@@ -4,7 +4,34 @@
 
 Int2D EngineWindow::WindowSize = Int2D();
 
-BOOL EngineWindow::WindowOpen(std::function<void(void)> _Start, std::function<void(void)> _End)
+BOOL EngineWindow::WindowRegister(HINSTANCE hInstance)
+{
+    WNDCLASSEXW wcex;
+
+    wcex.cbSize = sizeof(WNDCLASSEX);
+
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = EngineWindow::WndProc;
+    wcex.cbClsExtra = 0;
+    wcex.cbWndExtra = 0;
+    wcex.hInstance = hInstance;
+    wcex.hIcon = LoadIcon(nullptr, IDI_APPLICATION);  // 기본 애플리케이션 아이콘
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);    // 기본 화살표 커서
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName = nullptr;        // 메뉴 없음
+    wcex.lpszClassName = EngineName;   // 클래스 이름 (필요에 따라 변경)
+    wcex.hIconSm = LoadIcon(nullptr, IDI_APPLICATION); // 작은 아이콘도 기본 아이콘 사용
+
+    if (!RegisterClassExW(&wcex)) {
+        return FALSE;
+    }
+
+    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+
+    return TRUE;
+}
+
+BOOL EngineWindow::WindowOpen()
 {
 
     int screenWidth = GetSystemMetrics(SM_CXSCREEN);  // 화면 가로 해상도
@@ -23,8 +50,6 @@ BOOL EngineWindow::WindowOpen(std::function<void(void)> _Start, std::function<vo
         hInst,
         nullptr);
 
-
-
     if (!hWnd)
     {
         return FALSE;
@@ -34,6 +59,9 @@ BOOL EngineWindow::WindowOpen(std::function<void(void)> _Start, std::function<vo
     UpdateWindow(hWnd);
 
     MainBuffer = GetDC(hWnd);
+}
+
+BOOL EngineWindow::WindowStart(std::function<void(void)> _Start, std::function<void(void)> _End) {
 
 
     HACCEL hAccelTable = LoadAccelerators(hInst, MAKEINTRESOURCE(IDC_SMENGINE));
@@ -73,34 +101,6 @@ BOOL EngineWindow::WindowOpen(std::function<void(void)> _Start, std::function<vo
     }
 
     return (int)msg.wParam;
-
-}
-
-BOOL EngineWindow::WindowRegister(HINSTANCE hInstance)
-{
-    WNDCLASSEXW wcex;
-
-    wcex.cbSize = sizeof(WNDCLASSEX);
-
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = EngineWindow::WndProc;
-    wcex.cbClsExtra = 0;
-    wcex.cbWndExtra = 0;
-    wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(nullptr, IDI_APPLICATION);  // 기본 애플리케이션 아이콘
-    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);    // 기본 화살표 커서
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = nullptr;        // 메뉴 없음
-    wcex.lpszClassName = EngineName;   // 클래스 이름 (필요에 따라 변경)
-    wcex.hIconSm = LoadIcon(nullptr, IDI_APPLICATION); // 작은 아이콘도 기본 아이콘 사용
-
-    if (!RegisterClassExW(&wcex)) {
-        return FALSE;
-    }
-
-    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-
-    return TRUE;
 }
 
 LRESULT CALLBACK EngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

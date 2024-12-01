@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{4711b6a7-58a3-4925-a66e-e9d3669dac44}</ProjectGuid>
-    <RootNamespace>EngineWindow</RootNamespace>
+    <ProjectGuid>{b5926901-b6c0-467c-812d-4da37215bbd9}</ProjectGuid>
+    <RootNamespace>EngineContent</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -147,18 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EngineWindow.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="EngineWindow.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EngineDefine\EngineDefine.vcxproj">
-      <Project>{416c6c99-58f1-494b-b7e2-843733a8f09a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\EngineHelper\EngineHelper.vcxproj">
-      <Project>{b21a6af0-3cd1-48b7-96ce-0b61daeaff34}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

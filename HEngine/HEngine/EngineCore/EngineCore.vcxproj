@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b21a6af0-3cd1-48b7-96ce-0b61daeaff34}</ProjectGuid>
-    <RootNamespace>SMHelper</RootNamespace>
+    <ProjectGuid>{ce83709d-ca4c-4ab5-9d87-6c18653bfa01}</ProjectGuid>
+    <RootNamespace>EngineCore</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>EngineHelper</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -148,27 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EngineFile.h" />
-    <ClInclude Include="EngineImage.h" />
-    <ClInclude Include="EngineKey.h" />
-    <ClInclude Include="EngineMath.h" />
-    <ClInclude Include="EnginePath.h" />
-    <ClInclude Include="EngineTransform.h" />
-    <ClInclude Include="EngineTime.h" />
+    <ClInclude Include="EngineCore.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EngineFile.cpp" />
-    <ClCompile Include="EngineImage.cpp" />
-    <ClCompile Include="EngineKey.cpp" />
-    <ClCompile Include="EngineMath.cpp" />
-    <ClCompile Include="EnginePath.cpp" />
-    <ClCompile Include="EngineTransform.cpp" />
-    <ClCompile Include="EngineTime.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EngineDefine\SMDefine.vcxproj">
-      <Project>{416c6c99-58f1-494b-b7e2-843733a8f09a}</Project>
-    </ProjectReference>
+    <ClCompile Include="EngineCore.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

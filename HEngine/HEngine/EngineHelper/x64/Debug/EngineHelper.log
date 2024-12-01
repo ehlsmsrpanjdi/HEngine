@@ -1,0 +1,10 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\EngineDefine\SMDefine.vcxproj' does not exist.
+  EngineFile.cpp
+  EngineImage.cpp
+  EngineKey.cpp
+  EngineMath.cpp
+  EnginePath.cpp
+  EngineTransform.cpp
+  EngineTime.cpp
+  코드를 생성하고 있습니다...
+  EngineHelper.vcxproj -> D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineHelper.lib

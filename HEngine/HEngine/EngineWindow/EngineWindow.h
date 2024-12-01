@@ -24,8 +24,9 @@ public:
 	}
 
 private:
-	BOOL WindowOpen(std::function<void(void)> _Start, std::function<void(void)> _End);
 	BOOL WindowRegister(HINSTANCE hInstance);
+	BOOL WindowOpen();
+	BOOL WindowStart(std::function<void(void)> _Start, std::function<void(void)> _End);
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
