@@ -3,11 +3,10 @@
 #include <functional>
 #include "EngineHelper/EngineTransform.h"
 
-class SMEngine;
 
 class EngineWindow {
 public:
-	friend class SMEngine;
+	friend class EngineCore;
 
 
 	EngineWindow() {
