@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="EngineFile">
+      <UniqueIdentifier>{72ae32af-28a9-4856-beed-35fa0a59563a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineMath">
+      <UniqueIdentifier>{3dd2ecf0-d1f4-48ce-b552-807705ada4d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineTime">
+      <UniqueIdentifier>{7d088bb8-b53f-412f-85fe-f0adf7e45864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineTransform">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="EngineKey">
+      <UniqueIdentifier>{4f333940-2d1d-472c-9f49-6e2924bb4ba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineImage">
+      <UniqueIdentifier>{f1a5d35d-98fa-4d22-8b5f-6465ee533007}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineTransform.h">
+      <Filter>EngineTransform</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMath.h">
+      <Filter>EngineMath</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h">
+      <Filter>EngineTime</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineImage.h">
+      <Filter>EngineImage</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePath.h">
+      <Filter>EngineFile</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFile.h">
+      <Filter>EngineFile</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineKey.h">
+      <Filter>EngineKey</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EngineTransform.cpp">
+      <Filter>EngineTransform</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineMath.cpp">
+      <Filter>EngineMath</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>EngineTime</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineImage.cpp">
+      <Filter>EngineImage</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePath.cpp">
+      <Filter>EngineFile</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFile.cpp">
+      <Filter>EngineFile</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineKey.cpp">
+      <Filter>EngineKey</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
