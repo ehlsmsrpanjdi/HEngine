@@ -59,6 +59,8 @@ BOOL EngineWindow::WindowOpen()
     UpdateWindow(hWnd);
 
     MainBuffer = GetDC(hWnd);
+
+    return TRUE;
 }
 
 BOOL EngineWindow::WindowStart(std::function<void(void)> _Start, std::function<void(void)> _End) {

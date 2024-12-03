@@ -4,15 +4,24 @@
     <Filter Include="UserCore">
       <UniqueIdentifier>{046852a9-65a4-4d98-ac85-0ace26d0ed45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsActor">
+      <UniqueIdentifier>{18cd09f4-34f7-4f44-adaf-e85e17b4ab5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UserCore.h">
       <Filter>UserCore</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ContentsActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserCore.cpp">
       <Filter>UserCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ContentsActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
