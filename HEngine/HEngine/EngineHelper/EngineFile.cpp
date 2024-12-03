@@ -2,7 +2,8 @@
 
 bool EngineFile::FindFile(fs::path _path) {
 	for (const fs::directory_entry& entry : fs::directory_iterator(pa)) {
-		if (entry.path().filename() == _path) {
+		if (entry.path().filename().stem() == _path) {
+			pa = entry.path();
 			return true;
 		}
 	}

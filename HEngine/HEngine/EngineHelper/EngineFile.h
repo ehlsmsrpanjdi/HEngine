@@ -1,8 +1,10 @@
 #pragma once
 #include "EnginePath.h"
 class EngineFile : public EnginePath {
-	EngineFile() {
-		pa = fs::current_path();
+public:
+	EngineFile()
+		:EnginePath()
+	{
 	}
 
 	EngineFile(fs::path _path)
@@ -18,8 +20,9 @@ class EngineFile : public EnginePath {
 	}
 
 
-	bool FindFile(fs::path _path);
+	virtual bool FindFile(fs::path _path);
 
-	fs::path FindFileRecursive(fs::path _path, fs::path _my);
+	virtual fs::path FindFileRecursive(fs::path _path, fs::path _my);
+
 
 };

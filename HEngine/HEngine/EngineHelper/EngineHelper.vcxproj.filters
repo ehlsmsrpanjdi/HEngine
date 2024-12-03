@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="EnginePath.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFile.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineImage.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineKey.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineMath.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTransform.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineResource.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineFile.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePath.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineImage.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineKey.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTransform.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResource.h">
+      <Filter>File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="File">
+      <UniqueIdentifier>{d9a9877e-c060-4e4e-a509-c5dbb49003c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{eb207cd0-80de-41ab-8126-14082b23353e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{a8524109-f5f1-44cf-a184-30931e9d10cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{268ca1ff-51b4-4f61-a5e2-88e475e42873}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

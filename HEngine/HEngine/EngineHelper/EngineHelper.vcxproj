@@ -153,6 +153,7 @@
     <ClInclude Include="EngineKey.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="EnginePath.h" />
+    <ClInclude Include="EngineResource.h" />
     <ClInclude Include="EngineTransform.h" />
     <ClInclude Include="EngineTime.h" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <ClCompile Include="EngineKey.cpp" />
     <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="EnginePath.cpp" />
+    <ClCompile Include="EngineResource.cpp" />
     <ClCompile Include="EngineTransform.cpp" />
     <ClCompile Include="EngineTime.cpp" />
   </ItemGroup>

@@ -3,6 +3,7 @@
   EngineKey.cpp
   EngineMath.cpp
   EnginePath.cpp
+  EngineResource.cpp
   EngineTransform.cpp
   EngineTime.cpp
   코드를 생성하고 있습니다...
