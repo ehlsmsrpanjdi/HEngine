@@ -19,8 +19,14 @@ public:
 		return ResourceManager;
 	}
 
-	std::map<std::string_view, BITMAP*> Resources;
+	std::map<std::string_view, Bitmap*> Resources;
 
+	Bitmap* GetImage(std::string_view _str);
 
+	void FindImage(std::string_view _str);
+
+	void FindImageRecursive(fs::path _my);
+
+	void MakeImage();
 	static EngineResource* ResourceManager;
 };
