@@ -19,7 +19,7 @@ public:
 	}
 
 	const HDC GetHDC() {
-		return nullptr;
+		return MainBuffer;
 	}
 
 private:

@@ -2,12 +2,15 @@
 #include "EngineHelper/EngineTime.h"
 #include "Actor.h"
 
+EngineCore* EngineCore::MainCore = nullptr;
+
 EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
 	TimeManager = new EngineTime();
 	TimeManager->InitializeTimer();
 	MainWindow.SetWindowSize(_x, _y);
 	MainWindow.WindowRegister(_inst);
 	MainWindow.WindowOpen();
+	MainCore = this;
 }
 
 void EngineCore::EngineStart() {

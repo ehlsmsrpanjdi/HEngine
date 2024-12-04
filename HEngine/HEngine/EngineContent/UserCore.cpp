@@ -1,6 +1,10 @@
 #include "UserCore.h"
 #include "Player.h"
 #include "EngineHelper/EngineResource.h"
+
+#define RM EngineResource::GetInst()
+
+
 void SMCore::EngineStart() {
 	EngineCore::EngineStart();
 }
@@ -8,8 +12,10 @@ void SMCore::EngineStart() {
 void SMCore::BeginPlay() {
 	EngineCore::BeginPlay();
 
-	EngineResource::GetInst()->Move_parent();
-	EngineResource::GetInst()->FindFile("Resources");
+	RM->Move_parent();
+	if (RM->FindFile("Resources") == true) {
+		RM->FindImageRecursive(RM->GetPath());
+	}
 
 	SpawnActor<Player>("MainPlayer");
 }

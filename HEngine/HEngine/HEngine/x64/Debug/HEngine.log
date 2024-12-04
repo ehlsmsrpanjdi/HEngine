@@ -1,1 +1,2 @@
-﻿  HEngine.vcxproj -> D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\HEngine.exe
+﻿  App.cpp
+LINK : fatal error LNK1104: 'D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineCore.lib' 파일을 열 수 없습니다.

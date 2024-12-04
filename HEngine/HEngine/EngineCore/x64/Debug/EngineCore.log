@@ -1,6 +1,9 @@
 ﻿  Actor.cpp
+D:\SMGit\Hengine\HEngine\HEngine\EngineCore\Actor.cpp(18,8): error C2664: 'void Renderer::SetImage(Renderer::Bitmap *)': 인수 1을(를) 'Gdiplus::Bitmap *'에서 'Renderer::Bitmap *'(으)로 변환할 수 없습니다.
+D:\SMGit\Hengine\HEngine\HEngine\EngineCore\Actor.cpp(18,31): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+D:\SMGit\Hengine\HEngine\HEngine\EngineCore\Renderer.h(13,7): message : 'Renderer::SetImage' 선언을 참조하십시오.
+D:\SMGit\Hengine\HEngine\HEngine\EngineCore\Actor.cpp(18,8): message : 인수 목록 '(Gdiplus::Bitmap *)'을(를) 일치시키는 동안
   BaseObject.cpp
   EngineCore.cpp
   Renderer.cpp
   코드를 생성하고 있습니다...
-  EngineCore.vcxproj -> D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineCore.lib

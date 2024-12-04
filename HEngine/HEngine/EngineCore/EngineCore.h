@@ -12,9 +12,23 @@ public:
 
 	EngineCore(HINSTANCE _inst, int _x, int _y);
 
+	static EngineCore* GetInst() {
+		if (MainCore != nullptr) {
+			return MainCore;
+		}
+		else {
+			return nullptr;
+		}
+	}
+
+
 	virtual void EngineStart();
 
 	virtual void BeginPlay();
+
+	EngineWindow GetWindow() {
+		return MainWindow;
+	}
 
 protected:
 	virtual void EngineTick();
@@ -33,4 +47,6 @@ protected:
 
 	EngineWindow MainWindow;
 	EngineTime* TimeManager = nullptr;
+
+	static EngineCore* MainCore;
 };

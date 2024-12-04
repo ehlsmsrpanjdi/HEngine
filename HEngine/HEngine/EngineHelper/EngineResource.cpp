@@ -30,5 +30,6 @@ Bitmap* EngineResource::GetImage(std::string_view _str) {
 	}
 	else {
 		ErrorCheck("Resource is None" + std::string(_str));
+		return nullptr;
 	}
 }
