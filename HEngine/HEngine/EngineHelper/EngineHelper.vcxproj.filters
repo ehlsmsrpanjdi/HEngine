@@ -28,6 +28,9 @@
     <ClCompile Include="EngineString.cpp">
       <Filter>String</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineFile.h">
@@ -57,6 +60,9 @@
     <ClInclude Include="EngineString.h">
       <Filter>String</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="File">
@@ -73,6 +79,9 @@
     </Filter>
     <Filter Include="String">
       <UniqueIdentifier>{fb06f515-f332-4b42-b5f8-05e10a966dae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{cb60b1ca-c445-4374-ab6d-12cac192012e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 #pragma once
-#include <functional>
+
 #include "Windows.h"
 #include "EngineWindow/EngineWindow.h"
 #include <list>

@@ -1,4 +1,5 @@
-﻿  EngineFile.cpp
+﻿  pch.cpp
+  EngineFile.cpp
   EngineImage.cpp
   EngineKey.cpp
   EngineMath.cpp

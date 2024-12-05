@@ -1,5 +1,10 @@
+#include "pch.h"
+
 #include "EngineImage.h"
 #include "EnginePath.h"
+
+#pragma comment (lib, "gdiplus.lib")
+
 
 ULONG_PTR ImageInit::gdiplusToken = 0;
 HDC EngineImage::hdc = nullptr;

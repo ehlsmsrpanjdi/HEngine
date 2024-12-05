@@ -1,5 +1,5 @@
+#include "pch.h"
 #include "EngineWindow.h"
-#include "EngineDefine/EngineDefine.cpp"
 #define IDC_SMENGINE 1001
 
 Int2D EngineWindow::WindowSize = Int2D();

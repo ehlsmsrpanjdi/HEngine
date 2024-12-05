@@ -1,4 +1,5 @@
-﻿  Actor.cpp
+﻿  pch.cpp
+  Actor.cpp
   BaseObject.cpp
   EngineCore.cpp
   Renderer.cpp

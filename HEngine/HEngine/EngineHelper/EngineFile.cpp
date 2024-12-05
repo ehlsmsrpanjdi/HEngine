@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "EngineFile.h"
 
 bool EngineFile::FindFile(fs::path _path) {
