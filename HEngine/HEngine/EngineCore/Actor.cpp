@@ -10,7 +10,7 @@ void Actor::BeginPlay() {
 
 void Actor::Tick(float _deltatime) {
 	for (Renderer* Render : Renderers) {
-			
+		Render->Rendering();
 	}
 }
 

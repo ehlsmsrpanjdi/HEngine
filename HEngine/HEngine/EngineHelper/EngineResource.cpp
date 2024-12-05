@@ -33,6 +33,7 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 
 EngineImage* EngineResource::GetImage(std::string_view _str) {
 	std::string key(_str);
+	EngineString::Upper(key);
 	if (Resources.contains(key) == true) {
 		return Resources[key];
 	}

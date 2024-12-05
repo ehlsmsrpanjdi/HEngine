@@ -8,53 +8,55 @@ using namespace Gdiplus;
 
 class EngineImage {
 public:
-    EngineImage(Bitmap* _Bitmap) 
-        :hBitmap(_Bitmap)
-    {}
+	EngineImage(Bitmap* _Bitmap)
+		:hBitmap(_Bitmap)
+	{
+	}
 
-    void DrawImage(int x, int y, int width, int height);
+	void DrawImage(int x, int y, int width, int height);
 
-    void SetPath(const std::wstring& _path) {
-        path = _path;
-    }
+	/*void SetPath(const std::wstring& _path) {
+		path = _path;
+	}*/
 
-    static void SetDC(HDC _hdc) {
-        if (hdc == nullptr) {
-            hdc = _hdc;
-        }
-    }
+	static void SetDC(HDC _hdc) {
+		if (hdc == nullptr) {
+			hdc = _hdc;
+		}
+	}
 
-    void SetBitmap(Bitmap* _Bitmap) {
-        hBitmap = _Bitmap;
-    }
+	void SetBitmap(Bitmap* _Bitmap) {
+		hBitmap = _Bitmap;
+	}
 
-    Bitmap* GetBitmap() {
-        return hBitmap;
-    }
+	Bitmap* GetBitmap() {
+		return hBitmap;
+	}
 
 private:
-    static HDC hdc;
-    Bitmap* hBitmap = nullptr;
-    std::wstring path;
+	static HDC hdc;
+	Bitmap* hBitmap = nullptr;
+	//std::wstring path;
 };
 
 class ImageInit {
 public:
-    friend class EngineCore;
+	friend class EngineCore;
 
-    ImageInit() {}
+	ImageInit() {}
 
-    ~ImageInit() {}
+	~ImageInit() {}
 
 private:
-    static void ImageIniteralize() {
-        GdiplusStartupInput gdiplusStartupInput;
-        GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
-    }
+	static void ImageIniteralize(HDC _hdc) {
+		GdiplusStartupInput gdiplusStartupInput;
+		GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
+		EngineImage::SetDC(_hdc);
+	}
 
-    static void ImageExit() {
-        GdiplusShutdown(gdiplusToken);
-    }
+	static void ImageExit() {
+		GdiplusShutdown(gdiplusToken);
+	}
 
-    static ULONG_PTR gdiplusToken;
+	static ULONG_PTR gdiplusToken;
 };
