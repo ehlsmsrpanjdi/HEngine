@@ -17,6 +17,7 @@ void Actor::Tick(float _deltatime) {
 Renderer* Actor::CreateRenderer(std::string_view _str) {
 	Renderer* Render = new Renderer();
 	Render->SetImage(RM->GetImage(_str));
+	Render->SetOwner(this);
 	Renderers.push_back(Render);
 	return Render;
 }

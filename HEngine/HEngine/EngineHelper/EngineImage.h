@@ -4,11 +4,10 @@
 #include <gdiplus.h>
 #include <string>
 
-using namespace Gdiplus;
 
 class EngineImage {
 public:
-	EngineImage(Bitmap* _Bitmap)
+	EngineImage(Gdiplus::Bitmap* _Bitmap)
 		:hBitmap(_Bitmap)
 	{
 	}
@@ -25,17 +24,17 @@ public:
 		}
 	}
 
-	void SetBitmap(Bitmap* _Bitmap) {
+	void SetBitmap(Gdiplus::Bitmap* _Bitmap) {
 		hBitmap = _Bitmap;
 	}
 
-	Bitmap* GetBitmap() {
+	Gdiplus::Bitmap* GetBitmap() {
 		return hBitmap;
 	}
 
 private:
 	static HDC hdc;
-	Bitmap* hBitmap = nullptr;
+	Gdiplus::Bitmap* hBitmap = nullptr;
 	//std::wstring path;
 };
 
@@ -49,13 +48,13 @@ public:
 
 private:
 	static void ImageIniteralize(HDC _hdc) {
-		GdiplusStartupInput gdiplusStartupInput;
-		GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
+		Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+		Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
 		EngineImage::SetDC(_hdc);
 	}
 
 	static void ImageExit() {
-		GdiplusShutdown(gdiplusToken);
+		Gdiplus::GdiplusShutdown(gdiplusToken);
 	}
 
 	static ULONG_PTR gdiplusToken;

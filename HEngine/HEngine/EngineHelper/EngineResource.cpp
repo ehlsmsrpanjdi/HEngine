@@ -16,11 +16,17 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 				std::string fileName = entry.path().filename().stem().string();
 				EngineString::Upper(fileName);
 				// PNG 파일을 Bitmap으로 로드
-				Bitmap* pBitmap = new Bitmap(entry.path().wstring().c_str());
-				if (pBitmap->GetLastStatus() != Ok) {
+				Gdiplus::Image* NImage = Gdiplus::Image::FromFile(entry.path().wstring().c_str());
+				if (NImage == nullptr) {
+					ErrorCheck("이미지생성이 잘못됨");
+					return;
+				}
+				Gdiplus::Bitmap* pBitmap = reinterpret_cast<Gdiplus::Bitmap*>(NImage->Clone());
+				if (pBitmap->GetLastStatus() != Gdiplus::Ok) {
 					delete pBitmap;
 					continue; // 파일 로드 실패 시 건너뜀
 				}
+				//Gdiplus::Status stat = pBitmap->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &pBitmap);
 
 				EngineImage* NewImage = new EngineImage(pBitmap);
 
