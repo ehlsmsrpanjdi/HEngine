@@ -1,6 +1,6 @@
 #include "EngineResource.h"
 #include "EngineDefine/EngineDefine.h"
-
+#include "EngineString.h"
 
 EngineResource* EngineResource::ResourceManager = nullptr;
 
@@ -13,7 +13,7 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 		else if (entry.is_regular_file()) {
 			if (entry.path().extension() == ".png") {
 				std::string fileName = entry.path().filename().stem().string();
-
+				EngineString::Upper(fileName);
 				// PNG 파일을 Bitmap으로 로드
 				Bitmap* pBitmap = new Bitmap(entry.path().wstring().c_str());
 				if (pBitmap->GetLastStatus() != Ok) {

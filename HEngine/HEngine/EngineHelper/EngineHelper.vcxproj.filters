@@ -25,6 +25,9 @@
     <ClCompile Include="EngineResource.cpp">
       <Filter>File</Filter>
     </ClCompile>
+    <ClCompile Include="EngineString.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineFile.h">
@@ -51,6 +54,9 @@
     <ClInclude Include="EngineResource.h">
       <Filter>File</Filter>
     </ClInclude>
+    <ClInclude Include="EngineString.h">
+      <Filter>String</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="File">
@@ -64,6 +70,9 @@
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{268ca1ff-51b4-4f61-a5e2-88e475e42873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{fb06f515-f332-4b42-b5f8-05e10a966dae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
