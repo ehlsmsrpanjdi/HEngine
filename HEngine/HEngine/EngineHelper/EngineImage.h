@@ -9,7 +9,9 @@ using namespace Gdiplus;
 
 class EngineImage {
 public:
-    EngineImage() {}
+    EngineImage(Bitmap* _Bitmap) 
+        :hBitmap(_Bitmap)
+    {}
 
     void DrawImage(int x, int y, int width, int height);
 
@@ -23,14 +25,23 @@ public:
         }
     }
 
+    void SetBitmap(Bitmap* _Bitmap) {
+        hBitmap = _Bitmap;
+    }
+
+    Bitmap* GetBitmap() {
+        return hBitmap;
+    }
+
 private:
     static HDC hdc;
+    Bitmap* hBitmap = nullptr;
     std::wstring path;
 };
 
 class ImageInit {
 public:
-    friend class SMEngine;
+    friend class EngineCore;
 
     ImageInit() {}
 

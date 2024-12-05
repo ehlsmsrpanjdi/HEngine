@@ -3,6 +3,8 @@
 void Player::BeginPlay() {
 	Actor::BeginPlay();
 
+
+	CreateRenderer("LeftPipe");
 }
 
 

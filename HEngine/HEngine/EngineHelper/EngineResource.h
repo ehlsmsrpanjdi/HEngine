@@ -19,9 +19,9 @@ public:
 		return ResourceManager;
 	}
 
-	std::map<std::string_view, Bitmap*> Resources;
+	std::map<std::string, EngineImage*> Resources;
 
-	Bitmap* GetImage(std::string_view _str);
+	EngineImage* GetImage(std::string_view _str);
 
 	void FindImage(std::string_view _str);
 

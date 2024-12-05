@@ -4,17 +4,15 @@ class Actor;
 
 class Renderer {
 	friend Actor;
-	class Bitmap;
 public:
 	Renderer() {
 
 	}
 
-	void SetImage(Bitmap* _bitmap);
+	void SetImage(EngineImage* _Image);
 	void SetOwner(Actor* _Actor);
 	void Rendering();
 private:
-	/*EngineImage* Image = nullptr;*/
-	Bitmap* RBitmap = nullptr;
+	EngineImage* RImage = nullptr;
 	Actor* Owner = nullptr;
 };

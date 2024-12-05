@@ -2,8 +2,8 @@
 #include "EngineHelper/EngineImage.h"
 #include "Actor.h"
 #include "EngineCore.h"
-void Renderer::SetImage(Bitmap* _bitmap) {
-	RBitmap = _bitmap;
+void Renderer::SetImage(EngineImage* _Image) {
+	RImage = _Image;
 }
 
 
@@ -12,16 +12,17 @@ void Renderer::SetOwner(Actor* _Actor) {
 }
 
 void Renderer::Rendering() {
-	if (RBitmap != nullptr) {
-		HDC mhdc = EngineCore::GetInst()->GetWindow().GetHDC();
-		HDC nhdc = CreateCompatibleDC(mhdc);
-		HBITMAP OldBitmap = (HBITMAP)SelectObject(nhdc, RBitmap);
-		BITMAP bitmap;
-		GetObject(RBitmap, sizeof(BITMAP), &bitmap);
-		BitBlt(mhdc, 0, 0, 100, 100, nhdc, 0, 0, SRCCOPY);
+	if (RImage != nullptr) {
+		RImage->DrawImage(0,0,100,100);
+		//HDC mhdc = EngineCore::GetInst()->GetWindow().GetHDC();
+		//HDC nhdc = CreateCompatibleDC(mhdc);
+		//HBITMAP OldBitmap = (HBITMAP)SelectObject(nhdc, RImage->GetBitmap());
+		//BITMAP bitmap;
+		//GetObject(RImage->GetBitmap(), sizeof(BITMAP), &bitmap);
+		//BitBlt(mhdc, 0, 0, 100, 100, nhdc, 0, 0, SRCCOPY);
 
-		SelectObject(mhdc, OldBitmap);
-		DeleteDC(nhdc);
+		//SelectObject(mhdc, OldBitmap);
+		//DeleteDC(nhdc);
 	}
 }
 
