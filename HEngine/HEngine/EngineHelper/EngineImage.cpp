@@ -11,7 +11,7 @@ ULONG_PTR ImageInit::gdiplusToken = 0;
 HDC EngineImage::hdc = nullptr;
 
 EngineImage::~EngineImage() {
-	DeleteObject(hBitmap);
+	hBitmap = nullptr;
 }
 
 void EngineImage::DrawImage(int x, int y, int width, int height) {

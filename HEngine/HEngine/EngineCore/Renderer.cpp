@@ -5,7 +5,7 @@
 #include "EngineCore.h"
 
 Renderer::~Renderer() {
-	delete RImage;
+	RImage = nullptr;
 }
 
 void Renderer::SetImage(EngineImage* _Image) {

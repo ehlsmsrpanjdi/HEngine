@@ -38,4 +38,7 @@ void EngineCore::EngineEnd() {
 		delete Act;
 	}
 	EngineResource::GetInst()->ReleaseResources();
+	delete EngineResource::GetInst();
+	ImageInit::ImageExit();
+	delete TimeManager;
 }

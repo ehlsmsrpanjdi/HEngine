@@ -4,7 +4,7 @@
 #include <iostream>
 #include <map>
 #include <filesystem>
-class EngineResource : public EngineFile{
+class EngineResource : public EngineFile {
 public:
 	friend class EngineCore;
 
@@ -16,7 +16,9 @@ public:
 private:
 	static void ReleaseResources() {
 		for (std::pair<const std::string&, EngineImage*> pair : ResourceManager->Resources) {
-			delete pair.second;
+			if (pair.second != nullptr) {
+				delete pair.second;
+			}
 		}
 	}
 public:
