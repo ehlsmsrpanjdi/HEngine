@@ -5,11 +5,17 @@ d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\pch.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginetime.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginetransform.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginestring.obj
+d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\engineresource.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginepath.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginemath.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginekey.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\engineimage.obj
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginefile.obj
+d:\smgit\hengine\hengine\hengine\x64\debug\enginehelper.lib
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginehelper.tlog\cl.command.1.tlog
+d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginehelper.tlog\cl.items.tlog
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginehelper.tlog\cl.read.1.tlog
 d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginehelper.tlog\cl.write.1.tlog
+d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginehelper.tlog\lib-link.read.1.tlog
+d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginehelper.tlog\lib-link.write.1.tlog
+d:\smgit\hengine\hengine\hengine\enginehelper\x64\debug\enginehelper.tlog\lib.command.1.tlog
