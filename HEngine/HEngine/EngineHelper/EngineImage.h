@@ -7,10 +7,12 @@
 
 class EngineImage {
 public:
-	EngineImage(Gdiplus::Bitmap* _Bitmap)
+	EngineImage(HBITMAP _Bitmap)
 		:hBitmap(_Bitmap)
 	{
 	}
+
+	~EngineImage();
 
 	void DrawImage(int x, int y, int width, int height);
 
@@ -24,17 +26,18 @@ public:
 		}
 	}
 
-	void SetBitmap(Gdiplus::Bitmap* _Bitmap) {
+	void SetBitmap(HBITMAP _Bitmap) {
 		hBitmap = _Bitmap;
 	}
 
-	Gdiplus::Bitmap* GetBitmap() {
+	HBITMAP GetBitmap() {
 		return hBitmap;
 	}
 
 private:
 	static HDC hdc;
-	Gdiplus::Bitmap* hBitmap = nullptr;
+	HBITMAP hBitmap;
+	
 	//std::wstring path;
 };
 

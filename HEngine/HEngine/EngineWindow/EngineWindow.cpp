@@ -3,6 +3,8 @@
 #define IDC_SMENGINE 1001
 
 Int2D EngineWindow::WindowSize = Int2D();
+BOOL EngineWindow::WindowEnd = FALSE;
+
 
 BOOL EngineWindow::WindowRegister(HINSTANCE hInstance)
 {
@@ -98,7 +100,7 @@ BOOL EngineWindow::WindowStart(std::function<void(void)> _Start, std::function<v
         // 이 부분에 다른 비동기적인 작업이나 렌더링 등을 넣을 수 있다.
     }
 
-    if (nullptr != _End) {
+    if (nullptr != _End && WindowEnd == TRUE) {
         _End();
     }
 
@@ -117,6 +119,7 @@ LRESULT CALLBACK EngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, L
     }
     break;
     case WM_DESTROY:
+        WindowEnd = TRUE;
         PostQuitMessage(0);
         break;
     default:

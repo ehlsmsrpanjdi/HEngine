@@ -13,6 +13,28 @@ public:
 
 	}
 
+	~EngineWindow() {
+		// BackBuffer HDC 해제
+		if (BackBuffer) {
+			DeleteDC(BackBuffer);
+			BackBuffer = nullptr;
+		}
+
+		// MainBuffer HDC 해제
+		if (MainBuffer) {
+			DeleteDC(MainBuffer);
+			MainBuffer = nullptr;
+		}
+
+		// HWND 리소스 해제
+		if (hWnd) {
+			DestroyWindow(hWnd);
+			hWnd = nullptr;
+		}
+
+		// HINSTANCE는 시스템이 자동으로 관리하므로 추가적인 해제가 필요 없습니다.
+		hInst = NULL;
+	}
 
 	const HWND GetHWND() {
 		return hWnd;
@@ -44,5 +66,6 @@ private:
 	HWND hWnd = nullptr;
 	HDC MainBuffer = nullptr;
 	HDC BackBuffer = nullptr;
+	static BOOL WindowEnd;
 	static Int2D WindowSize;
 };

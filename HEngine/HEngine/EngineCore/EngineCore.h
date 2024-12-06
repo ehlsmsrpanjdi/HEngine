@@ -26,7 +26,7 @@ public:
 
 	virtual void BeginPlay();
 
-	EngineWindow GetWindow() {
+	EngineWindow& GetWindow() { // <<- 이 병신새끼가 &를 빼고 함수를 만들었다고 한다면 믿으시겠습니까?
 		return MainWindow;
 	}
 
@@ -45,7 +45,7 @@ protected:
 		return Actor;
 	}
 
-	EngineWindow MainWindow;
+	EngineWindow MainWindow = EngineWindow();
 	EngineTime* TimeManager = nullptr;
 
 	static EngineCore* MainCore;

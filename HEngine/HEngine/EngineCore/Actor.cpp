@@ -4,6 +4,12 @@
 #include "EngineHelper/EngineResource.h"
 #include "Renderer.h"
 
+Actor::~Actor() {
+	for (Renderer* Render : Renderers) {
+		delete Render;
+	}
+}
+
 void Actor::BeginPlay() {
 	int a = 0;
 }

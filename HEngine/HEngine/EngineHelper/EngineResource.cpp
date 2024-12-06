@@ -26,12 +26,20 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 					delete pBitmap;
 					continue; // 파일 로드 실패 시 건너뜀
 				}
-				//Gdiplus::Status stat = pBitmap->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &pBitmap);
 
-				EngineImage* NewImage = new EngineImage(pBitmap);
-
+				HBITMAP hBitmap = NULL;
+				COLORREF backgroundColor = RGB(255, 255, 255); 
+				//이 부분은 투명한 부분이 있을 때 그 부분을 어떻게 그릴건지에 대한 내용임
+				if (pBitmap) {
+					// GDI+ Bitmap 객체에서 HBITMAP으로 변환
+					pBitmap->GetHBITMAP(backgroundColor, &hBitmap);
+				}
+				if (hBitmap != NULL) {
+					EngineImage* NewImage = new EngineImage(hBitmap);
+					Resources[fileName] = NewImage;
+				}
+				//Bitmap을 HBITMAP으로 변환 후 EngineImage에서 쓸 수 있게 만들것
 				// Bitmap 객체를 Resources에 추가
-				Resources[fileName] = NewImage;
 			}
 		}
 	}

@@ -13,6 +13,8 @@ public:
 
 	}
 
+	~Actor();
+
 	virtual void BeginPlay();
 
 	virtual void Tick(float _deltatime) override;

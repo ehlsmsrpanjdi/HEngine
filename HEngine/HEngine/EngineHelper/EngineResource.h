@@ -6,12 +6,20 @@
 #include <filesystem>
 class EngineResource : public EngineFile{
 public:
+	friend class EngineCore;
+
 	EngineResource()
 		:EngineFile()
 	{
 
 	}
-
+private:
+	static void ReleaseResources() {
+		for (std::pair<const std::string&, EngineImage*> pair : ResourceManager->Resources) {
+			delete pair.second;
+		}
+	}
+public:
 	static EngineResource* GetInst() {
 		if (ResourceManager == nullptr) {
 			ResourceManager = new EngineResource();

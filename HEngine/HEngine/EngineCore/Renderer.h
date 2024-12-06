@@ -9,6 +9,8 @@ public:
 
 	}
 
+	~Renderer();
+
 	void SetImage(EngineImage* _Image);
 	void SetOwner(Actor* _Actor);
 	void Rendering();

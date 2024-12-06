@@ -3,6 +3,7 @@
 #include "EngineHelper/EngineTime.h"
 #include "Actor.h"
 #include "EngineHelper/EngineImage.h"
+#include "EngineHelper/EngineResource.h"
 EngineCore* EngineCore::MainCore = nullptr;
 
 EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
@@ -11,11 +12,11 @@ EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
 	MainWindow.SetWindowSize(_x, _y);
 	MainWindow.WindowRegister(_inst);
 	MainWindow.WindowOpen();
-	MainCore = this;
-	ImageInit::ImageIniteralize(MainCore->GetWindow().GetHDC());
 }
 
 void EngineCore::EngineStart() {
+	MainCore = this;
+	ImageInit::ImageIniteralize(MainCore->GetWindow().GetHDC());
 	BeginPlay();
 	MainWindow.WindowStart(std::bind(&EngineCore::EngineTick, this), std::bind(&EngineCore::EngineEnd, this));
 }
@@ -33,5 +34,8 @@ void EngineCore::EngineTick() {
 
 }
 void EngineCore::EngineEnd() {
-	int a = 0;
+	for (Actor* Act : Actors) {
+		delete Act;
+	}
+	EngineResource::GetInst()->ReleaseResources();
 }

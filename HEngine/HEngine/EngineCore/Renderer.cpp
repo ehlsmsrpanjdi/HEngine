@@ -3,6 +3,11 @@
 #include "EngineHelper/EngineImage.h"
 #include "Actor.h"
 #include "EngineCore.h"
+
+Renderer::~Renderer() {
+	delete RImage;
+}
+
 void Renderer::SetImage(EngineImage* _Image) {
 	RImage = _Image;
 }
