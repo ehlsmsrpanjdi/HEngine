@@ -4,10 +4,6 @@
 class EngineTime {
 public:
     EngineTime() {
-
-    }
-    void InitializeTimer()
-    {
         // 타이머 주파수 초기화
         QueryPerformanceFrequency(&frequency);
 
