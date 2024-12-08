@@ -3,7 +3,7 @@
 #include <ole2.h>
 #include <gdiplus.h>
 #include <string>
-
+#include "EngineHelper/EngineMath.h"
 
 class EngineImage {
 public:
@@ -34,10 +34,21 @@ public:
 		return hBitmap;
 	}
 
+	void SetImageSize(int _x, int _y) {
+		width = _x;
+		height = _y;
+	}
+
+	Int2D GetImageSize() {
+		return Int2D(width, height);
+	}
+
 private:
 	static HDC hdc;
 	HBITMAP hBitmap;
-	
+	int width = -1;
+	int height = -1;
+
 	//std::wstring path;
 };
 

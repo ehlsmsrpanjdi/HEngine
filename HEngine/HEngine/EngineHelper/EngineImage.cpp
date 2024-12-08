@@ -22,10 +22,16 @@ void EngineImage::DrawImage(int x, int y, int width, int height) {
 
 	HDC backBuffer = CreateCompatibleDC(hdc);
 	bool a = SelectObject(backBuffer, hBitmap);
-	/*if ( == NULL) {
-		Rectangle(hdc, 10, 10, 200, 200);
-		return;
-	}*/
-	BitBlt(hdc, 0, 0, 1000, 1000, backBuffer, 0, 0, SRCCOPY); // 백 버퍼 -> 메인 HDC
+
+	Int2D size = GetImageSize();
+
+	StretchBlt(hdc,        // 대상 DC			/bitblt 안쓴 이유는 bitblt은 사진 이미지 크기 조절이 안댐
+		100, 100,   // 대상 위치
+		300, 200,   // 출력할 이미지 크기
+		backBuffer,      // 원본 DC
+		0, 0,       // 원본 위치
+		100, 100,   // 원본 이미지 크기
+		SRCCOPY);   // 복사 방식
+
 	DeleteDC(backBuffer);
 }

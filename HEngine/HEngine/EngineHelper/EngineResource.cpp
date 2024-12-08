@@ -24,6 +24,7 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 				Gdiplus::Bitmap* pBitmap = reinterpret_cast<Gdiplus::Bitmap*>(NImage->Clone());
 				if (pBitmap->GetLastStatus() != Gdiplus::Ok) {
 					delete pBitmap;
+					ErrorCheck("이미지생성이 잘못됨");
 					continue; // 파일 로드 실패 시 건너뜀
 				}
 
@@ -34,7 +35,12 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 				if (hBitmap != NULL) {
 					delete pBitmap;
 					EngineImage* NewImage = new EngineImage(hBitmap);
-					Resources[fileName] = NewImage;
+					BITMAP bitmap;
+					memset(&bitmap, 0, sizeof(BITMAP));
+					if (GetObject(hBitmap, sizeof(BITMAP), &hBitmap)) {
+						NewImage->SetImageSize(bitmap.bmWidth, bitmap.bmHeight);
+						Resources[fileName] = NewImage;
+					}
 				}
 				else {
 					ErrorCheck("이미지생성이 잘못됨");
@@ -46,7 +52,6 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 		}
 	}
 }
-
 EngineImage* EngineResource::GetImage(std::string_view _str) {
 	std::string key(_str);
 	EngineString::Upper(key);
