@@ -65,12 +65,10 @@ BOOL EngineWindow::WindowOpen()
 	return TRUE;
 }
 
-BOOL EngineWindow::WindowStart(std::function<void(void)> _Start, std::function<void(void)> _End) {
+void EngineWindow::WindowStart(std::function<void(void)> _Start, std::function<void(void)> _End) {
 
 
-	HACCEL hAccelTable = LoadAccelerators(hInst, MAKEINTRESOURCE(IDC_SMENGINE));
-
-	MSG msg;
+	MSG msg = {};
 
 	// 기본 메시지 루프입니다:
 	while (WindowEnd == FALSE)
@@ -78,8 +76,9 @@ BOOL EngineWindow::WindowStart(std::function<void(void)> _Start, std::function<v
 		// 메시지를 대기하지 않고, 비어있는 메시지 큐도 처리할 수 있도록 PeekMessage 사용
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+				// 메시지 번역 및 디스패치
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 		}
 		if (nullptr != _Start)
 		{
@@ -91,7 +90,6 @@ BOOL EngineWindow::WindowStart(std::function<void(void)> _Start, std::function<v
 		_End();
 	}
 
-	return (int)msg.wParam;
 }
 
 LRESULT CALLBACK EngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
