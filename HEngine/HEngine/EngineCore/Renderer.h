@@ -21,6 +21,10 @@ public:
 	void SetRenderSize(float _x, float _y) {
 		RenderTransform.Scale = { _x,_y };
 	}
+
+	EngineTransform GetTransform() {
+		return RenderTransform;
+	}
 private:
 	EngineImage* RImage = nullptr;
 	Actor* Owner = nullptr;

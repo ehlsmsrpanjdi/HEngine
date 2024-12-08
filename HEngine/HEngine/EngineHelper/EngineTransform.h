@@ -49,6 +49,6 @@ public:
 
 
 
-	float2D Position;
-	float2D Scale;
+	float2D Position = { 0.f,0.f };
+	float2D Scale = { 1.f,1.f };
 };

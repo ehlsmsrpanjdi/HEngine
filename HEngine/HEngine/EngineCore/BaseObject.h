@@ -25,6 +25,10 @@ public:
 		Transform.Position = _Location;
 	}
 
+	void AddLocation(float2D _Location) {
+		Transform.Position += _Location;
+	}
+
 	float2D GetScale() {
 		return Transform.Scale;
 	}

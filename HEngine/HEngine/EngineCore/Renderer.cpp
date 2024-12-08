@@ -22,9 +22,12 @@ void Renderer::SetOwner(Actor* _Actor) {
 void Renderer::Rendering() {
 	if (RImage != nullptr) {
 
-		Owner->GetLocation();
+		float2D Location = Owner->GetLocation() + GetTransform().Position;
+		float2D Scale = Owner->GetScale() * GetTransform().Scale;
 
-		RImage->DrawImage(0,0,100,100);
+		
+
+		RImage->DrawImage(Location.FloatToInt() ,Scale.FloatToInt());
 	}
 }
 

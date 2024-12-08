@@ -13,7 +13,7 @@ public:
 	static void KeyCheck();
 	static bool IsInput(int _Key);
 
-
+private:
 	static std::map<int, Key> Keys;
 };
 

@@ -15,6 +15,9 @@ public:
 	~EngineImage();
 
 	void DrawImage(int x, int y, int width, int height);
+	void DrawImage(Int2D _Location, Int2D _Size) {
+		DrawImage(_Location.X, _Location.Y, _Size.X, _Size.Y);
+	}
 
 	/*void SetPath(const std::wstring& _path) {
 		path = _path;

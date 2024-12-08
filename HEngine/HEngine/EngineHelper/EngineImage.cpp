@@ -25,12 +25,13 @@ void EngineImage::DrawImage(int x, int y, int width, int height) {
 
 	Int2D size = GetImageSize();
 
+
 	StretchBlt(hdc,        // 대상 DC			/bitblt 안쓴 이유는 bitblt은 사진 이미지 크기 조절이 안댐
-		100, 100,   // 대상 위치
-		300, 200,   // 출력할 이미지 크기
+		x, y,   // 대상 위치
+		width, height,   // 출력할 이미지 크기
 		backBuffer,      // 원본 DC
 		0, 0,       // 원본 위치
-		100, 100,   // 원본 이미지 크기
+		size.X, size.Y,   // 원본 이미지 크기
 		SRCCOPY);   // 복사 방식
 
 	DeleteDC(backBuffer);

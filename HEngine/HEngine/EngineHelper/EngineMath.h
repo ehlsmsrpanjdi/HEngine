@@ -48,6 +48,31 @@ public:
 		Y += _float2D.Y;
 		return *this;
 	}
+
+	float2D operator-(const float2D& _float2D) {
+		float2D value = *this;
+		value.X -= _float2D.X;
+		value.Y -= _float2D.Y;
+		return value;
+	}
+
+	float2D operator+(const float2D& _float2D) {
+		float2D value = *this;
+		value.X += _float2D.X;
+		value.Y += _float2D.Y;
+		return value;
+	}
+
+	float2D operator*(const float2D& _float2D) {
+		float2D value = *this;
+		value.X *= _float2D.X;
+		value.Y *= _float2D.Y;
+		return value;
+	}
+
+	Int2D FloatToInt() {
+		return Int2D(static_cast<int>(round(X)), static_cast<int>(round(Y)));
+	}
 };
 
 struct float4D {

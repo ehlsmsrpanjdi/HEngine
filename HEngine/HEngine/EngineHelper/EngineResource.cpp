@@ -35,9 +35,8 @@ void EngineResource::FindImageRecursive(fs::path _my) {
 				if (hBitmap != NULL) {
 					delete pBitmap;
 					EngineImage* NewImage = new EngineImage(hBitmap);
-					BITMAP bitmap;
-					memset(&bitmap, 0, sizeof(BITMAP));
-					if (GetObject(hBitmap, sizeof(BITMAP), &hBitmap)) {
+					BITMAP bitmap = {};
+					if (GetObject(hBitmap, sizeof(BITMAP), &bitmap)) {
 						NewImage->SetImageSize(bitmap.bmWidth, bitmap.bmHeight);
 						Resources[fileName] = NewImage;
 					}
