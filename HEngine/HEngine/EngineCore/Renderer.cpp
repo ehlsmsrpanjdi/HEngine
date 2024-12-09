@@ -22,8 +22,8 @@ void Renderer::SetOwner(Actor* _Actor) {
 void Renderer::Rendering() {
 	if (RImage != nullptr) {
 
-		float2D Location = Owner->GetLocation() + GetTransform().Position;
-		float2D Scale = Owner->GetScale() * GetTransform().Scale;
+		float2D Location = Owner->GetLocation() + GetLocation();
+		float2D Scale = Owner->GetScale() * GetScale();
 
 		
 

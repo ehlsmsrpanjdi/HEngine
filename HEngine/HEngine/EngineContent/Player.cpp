@@ -8,7 +8,7 @@ void Player::BeginPlay() {
 
 
 	 Renderer* Render = CreateRenderer("LeftPipe");
-	 Render->SetRenderSize(128.0f, 134.0f);
+	 Render->SetScale(128.0f, 134.0f);
 }
 
 
