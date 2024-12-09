@@ -3,7 +3,7 @@
 class EngineImage;
 class Actor;
 
-class Renderer {
+class Renderer : public BaseObject{
 	friend Actor;
 public:
 	Renderer() {

@@ -16,6 +16,9 @@
     <Filter Include="PCH">
       <UniqueIdentifier>{39e4057a-abb1-46a5-bcc7-d547bedd58af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{fa593f92-77d3-4518-ad01-3dc56c35caf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h">
@@ -33,6 +36,9 @@
     <ClInclude Include="pch.h">
       <Filter>PCH</Filter>
     </ClInclude>
+    <ClInclude Include="EngineCollision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -49,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineCollision.cpp">
+      <Filter>Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
