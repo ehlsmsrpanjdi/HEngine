@@ -5,6 +5,7 @@
 #include "EngineHelper/EngineImage.h"
 #include "EngineHelper/EngineResource.h"
 #include "EngineHelper/EngineKey.h"
+#include "EngineCollision.h"
 EngineCore* EngineCore::MainCore = nullptr;
 
 EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
@@ -33,7 +34,13 @@ void EngineCore::EngineTick() {
 	for (Actor* Act : Actors) {
 		Act->Tick(DeltaTime);
 	}
-
+	if (CollisionRendering == true) {
+		for (std::pair<const int, std::unordered_set<EngineCollision*>>& pa : EngineCollision::Collisions) {
+			for (EngineCollision* Collision : pa.second) {
+				Collision->CollisionDraw(GetWindow().GetHDC());
+			}
+		}
+	}
 }
 void EngineCore::EngineEnd() {
 	for (Actor* Act : Actors) {

@@ -2,12 +2,15 @@
 #include "Player.h"
 #include "EngineCore/Renderer.h"
 #include "EngineCore/EngineCore.h"
+#include "EngineCore/EngineCollision.h"
 
 void Player::BeginPlay() {
 	Actor::BeginPlay();
 
 
 	 Renderer* Render = CreateRenderer("LeftPipe");
+	 EngineCollision* Collision = CreateCollision(0);
+	 Collision->SetScale(200.f, 200.f);
 	 Render->SetScale(128.0f, 134.0f);
 }
 

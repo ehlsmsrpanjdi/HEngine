@@ -30,6 +30,10 @@ public:
 		return MainWindow;
 	}
 
+	void SetCollisionRendering(bool _is) {
+		CollisionRendering = _is;
+	}
+
 protected:
 	virtual void EngineTick();
 	virtual void EngineEnd();
@@ -49,4 +53,6 @@ protected:
 	EngineTime* TimeManager = nullptr;
 
 	static EngineCore* MainCore;
+
+	bool CollisionRendering = true;
 };
