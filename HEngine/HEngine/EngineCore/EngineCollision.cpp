@@ -34,7 +34,7 @@ EngineCollision* EngineCollision::CreateCollision(int _Type) {
 	return Collision;
 }
 
-EngineCollision* EngineCollision::CollisionCheck(int _Select, EngineCollision* _Collision) {
+EngineCollision* EngineCollision::CollisionCheck(int _Select) {
 	for (EngineCollision* _Collision : Collisions[_Select]) {
 		if (_Collision != nullptr) {
 			if (isColliding(_Collision)) {
@@ -58,8 +58,8 @@ bool EngineCollision::isColliding(EngineCollision* _Collision) {
 	float2D LocationA = _Collision->GetOwner()->GetLocation() + _Collision->GetLocation();
 	float2D ScaleA = _Collision->GetOwner()->GetScale() + _Collision->GetScale();
 
-	float2D LocationB = Owner->GetLocation() + GetLocation();
-	float2D ScaleB = Owner->GetScale() * GetScale();
+	float2D LocationB = GetOwner()->GetLocation() + GetLocation();
+	float2D ScaleB = GetOwner()->GetScale() * GetScale();
 
 	float ARight = LocationA.X + ScaleA.X;
 	float ABottom = LocationA.Y + ScaleA.Y;

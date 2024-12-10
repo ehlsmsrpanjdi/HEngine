@@ -25,7 +25,7 @@ public:
 
 	static std::unordered_map<int, std::unordered_set<EngineCollision*>> Collisions;
 
-	EngineCollision* CollisionCheck(int _Select, EngineCollision* _Collision);
+	EngineCollision* CollisionCheck(int _Select);
 
 	static EngineCollision* CreateCollision(int _Type);
 
@@ -48,7 +48,11 @@ public:
 	}
 
 	Actor* GetOwner() {
-		return Owner;
+		if (Owner != nullptr) {
+			return Owner;
+		}
+		CodeError;
+		return nullptr;
 	}
 
 private:

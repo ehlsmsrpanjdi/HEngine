@@ -22,3 +22,10 @@
         Core->EngineStart(); \
         delete Core; \
     } while(0)
+
+#define CodeError \
+    { \
+        std::string errorMsg = "Error in function: " + std::string(__func__) + "\n" + \
+                               "Line: " + std::to_string(__LINE__); \
+        MessageBoxA(NULL, errorMsg.c_str(), "Intentional Error", MB_OK | MB_ICONERROR); \
+    }

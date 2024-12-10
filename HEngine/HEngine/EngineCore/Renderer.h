@@ -17,6 +17,14 @@ public:
 	void SetOwner(Actor* _Actor);
 	void Rendering();
 
+	Actor* GetOwner() {
+		if (Owner != nullptr) {
+			return Owner;
+		}
+		CodeError;
+		return nullptr;
+	}
+
 private:
 	EngineImage* RImage = nullptr;
 	Actor* Owner = nullptr;

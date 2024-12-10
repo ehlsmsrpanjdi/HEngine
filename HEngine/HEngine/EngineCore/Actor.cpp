@@ -22,11 +22,17 @@ void Actor::BeginPlay() {
 
 void Actor::Tick(float _deltatime) {
 	for (Renderer* Render : Renderers) {
+		if (nullptr == Render->GetOwner()) {
+			int a = 0;
+		}
 		if (Render != nullptr) {
 			Render->Rendering();
 		}
 	}
 	for (EngineCollision* Collision : Collisions) {
+		if (nullptr == Collision->GetOwner()) {
+			int a = 0;
+		}
 		if (Collision != nullptr) {
 			Collision->Collisioning();
 		}

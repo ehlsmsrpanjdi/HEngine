@@ -10,6 +10,9 @@
     <Filter Include="PCH">
       <UniqueIdentifier>{20a04d40-b2b6-4b23-acf6-23764e4ffff0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsDefine">
+      <UniqueIdentifier>{2545e820-cfcc-4f42-b6eb-2b5787c5b1d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UserCore.h">
@@ -21,6 +24,12 @@
     <ClInclude Include="pch.h">
       <Filter>PCH</Filter>
     </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>ContentsActor</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsDefine.h">
+      <Filter>ContentsDefine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserCore.cpp">
@@ -31,6 +40,12 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>ContentsActor</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsDefine.cpp">
+      <Filter>ContentsDefine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

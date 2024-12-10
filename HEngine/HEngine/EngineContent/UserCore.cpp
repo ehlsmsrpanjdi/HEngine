@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "UserCore.h"
 #include "Player.h"
+#include "Wall.h"
 #include "EngineHelper/EngineResource.h"
 
 #define RM EngineResource::GetInst()
@@ -19,6 +20,7 @@ void SMCore::BeginPlay() {
 	}
 
 	SpawnActor<Player>("MainPlayer");
+	SpawnActor<Wall>("Wall");
 }
 
 void SMCore::EngineTick() {
