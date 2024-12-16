@@ -6,6 +6,7 @@
 #include "EngineHelper/EngineResource.h"
 #include "EngineHelper/EngineKey.h"
 #include "EngineCollision.h"
+#include "Level.h"
 EngineCore* EngineCore::MainCore = nullptr;
 
 EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
@@ -31,9 +32,17 @@ void EngineCore::EngineTick() {
 	float DeltaTime = static_cast<float>(TimeManager->UpdateDeltaTime());
 	EngineKey::KeyCheck();
 
-	for (Actor* Act : Actors) {
-		Act->Tick(DeltaTime);
+	for (Level* Lev : Levels) {
+		Lev->Tick(DeltaTime);
 	}
+
+	//Rectangle(GetInst()->GetWindow().GetHDC(), 0, 0, GetInst()->GetWindow().WindowSize.X, GetInst()->GetWindow().WindowSize.Y);
+
+	for (Level* Lev : Levels) {
+		Lev->RenderTick(DeltaTime);
+	}
+
+
 	if (CollisionRendering == true) {
 		for (std::pair<const int, std::unordered_set<EngineCollision*>>& pa : EngineCollision::Collisions) {
 			for (EngineCollision* Collision : pa.second) {
@@ -43,8 +52,8 @@ void EngineCore::EngineTick() {
 	}
 }
 void EngineCore::EngineEnd() {
-	for (Actor* Act : Actors) {
-		delete Act;
+	for (Level* Lev: Levels) {
+		delete Lev;
 	}
 	EngineResource::GetInst()->ReleaseResources();
 	delete EngineResource::GetInst();

@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Wall.h"
 #include "EngineHelper/EngineResource.h"
-
+#include "MainWorld.h"
 #define RM EngineResource::GetInst()
 
 
@@ -19,8 +19,7 @@ void SMCore::BeginPlay() {
 		RM->FindImageRecursive(RM->GetPath());
 	}
 
-	SpawnActor<Player>("MainPlayer");
-	SpawnActor<Wall>("Wall");
+	CreateLevel<MainWorld>("MainLevel");
 }
 
 void SMCore::EngineTick() {

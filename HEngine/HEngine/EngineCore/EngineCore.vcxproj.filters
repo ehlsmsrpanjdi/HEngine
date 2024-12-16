@@ -19,6 +19,9 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{fa593f92-77d3-4518-ad01-3dc56c35caf4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{711c050b-a2d5-4d08-bbfa-a880a30b7def}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h">
@@ -39,6 +42,9 @@
     <ClInclude Include="EngineCollision.h">
       <Filter>Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -58,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="EngineCollision.cpp">
       <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

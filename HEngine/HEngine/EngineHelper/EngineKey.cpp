@@ -22,6 +22,7 @@ void EngineKey::InitKey() {
 	Keys[VK_RIGHT];
 	Keys[VK_UP];
 	Keys[VK_DOWN];
+	Keys['Z'];
 }
 
 bool EngineKey::IsInput(int _Key) {

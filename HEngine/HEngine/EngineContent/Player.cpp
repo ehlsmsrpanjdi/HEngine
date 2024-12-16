@@ -8,7 +8,7 @@ void Player::BeginPlay() {
 	Actor::BeginPlay();
 
 
-	 Renderer* Render = CreateRenderer("LeftPipe");
+	 Renderer* Render = CreateRenderer("LeftPipe", 0);
 	 EngineCollision* Collision = CreateCollision(static_cast<int>(CollisionEnum::Player));
 	 Collision->SetScale(200.f, 200.f);
 	 Render->SetScale(128.0f, 134.0f);
@@ -29,5 +29,9 @@ void Player::Tick(float _DeltaTime) {
 	}
 	if (EngineKey::IsInput(VK_DOWN) == true) {
 		AddLocation({ 0.f, + 100.f * _DeltaTime});
+	}
+	if (EngineKey::IsInput('Z') == true) {
+		Colren = !Colren;
+		EngineCore::GetInst()->SetCollisionRendering(Colren);
 	}
 }

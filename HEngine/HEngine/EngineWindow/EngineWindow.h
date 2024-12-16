@@ -44,6 +44,10 @@ public:
 		return MainBuffer;
 	}
 
+	const HDC GetBack() {
+		return BackBuffer;
+	}
+
 private:
 	BOOL WindowRegister(HINSTANCE hInstance);
 	BOOL WindowOpen();

@@ -7,6 +7,7 @@
 
 class EngineTime;
 class Actor;
+class Level;
 class EngineCore {
 public:
 
@@ -21,6 +22,17 @@ public:
 		}
 	}
 
+	template <typename _Level>
+	_Level* CreateLevel(std::string_view _str) {
+		_Level* Lv = new _Level();
+		Lv->SetName(_str);
+		Lv->BeginPlay();
+		Levels.push_back(Lv);
+		return Lv;
+	}
+
+
+	std::list<Level*> Levels;
 
 	virtual void EngineStart();
 
@@ -38,16 +50,6 @@ protected:
 	virtual void EngineTick();
 	virtual void EngineEnd();
 
-	std::list<Actor*> Actors;
-
-	template <typename Act>
-	Act* SpawnActor(std::string_view _str) {
-		Act* Actor = new Act();
-		Actor->SetName(_str);
-		Actor->BeginPlay();
-		Actors.push_back(Actor);
-		return Actor;
-	}
 
 	EngineWindow MainWindow = EngineWindow();
 	EngineTime* TimeManager = nullptr;

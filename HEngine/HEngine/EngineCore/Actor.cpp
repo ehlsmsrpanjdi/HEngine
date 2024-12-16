@@ -1,19 +1,13 @@
 #include "pch.h"
 #include "Actor.h"
-#define RM EngineResource::GetInst()
 #include "EngineHelper/EngineResource.h"
 #include "Renderer.h"
 #include "EngineCollision.h"
-
+#include "Level.h"
+#define RM EngineResource::GetInst()
 
 Actor::~Actor() {
-	for (Renderer* Render : Renderers) {
-		delete Render;
-	}
 
-	for (EngineCollision* Collision: Collisions) {
-		delete Collision;
-	}
 }
 
 void Actor::BeginPlay() {
@@ -21,35 +15,35 @@ void Actor::BeginPlay() {
 }
 
 void Actor::Tick(float _deltatime) {
-	for (Renderer* Render : Renderers) {
-		if (nullptr == Render->GetOwner()) {
-			int a = 0;
-		}
-		if (Render != nullptr) {
-			Render->Rendering();
-		}
-	}
-	for (EngineCollision* Collision : Collisions) {
-		if (nullptr == Collision->GetOwner()) {
-			int a = 0;
-		}
-		if (Collision != nullptr) {
-			Collision->Collisioning();
-		}
-	}
+	//for (Renderer* Render : Renderers) {
+	//	if (nullptr == Render->GetOwner()) {
+	//		int a = 0;
+	//	}
+	//	if (Render != nullptr) {
+	//		Render->Rendering();
+	//	}
+	//}
+	//for (EngineCollision* Collision : Collisions) {
+	//	if (nullptr == Collision->GetOwner()) {
+	//		int a = 0;
+	//	}
+	//	if (Collision != nullptr) {
+	//		Collision->Collisioning();
+	//	}
+	//}
 }
 
-Renderer* Actor::CreateRenderer(std::string_view _str) {
+Renderer* Actor::CreateRenderer(std::string_view _str, int _type) {
 	Renderer* Render = new Renderer();
 	Render->SetImage(RM->GetImage(_str));
 	Render->SetOwner(this);
-	Renderers.push_back(Render);
+	Current_Level->Renderers[_type] = Render;
 	return Render;
 }
 
 EngineCollision* Actor::CreateCollision(int _Type) {
 	EngineCollision* Collision = EngineCollision::CreateCollision(_Type);
 	Collision->SetOwner(this);
-	Collisions.push_back(Collision);
+	Current_Level->Collisions[_Type] = Collision;
 	return Collision;
 }

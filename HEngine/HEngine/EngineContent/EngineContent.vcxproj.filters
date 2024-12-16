@@ -13,6 +13,9 @@
     <Filter Include="ContentsDefine">
       <UniqueIdentifier>{2545e820-cfcc-4f42-b6eb-2b5787c5b1d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsLevel">
+      <UniqueIdentifier>{263e3d93-d1c9-4a59-87b4-d45ac3255008}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UserCore.h">
@@ -30,6 +33,9 @@
     <ClInclude Include="ContentsDefine.h">
       <Filter>ContentsDefine</Filter>
     </ClInclude>
+    <ClInclude Include="MainWorld.h">
+      <Filter>ContentsLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserCore.cpp">
@@ -46,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="ContentsDefine.cpp">
       <Filter>ContentsDefine</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWorld.cpp">
+      <Filter>ContentsLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

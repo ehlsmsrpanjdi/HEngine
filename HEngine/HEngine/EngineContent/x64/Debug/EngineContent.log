@@ -1,5 +1,6 @@
 ﻿  pch.cpp
   ContentsDefine.cpp
+  MainWorld.cpp
   Player.cpp
   UserCore.cpp
   Wall.cpp

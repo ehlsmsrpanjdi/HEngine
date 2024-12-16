@@ -6,10 +6,11 @@
 
 class Renderer;
 class EngineCollision;
+class Level;
 class Actor : public BaseObject {
 public:
 	friend class EngineCore;
-
+	friend class Level;
 	Actor() {
 
 	}
@@ -20,10 +21,9 @@ public:
 
 	virtual void Tick(float _deltatime) override;
 
-	Renderer* CreateRenderer(std::string_view _str);
+	Renderer* CreateRenderer(std::string_view _str, int _type);
 
 	EngineCollision* CreateCollision(int _Type);
 private:
-	std::list<Renderer*> Renderers;
-	std::list<EngineCollision*> Collisions;
+	Level* Current_Level = nullptr;
 };
