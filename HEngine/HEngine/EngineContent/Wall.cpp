@@ -3,6 +3,7 @@
 void Wall::BeginPlay() {
 	Actor::BeginPlay();
 	Renderer* Render = CreateRenderer("LeftPipe", 1);
+	Render->SetScale(100.f, 100.f);
 	EngineCollision* Collision =  CreateCollision(static_cast<int>(CollisionEnum::Wall));
 	Collision->SetScale(100.f, 100.f);
 	Collision->PushFunction([Collision]() {
