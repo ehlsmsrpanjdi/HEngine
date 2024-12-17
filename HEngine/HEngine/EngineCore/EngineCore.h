@@ -46,6 +46,8 @@ public:
 		CollisionRendering = _is;
 	}
 
+	void DoubleBuffering();
+
 protected:
 	virtual void EngineTick();
 	virtual void EngineEnd();

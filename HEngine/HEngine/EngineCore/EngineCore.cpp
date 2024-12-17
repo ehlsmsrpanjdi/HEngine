@@ -19,7 +19,8 @@ EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
 
 void EngineCore::EngineStart() {
 	MainCore = this;
-	ImageInit::ImageIniteralize(MainCore->GetWindow().GetHDC());
+	MainWindow.BackBuffer = CreateCompatibleDC(MainWindow.GetHDC());
+	ImageInit::ImageIniteralize(MainCore->GetWindow().GetBack());
 	BeginPlay();
 	MainWindow.WindowStart(std::bind(&EngineCore::EngineTick, this), std::bind(&EngineCore::EngineEnd, this));
 }
@@ -50,6 +51,11 @@ void EngineCore::EngineTick() {
 			}
 		}
 	}
+	DoubleBuffering();
+}
+
+void EngineCore::DoubleBuffering(){
+	BitBlt(GetWindow().GetHDC(), 0, 0, EngineWindow::WindowSize.X, EngineWindow::WindowSize.X, GetWindow().GetBack(), 0, 0, SRCCOPY);
 }
 void EngineCore::EngineEnd() {
 	for (Level* Lev: Levels) {
