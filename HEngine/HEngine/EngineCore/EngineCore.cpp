@@ -20,7 +20,7 @@ EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
 void EngineCore::EngineStart() {
 	MainCore = this;
 	MainWindow.BackBuffer = CreateCompatibleDC(MainWindow.GetHDC());
-	ImageInit::ImageIniteralize(MainCore->GetWindow().GetBack());
+	ImageInit::ImageIniteralize(MainCore->GetWindow().GetHDC());
 	BeginPlay();
 	MainWindow.WindowStart(std::bind(&EngineCore::EngineTick, this), std::bind(&EngineCore::EngineEnd, this));
 }
@@ -44,13 +44,13 @@ void EngineCore::EngineTick() {
 	}
 
 
-	if (CollisionRendering == true) {
-		for (std::pair<const int, std::unordered_set<EngineCollision*>>& pa : EngineCollision::Collisions) {
-			for (EngineCollision* Collision : pa.second) {
-				Collision->CollisionDraw(GetWindow().GetHDC());
-			}
-		}
-	}
+	//if (CollisionRendering == true) {
+	//	for (std::pair<const int, std::unordered_set<EngineCollision*>>& pa : EngineCollision::Collisions) {
+	//		for (EngineCollision* Collision : pa.second) {
+	//			Collision->CollisionDraw(GetWindow().GetHDC());
+	//		}
+	//	}
+	//}
 	DoubleBuffering();
 }
 

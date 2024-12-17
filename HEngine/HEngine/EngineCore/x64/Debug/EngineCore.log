@@ -1,9 +1,39 @@
-﻿  pch.cpp
-  Actor.cpp
-  BaseObject.cpp
-  EngineCollision.cpp
-  EngineCore.cpp
-  Level.cpp
-  Renderer.cpp
-  코드를 생성하고 있습니다...
-  EngineCore.vcxproj -> D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineCore.lib
+﻿빌드 시작: 2024-12-17 오후 9:58:39
+로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>2 노드의 "D:\SMGit\Hengine\HEngine\HEngine\EngineCore\EngineCore.vcxproj" 프로젝트(Rebuild 대상)입니다.
+     1>_PrepareForClean:
+         "x64\Debug\EngineCore.tlog\EngineCore.lastbuildstate" 파일을 삭제하고 있습니다.
+       PrepareForBuild:
+         구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
+       InitializeBuildStatus:
+         "AlwaysCreate"이(가) 지정되었기 때문에 "x64\Debug\EngineCore.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+         "x64\Debug\EngineCore.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX64\x64\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _DEBUG /D _CONSOLE /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /permissive- /Yc"pch.h" /Fp"x64\Debug\EngineCore.pch" /Fo"x64\Debug\\" /Fd"D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineCore.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt pch.cpp
+         pch.cpp
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX64\x64\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _DEBUG /D _CONSOLE /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /permissive- /Yu"pch.h" /Fp"x64\Debug\EngineCore.pch" /Fo"x64\Debug\\" /Fd"D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineCore.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt Actor.cpp BaseObject.cpp EngineCollision.cpp EngineCore.cpp Level.cpp Renderer.cpp
+         Actor.cpp
+         BaseObject.cpp
+         EngineCollision.cpp
+         EngineCore.cpp
+         Level.cpp
+         Renderer.cpp
+         코드를 생성하고 있습니다...
+       Lib:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX64\x64\Lib.exe /OUT:"D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineCore.lib" /NOLOGO /MACHINE:X64 x64\Debug\Actor.obj
+         x64\Debug\BaseObject.obj
+         x64\Debug\EngineCollision.obj
+         x64\Debug\EngineCore.obj
+         x64\Debug\Level.obj
+         x64\Debug\pch.obj
+         x64\Debug\Renderer.obj
+         EngineCore.vcxproj -> D:\SMGit\Hengine\HEngine\HEngine\x64\Debug\EngineCore.lib
+       FinalizeBuildStatus:
+         "x64\Debug\EngineCore.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+         "x64\Debug\EngineCore.tlog\EngineCore.lastbuildstate"에 연결(touching)하고 있습니다.
+     1>"D:\SMGit\Hengine\HEngine\HEngine\EngineCore\EngineCore.vcxproj" 프로젝트를 빌드했습니다(Rebuild 대상).
+
+빌드했습니다.
+    경고 0개
+    오류 0개
+
+경과 시간: 00:00:05.28
