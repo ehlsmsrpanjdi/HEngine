@@ -36,16 +36,15 @@ void EngineCore::EngineTick() {
 	float DeltaTime = static_cast<float>(TimeManager->UpdateDeltaTime());
 	EngineKey::KeyCheck();
 
+
+
 	for (Level* Lev : Levels) {
+		Lev->CollisionTick(DeltaTime);
 		Lev->Tick(DeltaTime);
-	}
-
-	//Rectangle(GetInst()->GetWindow().GetHDC(), 0, 0, GetInst()->GetWindow().WindowSize.X, GetInst()->GetWindow().WindowSize.Y);
-
-	for (Level* Lev : Levels) {
 		Lev->RenderTick(DeltaTime);
 	}
 
+	//Rectangle(GetInst()->GetWindow().GetHDC(), 0, 0, GetInst()->GetWindow().WindowSize.X, GetInst()->GetWindow().WindowSize.Y);
 
 	if (CollisionRendering == true) {
 		for (std::pair<const int, std::unordered_set<EngineCollision*>>& pa : EngineCollision::Collisions) {
@@ -59,7 +58,7 @@ void EngineCore::EngineTick() {
 	DoubleBuffering();
 }
 
-void EngineCore::DoubleBuffering(){
+void EngineCore::DoubleBuffering() {
 	StretchBlt(GetWindow().GetHDC(),        // 대상 DC			/bitblt 안쓴 이유는 bitblt은 사진 이미지 크기 조절이 안댐
 		0, 0,   // 대상 위치
 		EngineWindow::WindowSize.X, EngineWindow::WindowSize.X,   // 출력할 이미지 크기
@@ -71,7 +70,7 @@ void EngineCore::DoubleBuffering(){
 	//BitBlt(GetWindow().GetHDC(), 0, 0, EngineWindow::WindowSize.X, EngineWindow::WindowSize.X, GetWindow().GetBack(), 0, 0, SRCCOPY);
 }
 void EngineCore::EngineEnd() {
-	for (Level* Lev: Levels) {
+	for (Level* Lev : Levels) {
 		delete Lev;
 	}
 	EngineResource::GetInst()->ReleaseResources();

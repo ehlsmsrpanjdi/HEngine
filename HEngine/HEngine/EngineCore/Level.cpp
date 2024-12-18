@@ -47,3 +47,10 @@ void Level::RenderTick(float _deltatime) {
 		pa.second->Rendering();
 	}
 }
+
+
+void Level::CollisionTick(float _deltatime) {
+	for (std::pair<const int, EngineCollision*>& pa : Collisions) {
+		pa.second->Collisioning();
+	}
+}

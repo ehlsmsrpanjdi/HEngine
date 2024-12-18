@@ -8,7 +8,7 @@ void Player::BeginPlay() {
 	Actor::BeginPlay();
 
 
-	 Renderer* Render = CreateRenderer("LeftPipe", 0);
+	 Renderer* Render = CreateRenderer("LeftPipe", 1);
 	 EngineCollision* Collision = CreateCollision(static_cast<int>(CollisionEnum::Player));
 	 Collision->SetScale(200.f, 200.f);
 	 Render->SetScale(128.0f, 134.0f);

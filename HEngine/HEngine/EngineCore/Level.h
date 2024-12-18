@@ -16,6 +16,7 @@ public:
 	virtual void Tick(float _deltatime) override;
 
 	void RenderTick(float _deltatime);
+	void CollisionTick(float _deltatime);
 
 	template <typename Act>
 	Act* SpawnActor(std::string_view _str) {
