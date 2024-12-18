@@ -1,4 +1,4 @@
-﻿빌드 시작: 2024-12-17 오후 9:58:40
+﻿빌드 시작: 2024-12-18 오후 4:33:58
 로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>2 노드의 "D:\SMGit\Hengine\HEngine\HEngine\EngineHelper\EngineHelper.vcxproj" 프로젝트(Rebuild 대상)입니다.
      1>_PrepareForClean:
          "x64\Debug\EngineHelper.tlog\EngineHelper.lastbuildstate" 파일을 삭제하고 있습니다.
@@ -42,4 +42,4 @@
     경고 0개
     오류 0개
 
-경과 시간: 00:00:05.88
+경과 시간: 00:00:06.25

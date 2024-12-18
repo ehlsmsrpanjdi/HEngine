@@ -35,4 +35,5 @@ void EngineImage::DrawImage(int x, int y, int width, int height) {
 		SRCCOPY);   // 복사 방식
 
 	DeleteDC(backBuffer);
+
 }

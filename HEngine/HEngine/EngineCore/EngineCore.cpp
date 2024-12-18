@@ -51,6 +51,8 @@ void EngineCore::EngineTick() {
 	//		}
 	//	}
 	//}
+
+
 	DoubleBuffering();
 }
 
