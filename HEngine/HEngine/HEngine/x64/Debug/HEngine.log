@@ -1,28 +1,28 @@
-﻿빌드 시작: 2024-12-18 오후 4:34:12
+﻿빌드 시작: 2024-12-18 오후 5:57:35
 로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>2 노드의 "D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj" 프로젝트(Build 대상)입니다.
      1>PrepareForBuild:
          구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
        InitializeBuildStatus:
          "AlwaysCreate"이(가) 지정되었기 때문에 "x64\Debug\HEngine.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
          "x64\Debug\HEngine.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
-     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 1 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineCore\EngineCore.vcxproj"(6:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
-     6>PrepareForBuild:
-         구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 4 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineWindow\EngineWindow.vcxproj"(5:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
-     5>PrepareForBuild:
+     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 1 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineCore\EngineCore.vcxproj"(3:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
+     3>PrepareForBuild:
          구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
      1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 2 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineContent\EngineContent.vcxproj"(2:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
      2>PrepareForBuild:
          구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 3 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineDefine\EngineDefine.vcxproj"(3:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
-     3>PrepareForBuild:
-         구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 5 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineHelper\EngineHelper.vcxproj"(4:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
+     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 3 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineDefine\EngineDefine.vcxproj"(4:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
      4>PrepareForBuild:
          구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-     6>"D:\SMGit\Hengine\HEngine\HEngine\EngineCore\EngineCore.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
-     3>"D:\SMGit\Hengine\HEngine\HEngine\EngineDefine\EngineDefine.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
-     4>"D:\SMGit\Hengine\HEngine\HEngine\EngineHelper\EngineHelper.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
+     3>"D:\SMGit\Hengine\HEngine\HEngine\EngineCore\EngineCore.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
+     4>"D:\SMGit\Hengine\HEngine\HEngine\EngineDefine\EngineDefine.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
+     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 4 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineWindow\EngineWindow.vcxproj"(5:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
+     5>PrepareForBuild:
+         구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
+     1>"D:\SMGit\Hengine\HEngine\HEngine\HEngine\HEngine.vcxproj"(1) 프로젝트가 5 노드에서 "D:\SMGit\Hengine\HEngine\HEngine\EngineHelper\EngineHelper.vcxproj"(6:3)을(를) 빌드하고 있습니다(GetProjectInfoForReference 대상).
+     6>PrepareForBuild:
+         구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
+     6>"D:\SMGit\Hengine\HEngine\HEngine\EngineHelper\EngineHelper.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
      5>"D:\SMGit\Hengine\HEngine\HEngine\EngineWindow\EngineWindow.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
      2>"D:\SMGit\Hengine\HEngine\HEngine\EngineContent\EngineContent.vcxproj" 프로젝트를 빌드했습니다(GetProjectInfoForReference 대상).
      1>ClCompile:
@@ -42,4 +42,4 @@
     경고 0개
     오류 0개
 
-경과 시간: 00:00:00.15
+경과 시간: 00:00:00.39

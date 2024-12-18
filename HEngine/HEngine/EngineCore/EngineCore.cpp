@@ -20,7 +20,10 @@ EngineCore::EngineCore(HINSTANCE _inst, int _x, int _y) {
 void EngineCore::EngineStart() {
 	MainCore = this;
 	MainWindow.BackBuffer = CreateCompatibleDC(MainWindow.GetHDC());
-	ImageInit::ImageIniteralize(MainCore->GetWindow().GetHDC());
+	HBITMAP bmp = CreateCompatibleBitmap(MainWindow.GetHDC(), MainWindow.WindowSize.X, MainWindow.WindowSize.Y);
+	HBITMAP prev = (HBITMAP)::SelectObject(MainWindow.BackBuffer, bmp);
+	DeleteObject(prev);
+	ImageInit::ImageIniteralize(MainCore->GetWindow().GetHDC(), MainCore->GetWindow().GetBack());
 	BeginPlay();
 	MainWindow.WindowStart(std::bind(&EngineCore::EngineTick, this), std::bind(&EngineCore::EngineEnd, this));
 }
@@ -44,20 +47,28 @@ void EngineCore::EngineTick() {
 	}
 
 
-	//if (CollisionRendering == true) {
-	//	for (std::pair<const int, std::unordered_set<EngineCollision*>>& pa : EngineCollision::Collisions) {
-	//		for (EngineCollision* Collision : pa.second) {
-	//			Collision->CollisionDraw(GetWindow().GetHDC());
-	//		}
-	//	}
-	//}
+	if (CollisionRendering == true) {
+		for (std::pair<const int, std::unordered_set<EngineCollision*>>& pa : EngineCollision::Collisions) {
+			for (EngineCollision* Collision : pa.second) {
+				Collision->CollisionDraw(GetWindow().GetHDC());
+			}
+		}
+	}
 
 
 	DoubleBuffering();
 }
 
 void EngineCore::DoubleBuffering(){
-	BitBlt(GetWindow().GetHDC(), 0, 0, EngineWindow::WindowSize.X, EngineWindow::WindowSize.X, GetWindow().GetBack(), 0, 0, SRCCOPY);
+	StretchBlt(GetWindow().GetHDC(),        // 대상 DC			/bitblt 안쓴 이유는 bitblt은 사진 이미지 크기 조절이 안댐
+		0, 0,   // 대상 위치
+		EngineWindow::WindowSize.X, EngineWindow::WindowSize.X,   // 출력할 이미지 크기
+		GetWindow().GetBack(),      // 원본 DC
+		0, 0,       // 원본 위치
+		EngineWindow::WindowSize.X, EngineWindow::WindowSize.X,   // 원본 이미지 크기
+		SRCCOPY);   // 복사 방식
+
+	//BitBlt(GetWindow().GetHDC(), 0, 0, EngineWindow::WindowSize.X, EngineWindow::WindowSize.X, GetWindow().GetBack(), 0, 0, SRCCOPY);
 }
 void EngineCore::EngineEnd() {
 	for (Level* Lev: Levels) {

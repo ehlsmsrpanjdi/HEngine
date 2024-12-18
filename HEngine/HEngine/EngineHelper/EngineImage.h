@@ -23,9 +23,13 @@ public:
 		path = _path;
 	}*/
 
-	static void SetDC(HDC _hdc) {
+	static void SetDC(HDC _hdc, HDC _Backhdc) {
 		if (hdc == nullptr) {
 			hdc = _hdc;
+		}
+
+		if (backhdc == nullptr) {
+			backhdc = _Backhdc;
 		}
 	}
 
@@ -48,6 +52,7 @@ public:
 
 private:
 	static HDC hdc;
+	static HDC backhdc;
 	HBITMAP hBitmap;
 	int width = -1;
 	int height = -1;
@@ -64,10 +69,10 @@ public:
 	~ImageInit() {}
 
 private:
-	static void ImageIniteralize(HDC _hdc) {
+	static void ImageIniteralize(HDC _hdc, HDC _backhdc) {
 		Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 		Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
-		EngineImage::SetDC(_hdc);
+		EngineImage::SetDC(_hdc, _backhdc);
 	}
 
 	static void ImageExit() {

@@ -9,6 +9,7 @@
 
 ULONG_PTR ImageInit::gdiplusToken = 0;
 HDC EngineImage::hdc = nullptr;
+HDC EngineImage::backhdc = nullptr;
 
 EngineImage::~EngineImage() {
 	hBitmap = nullptr;
@@ -20,13 +21,13 @@ void EngineImage::DrawImage(int x, int y, int width, int height) {
 		return;
 	}
 
-	HDC backBuffer = CreateCompatibleDC(hdc);
+	HDC backBuffer = CreateCompatibleDC(backhdc);
 	bool a = SelectObject(backBuffer, hBitmap);
 
 	Int2D size = GetImageSize();
 
 
-	StretchBlt(hdc,        // 대상 DC			/bitblt 안쓴 이유는 bitblt은 사진 이미지 크기 조절이 안댐
+	StretchBlt(backhdc,        // 대상 DC			/bitblt 안쓴 이유는 bitblt은 사진 이미지 크기 조절이 안댐
 		x, y,   // 대상 위치
 		width, height,   // 출력할 이미지 크기
 		backBuffer,      // 원본 DC
