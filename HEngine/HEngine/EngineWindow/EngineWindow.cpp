@@ -96,13 +96,13 @@ LRESULT CALLBACK EngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, L
 {
 	switch (message)
 	{
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
-	}
-	break;
+	//case WM_PAINT:
+	//{
+	//	//PAINTSTRUCT ps;
+	//	//HDC hdc = BeginPaint(hWnd, &ps);
+	//	//EndPaint(hWnd, &ps);
+	//}
+	//break;
 	case WM_DESTROY:
 		WindowEnd = TRUE;
 		PostQuitMessage(0);
