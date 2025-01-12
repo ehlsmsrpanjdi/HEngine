@@ -31,3 +31,4 @@
 *.out
 *.app
 /HEngine/HEngine/.vs/HEngine
+/HDirect
