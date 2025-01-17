@@ -9,15 +9,16 @@ public:
 	GraphicDevice();
 
 	static GraphicDevice* GetEngine();
-	class SwapChain* CreateSwapChain();
 
+
+	class DeviceContext* GetContext();
 private:
 	D3D_FEATURE_LEVEL m_d3d_featurelevel = D3D_FEATURE_LEVEL();
 	bool isinit = false;
 
 
 	ID3D11Device* m_d3d_device = nullptr;                 // Device °´Ã¼
-	ID3D11DeviceContext* m_d3d_devicecontext = nullptr;   // Device Context °´Ã¼
+	class DeviceContext* m_d3d_context = nullptr;   // Device Context °´Ã¼
 
 private:
 	IDXGIDevice* m_dxgi_device = nullptr;

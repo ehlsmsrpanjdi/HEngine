@@ -1,6 +1,7 @@
 #include "AppWindow.h"
 #include "GraphicDevice.h"
 #include "SwapChain.h"
+#include "DeviceContext.h"
 AppWindow::AppWindow()
 {
 }
@@ -19,6 +20,9 @@ void AppWindow::onCreate()
 
 void AppWindow::onUpdate()
 {
+	Window::onUpdate();
+	GraphicDevice::GetEngine()->GetContext()->clearRenderTargetColor(m_SwapChain, 1,1,1,1);
+	m_SwapChain->present(true);
 }
 
 void AppWindow::onDestroy()

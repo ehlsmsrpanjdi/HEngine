@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Window">
       <UniqueIdentifier>{5f88a458-d059-4afb-af08-65386954a50e}</UniqueIdentifier>
     </Filter>
@@ -16,6 +12,9 @@
     </Filter>
     <Filter Include="SwapChain">
       <UniqueIdentifier>{6ff4f042-4e99-46ef-a283-1ffb09b21d08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeviceContext">
+      <UniqueIdentifier>{253883e0-ac29-4a5b-bb3c-a273ede501ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +31,9 @@
     <ClCompile Include="SwapChain.cpp">
       <Filter>SwapChain</Filter>
     </ClCompile>
+    <ClCompile Include="DeviceContext.cpp">
+      <Filter>DeviceContext</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -45,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="SwapChain.h">
       <Filter>SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceContext.h">
+      <Filter>DeviceContext</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

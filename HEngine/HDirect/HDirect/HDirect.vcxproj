@@ -135,6 +135,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -145,6 +146,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="GraphicDevice.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="Window.h" />
