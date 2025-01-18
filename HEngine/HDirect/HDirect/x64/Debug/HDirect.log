@@ -1,4 +1,4 @@
-﻿빌드 시작: 2025-01-18 오전 3:02:51
+﻿빌드 시작: 2025-01-18 오후 7:24:35
 로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>2 노드의 "D:\SMGit\Hengine\HEngine\HDirect\HDirect\HDirect.vcxproj" 프로젝트(Build 대상)입니다.
      1>PrepareForBuild:
          구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
@@ -11,8 +11,9 @@
        Link:
          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX64\x64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\SMGit\Hengine\HEngine\HDirect\x64\Debug\HDirect.exe" /INCREMENTAL /ILK:"x64\Debug\HDirect.ilk" /NOLOGO d3d11.lib d3dcompiler.lib dxgi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\SMGit\Hengine\HEngine\HDirect\x64\Debug\HDirect.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\SMGit\Hengine\HEngine\HDirect\x64\Debug\HDirect.lib" /MACHINE:X64 x64\Debug\AppWindow.obj
          x64\Debug\DeviceContext.obj
-         x64\Debug\GraphicDevice.obj
+         x64\Debug\GraphicsEngine.obj
          x64\Debug\SwapChain.obj
+         x64\Debug\VertexBuffer.obj
          x64\Debug\Window.obj
          x64\Debug\main.obj
          HDirect.vcxproj -> D:\SMGit\Hengine\HEngine\HDirect\x64\Debug\HDirect.exe
@@ -25,4 +26,4 @@
     경고 0개
     오류 0개
 
-경과 시간: 00:00:00.69
+경과 시간: 00:00:00.62

@@ -1,19 +1,20 @@
 #pragma once
 #include <d3d11.h>
+
+class SwapChain;
+class VertexBuffer;
+
 class DeviceContext
 {
 public:
-	DeviceContext(ID3D11DeviceContext* _context)
-		:m_d3d_context(_context)
-	{
+	DeviceContext(ID3D11DeviceContext* device_context);
+	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha);
+	void setVertexBuffer(VertexBuffer* vertex_buffer);
+	void drawTriangleList(UINT vertex_count, UINT start_vertex_index);
+	void setViewportSize(UINT width, UINT height);
 
-	}
-	bool clearRenderTargetColor(class SwapChain* _swapchain, float _red, float _green, float _blue, float _alpha);
-
-	void release();
-
+	bool release();
+	~DeviceContext();
 private:
-	ID3D11DeviceContext* m_d3d_context = nullptr;
-	friend class GraphicDevice;
+	ID3D11DeviceContext* m_device_context;
 };
-

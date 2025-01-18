@@ -1,21 +1,26 @@
 #pragma once
-#include "d3d11.h"
+#include <d3d11.h>
 
+class DeviceContext;
 class SwapChain
 {
 public:
-	void init(HWND _hwnd, RECT _rc);
-	void release();
 	SwapChain();
+	//Initialize SwapChain for a window
+	bool init(HWND hwnd, UINT width, UINT height);
+
 
 	bool present(bool vsync);
+
+	//Release the swap chain
+	bool release();
+	~SwapChain();
 private:
+	IDXGISwapChain* m_swap_chain;
+	ID3D11RenderTargetView* m_rtv;
+	ID3D11DepthStencilView* m_dsv;
 
 
 private:
-	bool isinit = false;
-	IDXGISwapChain* m_dxgi_swapchain = nullptr;
-	ID3D11RenderTargetView* m_d3d_rtv = nullptr;
 	friend class DeviceContext;
 };
-
