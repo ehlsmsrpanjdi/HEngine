@@ -22,6 +22,12 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{b0d9bb2e-91c9-4467-9e20-8fb201bb8d5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PixelShader">
+      <UniqueIdentifier>{d526d38b-b9d9-4a13-8e8c-a668d25a8953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VertexShader">
+      <UniqueIdentifier>{59dbf220-8433-4376-9407-2ef773a683c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -43,6 +49,12 @@
     <ClCompile Include="VertexBuffer.cpp">
       <Filter>VertexBuffer</Filter>
     </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>PixelShader</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>VertexShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -63,9 +75,18 @@
     <ClInclude Include="VertexBuffer.h">
       <Filter>VertexBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>PixelShader</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>VertexShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader.fx">
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
