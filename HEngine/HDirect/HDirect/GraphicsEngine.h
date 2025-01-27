@@ -31,6 +31,8 @@ public:
 public:
 	static GraphicsEngine* get();
 
+	UINT m4xMsaaQuality;
+
 private:
 	DeviceContext* m_imm_device_context = nullptr;
 private:

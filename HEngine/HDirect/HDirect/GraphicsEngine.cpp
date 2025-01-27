@@ -6,6 +6,7 @@
 #include "PixelShader.h"
 #include "iostream"
 #include <d3dcompiler.h>
+#include <cassert>
 
 void PrintSupportedDisplayModes(IDXGIOutput* output)
 {
@@ -79,6 +80,12 @@ bool GraphicsEngine::init(HWND _hwnd)
 	{
 		return false;
 	}
+
+	m4xMsaaQuality;
+	m_d3d_device->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &m4xMsaaQuality);
+	assert(m4xMsaaQuality > 0);
+
+
 
 	m_imm_device_context = new DeviceContext(m_imm_context);
 

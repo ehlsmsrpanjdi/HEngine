@@ -22,6 +22,13 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	desc.SampleDesc.Count = 1;
 	desc.SampleDesc.Quality = 0;
 	desc.Windowed = TRUE;
+	desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	desc.Flags = 0;
+
+	if (GraphicsEngine::get()->m4xMsaaQuality > 0) {
+		desc.SampleDesc.Count = 4;
+		desc.SampleDesc.Quality = GraphicsEngine::get()->m4xMsaaQuality - 1;
+	}
 
 	//Create the swap chain for the window indicated by HWND parameter
 	HRESULT hr = GraphicsEngine::get()->m_dxgi_factory->CreateSwapChain(device, &desc, &m_swap_chain);
