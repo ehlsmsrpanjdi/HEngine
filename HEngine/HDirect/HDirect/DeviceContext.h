@@ -23,5 +23,5 @@ public:
 	bool release();
 	~DeviceContext();
 private:
-	ID3D11DeviceContext* m_device_context;
+	ID3D11DeviceContext* m_device_context = nullptr;
 };

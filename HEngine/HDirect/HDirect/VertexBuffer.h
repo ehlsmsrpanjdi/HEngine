@@ -15,8 +15,8 @@ private:
 	UINT m_size_vertex;
 	UINT m_size_list;
 private:
-	ID3D11Buffer* m_buffer;
-	ID3D11InputLayout* m_layout;
+	ID3D11Buffer* m_buffer = nullptr;
+	ID3D11InputLayout* m_layout = nullptr;
 private:
 	friend class DeviceContext;
 };
