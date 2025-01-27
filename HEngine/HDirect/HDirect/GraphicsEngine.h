@@ -12,7 +12,7 @@ class GraphicsEngine
 public:
 	GraphicsEngine();
 	//Initialize the GraphicsEngine and DirectX 11 Device
-	bool init();
+	bool init(HWND _hwnd);
 	//Release all the resources loaded
 	bool release();
 	~GraphicsEngine();

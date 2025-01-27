@@ -23,7 +23,7 @@ AppWindow::~AppWindow()
 void AppWindow::onCreate()
 {
 	Window::onCreate();
-	GraphicsEngine::get()->init();
+	GraphicsEngine::get()->init(m_hwnd);
 	m_swap_chain=GraphicsEngine::get()->createSwapChain();
 
 	RECT rc = this->getClientWindowRect();

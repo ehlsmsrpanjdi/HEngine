@@ -18,8 +18,8 @@ public:
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
 private:
-	SwapChain* m_swap_chain;
-	VertexBuffer* m_vb;
-	VertexShader* m_vs;
-	PixelShader* m_ps;
+	SwapChain* m_swap_chain = nullptr;
+	VertexBuffer* m_vb = nullptr;
+	VertexShader* m_vs = nullptr;
+	PixelShader* m_ps = nullptr;
 };

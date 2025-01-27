@@ -11,8 +11,9 @@ GraphicsEngine::GraphicsEngine()
 {
 }
 
-bool GraphicsEngine::init()
+bool GraphicsEngine::init(HWND _hwnd)
 {
+	m_hwnd = _hwnd;
 	D3D_DRIVER_TYPE driver_types[] =
 	{
 		D3D_DRIVER_TYPE_HARDWARE,
@@ -47,6 +48,7 @@ bool GraphicsEngine::init()
 	m_d3d_device->QueryInterface(__uuidof(IDXGIDevice), (void**)&m_dxgi_device);
 	m_dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgi_adapter);
 	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
+
 
 	return true;
 }
