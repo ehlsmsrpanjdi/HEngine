@@ -5,12 +5,12 @@ class SwapChain;
 class VertexBuffer;
 class VertexShader;
 class PixelShader;
-
+class DepthView;
 class DeviceContext
 {
 public:
 	DeviceContext(ID3D11DeviceContext* device_context);
-	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha);
+	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha, DepthView* depth_view);
 	void setVertexBuffer(VertexBuffer* vertex_buffer);
 	void drawTriangleList(UINT vertex_count, UINT start_vertex_index);
 	void drawTriangleStrip(UINT vertex_count, UINT start_vertex_index);

@@ -22,7 +22,7 @@ bool DepthView::init(HWND hwnd, UINT width, UINT height)
 	m_desc.MiscFlags = 0;
 
 	HRESULT hr = GraphicsEngine::get()->m_d3d_device->CreateTexture2D(&m_desc, 0, &m_DepthStencil_Buffer);
-	if (hr != S_OK) {
+	if (m_DepthStencil_Buffer != nullptr) {
 		assert("Warrning");
 	}
 	hr = GraphicsEngine::get()->m_d3d_device->CreateDepthStencilView(m_DepthStencil_Buffer, 0, &mDepthStencil_View);
@@ -36,5 +36,6 @@ bool DepthView::release()
 {
 	m_DepthStencil_Buffer->Release();
 	mDepthStencil_View->Release();
-	return false;
+	delete this;
+	return true;
 }

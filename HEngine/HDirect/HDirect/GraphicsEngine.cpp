@@ -96,26 +96,26 @@ bool GraphicsEngine::init(HWND _hwnd)
 	UINT index = 0;
 	UINT Aindex = 0;
 
-	while (m_dxgi_factory->EnumAdapters(index, &m_dxgi_adapter) != DXGI_ERROR_NOT_FOUND)
-	{
-		DXGI_ADAPTER_DESC adapterDesc;
-		m_dxgi_adapter->GetDesc(&adapterDesc);
+	//while (m_dxgi_factory->EnumAdapters(index, &m_dxgi_adapter) != DXGI_ERROR_NOT_FOUND)
+	//{
+	//	DXGI_ADAPTER_DESC adapterDesc;
+	//	m_dxgi_adapter->GetDesc(&adapterDesc);
 
-		std::cout << "Adapter " << index << ": ";
-		PrintAdapterDescription(adapterDesc.Description);
-		std::cout << std::endl;
-		std::cout << "  - VRAM: " << (adapterDesc.DedicatedVideoMemory / (1024 * 1024)) << " MB" << std::endl;
-		std::cout << "  - Vendor ID: " << adapterDesc.VendorId << std::endl;
+	//	std::cout << "Adapter " << index << ": ";
+	//	PrintAdapterDescription(adapterDesc.Description);
+	//	std::cout << std::endl;
+	//	std::cout << "  - VRAM: " << (adapterDesc.DedicatedVideoMemory / (1024 * 1024)) << " MB" << std::endl;
+	//	std::cout << "  - Vendor ID: " << adapterDesc.VendorId << std::endl;
 
-		IDXGIOutput* t_output = nullptr;
-		m_dxgi_adapter->EnumOutputs(Aindex, &t_output);
-		if (t_output) {
-			PrintSupportedDisplayModes(t_output);
-		}
+	//	IDXGIOutput* t_output = nullptr;
+	//	m_dxgi_adapter->EnumOutputs(Aindex, &t_output);
+	//	if (t_output) {
+	//		PrintSupportedDisplayModes(t_output);
+	//	}
 
-		m_dxgi_adapter->Release();  // 해제
-		index++;
-	}
+	//	m_dxgi_adapter->Release();  // 해제
+	//	index++;
+	//}
 
 
 	return true;
@@ -131,7 +131,9 @@ bool GraphicsEngine::release()
 	if (m_psblob)m_psblob->Release();
 
 	m_dxgi_device->Release();
-	m_dxgi_adapter->Release();
+	if (m_dxgi_adapter) {
+		m_dxgi_adapter->Release();
+	}
 	m_dxgi_factory->Release();
 
 	m_imm_device_context->release();

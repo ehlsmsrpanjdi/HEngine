@@ -26,6 +26,7 @@ public:
 private:
 	ID3D11Texture2D* m_DepthStencil_Buffer = nullptr;
 	ID3D11DepthStencilView* mDepthStencil_View = nullptr;
+	friend class DeviceContext;
 
 private:
 	D3D11_TEXTURE2D_DESC m_desc = D3D11_TEXTURE2D_DESC();
