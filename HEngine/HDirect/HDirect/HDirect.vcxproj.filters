@@ -28,6 +28,9 @@
     <Filter Include="VertexShader">
       <UniqueIdentifier>{59dbf220-8433-4376-9407-2ef773a683c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DepthView">
+      <UniqueIdentifier>{b1d8f28c-42b1-4466-a325-f18a8e6e08e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -55,6 +58,9 @@
     <ClCompile Include="VertexShader.cpp">
       <Filter>VertexShader</Filter>
     </ClCompile>
+    <ClCompile Include="DepthView.cpp">
+      <Filter>DepthView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -80,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="VertexShader.h">
       <Filter>VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthView.h">
+      <Filter>DepthView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

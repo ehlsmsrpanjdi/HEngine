@@ -18,6 +18,7 @@ public:
 	~GraphicsEngine();
 public:
 	SwapChain* createSwapChain();
+	class DepthView* createDepthView();
 	DeviceContext* getImmediateDeviceContext();
 	VertexBuffer* createVertexBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
@@ -31,7 +32,7 @@ public:
 public:
 	static GraphicsEngine* get();
 
-	UINT m4xMsaaQuality;
+	UINT m4xMsaaQuality = 0;
 
 private:
 	DeviceContext* m_imm_device_context = nullptr;
@@ -59,5 +60,5 @@ private:
 	friend class VertexBuffer;
 	friend class VertexShader;
 	friend class PixelShader;
-
+	friend class DepthView;
 };

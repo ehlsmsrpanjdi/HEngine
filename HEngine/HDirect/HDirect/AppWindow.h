@@ -4,6 +4,7 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "DepthView.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 
@@ -19,6 +20,7 @@ public:
 	virtual void onDestroy() override;
 private:
 	SwapChain* m_swap_chain = nullptr;
+	DepthView* m_depth_view = nullptr;
 	VertexBuffer* m_vb = nullptr;
 	VertexShader* m_vs = nullptr;
 	PixelShader* m_ps = nullptr;

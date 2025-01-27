@@ -7,7 +7,7 @@
 #include "iostream"
 #include <d3dcompiler.h>
 #include <cassert>
-
+#include "DepthView.h"
 void PrintSupportedDisplayModes(IDXGIOutput* output)
 {
 	// 지원되는 디스플레이 모드를 가져올 수 있는 크기 확인
@@ -148,6 +148,11 @@ GraphicsEngine::~GraphicsEngine()
 SwapChain* GraphicsEngine::createSwapChain()
 {
 	return new SwapChain();
+}
+
+DepthView* GraphicsEngine::createDepthView()
+{
+	return new DepthView();
 }
 
 

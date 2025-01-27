@@ -25,8 +25,11 @@ void AppWindow::onCreate()
 	Window::onCreate();
 	GraphicsEngine::get()->init(m_hwnd);
 	m_swap_chain=GraphicsEngine::get()->createSwapChain();
+	m_depth_view = GraphicsEngine::get()->createDepthView();
+
 
 	RECT rc = this->getClientWindowRect();
+	m_depth_view->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 	vertex list[] = 
@@ -84,6 +87,7 @@ void AppWindow::onDestroy()
 	Window::onDestroy();
 	m_vb->release();
 	m_swap_chain->release();
+	m_depth_view->release();
 	m_vs->release();
 	m_ps->release();
 	GraphicsEngine::get()->release();

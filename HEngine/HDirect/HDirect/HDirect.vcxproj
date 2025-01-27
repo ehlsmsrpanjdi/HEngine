@@ -139,6 +139,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="DepthView.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
     <ClCompile Include="PixelShader.cpp" />
@@ -153,6 +154,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="DepthView.h" />
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="PixelShader.h" />
