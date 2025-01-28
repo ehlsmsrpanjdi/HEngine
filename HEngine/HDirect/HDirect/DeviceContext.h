@@ -6,6 +6,7 @@ class VertexBuffer;
 class VertexShader;
 class PixelShader;
 class DepthView;
+class IndexBuffer;
 class DeviceContext
 {
 public:
@@ -13,6 +14,7 @@ public:
 	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha, DepthView* depth_view);
 	void clearDepthStencilView(DepthView* depth_view);
 	void setVertexBuffer(VertexBuffer* vertex_buffer);
+	void setIndexBuffer(IndexBuffer* index_buffer);
 	void drawTriangleList(UINT vertex_count, UINT start_vertex_index);
 	void drawTriangleStrip(UINT vertex_count, UINT start_vertex_index);
 

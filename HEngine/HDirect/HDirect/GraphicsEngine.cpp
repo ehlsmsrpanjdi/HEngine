@@ -8,6 +8,7 @@
 #include <d3dcompiler.h>
 #include <cassert>
 #include "DepthView.h"
+#include "IndexBuffer.h"
 void PrintSupportedDisplayModes(IDXGIOutput* output)
 {
 	// 지원되는 디스플레이 모드를 가져올 수 있는 크기 확인
@@ -96,26 +97,26 @@ bool GraphicsEngine::init(HWND _hwnd)
 	UINT index = 0;
 	UINT Aindex = 0;
 
-	//while (m_dxgi_factory->EnumAdapters(index, &m_dxgi_adapter) != DXGI_ERROR_NOT_FOUND)
-	//{
-	//	DXGI_ADAPTER_DESC adapterDesc;
-	//	m_dxgi_adapter->GetDesc(&adapterDesc);
+	while (m_dxgi_factory->EnumAdapters(index, &m_dxgi_adapter) != DXGI_ERROR_NOT_FOUND)
+	{
+		DXGI_ADAPTER_DESC adapterDesc;
+		m_dxgi_adapter->GetDesc(&adapterDesc);
 
-	//	std::cout << "Adapter " << index << ": ";
-	//	PrintAdapterDescription(adapterDesc.Description);
-	//	std::cout << std::endl;
-	//	std::cout << "  - VRAM: " << (adapterDesc.DedicatedVideoMemory / (1024 * 1024)) << " MB" << std::endl;
-	//	std::cout << "  - Vendor ID: " << adapterDesc.VendorId << std::endl;
+		std::cout << "Adapter " << index << ": ";
+		PrintAdapterDescription(adapterDesc.Description);
+		std::cout << std::endl;
+		std::cout << "  - VRAM: " << (adapterDesc.DedicatedVideoMemory / (1024 * 1024)) << " MB" << std::endl;
+		std::cout << "  - Vendor ID: " << adapterDesc.VendorId << std::endl;
 
-	//	IDXGIOutput* t_output = nullptr;
-	//	m_dxgi_adapter->EnumOutputs(Aindex, &t_output);
-	//	if (t_output) {
-	//		PrintSupportedDisplayModes(t_output);
-	//	}
+		IDXGIOutput* t_output = nullptr;
+		m_dxgi_adapter->EnumOutputs(Aindex, &t_output);
+		if (t_output) {
+			PrintSupportedDisplayModes(t_output);
+		}
 
-	//	m_dxgi_adapter->Release();  // 해제
-	//	index++;
-	//}
+		m_dxgi_adapter->Release();  // 해제
+		index++;
+	}
 
 
 	return true;
@@ -161,6 +162,11 @@ DepthView* GraphicsEngine::createDepthView()
 DeviceContext* GraphicsEngine::getImmediateDeviceContext()
 {
 	return this->m_imm_device_context;
+}
+
+IndexBuffer* GraphicsEngine::createIndexBuffer()
+{
+	return new IndexBuffer();
 }
 
 VertexBuffer* GraphicsEngine::createVertexBuffer()

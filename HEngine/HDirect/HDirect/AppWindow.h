@@ -7,7 +7,7 @@
 #include "DepthView.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
-
+#include "IndexBuffer.h"
 class AppWindow : public Window
 {
 public:
@@ -22,6 +22,7 @@ private:
 	SwapChain* m_swap_chain = nullptr;
 	DepthView* m_depth_view = nullptr;
 	VertexBuffer* m_vb = nullptr;
+	IndexBuffer* m_ib = nullptr;
 	VertexShader* m_vs = nullptr;
 	PixelShader* m_ps = nullptr;
 };

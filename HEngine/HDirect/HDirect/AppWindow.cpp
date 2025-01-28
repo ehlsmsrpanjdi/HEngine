@@ -24,7 +24,7 @@ void AppWindow::onCreate()
 {
 	Window::onCreate();
 	GraphicsEngine::get()->init(m_hwnd);
-	m_swap_chain=GraphicsEngine::get()->createSwapChain();
+	m_swap_chain = GraphicsEngine::get()->createSwapChain();
 	m_depth_view = GraphicsEngine::get()->createDepthView();
 
 
@@ -32,7 +32,7 @@ void AppWindow::onCreate()
 	m_depth_view->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	vertex list[] = 
+	vertex list[] =
 	{
 		//X - Y - Z
 		{-0.5f,-0.5f,0.0f,   0,0,0}, // POS1
@@ -41,15 +41,30 @@ void AppWindow::onCreate()
 		{ 0.5f,0.5f,0.0f,    1,1,1}
 	};
 
-	m_vb=GraphicsEngine::get()->createVertexBuffer();
-	UINT size_list = ARRAYSIZE(list);
 
+	m_vb = GraphicsEngine::get()->createVertexBuffer();
+	UINT size_list = ARRAYSIZE(list);
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-
-	m_vs=GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 	m_vb->load(list, sizeof(vertex), size_list, shader_byte_code, size_shader);
+	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
+
+
+	UINT indices[24] = {
+		0,1,2,
+		0,2,3,
+		0,3,4,
+		0,4,5,
+		0,5,6,
+		0,6,7,
+		0,7,8,
+		0,8,1,
+	};
+
+	m_ib = GraphicsEngine::get()->createIndexBuffer();
+	size_list = ARRAYSIZE(indices);
+	m_ib->load(indices, sizeof(UINT), size_list);
 
 	GraphicsEngine::get()->releaseCompiledShader();
 
@@ -65,7 +80,7 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
-		0, 0.3f,0.4f, 1, this->m_depth_view);
+		0, 0.3f, 0.4f, 1, this->m_depth_view);
 	GraphicsEngine::get()->getImmediateDeviceContext()->clearDepthStencilView(this->m_depth_view);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
@@ -77,7 +92,7 @@ void AppWindow::onUpdate()
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
-
+	GraphicsEngine::get()->getImmediateDeviceContext()->setIndexBuffer(m_ib);
 	// FINALLY DRAW THE TRIANGLE
 	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
 	m_swap_chain->present(true);
@@ -91,5 +106,6 @@ void AppWindow::onDestroy()
 	m_depth_view->release();
 	m_vs->release();
 	m_ps->release();
+	m_ib->release();
 	GraphicsEngine::get()->release();
 }

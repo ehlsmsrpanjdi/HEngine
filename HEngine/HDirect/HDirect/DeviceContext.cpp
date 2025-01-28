@@ -1,4 +1,5 @@
 #include "DeviceContext.h"
+#include "IndexBuffer.h"
 #include "SwapChain.h"
 #include "VertexBuffer.h"
 #include "VertexShader.h"
@@ -26,6 +27,12 @@ void DeviceContext::setVertexBuffer(VertexBuffer* vertex_buffer)
 	UINT offset = 0;
 	m_device_context->IASetVertexBuffers(0, 1, &vertex_buffer->m_buffer, &stride, &offset);
 	m_device_context->IASetInputLayout(vertex_buffer->m_layout);
+}
+
+void DeviceContext::setIndexBuffer(IndexBuffer* index_buffer)
+{
+	m_device_context->IASetIndexBuffer(index_buffer->m_buffer, DXGI_FORMAT_R32_UINT, 0);
+	
 }
 
 void DeviceContext::drawTriangleList(UINT vertex_count, UINT start_vertex_index)

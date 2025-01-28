@@ -31,6 +31,9 @@
     <Filter Include="DepthView">
       <UniqueIdentifier>{b1d8f28c-42b1-4466-a325-f18a8e6e08e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IndexBuffer">
+      <UniqueIdentifier>{6077aad7-270f-470a-8d91-7c21ee98b82b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -61,6 +64,9 @@
     <ClCompile Include="DepthView.cpp">
       <Filter>DepthView</Filter>
     </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>IndexBuffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -89,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="DepthView.h">
       <Filter>DepthView</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>IndexBuffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

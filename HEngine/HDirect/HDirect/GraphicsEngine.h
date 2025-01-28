@@ -6,7 +6,7 @@ class DeviceContext;
 class VertexBuffer;
 class VertexShader;
 class PixelShader;
-
+class IndexBuffer;
 class GraphicsEngine
 {
 public:
@@ -20,6 +20,7 @@ public:
 	SwapChain* createSwapChain();
 	class DepthView* createDepthView();
 	DeviceContext* getImmediateDeviceContext();
+	IndexBuffer* createIndexBuffer();
 	VertexBuffer* createVertexBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
 	PixelShader* createPixelShader(const void* shader_byte_code, size_t byte_code_size);
@@ -61,4 +62,5 @@ private:
 	friend class VertexShader;
 	friend class PixelShader;
 	friend class DepthView;
+	friend class IndexBuffer;
 };
