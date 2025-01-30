@@ -34,6 +34,9 @@
     <Filter Include="IndexBuffer">
       <UniqueIdentifier>{6077aad7-270f-470a-8d91-7c21ee98b82b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ConstBuffer">
+      <UniqueIdentifier>{478b1b89-f2e5-4a95-9e69-4acbdf78838b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -67,6 +70,9 @@
     <ClCompile Include="IndexBuffer.cpp">
       <Filter>IndexBuffer</Filter>
     </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>ConstBuffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -98,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="IndexBuffer.h">
       <Filter>IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>ConstBuffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

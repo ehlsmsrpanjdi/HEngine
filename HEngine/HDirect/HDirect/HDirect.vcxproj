@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,6 +139,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="DepthView.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
@@ -155,6 +156,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="DepthView.h" />
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="GraphicsEngine.h" />
