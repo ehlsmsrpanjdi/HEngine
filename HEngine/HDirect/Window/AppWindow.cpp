@@ -26,6 +26,10 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 	KeyManager->Update();
 	TimeManager->Update();
+
+	if (EngineKey::IsDown('Z') == true) {
+		int a = 0;
+	}
 }
 
 void AppWindow::onDestroy()

@@ -7,6 +7,9 @@
     <Filter Include="EngineTime">
       <UniqueIdentifier>{287a21a2-9500-44a5-9790-5a1f99e53b6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineFile">
+      <UniqueIdentifier>{17fef737-1a43-4f37-a4b2-b72417f498c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineKey.h">
@@ -15,6 +18,12 @@
     <ClInclude Include="EngineTime.h">
       <Filter>EngineTime</Filter>
     </ClInclude>
+    <ClInclude Include="EngineFile.h">
+      <Filter>EngineFile</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePath.h">
+      <Filter>EngineFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -22,6 +31,12 @@
     </ClCompile>
     <ClCompile Include="EngineTime.cpp">
       <Filter>EngineTime</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePath.cpp">
+      <Filter>EngineFile</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFile.cpp">
+      <Filter>EngineFile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
