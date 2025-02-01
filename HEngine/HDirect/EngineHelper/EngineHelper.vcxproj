@@ -151,12 +151,16 @@
     <ClInclude Include="EngineKey.h" />
     <ClInclude Include="EnginePath.h" />
     <ClInclude Include="EngineTime.h" />
+    <ClInclude Include="Matrix4x4.h" />
+    <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineFile.cpp" />
     <ClCompile Include="EngineKey.cpp" />
     <ClCompile Include="EnginePath.cpp" />
     <ClCompile Include="EngineTime.cpp" />
+    <ClCompile Include="Matrix4x4.cpp" />
+    <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

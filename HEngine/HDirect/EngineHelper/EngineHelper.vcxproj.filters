@@ -10,6 +10,9 @@
     <Filter Include="EngineFile">
       <UniqueIdentifier>{17fef737-1a43-4f37-a4b2-b72417f498c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{ef3e3440-4ec3-468c-89e8-e5ea68eccecc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineKey.h">
@@ -24,6 +27,12 @@
     <ClInclude Include="EnginePath.h">
       <Filter>EngineFile</Filter>
     </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -37,6 +46,12 @@
     </ClCompile>
     <ClCompile Include="EngineFile.cpp">
       <Filter>EngineFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix4x4.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
