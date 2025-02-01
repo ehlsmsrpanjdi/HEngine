@@ -9,9 +9,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EngineKey.h" />
+    <ClInclude Include="EngineKey.h">
+      <Filter>EngineKeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h">
+      <Filter>EngineTime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EngineKey.cpp" />
+    <ClCompile Include="EngineKey.cpp">
+      <Filter>EngineKeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>EngineTime</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

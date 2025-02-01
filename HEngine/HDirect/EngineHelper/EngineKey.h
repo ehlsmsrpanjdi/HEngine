@@ -21,22 +21,10 @@ class Key {
 public:
 	bool Down = false;
 	bool Up = false;
-	bool On = false;
-	bool Off = true;
+	bool Pressed = false;
+	bool UnPressed = false;
 
-	void KeyPress() {
-		Down = true;
-		Up = false;
-		On = true;
-		Off = false;
-	}
 
-	void KeyUp() {
-		Down = false;
-		Up = false;
-		On = false;
-		Off = true;
-	}
 
 	int KeyType = -1;
 };

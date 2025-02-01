@@ -5,12 +5,32 @@ std::map<int, Key> EngineKey::Keys;
 void EngineKey::KeyCheck() {
 	for (std::pair<const int, Key>& pa : Keys) {
 		if (GetAsyncKeyState(pa.first) & 0x8000) {
-			pa.second.On = true;
-			pa.second.Off = false;
+			if (pa.second.Down == true) {
+				pa.second.Pressed = true;
+				pa.second.UnPressed = false;
+				pa.second.Up = false;
+				pa.second.Down = false;
+			}
+			else if (pa.second.Down == false) {
+				pa.second.Down = true;
+				pa.second.Pressed = true;
+				pa.second.Up = false;
+				pa.second.UnPressed = false;
+			}
 		}
 		else {
-			pa.second.On = false;
-			pa.second.Off = true;
+			if (pa.second.Pressed == true) {
+				pa.second.Pressed = false;
+				pa.second.UnPressed = true;
+				pa.second.Up = true;
+				pa.second.Down = false;
+			}
+			else if (pa.second.Pressed == false) {
+				pa.second.Down = false;
+				pa.second.Pressed = false;
+				pa.second.Up = false;
+				pa.second.UnPressed = true;
+			}
 		}
 	}
 }
