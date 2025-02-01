@@ -10,5 +10,10 @@ public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
+
+protected:
+	class EngineKey* KeyManager = nullptr;
+	class EngineTime* TimeManager = nullptr;
+
 private:
 };

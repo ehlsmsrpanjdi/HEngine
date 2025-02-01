@@ -9,9 +9,12 @@ class EngineKey {
 public:
 	EngineKey() {
 	}
-	static void InitKey();
-	static void KeyCheck();
-	static bool IsInput(int _Key);
+	void Init();
+	void Update();
+
+	static bool IsDown(int _Key);
+	static bool IsPressed(int _Key);
+
 
 private:
 	static std::map<int, Key> Keys;
@@ -23,7 +26,6 @@ public:
 	bool Up = false;
 	bool Pressed = false;
 	bool UnPressed = false;
-
 
 
 	int KeyType = -1;

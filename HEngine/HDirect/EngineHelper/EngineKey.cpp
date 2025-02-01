@@ -2,7 +2,7 @@
 
 std::map<int, Key> EngineKey::Keys;
 
-void EngineKey::KeyCheck() {
+void EngineKey::Update() {
 	for (std::pair<const int, Key>& pa : Keys) {
 		if (GetAsyncKeyState(pa.first) & 0x8000) {
 			if (pa.second.Down == true) {
@@ -35,7 +35,23 @@ void EngineKey::KeyCheck() {
 	}
 }
 
-void EngineKey::InitKey() {
+bool EngineKey::IsDown(int _Key)
+{
+	if (Keys[_Key].Down == true) {
+		return true;
+	}
+	return false;
+}
+
+bool EngineKey::IsPressed(int _Key)
+{
+	if (Keys[_Key].Pressed == true) {
+		return true;
+	}
+	return false;
+}
+
+void EngineKey::Init() {
 	Keys[VK_LEFT];
 	Keys[VK_RIGHT];
 	Keys[VK_UP];
@@ -43,11 +59,4 @@ void EngineKey::InitKey() {
 	Keys['Z'];
 }
 
-bool EngineKey::IsInput(int _Key) {
-	if (Keys[_Key].On == true) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
+
