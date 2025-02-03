@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HDirect", "HDirect\HDirect.vcxproj", "{B788BAAB-1E09-4A2B-9B3D-90744BD7F207}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APP", "APP\APP.vcxproj", "{CB8C70A2-2970-40B3-95AD-EC3F2EFB5ED2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D639478F-E1B2-448B-9F4B-3A461DD8240A} = {D639478F-E1B2-448B-9F4B-3A461DD8240A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Window", "Window\Window.vcxproj", "{93A23264-F02A-4BE9-9A84-803B765C3422}"
 EndProject

@@ -1,33 +1,38 @@
 #include "IndexBuffer.h"
 #include "GraphicsEngine.h"
-IndexBuffer::IndexBuffer()
+
+
+IndexBuffer::IndexBuffer() : m_buffer(0)
 {
 }
-bool IndexBuffer::load(void* list_vertices, UINT size_index, UINT size_list)
+
+bool IndexBuffer::load(void* list_indices, UINT size_list)
 {
+	if (m_buffer)m_buffer->Release();
 
-	D3D11_BUFFER_DESC idb;
-	idb.Usage = D3D11_USAGE_IMMUTABLE;
-	idb.ByteWidth = size_index * size_list;
-	idb.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	idb.CPUAccessFlags = 0;
-	idb.MiscFlags = 0;
-	idb.StructureByteStride = 0;
+	D3D11_BUFFER_DESC buff_desc = {};
+	buff_desc.Usage = D3D11_USAGE_DEFAULT;
+	buff_desc.ByteWidth = 4 * size_list;
+	buff_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	buff_desc.CPUAccessFlags = 0;
+	buff_desc.MiscFlags = 0;
 
-	D3D11_SUBRESOURCE_DATA iinitData = {};
-	iinitData.pSysMem = list_vertices;
+	D3D11_SUBRESOURCE_DATA init_data = {};
+	init_data.pSysMem = list_indices;
 
-	m_size_index = size_index;
 	m_size_list = size_list;
 
-	GraphicsEngine::get()->m_d3d_device->CreateBuffer(&idb, &iinitData, &m_buffer);
+	if (FAILED(GraphicsEngine::get()->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
+	{
+		return false;
+	}
 
 	return true;
 }
 
-UINT IndexBuffer::getSizeVertexList()
+UINT IndexBuffer::getSizeIndexList()
 {
-	return 0;
+	return this->m_size_list;
 }
 
 bool IndexBuffer::release()
@@ -36,6 +41,7 @@ bool IndexBuffer::release()
 	delete this;
 	return true;
 }
+
 
 IndexBuffer::~IndexBuffer()
 {

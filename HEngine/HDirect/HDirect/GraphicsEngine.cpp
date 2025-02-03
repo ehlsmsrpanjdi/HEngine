@@ -5,10 +5,11 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "iostream"
+#include "IndexBuffer.h"
 #include <d3dcompiler.h>
 #include <cassert>
 #include "DepthView.h"
-#include "IndexBuffer.h"
+#include "ConstantBuffer.h"
 void PrintSupportedDisplayModes(IDXGIOutput* output)
 {
 	// 지원되는 디스플레이 모드를 가져올 수 있는 크기 확인
@@ -122,6 +123,10 @@ bool GraphicsEngine::init(HWND _hwnd)
 	return true;
 }
 
+ConstantBuffer* GraphicsEngine::createConstantBuffer()
+{
+	return new ConstantBuffer();
+}
 
 bool GraphicsEngine::release()
 {
@@ -203,8 +208,12 @@ PixelShader* GraphicsEngine::createPixelShader(const void* shader_byte_code, siz
 bool GraphicsEngine::compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
 {
 	ID3DBlob* error_blob = nullptr;
-	if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "vs_5_0", 0, 0, &m_blob, &error_blob)))
+	HRESULT hr = D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "vs_5_0", 0, 0, &m_blob, &error_blob);
+	if (FAILED(hr))
 	{
+		std::cerr << hr << std::endl;
+		std::cerr << "error" << static_cast<const char*>(error_blob->GetBufferPointer());
+
 		if (error_blob) error_blob->Release();
 		return false;
 	}
