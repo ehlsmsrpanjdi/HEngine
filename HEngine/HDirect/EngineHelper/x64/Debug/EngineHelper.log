@@ -1,4 +1,4 @@
-﻿빌드 시작: 2025-02-04 오전 2:38:47
+﻿빌드 시작: 2025-02-04 오전 2:41:28
 로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>2 노드의 "D:\SMGit\Hengine\HEngine\HDirect\EngineHelper\EngineHelper.vcxproj" 프로젝트(Rebuild 대상)입니다.
      1>_PrepareForClean:
          "x64\Debug\EngineHelper.tlog\EngineHelper.lastbuildstate" 파일을 삭제하고 있습니다.
@@ -14,6 +14,8 @@
          EnginePath.cpp
          EngineTime.cpp
          Matrix4x4.cpp
+         Vector3D.cpp
+         코드를 생성하고 있습니다...
      1>D:\SMGit\Hengine\HEngine\HDirect\EngineHelper\Matrix4x4.h(38,20): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
          (소스 파일 'Matrix4x4.cpp'을(를) 컴파일하는 중)
          
@@ -50,8 +52,6 @@
      1>D:\SMGit\Hengine\HEngine\HDirect\EngineHelper\Matrix4x4.h(57,20): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
          (소스 파일 'Matrix4x4.cpp'을(를) 컴파일하는 중)
          
-         Vector3D.cpp
-         코드를 생성하고 있습니다...
        Lib:
          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX64\x64\Lib.exe /OUT:"D:\SMGit\Hengine\HEngine\HDirect\x64\Debug\EngineHelper.lib" /NOLOGO /MACHINE:X64 x64\Debug\EngineFile.obj
          x64\Debug\EngineKey.obj
@@ -85,4 +85,4 @@
     경고 12개
     오류 0개
 
-경과 시간: 00:00:04.12
+경과 시간: 00:00:04.07
