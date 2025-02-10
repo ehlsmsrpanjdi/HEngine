@@ -22,8 +22,21 @@ public:
 	DeviceContext* createDeviceContext();
 	bool createD3DDevice();
 	class DepthView* createDepthView();
+
+public:
 	DeviceContext* getImmediateDeviceContext();
 	SwapChain* getSwapChain();
+
+public:
+	void ResizeBuffers();
+	void ClearRenderTargetView(float red, float green, float blue, float alpha);
+
+
+
+
+
+
+public:
 	IndexBuffer* createIndexBuffer();
 	VertexBuffer* createVertexBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
@@ -43,6 +56,7 @@ public:
 private:
 	DeviceContext* m_imm_device_context = nullptr;
 	SwapChain* m_SwapChain = nullptr;
+	DepthView* m_DepthView = nullptr;
 private:
 	ID3D11Device* m_d3d_device = nullptr;
 	D3D_FEATURE_LEVEL m_feature_level = D3D_FEATURE_LEVEL();

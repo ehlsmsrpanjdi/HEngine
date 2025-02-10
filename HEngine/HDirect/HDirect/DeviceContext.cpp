@@ -11,11 +11,13 @@ DeviceContext::DeviceContext()
 {
 }
 
-void DeviceContext::clearRenderTargetColor(float red, float green, float blue, float alpha)
+void DeviceContext::clearRenderTargetColor(ID3D11RenderTargetView* _rtv, ID3D11DepthStencilView* _dtv, float red, float green, float blue, float alpha)
 {
 	FLOAT clear_color[] = { red,green,blue,alpha };
-	m_device_context->ClearRenderTargetView(GraphicsEngine::get()->getSwapChain()->m_rtv, clear_color);
-	m_device_context->OMSetRenderTargets(1, &GraphicsEngine::get()->getSwapChain()->m_rtv, NULL);
+	m_device_context->ClearRenderTargetView(_rtv, clear_color);
+	m_device_context->ClearDepthStencilView(_dtv, D3D11_CLEAR_DEPTH|D3D11_CLEAR_STENCIL, 1.0f, 0);
+	m_device_context->OMSetRenderTargets(1, &_rtv, _dtv);
+
 }
 
 void DeviceContext::setVertexBuffer(VertexBuffer* vertex_buffer)

@@ -74,13 +74,6 @@ bool SwapChain::release()
 {
 	m_swap_chain->Release();
 	delete this;
-
-	if (m_rtv != nullptr) {
-		m_rtv->Release();
-	}
-	if (m_dsv != nullptr) {
-		m_dsv->Release();
-	}
 	return true;
 }
 

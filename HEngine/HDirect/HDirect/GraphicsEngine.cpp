@@ -15,6 +15,8 @@ GraphicsEngine::GraphicsEngine()
 {
 	m_SwapChain = createSwapChain();
 	m_imm_device_context = createDeviceContext();
+	m_DepthView = createDepthView();
+
 }
 
 bool GraphicsEngine::init(HWND _hwnd, RECT rc)
@@ -27,6 +29,8 @@ bool GraphicsEngine::init(HWND _hwnd, RECT rc)
 	m4xMsaaQuality;
 	m_d3d_device->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &m4xMsaaQuality);
 	assert(m4xMsaaQuality > 0);
+
+	m_DepthView->init(_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 	return true;
 }
@@ -119,6 +123,16 @@ DepthView* GraphicsEngine::createDepthView()
 DeviceContext* GraphicsEngine::getImmediateDeviceContext()
 {
 	return this->m_imm_device_context;
+}
+
+void GraphicsEngine::ResizeBuffers()
+{
+	/*m_SwapChain->m_swap_chain->ResizeBuffers();*/
+}
+
+void GraphicsEngine::ClearRenderTargetView(float red, float green, float blue, float alpha)
+{
+	m_imm_device_context->clearRenderTargetColor(m_SwapChain->m_rtv, m_DepthView->mDepthStencil_View, red, green, blue, alpha);
 }
 
 IndexBuffer* GraphicsEngine::createIndexBuffer()

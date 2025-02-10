@@ -12,7 +12,16 @@ class DeviceContext
 {
 public:
 	DeviceContext();
-	void clearRenderTargetColor(float red, float green, float blue, float alpha);
+
+	ID3D11DeviceContext* Get() {
+		if (m_device_context != nullptr) {
+			return m_device_context;
+		}
+		else {
+			return nullptr;
+		}
+	}
+	void clearRenderTargetColor(ID3D11RenderTargetView* _rtv, ID3D11DepthStencilView* _dtv, float red, float green, float blue, float alpha);
 	void setVertexBuffer(VertexBuffer* vertex_buffer);
 	void setIndexBuffer(IndexBuffer* index_buffer);
 

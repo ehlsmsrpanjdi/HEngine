@@ -184,7 +184,7 @@ void AppWindow::onUpdate()
 		int a = 0;
 	}
 
-	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(0, 0.3f, 0.4f, 1);
+	GraphicsEngine::get()->ClearRenderTargetView(0, 0.3f, 0.4f, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
@@ -225,4 +225,9 @@ void AppWindow::onUpdate()
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
+}
+
+void AppWindow::OnSize()
+{
+	GraphicsEngine::get()->ResizeBuffers();
 }

@@ -17,6 +17,7 @@ public:
 	virtual void onCreate();
 	virtual void onUpdate();
 	virtual void onDestroy();
+	virtual void OnSize();
 
 protected:
 	HWND m_hwnd = NULL;

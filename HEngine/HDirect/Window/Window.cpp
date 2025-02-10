@@ -23,6 +23,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 		::PostQuitMessage(0);
 		break;
 	}
+	case WM_SIZE: {
+		window->OnSize();
+		break;
+	}
 	default: {
 		return ::DefWindowProc(hwnd, msg, wparam, lparam);
 	}
@@ -136,4 +140,8 @@ void Window::onUpdate()
 void Window::onDestroy()
 {
 	m_is_run = false;
+}
+
+void Window::OnSize()
+{
 }

@@ -30,5 +30,6 @@ private:
 
 private:
 	D3D11_TEXTURE2D_DESC m_desc = D3D11_TEXTURE2D_DESC();
+	friend class GraphicsEngine;
 };
 

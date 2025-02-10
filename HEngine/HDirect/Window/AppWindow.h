@@ -11,6 +11,7 @@ public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
+	void OnSize() override;
 
 	void updateQuadPosition();
 
