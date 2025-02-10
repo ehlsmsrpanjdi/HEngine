@@ -19,7 +19,6 @@ protected:
 	std::shared_ptr<class EngineTime> TimeManager = nullptr;
 
 private:
-	class SwapChain* m_swap_chain;
 	class VertexBuffer* m_vb;
 	class VertexShader* m_vs;
 	class PixelShader* m_ps;

@@ -33,7 +33,7 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	//Create the swap chain for the window indicated by HWND parameter
 	HRESULT hr = GraphicsEngine::get()->m_dxgi_factory->CreateSwapChain(device, &desc, &m_swap_chain);
 
-	if ( GraphicsEngine::get()->m_dxgi_factory) {
+	if (GraphicsEngine::get()->m_dxgi_factory) {
 		GraphicsEngine::get()->m_dxgi_factory->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
 	}
 
@@ -74,6 +74,13 @@ bool SwapChain::release()
 {
 	m_swap_chain->Release();
 	delete this;
+
+	if (m_rtv != nullptr) {
+		m_rtv->Release();
+	}
+	if (m_dsv != nullptr) {
+		m_dsv->Release();
+	}
 	return true;
 }
 

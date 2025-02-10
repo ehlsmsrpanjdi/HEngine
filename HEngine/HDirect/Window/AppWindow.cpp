@@ -13,6 +13,7 @@
 #include "HDirect/ConstantBuffer.h"
 #include "HDirect/DeviceContext.h"
 
+
 struct vertex {
 	Vector3D position;
 	Vector3D position1;
@@ -47,11 +48,10 @@ void AppWindow::onCreate()
 	TimeManager = std::make_shared<EngineTime>();
 	TimeManager->Init();
 
-	GraphicsEngine::get()->init(m_hwnd);
-	m_swap_chain = GraphicsEngine::get()->createSwapChain();
-
 	RECT rc = this->getClientWindowRect();
-	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+	GraphicsEngine::get()->init(m_hwnd, rc);
+
+	GraphicsEngine::get()->getSwapChain()->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 	vertex vertex_list[] =
 	{
@@ -184,8 +184,7 @@ void AppWindow::onUpdate()
 		int a = 0;
 	}
 
-	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
-		0, 0.3f, 0.4f, 1);
+	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(0, 0.3f, 0.4f, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
@@ -214,7 +213,7 @@ void AppWindow::onUpdate()
 
 	// FINALLY DRAW THE TRIANGLE
 	GraphicsEngine::get()->getImmediateDeviceContext()->drawIndexedTriangleList(m_ib->getSizeIndexList(), 0, 0);
-	m_swap_chain->present(true);
+	GraphicsEngine::get()->getSwapChain()->present(true);
 
 
 	m_old_delta = m_new_delta;

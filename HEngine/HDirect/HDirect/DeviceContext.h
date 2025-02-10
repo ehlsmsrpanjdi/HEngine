@@ -11,8 +11,8 @@ class PixelShader;
 class DeviceContext
 {
 public:
-	DeviceContext(ID3D11DeviceContext* device_context);
-	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha);
+	DeviceContext();
+	void clearRenderTargetColor(float red, float green, float blue, float alpha);
 	void setVertexBuffer(VertexBuffer* vertex_buffer);
 	void setIndexBuffer(IndexBuffer* index_buffer);
 
@@ -34,4 +34,5 @@ public:
 private:
 	ID3D11DeviceContext* m_device_context = nullptr;
 	friend ConstantBuffer;
+	friend class GraphicsEngine;
 };

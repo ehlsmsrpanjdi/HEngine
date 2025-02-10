@@ -13,14 +13,17 @@ class GraphicsEngine
 public:
 	GraphicsEngine();
 	//Initialize the GraphicsEngine and DirectX 11 Device
-	bool init(HWND _hwnd);
+	bool init(HWND _hwnd, RECT rc);
 	//Release all the resources loaded
 	bool release();
 	~GraphicsEngine();
 public:
 	SwapChain* createSwapChain();
+	DeviceContext* createDeviceContext();
+	bool createD3DDevice();
 	class DepthView* createDepthView();
 	DeviceContext* getImmediateDeviceContext();
+	SwapChain* getSwapChain();
 	IndexBuffer* createIndexBuffer();
 	VertexBuffer* createVertexBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
@@ -39,6 +42,7 @@ public:
 
 private:
 	DeviceContext* m_imm_device_context = nullptr;
+	SwapChain* m_SwapChain = nullptr;
 private:
 	ID3D11Device* m_d3d_device = nullptr;
 	D3D_FEATURE_LEVEL m_feature_level = D3D_FEATURE_LEVEL();

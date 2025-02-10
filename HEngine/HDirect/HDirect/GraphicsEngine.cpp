@@ -10,50 +10,70 @@
 #include <cassert>
 #include "DepthView.h"
 #include "ConstantBuffer.h"
-void PrintSupportedDisplayModes(IDXGIOutput* output)
-{
-	// 지원되는 디스플레이 모드를 가져올 수 있는 크기 확인
-	UINT numModes = 0;
-	output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, 0, &numModes, nullptr);
-
-	if (numModes == 0)
-	{
-		std::cout << "지원되는 R8G8B8A8_UNORM 포맷 디스플레이 모드가 없습니다." << std::endl;
-		return;
-	}
-
-	// 디스플레이 모드 배열
-	DXGI_MODE_DESC* modes = new DXGI_MODE_DESC[numModes];
-
-	// 디스플레이 모드 목록 가져오기
-	output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, 0, &numModes, modes);
-
-	std::cout << "지원되는 R8G8B8A8_UNORM 포맷 디스플레이 모드:" << std::endl;
-	for (UINT i = 0; i < numModes; ++i)
-	{
-		const DXGI_MODE_DESC& mode = modes[i];
-		std::cout << "해상도: " << mode.Width << "x" << mode.Height
-			<< ", 갱신률: " << mode.RefreshRate.Numerator << "/" << mode.RefreshRate.Denominator
-			<< ", 비율: " << (float)mode.RefreshRate.Numerator / mode.RefreshRate.Denominator << "Hz" << std::endl;
-	}
-
-	delete[] modes;
-}
-
-void PrintAdapterDescription(const wchar_t* description)
-{
-	char buffer[128]; // 변환된 문자열을 저장할 버퍼
-	WideCharToMultiByte(CP_ACP, 0, description, -1, buffer, sizeof(buffer), nullptr, nullptr);
-	std::cout << buffer;
-}
 
 GraphicsEngine::GraphicsEngine()
 {
+	m_SwapChain = createSwapChain();
+	m_imm_device_context = createDeviceContext();
 }
 
-bool GraphicsEngine::init(HWND _hwnd)
+bool GraphicsEngine::init(HWND _hwnd, RECT rc)
 {
 	m_hwnd = _hwnd;
+
+	createD3DDevice();
+	m_SwapChain->init(_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+
+	m4xMsaaQuality;
+	m_d3d_device->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &m4xMsaaQuality);
+	assert(m4xMsaaQuality > 0);
+
+	return true;
+}
+
+ConstantBuffer* GraphicsEngine::createConstantBuffer()
+{
+	return new ConstantBuffer();
+}
+
+
+bool GraphicsEngine::release()
+{
+	if (m_vs)m_vs->Release();
+	if (m_ps)m_ps->Release();
+
+	if (m_vsblob)m_vsblob->Release();
+	if (m_psblob)m_psblob->Release();
+
+
+
+
+	m_dxgi_device->Release();
+	m_dxgi_adapter->Release();
+	m_dxgi_factory->Release();
+	m_imm_device_context->release();
+	m_d3d_device->Release();
+	m_SwapChain->release();
+
+	return true;
+}
+
+GraphicsEngine::~GraphicsEngine()
+{
+}
+
+SwapChain* GraphicsEngine::createSwapChain()
+{
+	return new SwapChain();
+}
+
+DeviceContext* GraphicsEngine::createDeviceContext()
+{
+	return new DeviceContext();
+}
+
+bool GraphicsEngine::createD3DDevice()
+{
 	D3D_DRIVER_TYPE driver_types[] =
 	{
 		D3D_DRIVER_TYPE_HARDWARE,
@@ -73,7 +93,7 @@ bool GraphicsEngine::init(HWND _hwnd)
 	for (UINT driver_type_index = 0; driver_type_index < num_driver_types;)
 	{
 		res = D3D11CreateDevice(NULL, driver_types[driver_type_index], NULL, NULL, feature_levels,
-			num_feature_levels, D3D11_SDK_VERSION, &m_d3d_device, &m_feature_level, &m_imm_context);
+			num_feature_levels, D3D11_SDK_VERSION, &m_d3d_device, &m_feature_level, &m_imm_device_context->m_device_context);
 		if (SUCCEEDED(res))
 			break;
 		++driver_type_index;
@@ -83,79 +103,11 @@ bool GraphicsEngine::init(HWND _hwnd)
 		return false;
 	}
 
-	m4xMsaaQuality;
-	m_d3d_device->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &m4xMsaaQuality);
-	assert(m4xMsaaQuality > 0);
-
-
-
-	m_imm_device_context = new DeviceContext(m_imm_context);
 
 	m_d3d_device->QueryInterface(__uuidof(IDXGIDevice), (void**)&m_dxgi_device);
 	m_dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgi_adapter);
 	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
-
-	UINT index = 0;
-	UINT Aindex = 0;
-
-	while (m_dxgi_factory->EnumAdapters(index, &m_dxgi_adapter) != DXGI_ERROR_NOT_FOUND)
-	{
-		DXGI_ADAPTER_DESC adapterDesc;
-		m_dxgi_adapter->GetDesc(&adapterDesc);
-
-		std::cout << "Adapter " << index << ": ";
-		PrintAdapterDescription(adapterDesc.Description);
-		std::cout << std::endl;
-		std::cout << "  - VRAM: " << (adapterDesc.DedicatedVideoMemory / (1024 * 1024)) << " MB" << std::endl;
-		std::cout << "  - Vendor ID: " << adapterDesc.VendorId << std::endl;
-
-		IDXGIOutput* t_output = nullptr;
-		m_dxgi_adapter->EnumOutputs(Aindex, &t_output);
-		if (t_output) {
-			PrintSupportedDisplayModes(t_output);
-		}
-
-		m_dxgi_adapter->Release();  // 해제
-		index++;
-	}
-
-
 	return true;
-}
-
-ConstantBuffer* GraphicsEngine::createConstantBuffer()
-{
-	return new ConstantBuffer();
-}
-
-bool GraphicsEngine::release()
-{
-	if (m_vs)m_vs->Release();
-	if (m_ps)m_ps->Release();
-
-	if (m_vsblob)m_vsblob->Release();
-	if (m_psblob)m_psblob->Release();
-
-	m_dxgi_device->Release();
-	if (m_dxgi_adapter) {
-		m_dxgi_adapter->Release();
-	}
-	m_dxgi_factory->Release();
-
-	m_imm_device_context->release();
-
-
-	m_d3d_device->Release();
-	return true;
-}
-
-GraphicsEngine::~GraphicsEngine()
-{
-}
-
-SwapChain* GraphicsEngine::createSwapChain()
-{
-	return new SwapChain();
 }
 
 DepthView* GraphicsEngine::createDepthView()
@@ -250,4 +202,8 @@ GraphicsEngine* GraphicsEngine::get()
 {
 	static GraphicsEngine engine;
 	return &engine;
+}
+
+SwapChain* GraphicsEngine::getSwapChain() {
+	return m_SwapChain;
 }
