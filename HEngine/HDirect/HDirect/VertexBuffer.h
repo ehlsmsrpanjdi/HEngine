@@ -1,7 +1,20 @@
 #pragma once
 #include <d3d11.h>
-
+#include <DirectXMath.h>
 class DeviceContext;
+
+struct Vertex1 {
+	DirectX::XMFLOAT3 Pos;
+	DirectX::XMFLOAT4 Color;
+};
+
+struct Vertex2 {
+	DirectX::XMFLOAT3 Pos;
+	DirectX::XMFLOAT3 Normal;
+	DirectX::XMFLOAT2 Tex0;
+	DirectX::XMFLOAT2 Tex1;
+};
+
 
 class VertexBuffer
 {

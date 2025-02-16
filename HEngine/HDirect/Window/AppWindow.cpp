@@ -14,8 +14,6 @@
 #include "HDirect/DeviceContext.h"
 #include <DirectXMath.h>
 
-UINT indexList[6] = { 0,1,2,0,2,3 };
-
 
 //struct vertex {
 //	Vector3D position;
