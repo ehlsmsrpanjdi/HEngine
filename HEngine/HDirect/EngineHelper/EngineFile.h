@@ -1,5 +1,6 @@
 #pragma once
 #include "EnginePath.h"
+#include <unordered_map>
 class EngineFile : public EnginePath {
 public:
 	EngineFile()
@@ -23,6 +24,12 @@ public:
 	virtual bool FindFile(fs::path _path);
 
 	virtual fs::path FindFileRecursive(fs::path _path, fs::path _my);
+
+	virtual fs::path AllFileRecursive(fs::path _path, fs::path _my);
+
+	virtual fs::path AllExtendFileRecursive(fs::path _path, fs::path _my, std::string _extend);
+
+	std::unordered_map<std::string, std::string> Files;
 
 
 };

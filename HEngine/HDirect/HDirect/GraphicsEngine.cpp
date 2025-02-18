@@ -1,8 +1,6 @@
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
 #include "DeviceContext.h"
-#include "VertexShader.h"
-#include "PixelShader.h"
 #include "iostream"
 #include <d3dcompiler.h>
 #include <cassert>

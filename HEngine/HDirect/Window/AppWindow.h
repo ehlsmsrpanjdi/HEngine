@@ -13,24 +13,11 @@ public:
 	virtual void onDestroy() override;
 	void OnSize() override;
 
-	void updateQuadPosition();
 
 protected:
 	std::shared_ptr<class EngineKey> KeyManager = nullptr;
 	std::shared_ptr<class EngineTime> TimeManager = nullptr;
+	std::shared_ptr<class EngineFile> FileManager = nullptr;
 
 private:
-	class VertexBuffer* m_vb;
-	class VertexShader* m_vs;
-	class PixelShader* m_ps;
-	class ConstantBuffer* m_cb;
-	class IndexBuffer* m_ib;
-private:
-	long m_old_delta;
-	long m_new_delta;
-	float m_delta_time;
-
-	float m_delta_pos;
-	float m_delta_scale;
-	float m_delta_rot;
 };
