@@ -104,27 +104,6 @@ void AppWindow::onCreate()
 	//m_ib->load(index_list, size_index_list);
 
 
-	GraphicsEngine::get()->compileVertexShader
-
-	//void* shader_byte_code = nullptr;
-	//size_t size_shader = 0;
-	//GraphicsEngine::get()->compileVertexShader(L"../HDirect/VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-
-	//m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
-	//m_vb->load(vertex_list, sizeof(vertex), size_list, shader_byte_code, size_shader);
-
-	//GraphicsEngine::get()->releaseCompiledShader();
-
-
-	//GraphicsEngine::get()->compilePixelShader(L"../HDirect/PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-	//m_ps = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
-	//GraphicsEngine::get()->releaseCompiledShader();
-
-	//constant cc;
-	//cc.m_time = 0;
-
-	//m_cb = GraphicsEngine::get()->createConstantBuffer();
-	//m_cb->load(&cc, sizeof(constant));
 }
 
 void AppWindow::updateQuadPosition()

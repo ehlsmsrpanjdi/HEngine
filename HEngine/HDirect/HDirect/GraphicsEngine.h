@@ -2,6 +2,8 @@
 #include <d3d11.h>
 #include <map>
 #include <iostream>
+#include <unordered_map>
+
 class SwapChain;
 class DeviceContext;
 class GraphicsEngine
@@ -19,9 +21,15 @@ public:
 	bool createD3DDevice();
 	class DepthView* createDepthView();
 
+
+#pragma region "∞‘≈Õ"
 public:
 	DeviceContext* getImmediateDeviceContext();
 	SwapChain* getSwapChain();
+	static GraphicsEngine* get();
+
+#pragma endregion
+
 
 public:
 	void ResizeBuffers();
@@ -31,28 +39,31 @@ public:
 
 #pragma region "Ω¶¿Ã¥ı"
 public:
-	std::map<std::string, ID3DBlob*> BlobMap;
-	
+	std::unordered_map<std::string, ID3DBlob*> VSBlobMap;
+	std::unordered_map<std::string, ID3DBlob*> PSBlobMap;
+
+
+	std::unordered_map<std::string, ID3D11VertexShader*> VSShader;
+	std::unordered_map<std::string, ID3D11PixelShader*> PSShader;
+
+	std::unordered_map<std::string, ID3DBlob*> ErrorBlobMap;
+
+	std::unordered_map<std::string, ID3D11Buffer*> BufferMap;
+
+
+	std::unordered_map<std::string, ID3D11InputLayout*> LayoutMap;
+
+	void CreateHlsl();
+
 	void CompileShader();
+	void CreateBuffer();
+	void CreateLayout();
+
 #pragma endregion
 
 
 
 public:
-	IndexBuffer* createIndexBuffer();
-	VertexBuffer* createVertexBuffer();
-	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
-	PixelShader* createPixelShader(const void* shader_byte_code, size_t byte_code_size);
-	ConstantBuffer* createConstantBuffer();
-public:
-	bool compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
-	bool compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
-
-	void releaseCompiledShader();
-
-public:
-	static GraphicsEngine* get();
-
 	UINT m4xMsaaQuality = 0;
 
 private:

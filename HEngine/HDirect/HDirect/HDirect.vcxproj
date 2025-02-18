@@ -154,17 +154,13 @@
     <ClCompile Include="DepthView.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
-    <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="SwapChain.cpp" />
-    <ClCompile Include="VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepthView.h" />
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="GraphicsEngine.h" />
-    <ClInclude Include="PixelShader.h" />
     <ClInclude Include="SwapChain.h" />
-    <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">

@@ -10,15 +10,6 @@
     <Filter Include="Graphic\GraphicDevice">
       <UniqueIdentifier>{9530d82e-9f17-4384-915b-635eeada39f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphic\Shader">
-      <UniqueIdentifier>{f3ae8c21-5537-42cb-9116-b99e4f768367}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphic\Shader\PixelShader">
-      <UniqueIdentifier>{d526d38b-b9d9-4a13-8e8c-a668d25a8953}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphic\Shader\VertexShader">
-      <UniqueIdentifier>{59dbf220-8433-4376-9407-2ef773a683c6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Hlsl">
       <UniqueIdentifier>{b0d9bb2e-91c9-4467-9e20-8fb201bb8d5c}</UniqueIdentifier>
     </Filter>
@@ -42,12 +33,6 @@
     <ClCompile Include="DeviceContext.cpp">
       <Filter>Graphic\DeviceContext</Filter>
     </ClCompile>
-    <ClCompile Include="PixelShader.cpp">
-      <Filter>Graphic\Shader\PixelShader</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexShader.cpp">
-      <Filter>Graphic\Shader\VertexShader</Filter>
-    </ClCompile>
     <ClCompile Include="DepthView.cpp">
       <Filter>Graphic\Render\DepthView</Filter>
     </ClCompile>
@@ -61,12 +46,6 @@
     </ClInclude>
     <ClInclude Include="DeviceContext.h">
       <Filter>Graphic\DeviceContext</Filter>
-    </ClInclude>
-    <ClInclude Include="PixelShader.h">
-      <Filter>Graphic\Shader\PixelShader</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexShader.h">
-      <Filter>Graphic\Shader\VertexShader</Filter>
     </ClInclude>
     <ClInclude Include="DepthView.h">
       <Filter>Graphic\Render\DepthView</Filter>
