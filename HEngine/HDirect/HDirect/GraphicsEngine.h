@@ -1,13 +1,9 @@
 #pragma once
 #include <d3d11.h>
-
+#include <map>
+#include <iostream>
 class SwapChain;
 class DeviceContext;
-class VertexBuffer;
-class VertexShader;
-class PixelShader;
-class IndexBuffer;
-class ConstantBuffer;
 class GraphicsEngine
 {
 public:
@@ -33,6 +29,12 @@ public:
 
 
 
+#pragma region "Ω¶¿Ã¥ı"
+public:
+	std::map<std::string, ID3DBlob*> BlobMap;
+	
+	void CompileShader();
+#pragma endregion
 
 
 
@@ -67,21 +69,9 @@ private:
 	ID3D11DeviceContext* m_imm_context = nullptr;
 
 private:
-	ID3DBlob* m_blob = nullptr;
-	ID3DBlob* m_vsblob = nullptr;
-	ID3DBlob* m_psblob = nullptr;
-	ID3D11VertexShader* m_vs = nullptr;
-	ID3D11PixelShader* m_ps = nullptr;
-
-
 	HWND m_hwnd = NULL;
 
 private:
 	friend class SwapChain;
-	friend class VertexBuffer;
-	friend class VertexShader;
-	friend class PixelShader;
 	friend class DepthView;
-	friend class IndexBuffer;
-	friend class ConstantBuffer;
 };

@@ -104,7 +104,7 @@ void AppWindow::onCreate()
 	//m_ib->load(index_list, size_index_list);
 
 
-
+	GraphicsEngine::get()->compileVertexShader
 
 	//void* shader_byte_code = nullptr;
 	//size_t size_shader = 0;
