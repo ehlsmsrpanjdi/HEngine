@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Graphic">
+      <UniqueIdentifier>{0a0b5f4e-ce7c-457f-8723-9853fef37235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\GraphicDevice">
+      <UniqueIdentifier>{9530d82e-9f17-4384-915b-635eeada39f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hlsl">
+      <UniqueIdentifier>{b0d9bb2e-91c9-4467-9e20-8fb201bb8d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Render">
+      <UniqueIdentifier>{8bfb1c9b-7baf-4765-b2b8-e1c9fd9da9c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Render\DepthView">
+      <UniqueIdentifier>{b1d8f28c-42b1-4466-a325-f18a8e6e08e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Render\SwapChain">
+      <UniqueIdentifier>{6ff4f042-4e99-46ef-a283-1ffb09b21d08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\GraphicDevice\Device">
+      <UniqueIdentifier>{906a092d-5482-43e8-ae8c-dc7e5dcd95e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\GraphicDevice\Context">
+      <UniqueIdentifier>{983aaf5c-9642-4572-b01c-7eb110342c8e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GraphicsEngine.cpp">
+      <Filter>Graphic\GraphicDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="SwapChain.cpp">
+      <Filter>Graphic\Render\SwapChain</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthView.cpp">
+      <Filter>Graphic\Render\DepthView</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicDevice.cpp">
+      <Filter>Graphic\GraphicDevice\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceContext.cpp">
+      <Filter>Graphic\GraphicDevice\Context</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GraphicsEngine.h">
+      <Filter>Graphic\GraphicDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="SwapChain.h">
+      <Filter>Graphic\Render\SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthView.h">
+      <Filter>Graphic\Render\DepthView</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicDevice.h">
+      <Filter>Graphic\GraphicDevice\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceContext.h">
+      <Filter>Graphic\GraphicDevice\Context</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>Hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaderfx.hlsl">
+      <Filter>Hlsl</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

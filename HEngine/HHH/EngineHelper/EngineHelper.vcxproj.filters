@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="EngineKeyManager">
+      <UniqueIdentifier>{c6a7a689-c83d-4248-8df5-1819402a7e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineTime">
+      <UniqueIdentifier>{287a21a2-9500-44a5-9790-5a1f99e53b6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineFile">
+      <UniqueIdentifier>{17fef737-1a43-4f37-a4b2-b72417f498c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{ef3e3440-4ec3-468c-89e8-e5ea68eccecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{4f350011-4cca-49c4-9901-9ba72bd657e1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineKey.h">
+      <Filter>EngineKeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h">
+      <Filter>EngineTime</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFile.h">
+      <Filter>EngineFile</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePath.h">
+      <Filter>EngineFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="HString.h">
+      <Filter>String</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EngineKey.cpp">
+      <Filter>EngineKeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>EngineTime</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePath.cpp">
+      <Filter>EngineFile</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFile.cpp">
+      <Filter>EngineFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix4x4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="HString.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

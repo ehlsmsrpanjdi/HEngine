@@ -1,0 +1,64 @@
+#include "Window/AppWindow.h"
+#include "EngineHelper/EngineFile.h"
+#include "EngineHelper/EngineTime.h"
+#include "EngineHelper/EngineKey.h"
+#include "HDirect/GraphicsEngine.h"
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+
+AppWindow::AppWindow()
+{
+}
+
+
+AppWindow::~AppWindow()
+{
+
+}
+
+void AppWindow::onCreate()
+{
+	Window::onCreate();
+	KeyManager = std::make_shared<EngineKey>(EngineKey());
+	KeyManager->Init();
+	TimeManager = std::make_shared<EngineTime>(EngineTime());
+	TimeManager->Init();
+	FileManager = std::make_shared<EngineFile>(EngineFile());
+
+	FileManager->Move_parent();
+	//FileManager->MovetoFile("HDirect");
+	//FileManager->AllExtendFileRecursive(".hlsl");
+	
+	RECT rc = this->getClientWindowRect();
+	GraphicsEngine::get()->init(m_hwnd, rc);
+	//GraphicsEngine::get()->CreateHlsl(FileManager.get());
+
+}
+
+
+void AppWindow::onUpdate()
+{
+	Window::onUpdate();
+	KeyManager->Update();
+	TimeManager->Update();
+
+	if (EngineKey::IsDown('Z') == true) {
+		int a = 0;
+	}
+	GraphicsEngine::get()->Presnet(0.5f, 0.5f, 0.5f, 1.f, true);
+
+}
+
+void AppWindow::onDestroy()
+{
+	Window::onDestroy();
+	KeyManager = nullptr;
+	TimeManager = nullptr;
+	FileManager = nullptr;
+	GraphicsEngine::get()->release();
+}
+
+void AppWindow::OnSize()
+{
+	//GraphicsEngine::get()->ResizeBuffers();
+}
