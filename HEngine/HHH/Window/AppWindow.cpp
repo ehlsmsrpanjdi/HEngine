@@ -26,12 +26,12 @@ void AppWindow::onCreate()
 	FileManager = std::make_shared<EngineFile>(EngineFile());
 
 	FileManager->Move_parent();
-	//FileManager->MovetoFile("HDirect");
-	//FileManager->AllExtendFileRecursive(".hlsl");
+	FileManager->MovetoFile("HDirect");
+	FileManager->AllExtendFileRecursive(".hlsl");
 	
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);
-	//GraphicsEngine::get()->CreateHlsl(FileManager.get());
+	GraphicsEngine::get()->CreateHlsl(FileManager.get());
 
 }
 

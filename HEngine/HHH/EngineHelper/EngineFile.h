@@ -2,6 +2,9 @@
 #include "EnginePath.h"
 #include "filesystem"
 #include <unordered_map>
+#include "HString.h"
+
+
 class EngineFile : public EnginePath {
 public:
 	EngineFile()
@@ -32,6 +35,16 @@ public:
 
 	void AllExtendFileRecursive(const fs::path& _extend, const fs::path& _my = "");
 
+	std::string GetFile(std::string _str) {
+		std::string str = HString::Upper(_str);
+		if (Files.find(str) == Files.end()) {
+			return "";
+		}
+		return Files[str];
+	}
+
+
+private:
 	std::unordered_map<std::string, std::string> Files;
 
 

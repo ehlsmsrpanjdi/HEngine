@@ -1,5 +1,6 @@
 #include "EngineFile.h"
 #include "filesystem"
+#include "HString.h"
 
 bool EngineFile::FindFile(fs::path _path) {
 	for (const fs::directory_entry& entry : fs::directory_iterator(pa)) {
@@ -45,9 +46,8 @@ void EngineFile::AllExtendFileRecursive(const fs::path& _extend, const fs::path&
 		else {
 			fs::path ppath = entry.path().extension();
 
-
 			if (entry.path().extension() == _extend) {
-				Files[entry.path().filename().string()] = entry.path().string();
+				Files[HString::Upper(entry.path().filename().string())] = entry.path().string();
 			}
 		}
 	}

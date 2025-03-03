@@ -148,12 +148,24 @@ void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 {
 	//vsblob
 	HRESULT hr;
-	std::wstring ws = HString::StoWC(_fileManager->Files["Shaderfx.hlsl"]);
+	
+	std::wstring ws = HString::StoWC(_fileManager->GetFile("Shaderfx.hlsl"));
 	const WCHAR* wcc = ws.c_str();
 	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlobMap["vsmain"], &ErrorBlobMap["vsmain"]);
 
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
+
 	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlobMap["psmain"], &ErrorBlobMap["psmain"]);
 
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
 
 	for (std::pair<const std::string, ID3DBlob*>& pa : VSBlobMap) {
 		hr = m_Device->Get()->CreateVertexShader(pa.second->GetBufferPointer(), pa.second->GetBufferSize(), nullptr, &VSShader[pa.first]);
