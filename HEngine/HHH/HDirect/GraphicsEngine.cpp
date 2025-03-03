@@ -142,7 +142,7 @@ void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 {
 	HRESULT hr;
-	
+
 	std::wstring ws = HString::StoWC(_fileManager->GetFile("Shaderfx.hlsl"));
 	const WCHAR* wcc = ws.c_str();
 	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlobMap["vsmain"], &ErrorBlobMap["vsmain"]);
@@ -182,14 +182,26 @@ void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 
 void GraphicsEngine::CreateBuffer()
 {
-	DirectX::XMFLOAT3 list[] =
-	{
-		//X - Y - Z
-		{-0.5f, -0.5f, 0.0f}, // POS1
-		{ 0.0f,  0.5f, 0.0f}, // POS2
-		{ 0.5f, -0.5f, 0.0f}  // POS3
-	};
+	//DirectX::XMFLOAT3 list[] =
+	//{
+	//	//X - Y - Z
+	//	{-0.5f, 0.5f, 0.0f}, // POS1
+	//	{ -0.5f,  -0.5f, 0.0f}, // POS2
+	//	{ 0.5f, -0.5f, 0.0f},  // POS3
 
+	//	{ 0.5f, -0.5f, 0.0f }, // POS1
+	//	{ 0.5f,  0.5f, 0.0f}, // POS2
+	//	{ -0.5f, 0.5f, 0.0f}  // POS3
+	//};
+
+	DirectX::XMFLOAT3 list[] = {
+		{-0.5f, -0.5f, 0.f},
+		{-0.5f, 0.5f, 0.f},
+		{0.5f, -0.5f, 0.f},
+		{0.5f, -0.5f, 0.f},
+		{-0.5f, 0.5f, 0.f},
+		{0.5f, 0.5f, 0.f}
+	};
 
 	UINT size_vertex = sizeof(DirectX::XMFLOAT3);
 	UINT size_list = ARRAYSIZE(list);
@@ -214,13 +226,27 @@ void GraphicsEngine::CreateBuffer()
 
 void GraphicsEngine::SetBuffer()
 {
-	DirectX::XMFLOAT3 list[] =
-	{
-		//X - Y - Z
-		{-0.5f, -0.5f, 0.0f}, // POS1
-		{ 0.0f,  0.5f, 0.0f}, // POS2
-		{ 0.5f, -0.5f, 0.0f}  // POS3
+	//DirectX::XMFLOAT3 list[] =
+	//{
+	//	//X - Y - Z
+	//	{-0.5f,  0.5f, 0.0f}, // POS1
+	//	{-0.5f, -0.5f, 0.0f}, // POS2
+	//	{ 0.5f, -0.5f, 0.0f}, // POS3
+
+	//	{ 0.5f, -0.5f, 0.0f}, // POS4
+	//	{ 0.5f,  0.5f, 0.0f}, // POS5
+	//	{-0.5f,  0.5f, 0.0f}  // POS6
+	//};
+
+	DirectX::XMFLOAT3 list[] = {
+		{-0.5f, -0.5f, 0.f},
+		{-0.5f, 0.5f, 0.f},
+		{0.5f, -0.5f, 0.f},
+		{0.5f, -0.5f, 0.f},
+		{-0.5f, 0.5f, 0.f},
+		{0.5f, 0.5f, 0.f}
 	};
+
 	UINT size_list = ARRAYSIZE(list);
 	UINT vertex_size = sizeof(DirectX::XMFLOAT3);
 
