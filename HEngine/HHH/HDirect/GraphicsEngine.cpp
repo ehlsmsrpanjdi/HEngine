@@ -32,6 +32,7 @@ bool GraphicsEngine::init(HWND _hwnd, RECT rc)
 
 	m_DepthView->init(_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
+	m_Context->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 	return true;
 }
 
@@ -52,6 +53,7 @@ bool GraphicsEngine::release()
 void GraphicsEngine::Presnet(float red, float green, float blue, float alpha, bool _bool)
 {
 	m_Context->clearRenderTargetColor(m_SwapChain->m_rtv, m_DepthView->m_dsv, red, green, blue, alpha);
+	SetBuffer();
 	m_SwapChain->present(_bool);
 }
 
@@ -129,13 +131,6 @@ void GraphicsEngine::ResizeBuffers()
 	/*m_SwapChain->m_swap_chain->ResizeBuffers();*/
 }
 
-void GraphicsEngine::ClearRenderTargetView(float red, float green, float blue, float alpha)
-{
-	//m_Context->clearRenderTargetColor(m_SwapChain->m_rtv, m_DepthView->mDepthStencil_View, red, green, blue, alpha);
-	m_Context->clearRenderTargetColor(m_SwapChain->m_rtv, nullptr, red, green, blue, alpha);
-}
-
-
 #pragma region "½¦ÀÌ´õ"
 void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 {
@@ -146,7 +141,6 @@ void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 
 void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 {
-	//vsblob
 	HRESULT hr;
 	
 	std::wstring ws = HString::StoWC(_fileManager->GetFile("Shaderfx.hlsl"));
@@ -169,12 +163,21 @@ void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 
 	for (std::pair<const std::string, ID3DBlob*>& pa : VSBlobMap) {
 		hr = m_Device->Get()->CreateVertexShader(pa.second->GetBufferPointer(), pa.second->GetBufferSize(), nullptr, &VSShader[pa.first]);
+		if (hr != S_OK)
+		{
+			assert(false);
+			return;
+		}
 	}
 
 	for (std::pair<const std::string, ID3DBlob*>& pa : PSBlobMap) {
 		hr = m_Device->Get()->CreatePixelShader(pa.second->GetBufferPointer(), pa.second->GetBufferSize(), nullptr, &PSShader[pa.first]);
+		if (hr != S_OK)
+		{
+			assert(false);
+			return;
+		}
 	}
-
 }
 
 void GraphicsEngine::CreateBuffer()
@@ -182,9 +185,9 @@ void GraphicsEngine::CreateBuffer()
 	DirectX::XMFLOAT3 list[] =
 	{
 		//X - Y - Z
-		{-0.5f,-0.5f,0.0f}, // POS1
-		{0.0f,0.5f,0.0f}, // POS2
-		{ 0.5f,-0.5f,0.0f}
+		{-0.5f, -0.5f, 0.0f}, // POS1
+		{ 0.0f,  0.5f, 0.0f}, // POS2
+		{ 0.5f, -0.5f, 0.0f}  // POS3
 	};
 	UINT size_vertex = sizeof(DirectX::XMFLOAT3);
 	UINT size_list = ARRAYSIZE(list);
@@ -199,9 +202,11 @@ void GraphicsEngine::CreateBuffer()
 	D3D11_SUBRESOURCE_DATA init_data = {};
 	init_data.pSysMem = list;
 
-	if (FAILED(m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &BufferMap["vsmain"])))
+	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &BufferMap["vsmain"]);
+
+	if (hr != S_OK)
 	{
-		return;
+		assert(false);
 	}
 }
 
@@ -217,9 +222,9 @@ void GraphicsEngine::CreateLayout()
 	UINT size_layout = ARRAYSIZE(layout);
 	HRESULT hr;
 	hr = m_Device->Get()->CreateInputLayout(layout, size_layout, VSBlobMap["vsmain"]->GetBufferPointer(), (UINT)VSBlobMap["vsmain"]->GetBufferSize(), &LayoutMap["vsmain"]);
-	if (FAILED(m_Device->Get()->CreateInputLayout(layout, size_layout, VSBlobMap["vsmain"]->GetBufferPointer(), (UINT)VSBlobMap["vsmain"]->GetBufferSize(), &LayoutMap["vsmain"])))
+	if (hr != S_OK)
 	{
-		return;
+		assert(false);
 	}
 
 }
@@ -229,16 +234,16 @@ void GraphicsEngine::SetBuffer()
 	DirectX::XMFLOAT3 list[] =
 	{
 		//X - Y - Z
-		{-0.5f,-0.5f,0.0f}, // POS1
-		{0.0f,0.5f,0.0f}, // POS2
-		{ 0.5f,-0.5f,0.0f}
+		{-1.f, -0.5f, 0.0f}, // POS1
+		{ 0.0f,  0.5f, 0.0f}, // POS2
+		{ 0.5f, -0.5f, 0.0f}  // POS3
 	};
 	UINT size_list = ARRAYSIZE(list);
 	UINT vertex_size = sizeof(DirectX::XMFLOAT3);
 
 	if (BufferMap.find("vsmain") != BufferMap.end() && BufferMap["vsmain"] != nullptr)
 	{
-		UINT stride = vertex_size;
+		UINT stride = sizeof(BufferMap["vsmain"]);
 		UINT offset = 0;
 		m_Context->Get()->IASetVertexBuffers(0, 1, &BufferMap["vsmain"], &stride, &offset);
 	}
@@ -246,7 +251,12 @@ void GraphicsEngine::SetBuffer()
 	{
 		// Handle error: buffer not found or not initialized
 	}
-	m_Context->drawIndexedTriangleList(0, 3, 0);
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
+	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
+	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
+	m_Context->Get()->Draw(size_list, 0);
+	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 }
 
 #pragma endregion

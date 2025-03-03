@@ -42,10 +42,6 @@ public:
 
 public:
 	void ResizeBuffers();
-	void ClearRenderTargetView(float red, float green, float blue, float alpha);
-
-
-
 #pragma region "Ω¶¿Ã¥ı"
 public:
 	std::unordered_map<std::string, ID3DBlob*> VSBlobMap;
@@ -77,7 +73,7 @@ public:
 public:
 	UINT m4xMsaaQuality = 0;
 
-	RECT WindowSize;
+	RECT WindowSize = { 0,0 };
 
 private:
 	std::shared_ptr<DeviceContext> m_Context = nullptr;
