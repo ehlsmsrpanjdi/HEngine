@@ -186,8 +186,8 @@ void GraphicsEngine::CreateBuffer()
 	{
 		//X - Y - Z
 		{-0.5f, -0.5f, 0.0f}, // POS1
-		{ 0.0f,  0.5f, 0.0f}, // POS2
-		{ 0.5f, -0.5f, 0.0f}  // POS3
+		{ 0.5f,  0.5f, 0.0f}, // POS2
+		{ -0.5f, 0.5f, 0.0f}  // POS3
 	};
 	UINT size_vertex = sizeof(DirectX::XMFLOAT3);
 	UINT size_list = ARRAYSIZE(list);
@@ -234,8 +234,8 @@ void GraphicsEngine::SetBuffer()
 	DirectX::XMFLOAT3 list[] =
 	{
 		//X - Y - Z
-		{-1.f, -0.5f, 0.0f}, // POS1
-		{ 0.0f,  0.5f, 0.0f}, // POS2
+		{-0.5f, -0.5f, 0.0f}, // POS1
+		{ 0.5f,  0.5f, 0.0f}, // POS2
 		{ 0.5f, -0.5f, 0.0f}  // POS3
 	};
 	UINT size_list = ARRAYSIZE(list);
@@ -251,7 +251,7 @@ void GraphicsEngine::SetBuffer()
 	{
 		// Handle error: buffer not found or not initialized
 	}
-	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
 	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
 	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
