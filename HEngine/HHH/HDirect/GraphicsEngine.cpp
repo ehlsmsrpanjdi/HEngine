@@ -186,9 +186,11 @@ void GraphicsEngine::CreateBuffer()
 	{
 		//X - Y - Z
 		{-0.5f, -0.5f, 0.0f}, // POS1
-		{ 0.5f,  0.5f, 0.0f}, // POS2
-		{ -0.5f, 0.5f, 0.0f}  // POS3
+		{ 0.0f,  0.5f, 0.0f}, // POS2
+		{ 0.5f, -0.5f, 0.0f}  // POS3
 	};
+
+
 	UINT size_vertex = sizeof(DirectX::XMFLOAT3);
 	UINT size_list = ARRAYSIZE(list);
 
@@ -210,6 +212,36 @@ void GraphicsEngine::CreateBuffer()
 	}
 }
 
+void GraphicsEngine::SetBuffer()
+{
+	DirectX::XMFLOAT3 list[] =
+	{
+		//X - Y - Z
+		{-0.5f, -0.5f, 0.0f}, // POS1
+		{ 0.0f,  0.5f, 0.0f}, // POS2
+		{ 0.5f, -0.5f, 0.0f}  // POS3
+	};
+	UINT size_list = ARRAYSIZE(list);
+	UINT vertex_size = sizeof(DirectX::XMFLOAT3);
+
+	if (BufferMap.find("vsmain") != BufferMap.end() && BufferMap["vsmain"] != nullptr)
+	{
+		UINT stride = vertex_size;
+		UINT offset = 0;
+		m_Context->Get()->IASetVertexBuffers(0, 1, &BufferMap["vsmain"], &stride, &offset);
+	}
+	else
+	{
+		// Handle error: buffer not found or not initialized
+	}
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
+	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
+	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
+	m_Context->Get()->Draw(size_list, 0);
+	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
+}
+
 
 void GraphicsEngine::CreateLayout()
 {
@@ -228,36 +260,5 @@ void GraphicsEngine::CreateLayout()
 	}
 
 }
-
-void GraphicsEngine::SetBuffer()
-{
-	DirectX::XMFLOAT3 list[] =
-	{
-		//X - Y - Z
-		{-0.5f, -0.5f, 0.0f}, // POS1
-		{ 0.5f,  0.5f, 0.0f}, // POS2
-		{ 0.5f, -0.5f, 0.0f}  // POS3
-	};
-	UINT size_list = ARRAYSIZE(list);
-	UINT vertex_size = sizeof(DirectX::XMFLOAT3);
-
-	if (BufferMap.find("vsmain") != BufferMap.end() && BufferMap["vsmain"] != nullptr)
-	{
-		UINT stride = sizeof(BufferMap["vsmain"]);
-		UINT offset = 0;
-		m_Context->Get()->IASetVertexBuffers(0, 1, &BufferMap["vsmain"], &stride, &offset);
-	}
-	else
-	{
-		// Handle error: buffer not found or not initialized
-	}
-	m_Context->Get()->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
-	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
-	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
-	m_Context->Get()->Draw(size_list, 0);
-	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
-}
-
 #pragma endregion
 
