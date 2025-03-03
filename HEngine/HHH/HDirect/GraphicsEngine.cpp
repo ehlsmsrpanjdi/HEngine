@@ -137,6 +137,7 @@ void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 	CompileShader(_fileManager);
 	CreateBuffer();
 	CreateLayout();
+	CreateIndexBuffer();
 }
 
 void GraphicsEngine::CompileShader(EngineFile* _fileManager)
@@ -251,6 +252,31 @@ void GraphicsEngine::CreateLayout()
 
 }
 
+void GraphicsEngine::CreateIndexBuffer()
+{
+	UINT list[] = {
+	0, 1, 2, // 첫 번째 삼각형
+	2, 1, 3  // 두 번째 삼각형
+	};
+
+	D3D11_BUFFER_DESC buff_desc = {};
+	buff_desc.Usage = D3D11_USAGE_IMMUTABLE;
+	buff_desc.ByteWidth = sizeof(UINT) * ARRAYSIZE(list);
+	buff_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	buff_desc.CPUAccessFlags = 0;
+	buff_desc.MiscFlags = 0;
+	buff_desc.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA init_data = {};
+	init_data.pSysMem = list;
+
+	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &IndexBufferMap["vsmain"]);
+	if (hr != S_OK)
+	{
+		assert(false);
+	}
+}
+
 void GraphicsEngine::CreateBuffer()
 {
 	//DirectX::XMFLOAT3 list[] =
@@ -266,12 +292,10 @@ void GraphicsEngine::CreateBuffer()
 	//};
 
 	DirectX::XMFLOAT3 list[] = {
-		{-0.5f, -0.5f, 0.f},
-		{-0.5f, 0.5f, 0.f},
-		{0.5f, -0.5f, 0.f},
-		{0.5f, -0.5f, 0.f},
-		{-0.5f, 0.5f, 0.f},
-		{0.5f, 0.5f, 0.f}
+		{-0.5f, -0.5f, 0.f},	//좌측 하단
+		{-0.5f, 0.5f, 0.f},		//좌측 상단
+		{0.5f, -0.5f, 0.f},		//우측 하단
+		{0.5f, 0.5f, 0.f}		//우측 상단
 	};
 
 	UINT size_vertex = sizeof(DirectX::XMFLOAT3);
@@ -310,12 +334,10 @@ void GraphicsEngine::SetBuffer()
 	//};
 
 	DirectX::XMFLOAT3 list[] = {
-		{-0.5f, -0.5f, 0.f},
-		{-0.5f, 0.5f, 0.f},
-		{0.5f, -0.5f, 0.f},
-		{0.5f, -0.5f, 0.f},
-		{-0.5f, 0.5f, 0.f},
-		{0.5f, 0.5f, 0.f}
+		{-0.5f, -0.5f, 0.f},	//좌측 하단
+		{-0.5f, 0.5f, 0.f},		//좌측 상단
+		{0.5f, -0.5f, 0.f},		//우측 하단
+		{0.5f, 0.5f, 0.f}		//우측 상단
 	};
 
 	UINT size_list = ARRAYSIZE(list);
@@ -333,13 +355,14 @@ void GraphicsEngine::SetBuffer()
 	}
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
+	m_Context->Get()->IASetIndexBuffer(IndexBufferMap["vsmain"], DXGI_FORMAT_R32_UINT, 0);
 	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
 	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
-	m_Context->Get()->Draw(size_list, 0);
+	m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 }
 
-void GraphicsEngine::CreateBuffer(enum class BufferType _Type, std::string _vs = "", std::string _ps = "")
+void GraphicsEngine::CreateBuffer(enum class BufferType _Type, std::string _vs, std::string _ps)
 {
 	BufferInfo* buffer = new BufferInfo(_Type);
 	switch (_Type)

@@ -54,6 +54,7 @@ public:
 	std::unordered_map<std::string, ID3DBlob*> ErrorBlobMap;
 
 	std::unordered_map<std::string, ID3D11Buffer*> BufferMap;
+	std::unordered_map<std::string, ID3D11Buffer*> IndexBufferMap;
 
 
 	std::unordered_map<std::string, ID3D11InputLayout*> LayoutMap;
@@ -65,6 +66,7 @@ public:
 	void CreateLayout(class BufferInfo* _Info);
 	void CreateBuffer();
 	void CreateLayout();
+	void CreateIndexBuffer();
 
 	void SetBuffer();
 
