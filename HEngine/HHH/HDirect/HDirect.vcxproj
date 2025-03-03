@@ -159,6 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BufferInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DepthView.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="GraphicDevice.cpp">
@@ -169,6 +173,10 @@
     <ClCompile Include="SwapChain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BufferInfo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DepthView.h" />
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="GraphicDevice.h">

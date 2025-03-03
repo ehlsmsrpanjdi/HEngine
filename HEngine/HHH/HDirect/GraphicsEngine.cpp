@@ -9,7 +9,7 @@
 #include "EngineHelper/EngineFile.h"
 #include "EngineHelper/HString.h"
 #include "GraphicDevice.h"
-
+#include "BufferInfo.h"
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -180,6 +180,77 @@ void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 	}
 }
 
+void GraphicsEngine::CompileShader(EngineFile* _fileManager, BufferInfo* _Info)
+{
+	HRESULT hr;
+	std::wstring ws = HString::StoWC(_fileManager->GetFile("Shaderfx.hlsl"));
+	const WCHAR* wcc = ws.c_str();
+
+	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &_Info->VSBlob, &_Info->ErrorBlob);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
+
+	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &_Info->PSBlob, &_Info->ErrorBlob);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
+
+	hr = m_Device->Get()->CreateVertexShader(_Info->VSBlob->GetBufferPointer(), _Info->VSBlob->GetBufferSize(), nullptr, &_Info->VS);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
+
+	hr = m_Device->Get()->CreatePixelShader(_Info->PSBlob->GetBufferPointer(), _Info->PSBlob->GetBufferSize(), nullptr, &_Info->PS);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
+}
+
+void GraphicsEngine::CreateLayout(BufferInfo* _Info)
+{
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0}
+	};
+
+	UINT size_layout = ARRAYSIZE(layout);
+	HRESULT hr;
+
+	hr = m_Device->Get()->CreateInputLayout(layout, size_layout, _Info->VSBlob->GetBufferPointer(), (UINT)_Info->VSBlob->GetBufferSize(), &_Info->Layout);
+	if (hr != S_OK)
+	{
+		assert(false);
+	}
+}
+
+void GraphicsEngine::CreateLayout()
+{
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0}
+	};
+
+	UINT size_layout = ARRAYSIZE(layout);
+	HRESULT hr;
+	hr = m_Device->Get()->CreateInputLayout(layout, size_layout, VSBlobMap["vsmain"]->GetBufferPointer(), (UINT)VSBlobMap["vsmain"]->GetBufferSize(), &LayoutMap["vsmain"]);
+	if (hr != S_OK)
+	{
+		assert(false);
+	}
+
+}
+
 void GraphicsEngine::CreateBuffer()
 {
 	//DirectX::XMFLOAT3 list[] =
@@ -258,7 +329,7 @@ void GraphicsEngine::SetBuffer()
 	}
 	else
 	{
-		// Handle error: buffer not found or not initialized
+		// Handle error: BufferInfo not found or not initialized
 	}
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
@@ -268,23 +339,35 @@ void GraphicsEngine::SetBuffer()
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 }
 
-
-void GraphicsEngine::CreateLayout()
+void GraphicsEngine::CreateBuffer(enum class BufferType _Type, std::string _vs = "", std::string _ps = "")
 {
-	D3D11_INPUT_ELEMENT_DESC layout[] =
+	BufferInfo* buffer = new BufferInfo(_Type);
+	switch (_Type)
 	{
-		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0}
-	};
+	case BufferType::VERTEX:
+		buffer->Layout = LayoutMap[_vs];
+		buffer->VS = VSShader[_vs];
+		buffer->PS = PSShader[_ps];
 
-	UINT size_layout = ARRAYSIZE(layout);
-	HRESULT hr;
-	hr = m_Device->Get()->CreateInputLayout(layout, size_layout, VSBlobMap["vsmain"]->GetBufferPointer(), (UINT)VSBlobMap["vsmain"]->GetBufferSize(), &LayoutMap["vsmain"]);
-	if (hr != S_OK)
-	{
-		assert(false);
+		break;
+	case BufferType::INDEX:
+		break;
+	case BufferType::CONSTANT:
+		break;
+	case BufferType::STRUCTURED:
+		break;
+	case BufferType::APPEND:
+		break;
+	case BufferType::COUNTER:
+		break;
+	case BufferType::INDIRECT:
+		break;
+	case BufferType::ARGUMENT:
+		break;
+	default:
+		break;
 	}
-
 }
+
 #pragma endregion
 

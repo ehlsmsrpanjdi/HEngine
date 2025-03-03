@@ -61,10 +61,14 @@ public:
 	void CreateHlsl(class EngineFile* _fileManager);
 
 	void CompileShader(class EngineFile* _fileManager);
+	void CompileShader(EngineFile* _fileManager, class BufferInfo* _Info);
+	void CreateLayout(class BufferInfo* _Info);
 	void CreateBuffer();
 	void CreateLayout();
 
 	void SetBuffer();
+
+	void CreateBuffer(enum class BufferType _Type, std::string _vs = "", std::string _ps = "");
 
 #pragma endregion
 

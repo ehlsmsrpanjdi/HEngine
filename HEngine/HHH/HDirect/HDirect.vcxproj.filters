@@ -25,6 +25,9 @@
     <Filter Include="Graphic\GraphicDevice\Context">
       <UniqueIdentifier>{983aaf5c-9642-4572-b01c-7eb110342c8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic\Buffer">
+      <UniqueIdentifier>{0480bc9f-c161-4d14-81d8-446404741baa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsEngine.cpp">
@@ -42,6 +45,9 @@
     <ClCompile Include="DeviceContext.cpp">
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClCompile>
+    <ClCompile Include="BufferInfo.cpp">
+      <Filter>Graphic\Buffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -58,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="DeviceContext.h">
       <Filter>Graphic\GraphicDevice\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferInfo.h">
+      <Filter>Graphic\Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
