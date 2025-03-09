@@ -68,6 +68,9 @@ public:
 	void CreateLayout();
 	void CreateIndexBuffer();
 
+	void CreateConstantBuffer();
+	void UpdateConstantBuffer();
+
 	void SetBuffer();
 
 	void CreateBuffer(enum class BufferType _Type, std::string _vs = "", std::string _ps = "");

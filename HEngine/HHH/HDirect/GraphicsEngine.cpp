@@ -138,6 +138,7 @@ void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 	CreateBuffer();
 	CreateLayout();
 	CreateIndexBuffer();
+	CreateConstantBuffer();
 }
 
 void GraphicsEngine::CompileShader(EngineFile* _fileManager)
@@ -277,20 +278,38 @@ void GraphicsEngine::CreateIndexBuffer()
 	}
 }
 
+void GraphicsEngine::CreateConstantBuffer()
+{
+	D3D11_BUFFER_DESC buff_desc = {};
+	buff_desc.Usage = D3D11_USAGE_DYNAMIC;
+	buff_desc.ByteWidth = sizeof(DirectX::XMMATRIX);
+	buff_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	buff_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	buff_desc.MiscFlags = 0;
+	buff_desc.StructureByteStride = 0;
+	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, nullptr, &BufferMap["Matrix"]);
+	if (hr != S_OK)
+	{
+		assert(false);
+	}
+}
+
+void GraphicsEngine::UpdateConstantBuffer()
+{
+	DirectX::XMMATRIX worldViewProj = DirectX::XMMatrixIdentity(); // 예시로 단순히 단위 행렬을 사용
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT hr = m_Context->Get()->Map(BufferMap["Matrix"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	if (hr != S_OK)
+	{
+		assert(false);
+	}
+	memcpy(mappedResource.pData, &worldViewProj, sizeof(DirectX::XMMATRIX));
+	m_Context->Get()->Unmap(BufferMap["Matrix"], 0);
+
+}
+
 void GraphicsEngine::CreateBuffer()
 {
-	//DirectX::XMFLOAT3 list[] =
-	//{
-	//	//X - Y - Z
-	//	{-0.5f, 0.5f, 0.0f}, // POS1
-	//	{ -0.5f,  -0.5f, 0.0f}, // POS2
-	//	{ 0.5f, -0.5f, 0.0f},  // POS3
-
-	//	{ 0.5f, -0.5f, 0.0f }, // POS1
-	//	{ 0.5f,  0.5f, 0.0f}, // POS2
-	//	{ -0.5f, 0.5f, 0.0f}  // POS3
-	//};
-
 	DirectX::XMFLOAT3 list[] = {
 		{-0.5f, -0.5f, 0.f},	//좌측 하단
 		{-0.5f, 0.5f, 0.f},		//좌측 상단
@@ -321,17 +340,6 @@ void GraphicsEngine::CreateBuffer()
 
 void GraphicsEngine::SetBuffer()
 {
-	//DirectX::XMFLOAT3 list[] =
-	//{
-	//	//X - Y - Z
-	//	{-0.5f,  0.5f, 0.0f}, // POS1
-	//	{-0.5f, -0.5f, 0.0f}, // POS2
-	//	{ 0.5f, -0.5f, 0.0f}, // POS3
-
-	//	{ 0.5f, -0.5f, 0.0f}, // POS4
-	//	{ 0.5f,  0.5f, 0.0f}, // POS5
-	//	{-0.5f,  0.5f, 0.0f}  // POS6
-	//};
 
 	DirectX::XMFLOAT3 list[] = {
 		{-0.5f, -0.5f, 0.f},	//좌측 하단
@@ -353,11 +361,16 @@ void GraphicsEngine::SetBuffer()
 	{
 		// Handle error: BufferInfo not found or not initialized
 	}
+	UpdateConstantBuffer();
+
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
 	m_Context->Get()->IASetIndexBuffer(IndexBufferMap["vsmain"], DXGI_FORMAT_R32_UINT, 0);
 	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
 	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
+
+	m_Context->Get()->VSSetConstantBuffers(0, 1, &BufferMap["Matrix"]);
+
 	m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 }
