@@ -33,7 +33,7 @@
     <ClInclude Include="Vector3D.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix4x4.h">
+    <ClInclude Include="EngineTransform.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="HString.h">
@@ -56,7 +56,7 @@
     <ClCompile Include="Vector3D.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Matrix4x4.cpp">
+    <ClCompile Include="EngineTransform.cpp">
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="HString.cpp">

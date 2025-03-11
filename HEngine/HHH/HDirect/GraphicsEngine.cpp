@@ -10,6 +10,7 @@
 #include "EngineHelper/HString.h"
 #include "GraphicDevice.h"
 #include "BufferInfo.h"
+#include "EngineHelper/EngineTransform.h"
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -296,16 +297,43 @@ void GraphicsEngine::CreateConstantBuffer()
 
 void GraphicsEngine::UpdateConstantBuffer()
 {
-	DirectX::XMMATRIX worldViewProj = DirectX::XMMatrixIdentity(); // 예시로 단순히 단위 행렬을 사용
+	//DirectX::XMMATRIX worldViewProj = DirectX::XMMatrixIdentity(); // 예시로 단순히 단위 행렬을 사용
+	//D3D11_MAPPED_SUBRESOURCE mappedResource;
+	//HRESULT hr = m_Context->Get()->Map(BufferMap["Matrix"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	//if (hr != S_OK)
+	//{
+	//	assert(false);
+	//}
+	//memcpy(mappedResource.pData, &worldViewProj, sizeof(DirectX::XMMATRIX));
+	//m_Context->Get()->Unmap(BufferMap["Matrix"], 0);
+
+
+ // 이동 변환 행렬을 생성합니다. 여기서는 x축으로 0.01 단위만큼 이동합니다.
+	static float offset = 0.0f;
+	offset += 0.01f; // 매 프레임마다 0.01 단위만큼 이동
+	static EngineTransform transform;
+
+	transform.AddLocation(offset, 0.f, 0.f);
+
+
+	// 기존의 WorldViewProj 행렬에 이동 변환을 적용합니다.
+	DirectX::XMMATRIX worldViewProj = DirectX::XMMatrixIdentity() * transform.GetWorldMatrix();
+
+	// D3D11_MAPPED_SUBRESOURCE 구조체를 선언합니다.
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
+
+	// Constant Buffer를 매핑하여 CPU 메모리 공간에 접근할 수 있도록 합니다.
 	HRESULT hr = m_Context->Get()->Map(BufferMap["Matrix"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 	if (hr != S_OK)
 	{
 		assert(false);
 	}
-	memcpy(mappedResource.pData, &worldViewProj, sizeof(DirectX::XMMATRIX));
-	m_Context->Get()->Unmap(BufferMap["Matrix"], 0);
 
+	// 매핑된 메모리 공간에 WorldViewProj 행렬 데이터를 씁니다.
+	memcpy(mappedResource.pData, &worldViewProj, sizeof(DirectX::XMMATRIX));
+
+	// 매핑된 메모리를 해제하여 GPU가 다시 리소스에 접근할 수 있도록 합니다.
+	m_Context->Get()->Unmap(BufferMap["Matrix"], 0);
 }
 
 void GraphicsEngine::CreateBuffer()
