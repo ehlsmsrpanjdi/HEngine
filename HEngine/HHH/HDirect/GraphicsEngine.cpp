@@ -310,10 +310,11 @@ void GraphicsEngine::UpdateConstantBuffer()
 
  // 이동 변환 행렬을 생성합니다. 여기서는 x축으로 0.01 단위만큼 이동합니다.
 	static float offset = 0.0f;
-	offset += 0.01f; // 매 프레임마다 0.01 단위만큼 이동
+	offset += 0.0001f; // 매 프레임마다 0.01 단위만큼 이동
 	static EngineTransform transform;
 
-	transform.AddLocation(offset, 0.f, 0.f);
+	//transform.AddRotation(0.f, 0.f, offset);
+	transform.AddScale(0.f, 0.f, offset);
 
 
 	// 기존의 WorldViewProj 행렬에 이동 변환을 적용합니다.

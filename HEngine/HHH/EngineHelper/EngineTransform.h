@@ -149,11 +149,36 @@ public:
 		XMStoreFloat4(&rotation, newRotation);
 	}
 
+	void AddRotation(float _x, float _y = 0, float _z = 0) {
+		// 회전 각도를 쿼터니언으로 변환
+		XMVECTOR additionalRotationX = XMQuaternionRotationRollPitchYaw(_x, 0.0f, 0.0f);
+		XMVECTOR additionalRotationY = XMQuaternionRotationRollPitchYaw(0.0f, _y, 0.0f);
+		XMVECTOR additionalRotationZ = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, _z);
+
+		// 현재 회전을 로드
+		XMVECTOR currentRotation = XMLoadFloat4(&rotation);
+
+		// 쿼터니언 곱셈을 사용하여 회전을 누적
+		XMVECTOR newRotation = XMQuaternionMultiply(currentRotation, additionalRotationX);
+		newRotation = XMQuaternionMultiply(newRotation, additionalRotationY);
+		newRotation = XMQuaternionMultiply(newRotation, additionalRotationZ);
+
+		// 결과를 저장
+		XMStoreFloat4(&rotation, newRotation);
+	}
+
 	void AddScale(const XMFLOAT3& _Scale) {
 		scale.x += _Scale.x;
 		scale.y += _Scale.y;
 		scale.z += _Scale.z;
 	}
+
+	void AddScale(float _x, float _y = 0.f, float _z = 0.f) {
+		scale.x += _x;
+		scale.y += _y;
+		scale.z += _z;
+	}
+
 
 	void SetLocation(const XMFLOAT3& _position) {
 		position = _position;
