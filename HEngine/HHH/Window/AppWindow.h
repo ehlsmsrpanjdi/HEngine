@@ -18,6 +18,6 @@ protected:
 	std::shared_ptr<class EngineKey> KeyManager = nullptr;
 	std::shared_ptr<class EngineTime> TimeManager = nullptr;
 	std::shared_ptr<class EngineFile> FileManager = nullptr;
-
+	
 private:
 };

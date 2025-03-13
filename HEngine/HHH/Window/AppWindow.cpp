@@ -3,6 +3,7 @@
 #include "EngineHelper/EngineTime.h"
 #include "EngineHelper/EngineKey.h"
 #include "HDirect/GraphicsEngine.h"
+#include "GameEngine/GameEngine.h"
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -32,7 +33,7 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);
 	GraphicsEngine::get()->CreateHlsl(FileManager.get());
-
+	GameEngine::get()->test();
 }
 
 

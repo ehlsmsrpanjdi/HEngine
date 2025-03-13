@@ -30,6 +30,9 @@
     <ProjectReference Include="..\EngineHelper\EngineHelper.vcxproj">
       <Project>{96ba0ecd-aefb-44b2-85c9-7825cb73f21e}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
+      <Project>{b6501716-2724-4376-94b7-807d1de2c52f}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\HDirect\HDirect.vcxproj">
       <Project>{b788baab-1e09-4a2b-9b3d-90744bd7f207}</Project>
     </ProjectReference>
