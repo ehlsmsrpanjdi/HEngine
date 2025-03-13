@@ -33,16 +33,19 @@ public:
 	void CreateCamera(std::string _Name);
 	void SetMainCamera(std::string _Name);
 
-	class std::shared_ptr<class Actor> SpawnActor();
 
-	std::map<std::string, class Actor*> AllCamera;
-	std::list<std::shared_ptr<class Actor>> AllActor;
+	void CameraUpdate();
+	std::shared_ptr<class Actor> SpawnActor();
+
 
 protected:
 
 private:
 	class Actor* MainCamera = nullptr;
 	GameEngine();
+
+	std::map<std::string, class Actor*> AllCamera;
+	std::list<std::shared_ptr<class Actor>> AllActor;
 };
 
 

@@ -11,6 +11,7 @@
 #include "GraphicDevice.h"
 #include "BufferInfo.h"
 #include "EngineHelper/EngineTransform.h"
+#include "EngineHelper/EngineDebug.h"
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -141,7 +142,7 @@ void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 	CreateBuffer();
 	CreateLayout();
 	CreateIndexBuffer();
-	CreateConstantBuffer();
+	CreateAllCBuffer();
 }
 
 void GraphicsEngine::CompileShader(EngineFile* _fileManager)
@@ -304,25 +305,20 @@ void GraphicsEngine::CreateConstantBuffer(std::string _str)
 	}
 }
 
-void GraphicsEngine::UpdateConstantBuffer()
+void GraphicsEngine::UpdateConstantBuffer(const EngineTransform& _transform, std::string_view _str)
 {
- // 이동 변환 행렬을 생성합니다. 여기서는 x축으로 0.01 단위만큼 이동합니다.
-	static float offset = 0.0f;
-	offset += 0.0001f; // 매 프레임마다 0.01 단위만큼 이동
-	static EngineTransform transform;
-
-	//transform.AddRotation(0.f, 0.f, offset);
-	transform.AddScale(0.f, 0.f, offset);
-
-
-	// 기존의 WorldViewProj 행렬에 이동 변환을 적용합니다.
-	DirectX::XMMATRIX worldViewProj = DirectX::XMMatrixIdentity() * transform.GetWorldMatrix();
+	std::string str = HString::Upper(_str.data());
+	if (ConstantBufferMap.contains(str) == false) {
+		EngineDebug::Error("없는상수버퍼업데이트");
+		return;
+	}
+	DirectX::XMMATRIX worldViewProj = _transform.GetWorldMatrix();
 
 	// D3D11_MAPPED_SUBRESOURCE 구조체를 선언합니다.
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 
 	// Constant Buffer를 매핑하여 CPU 메모리 공간에 접근할 수 있도록 합니다.
-	HRESULT hr = m_Context->Get()->Map(BufferMap["Matrix"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	HRESULT hr = m_Context->Get()->Map(ConstantBufferMap[str], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 	if (hr != S_OK)
 	{
 		assert(false);
@@ -332,7 +328,7 @@ void GraphicsEngine::UpdateConstantBuffer()
 	memcpy(mappedResource.pData, &worldViewProj, sizeof(DirectX::XMMATRIX));
 
 	// 매핑된 메모리를 해제하여 GPU가 다시 리소스에 접근할 수 있도록 합니다.
-	m_Context->Get()->Unmap(BufferMap["Matrix"], 0);
+	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
 }
 
 void GraphicsEngine::CreateBuffer()
@@ -388,7 +384,7 @@ void GraphicsEngine::SetBuffer()
 	{
 		// Handle error: BufferInfo not found or not initialized
 	}
-	UpdateConstantBuffer();
+	//UpdateConstantBuffer();
 
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
@@ -396,7 +392,7 @@ void GraphicsEngine::SetBuffer()
 	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
 	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
 
-	m_Context->Get()->VSSetConstantBuffers(0, 1, &BufferMap["Matrix"]);
+	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap["CAMERA"]);
 
 	m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);

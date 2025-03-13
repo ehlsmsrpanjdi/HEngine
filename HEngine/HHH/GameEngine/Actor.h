@@ -21,6 +21,8 @@ public:
 	void SetActorLocation(float _x, float _y, float _z);
 	void SetActorScale(float _x, float _y, float _z);
 	void SetActorRotation(float _x, float _y, float _z);
+
+	const EngineTransform& GetTransform();
 protected:
 
 private:

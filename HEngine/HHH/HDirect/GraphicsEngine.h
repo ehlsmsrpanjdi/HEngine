@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <memory>
+#include "EngineHelper/EngineTransform.h"
 
 class SwapChain;
 class DeviceContext;
@@ -72,7 +73,7 @@ public:
 
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
-	void UpdateConstantBuffer();
+	void UpdateConstantBuffer(const EngineTransform& _transform, std::string_view _str);
 
 	void SetBuffer();
 

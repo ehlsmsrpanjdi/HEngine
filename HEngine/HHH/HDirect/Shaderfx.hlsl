@@ -1,12 +1,12 @@
-cbuffer constant : register(b0)
+cbuffer Camera : register(b0)
 {
-    float4x4 WorldViewProj;
+    float4x4 CameraProj;
 }
 
 
 float4 vsmain(float4 pos : POSITION) : SV_POSITION
 {
-    pos = mul(pos, WorldViewProj);
+    pos = mul(pos, CameraProj);
     return pos;
 }
 

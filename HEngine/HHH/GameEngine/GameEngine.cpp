@@ -3,6 +3,9 @@
 #include "assert.h"
 #include "Windows.h"
 #include "EngineHelper/HString.h"
+#include "HDirect/GraphicsEngine.h"
+#include "EngineHelper/EngineDebug.h"	
+
 
 GameEngine::GameEngine()
 {
@@ -26,11 +29,10 @@ void GameEngine::release()
 
 void GameEngine::Update(float _DeltaTime)
 {
-	if (MainCamera == nullptr) {
-		MessageBoxA(NULL, "메인카메라없음","경고", MB_OK | MB_ICONERROR);
-		exit(EXIT_FAILURE);
-		return;
-	}
+
+
+	CameraUpdate();
+
 }
 
 void GameEngine::CreateCamera(std::string _Name)
@@ -50,6 +52,19 @@ void GameEngine::SetMainCamera(std::string _Name)
 		MainCamera = AllCamera[str];
 	}
 	return;
+}
+
+void GameEngine::CameraUpdate()
+{
+	if (MainCamera == nullptr) {
+		EngineDebug::Error("카메라 없는데 업데이트중");
+		exit(EXIT_FAILURE);
+		return;
+	}
+	else {
+		GraphicsEngine::get()->UpdateConstantBuffer(MainCamera->GetTransform(), "camera");
+	}
+
 }
 
 std::shared_ptr<Actor> GameEngine::SpawnActor()
