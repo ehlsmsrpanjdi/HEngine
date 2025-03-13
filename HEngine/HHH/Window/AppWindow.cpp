@@ -33,13 +33,14 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);
 	GraphicsEngine::get()->CreateHlsl(FileManager.get());
-	GameEngine::get()->test();
+	GameEngine::get()->Init();
 }
 
 
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
+	GameEngine::get()->Update(1.f);
 	KeyManager->Update();
 	TimeManager->Update();
 

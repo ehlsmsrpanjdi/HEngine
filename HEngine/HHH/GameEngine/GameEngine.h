@@ -16,6 +16,9 @@ public:
 	GameEngine& operator=(const GameEngine& _Other) = delete;
 	GameEngine& operator=(GameEngine&& _Other) noexcept = delete;
 
+	void Init();
+
+	void Update(float _DeltaTime);
 
 	static GameEngine* get() {
 		static GameEngine Engine;
@@ -27,7 +30,7 @@ public:
 	}
 
 	void CreateCamera(std::string _Name);
-	void SetCamera(std::string _Name);
+	void SetMainCamera(std::string _Name);
 
 	class std::shared_ptr<class Actor> SpawnActor();
 
