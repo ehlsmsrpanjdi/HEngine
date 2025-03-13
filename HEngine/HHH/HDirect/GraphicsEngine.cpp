@@ -48,6 +48,8 @@ bool GraphicsEngine::release()
 	m_SwapChain = nullptr;
 	m_DepthView = nullptr;
 
+
+
 	return true;
 }
 
@@ -279,8 +281,15 @@ void GraphicsEngine::CreateIndexBuffer()
 	}
 }
 
-void GraphicsEngine::CreateConstantBuffer()
+void GraphicsEngine::CreateAllCBuffer()
 {
+	CreateConstantBuffer("World");
+	CreateConstantBuffer("Camera");
+}
+
+void GraphicsEngine::CreateConstantBuffer(std::string _str)
+{
+	std::string str = HString::Upper(_str);
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DYNAMIC;
 	buff_desc.ByteWidth = sizeof(DirectX::XMMATRIX);
@@ -288,7 +297,7 @@ void GraphicsEngine::CreateConstantBuffer()
 	buff_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	buff_desc.MiscFlags = 0;
 	buff_desc.StructureByteStride = 0;
-	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, nullptr, &BufferMap["Matrix"]);
+	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, nullptr, &ConstantBufferMap[str]);
 	if (hr != S_OK)
 	{
 		assert(false);
@@ -297,17 +306,6 @@ void GraphicsEngine::CreateConstantBuffer()
 
 void GraphicsEngine::UpdateConstantBuffer()
 {
-	//DirectX::XMMATRIX worldViewProj = DirectX::XMMatrixIdentity(); // 예시로 단순히 단위 행렬을 사용
-	//D3D11_MAPPED_SUBRESOURCE mappedResource;
-	//HRESULT hr = m_Context->Get()->Map(BufferMap["Matrix"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	//if (hr != S_OK)
-	//{
-	//	assert(false);
-	//}
-	//memcpy(mappedResource.pData, &worldViewProj, sizeof(DirectX::XMMATRIX));
-	//m_Context->Get()->Unmap(BufferMap["Matrix"], 0);
-
-
  // 이동 변환 행렬을 생성합니다. 여기서는 x축으로 0.01 단위만큼 이동합니다.
 	static float offset = 0.0f;
 	offset += 0.0001f; // 매 프레임마다 0.01 단위만큼 이동

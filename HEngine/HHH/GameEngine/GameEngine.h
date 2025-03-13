@@ -17,6 +17,7 @@ public:
 	GameEngine& operator=(GameEngine&& _Other) noexcept = delete;
 
 	void Init();
+	void release();
 
 	void Update(float _DeltaTime);
 

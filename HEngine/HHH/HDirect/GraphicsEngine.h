@@ -56,6 +56,8 @@ public:
 	std::unordered_map<std::string, ID3D11Buffer*> BufferMap;
 	std::unordered_map<std::string, ID3D11Buffer*> IndexBufferMap;
 
+	std::unordered_map<std::string, ID3D11Buffer*> ConstantBufferMap;
+
 
 	std::unordered_map<std::string, ID3D11InputLayout*> LayoutMap;
 
@@ -68,7 +70,8 @@ public:
 	void CreateLayout();
 	void CreateIndexBuffer();
 
-	void CreateConstantBuffer();
+	void CreateAllCBuffer();
+	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer();
 
 	void SetBuffer();

@@ -16,7 +16,12 @@ void GameEngine::Init()
 {
 	CreateCamera("temp");
 	SetMainCamera("temp");
-	
+}
+
+void GameEngine::release()
+{
+	AllCamera.clear();
+	AllActor.clear();
 }
 
 void GameEngine::Update(float _DeltaTime)
