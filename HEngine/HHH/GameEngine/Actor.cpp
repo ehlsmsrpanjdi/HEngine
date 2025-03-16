@@ -8,6 +8,18 @@ Actor::~Actor()
 {
 }
 
+void Actor::BeginPlay()
+{
+}
+
+void Actor::Tick(float _DeltaTime)
+{
+}
+
+void Actor::Render()
+{
+}
+
 void Actor::AddActorLocation(float _x, float _y, float _z)
 {
 	ActorTransform.AddLocation(_x, _y, _z);
@@ -38,7 +50,7 @@ void Actor::SetActorRotation(float _x, float _y, float _z)
 	ActorTransform.SetRotation(XMFLOAT4(_x, _y, _z, 1.f));
 }
 
-const EngineTransform& Actor::GetTransform()
+EngineTransform Actor::GetTransform()
 {
 	return ActorTransform;
 }

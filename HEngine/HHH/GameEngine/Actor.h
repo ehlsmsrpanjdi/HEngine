@@ -14,6 +14,10 @@ public:
 	Actor& operator=(const Actor& _Other) = delete;
 	Actor& operator=(Actor&& _Other) noexcept = delete;
 
+	void BeginPlay();
+	void Tick(float _DeltaTime);
+	void Render();
+
 	void AddActorLocation(float _x, float _y = 0, float _z = 0);
 	void AddActorScale(float _x, float _y = 0, float _z = 0);
 	void AddActorRotation(float _x, float _y = 0, float _z = 0);
@@ -22,7 +26,7 @@ public:
 	void SetActorScale(float _x, float _y, float _z);
 	void SetActorRotation(float _x, float _y, float _z);
 
-	const EngineTransform& GetTransform();
+	EngineTransform GetTransform();
 protected:
 
 private:

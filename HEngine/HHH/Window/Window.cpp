@@ -64,7 +64,8 @@ bool Window::init()
 		window = this;
 	}
 
-	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, EngineName, "DirectX Application", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
+	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, EngineName, "DirectX Application",
+		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WindowX, WindowY,
 		NULL, NULL, NULL, NULL);
 
 	if (!m_hwnd) {
@@ -140,6 +141,12 @@ void Window::onUpdate()
 void Window::onDestroy()
 {
 	m_is_run = false;
+}
+
+void Window::SetSize(int _x, int _y)
+{
+	WindowX = _x;
+	WindowY = _y;
 }
 
 void Window::OnSize()

@@ -33,7 +33,7 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);
 	GraphicsEngine::get()->CreateHlsl(FileManager.get());
-	GameEngine::get()->Init();
+	GameEngine::get()->Init(rc);
 }
 
 
@@ -47,7 +47,7 @@ void AppWindow::onUpdate()
 	if (EngineKey::IsDown('Z') == true) {
 		int a = 0;
 	}
-	GraphicsEngine::get()->Presnet(0.5f, 0.5f, 0.5f, 1.f, true);
+	GraphicsEngine::get()->Presnet(1.0f,0.5,0.5,1.0f, true);
 
 }
 

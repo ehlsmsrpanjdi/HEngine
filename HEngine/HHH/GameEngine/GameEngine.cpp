@@ -1,11 +1,9 @@
 #include "GameEngine.h"
 #include "Actor.h"
 #include "assert.h"
-#include "Windows.h"
 #include "EngineHelper/HString.h"
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/EngineDebug.h"	
-
 
 GameEngine::GameEngine()
 {
@@ -15,10 +13,23 @@ GameEngine::~GameEngine()
 {
 }
 
-void GameEngine::Init()
+void GameEngine::Init(RECT _rc)
 {
+	float width = (float)(_rc.right - _rc.left);
+	float height = (float)(_rc.bottom - _rc.top);
+
+	AspectRatio = width / height;
+
+	if (isPersepectiveChange == true) {
+		isPersepectiveChange = false;
+		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
+	}
+
 	CreateCamera("temp");
 	SetMainCamera("temp");
+
+	MainCamera->AddActorLocation(0.f, 0.f, -2.f);
+
 }
 
 void GameEngine::release()
@@ -29,10 +40,31 @@ void GameEngine::release()
 
 void GameEngine::Update(float _DeltaTime)
 {
-
-
+	if (isPersepectiveChange == true) {
+		isPersepectiveChange = false;
+		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
+	}
 	CameraUpdate();
 
+	MainCamera->AddActorLocation(0.01f, 0.0f, 0.f);
+
+	for (std::shared_ptr<Actor> Act : AllActor) {
+		Act->Tick(_DeltaTime);
+	}
+
+	Render();
+}
+
+void GameEngine::Render()
+{
+	WorldMatrix = DirectX::XMMatrixIdentity();
+	WVP = WorldMatrix * ViewMatrix * PerseMatrix;
+	GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
+	//for (std::shared_ptr<Actor> Act : AllActor) {
+	//	WorldMatrix = Act->GetTransform().GetWorldMatrix();
+	//	WVP = WorldMatrix* ViewMatrix* PerseMatrix;
+	//	GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
+	//}
 }
 
 void GameEngine::CreateCamera(std::string _Name)
@@ -62,7 +94,7 @@ void GameEngine::CameraUpdate()
 		return;
 	}
 	else {
-		GraphicsEngine::get()->UpdateConstantBuffer(MainCamera->GetTransform(), "camera");
+		ViewMatrix = MainCamera->GetTransform().GetInverseMatrix();
 	}
 
 }

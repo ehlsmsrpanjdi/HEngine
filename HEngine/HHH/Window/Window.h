@@ -17,10 +17,14 @@ public:
 	virtual void onCreate();
 	virtual void onUpdate();
 	virtual void onDestroy();
+	virtual void SetSize(int _x, int _y);
 	virtual void OnSize();
 
 protected:
 	HWND m_hwnd = NULL;
 	bool m_is_run = false;;
+
+	int WindowX = 1024;
+	int WindowY = 768;
 };
 

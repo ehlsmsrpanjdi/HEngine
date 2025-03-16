@@ -73,7 +73,7 @@ public:
 
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
-	void UpdateConstantBuffer(const EngineTransform& _transform, std::string_view _str);
+	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
 
 	void SetBuffer();
 

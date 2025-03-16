@@ -1,12 +1,12 @@
-cbuffer Camera : register(b0)
+cbuffer WVP : register(b0)
 {
-    float4x4 CameraProj;
+    float4x4 WVPMatrix;
 }
 
 
 float4 vsmain(float4 pos : POSITION) : SV_POSITION
 {
-    pos = mul(pos, CameraProj);
+    pos = mul(pos, WVPMatrix);
     return pos;
 }
 

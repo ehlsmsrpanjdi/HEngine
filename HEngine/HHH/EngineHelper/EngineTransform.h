@@ -21,7 +21,7 @@ public:
 	XMFLOAT3 scale;
 
 	XMMATRIX Identity() {
-		return XMMatrixIdentity();
+		return DirectX::XMMatrixIdentity();
 	}
 
 	void AddLocation(const XMFLOAT3& _position) {
@@ -107,6 +107,39 @@ public:
 
 		// Scale * Rotation * Translation 순서로 곱하기
 		return scaleMat * rotationMat * translationMat; // S * R * T
+	}
+
+	XMMATRIX GetInverseMatrix() {
+		XMVECTOR determinant;
+		XMMATRIX inverseMatrix = DirectX::XMMatrixInverse(&determinant, GetWorldMatrix());
+
+		// 행렬식이 0인 경우
+		if (XMVectorGetX(determinant) == 0.0f) {
+			return XMMATRIX();
+		}
+		else {
+			return inverseMatrix;
+		}
+	}
+
+	XMMATRIX GetViewMatrix() const {
+		// 카메라의 위치
+		XMVECTOR eyePosition = XMLoadFloat3(&position);
+
+		// 카메라의 회전 (쿼터니언)
+		XMVECTOR quaternion = XMLoadFloat4(&rotation);
+        XMMATRIX rotationMatrix = DirectX::XMMatrixRotationQuaternion(quaternion);
+
+		// 카메라의 방향 벡터 (기본적으로 -Z 방향)
+		XMVECTOR forward = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
+		forward = XMVector3Transform(forward, rotationMatrix);
+
+		// 카메라의 업 벡터 (기본적으로 Y 방향)
+		XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+		up = XMVector3Transform(up, rotationMatrix);
+
+		// 뷰 행렬 계산
+		return DirectX::XMMatrixLookToLH(eyePosition, forward, up);
 	}
 };
 

@@ -13,6 +13,11 @@
 #include "EngineHelper/EngineTransform.h"
 #include "EngineHelper/EngineDebug.h"
 
+namespace Cbuffer {
+	std::string WVP = "WVPMatrix";
+}
+
+
 GraphicsEngine::GraphicsEngine()
 {
 	m_Context = std::make_shared<DeviceContext>();
@@ -284,8 +289,7 @@ void GraphicsEngine::CreateIndexBuffer()
 
 void GraphicsEngine::CreateAllCBuffer()
 {
-	CreateConstantBuffer("World");
-	CreateConstantBuffer("Camera");
+	CreateConstantBuffer(Cbuffer::WVP);
 }
 
 void GraphicsEngine::CreateConstantBuffer(std::string _str)
@@ -305,15 +309,13 @@ void GraphicsEngine::CreateConstantBuffer(std::string _str)
 	}
 }
 
-void GraphicsEngine::UpdateConstantBuffer(const EngineTransform& _transform, std::string_view _str)
+void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
 	if (ConstantBufferMap.contains(str) == false) {
 		EngineDebug::Error("없는상수버퍼업데이트");
 		return;
 	}
-	DirectX::XMMATRIX worldViewProj = _transform.GetWorldMatrix();
-
 	// D3D11_MAPPED_SUBRESOURCE 구조체를 선언합니다.
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 
@@ -324,8 +326,9 @@ void GraphicsEngine::UpdateConstantBuffer(const EngineTransform& _transform, std
 		assert(false);
 	}
 
+
 	// 매핑된 메모리 공간에 WorldViewProj 행렬 데이터를 씁니다.
-	memcpy(mappedResource.pData, &worldViewProj, sizeof(DirectX::XMMATRIX));
+	memcpy(mappedResource.pData, &_Matrix, sizeof(DirectX::XMMATRIX));
 
 	// 매핑된 메모리를 해제하여 GPU가 다시 리소스에 접근할 수 있도록 합니다.
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
@@ -392,7 +395,7 @@ void GraphicsEngine::SetBuffer()
 	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
 	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
 
-	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap["CAMERA"]);
+	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
 
 	m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
