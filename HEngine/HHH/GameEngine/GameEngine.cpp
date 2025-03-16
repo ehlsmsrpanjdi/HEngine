@@ -29,6 +29,7 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	MainCamera->AddActorLocation(0.f, 0.f, -2.f);
+	//MainCamera->AddActorRotation(0.f, 0.f, 45.f);
 
 }
 
@@ -47,10 +48,9 @@ void GameEngine::Update(float _DeltaTime)
 	CameraUpdate();
 
 	MainCamera->AddActorLocation(0.01f, 0.0f, 0.f);
-
-	for (std::shared_ptr<Actor> Act : AllActor) {
-		Act->Tick(_DeltaTime);
-	}
+	//for (std::shared_ptr<Actor> Act : AllActor) {
+	//	Act->Tick(_DeltaTime);
+	//}
 
 	Render();
 }
