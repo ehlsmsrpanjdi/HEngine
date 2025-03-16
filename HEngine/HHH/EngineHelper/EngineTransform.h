@@ -92,6 +92,10 @@ public:
 		scale = _Scale;
 	}
 
+	void SetScale(float _x, float _y, float _z) {
+		scale = XMFLOAT3(_x, _y, _z);
+	}
+
 	// 각 변환 행렬을 개별적으로 계산하고, 최종 월드 행렬을 반환
 	XMMATRIX GetWorldMatrix() const
 	{

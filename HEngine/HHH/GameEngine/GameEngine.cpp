@@ -46,7 +46,7 @@ void GameEngine::Update(float _DeltaTime)
 		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
 	}
 	CameraUpdate();
-
+	EngineTransform trasn;
 	MainCamera->AddActorLocation(0.01f, 0.0f, 0.f);
 	//for (std::shared_ptr<Actor> Act : AllActor) {
 	//	Act->Tick(_DeltaTime);
@@ -57,8 +57,10 @@ void GameEngine::Update(float _DeltaTime)
 
 void GameEngine::Render()
 {
-	WorldMatrix = DirectX::XMMatrixIdentity();
-	WVP = WorldMatrix * ViewMatrix * PerseMatrix;
+	EngineTransform trans;
+	//trans.SetScale(2.0f, 2.0f, 1.0f);
+	//WorldMatrix = DirectX::XMMatrixIdentity();
+	WVP = trans.GetWorldMatrix() * ViewMatrix * PerseMatrix;
 	GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
 	//for (std::shared_ptr<Actor> Act : AllActor) {
 	//	WorldMatrix = Act->GetTransform().GetWorldMatrix();
