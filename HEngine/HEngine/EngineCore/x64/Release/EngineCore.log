@@ -1,6 +1,0 @@
-﻿  pch.cpp
-  Actor.cpp
-  BaseObject.cpp
-  EngineCore.cpp
-  Renderer.cpp
-  EngineCore.vcxproj -> D:\SMGit\Hengine\HEngine\HEngine\x64\Release\EngineCore.lib
