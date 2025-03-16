@@ -6,7 +6,7 @@ cbuffer WVP : register(b0)
 
 float4 vsmain(float4 pos : POSITION) : SV_POSITION
 {
-    pos = mul(pos, WVPMatrix);
+    pos = mul(WVPMatrix, pos);
     return pos;
 }
 
