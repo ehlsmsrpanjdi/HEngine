@@ -1,7 +1,7 @@
 #pragma once
 #include "EnginePath.h"
 #include "filesystem"
-#include <unordered_map>
+#include <map>
 #include "HString.h"
 
 
@@ -45,7 +45,8 @@ public:
 
 
 private:
-	std::unordered_map<std::string, std::string> Files;
-
+	std::map<std::string, std::string> Files;
+	std::map<std::string, std::string> AllFBXs;
+	std::map<std::string, std::map<std::string, std::string>> AllFiles;
 
 };

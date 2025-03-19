@@ -101,6 +101,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\2020.3.7\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +117,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\2020.3.7\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +133,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\2020.3.7\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +149,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\2020.3.7\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,6 +167,10 @@
     <ClInclude Include="EngineKey.h" />
     <ClInclude Include="EnginePath.h" />
     <ClInclude Include="EngineTime.h" />
+    <ClInclude Include="FBXTool.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="HString.h" />
     <ClInclude Include="EngineTransform.h" />
     <ClInclude Include="Vector3D.h" />
@@ -176,6 +184,10 @@
     <ClCompile Include="EngineKey.cpp" />
     <ClCompile Include="EnginePath.cpp" />
     <ClCompile Include="EngineTime.cpp" />
+    <ClCompile Include="FBXTool.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HString.cpp" />
     <ClCompile Include="EngineTransform.cpp" />
     <ClCompile Include="Vector3D.cpp" />

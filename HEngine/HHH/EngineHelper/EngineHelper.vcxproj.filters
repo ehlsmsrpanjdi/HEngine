@@ -19,6 +19,9 @@
     <Filter Include="EngineDebug">
       <UniqueIdentifier>{17913f0a-7dc8-40ef-989f-520eaaafd7d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FBX">
+      <UniqueIdentifier>{9f7863bd-c213-4489-bffd-be37de969ab3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineKey.h">
@@ -45,6 +48,9 @@
     <ClInclude Include="EngineDebug.h">
       <Filter>EngineDebug</Filter>
     </ClInclude>
+    <ClInclude Include="FBXTool.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -70,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="EngineDebug.cpp">
       <Filter>EngineDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="FBXTool.cpp">
+      <Filter>FBX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
