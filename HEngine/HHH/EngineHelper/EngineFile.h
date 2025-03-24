@@ -34,6 +34,11 @@ public:
 	//virtual fs::path AllFileRecursive(fs::path _my);
 
 	void AllExtendFileRecursive(const fs::path& _extend, const fs::path& _my = "");
+	void AllExtendFileRecursive();
+	void GetAllFile(std::string _str, fs::path _pa);
+	void GetAllFile(fs::path _pa);
+
+
 
 	std::string GetFile(std::string _str) {
 		std::string str = HString::Upper(_str);

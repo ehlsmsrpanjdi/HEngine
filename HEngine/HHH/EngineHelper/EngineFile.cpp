@@ -66,3 +66,38 @@ bool EngineFile::MovetoFile(fs::path _path)
 	}
 	return false;
 }
+
+
+void EngineFile::AllExtendFileRecursive() {
+	fs::path dirpath = pa;
+	for (fs::directory_entry entry : fs::directory_iterator(dirpath)) {
+		if (entry.is_directory() == true) {
+			GetAllFile(entry.path().filename().string(), entry.path());
+		}
+	}
+}
+
+
+void EngineFile::GetAllFile(std::string _str, fs::path _pa)
+{
+	AllFiles[_str];
+	for (fs::directory_entry entry : fs::directory_iterator(_pa)) {
+		AllFiles[_str].emplace(std::make_pair(entry.path().filename().stem().string(), entry.path().string()));
+	}
+}
+
+void EngineFile::GetAllFile(fs::path _pa)
+{
+	for (fs::directory_entry entry : fs::directory_iterator(_pa)) {
+
+	}
+}
+
+
+
+
+
+
+
+
+

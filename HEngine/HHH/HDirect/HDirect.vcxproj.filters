@@ -7,9 +7,6 @@
     <Filter Include="Graphic\GraphicDevice">
       <UniqueIdentifier>{9530d82e-9f17-4384-915b-635eeada39f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Hlsl">
-      <UniqueIdentifier>{b0d9bb2e-91c9-4467-9e20-8fb201bb8d5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphic\Render">
       <UniqueIdentifier>{8bfb1c9b-7baf-4765-b2b8-e1c9fd9da9c8}</UniqueIdentifier>
     </Filter>
@@ -68,13 +65,5 @@
     <ClInclude Include="BufferInfo.h">
       <Filter>Graphic\Buffer</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Hlsl</Filter>
-    </FxCompile>
-    <FxCompile Include="Shaderfx.hlsl">
-      <Filter>Hlsl</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>
