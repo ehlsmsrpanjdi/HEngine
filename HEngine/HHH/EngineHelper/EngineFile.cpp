@@ -72,25 +72,24 @@ void EngineFile::AllExtendFileRecursive() {
 	fs::path dirpath = pa;
 	for (fs::directory_entry entry : fs::directory_iterator(dirpath)) {
 		if (entry.is_directory() == true) {
-			GetAllFile(entry.path().filename().string(), entry.path());
+			FindAllFile(entry.path().filename().string(), entry.path());
 		}
 	}
 }
 
 
-void EngineFile::GetAllFile(std::string _str, fs::path _pa)
+void EngineFile::FindAllFile(std::string _str, fs::path _pa)
 {
-	AllFiles[_str];
+	AllFiles[HString::Upper(_str)];
 	for (fs::directory_entry entry : fs::directory_iterator(_pa)) {
-		AllFiles[_str].emplace(std::make_pair(entry.path().filename().stem().string(), entry.path().string()));
+		std::string str = HString::Upper(entry.path().filename().stem().string());
+		AllFiles[_str].emplace(std::make_pair(str, entry.path().string()));
 	}
 }
 
-void EngineFile::GetAllFile(fs::path _pa)
+const std::map<std::string, std::string>& EngineFile::GetAllFile(std::string _str)
 {
-	for (fs::directory_entry entry : fs::directory_iterator(_pa)) {
-
-	}
+	return AllFiles[HString::Upper(_str)];
 }
 
 

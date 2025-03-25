@@ -40,6 +40,7 @@ bool GraphicsEngine::init(HWND _hwnd, RECT rc)
 	m_DepthView->init(_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 	m_Context->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+
 	return true;
 }
 

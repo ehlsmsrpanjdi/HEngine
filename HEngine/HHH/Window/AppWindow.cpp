@@ -5,6 +5,7 @@
 #include "HDirect/GraphicsEngine.h"
 #include "GameEngine/GameEngine.h"
 #include "EngineHelper/EngineDebug.h"
+#include "EngineHelper/FBXTool.h"
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -32,6 +33,11 @@ void AppWindow::onCreate()
 		EngineDebug::Error("없는경로로 이동함");
 	}
 	FileManager->AllExtendFileRecursive();
+
+	//FBXTool::GetInst().Init();
+	FileManager->GetAllFile("fbx");
+
+	//FBXTool::GetInst().LoadFBX("asdf");
 	
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);

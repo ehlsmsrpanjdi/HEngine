@@ -35,8 +35,8 @@ public:
 
 	void AllExtendFileRecursive(const fs::path& _extend, const fs::path& _my = "");
 	void AllExtendFileRecursive();
-	void GetAllFile(std::string _str, fs::path _pa);
-	void GetAllFile(fs::path _pa);
+	void FindAllFile(std::string _str, fs::path _pa);
+	const std::map<std::string, std::string>& GetAllFile(std::string _str);
 
 
 

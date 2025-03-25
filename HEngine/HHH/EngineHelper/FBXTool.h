@@ -4,6 +4,7 @@
 #include <vector>
 #include <DirectXMath.h>
 #include <Windows.h>
+#pragma comment(lib, "fbxsdk.lib")
 // Ό³Έν :
 class FBXTool
 {
@@ -12,24 +13,24 @@ public:
 	~FBXTool();
 
 	// delete Function
-	FBXTool(const FBXTool& _Other) = delete;
-	FBXTool(FBXTool&& _Other) noexcept = delete;
-	FBXTool& operator=(const FBXTool& _Other) = delete;
-	FBXTool& operator=(FBXTool&& _Other) noexcept = delete;
+	//FBXTool(const FBXTool& _Other) = delete;
+	//FBXTool(FBXTool&& _Other) noexcept = delete;
+	//FBXTool& operator=(const FBXTool& _Other) = delete;
+	//FBXTool& operator=(FBXTool&& _Other) noexcept = delete;
 
 	static FBXTool& GetInst();
 
-	void Init();
+	//void Init();
 
-	void LoadFBX(const char* _filename);
+	//void LoadFBX(const char* _filename);
 
-	void ProcessNode(FbxNode* _pNode);
-	void ProcessMesh(FbxMesh* pMesh);
+	//void ProcessNode(FbxNode* _pNode);
+	//void ProcessMesh(FbxMesh* pMesh);
 
-	std::vector<DirectX::XMFLOAT3> vertices;
-	std::vector<DirectX::XMFLOAT3> normals;
-	std::vector<DirectX::XMFLOAT2> uvs;
-	std::vector<UINT> indices;
+	//std::vector<DirectX::XMFLOAT3> vertices;
+	//std::vector<DirectX::XMFLOAT3> normals;
+	//std::vector<DirectX::XMFLOAT2> uvs;
+	//std::vector<UINT> indices;
 
 protected:
 

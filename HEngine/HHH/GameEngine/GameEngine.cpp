@@ -25,6 +25,8 @@ void GameEngine::Init(RECT _rc)
 		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
 	}
 
+
+
 	CreateCamera("temp");
 	SetMainCamera("temp");
 
