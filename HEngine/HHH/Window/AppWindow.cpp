@@ -34,8 +34,8 @@ void AppWindow::onCreate()
 	}
 	FileManager->AllExtendFileRecursive();
 
-	//FBXTool::GetInst().Init();
-	FileManager->GetAllFile("fbx");
+	FBXTool::GetInst().Init();
+	//FileManager->GetAllFile("fbx");
 
 	//FBXTool::GetInst().LoadFBX("asdf");
 	

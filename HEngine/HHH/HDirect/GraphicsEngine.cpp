@@ -154,8 +154,9 @@ void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 {
 	HRESULT hr;
+	
 
-	std::wstring ws = HString::StoWC(_fileManager->GetFile("Shaderfx.hlsl"));
+	std::wstring ws = HString::StoWC(_fileManager->GetFile("hlsl", "Shaderfx"));
 	const WCHAR* wcc = ws.c_str();
 	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlobMap["vsmain"], &ErrorBlobMap["vsmain"]);
 
@@ -195,7 +196,7 @@ void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 void GraphicsEngine::CompileShader(EngineFile* _fileManager, BufferInfo* _Info)
 {
 	HRESULT hr;
-	std::wstring ws = HString::StoWC(_fileManager->GetFile("Shaderfx.hlsl"));
+	std::wstring ws = HString::StoWC(_fileManager->GetFile("hlsl", "Shaderfx"));
 	const WCHAR* wcc = ws.c_str();
 
 	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &_Info->VSBlob, &_Info->ErrorBlob);
