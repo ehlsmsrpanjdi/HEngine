@@ -1,5 +1,5 @@
 #include "FBXTool.h"
-
+#include "EngineFile.h"
 FBXTool::FBXTool()
 {
 }
@@ -36,6 +36,16 @@ void FBXTool::Init()
 	lSdkManager = FbxManager::Create();
 	ios = FbxIOSettings::Create(lSdkManager, IOSROOT);
 	lSdkManager->SetIOSettings(ios);
+}
+
+
+
+void FBXTool::LoadALLFBX(EngineFile* _fileManager)
+{
+	const std::map<std::string, std::string>& map = _fileManager->GetAllFile("fbx");
+	for (const std::pair<const std::string, std::string>& pa : map) {
+		LoadFBX(pa.second.c_str());
+	}
 }
 
 void FBXTool::LoadFBX(const char* _filename)

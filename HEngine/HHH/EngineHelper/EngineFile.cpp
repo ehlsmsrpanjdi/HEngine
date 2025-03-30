@@ -87,9 +87,16 @@ void EngineFile::FindAllFile(std::string _str, fs::path _pa)
 	}
 }
 
+
+
 std::string EngineFile::GetFile(std::string _str, std::string _FileName)
 {
 	return AllFiles[HString::Upper(_str)][HString::Upper(_FileName)];
+}
+
+const std::map<std::string, std::string>& EngineFile::GetAllFile(std::string _str)
+{
+	return AllFiles[HString::Upper(_str)];
 }
 
 

@@ -21,6 +21,8 @@ public:
 
 	void Init();
 
+
+	void LoadALLFBX(class EngineFile* _fileManager);
 	void LoadFBX(const char* _filename);
 
 	void ProcessNode(FbxNode* _pNode);

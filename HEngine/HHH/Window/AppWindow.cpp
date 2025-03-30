@@ -37,10 +37,10 @@ void AppWindow::onCreate()
 	FBXTool::GetInst().Init();
 	//FileManager->GetAllFile("fbx");
 
-	//FBXTool::GetInst().LoadFBX("asdf");
 	
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);
+	FBXTool::GetInst().LoadALLFBX(FileManager.get());
 	GraphicsEngine::get()->CreateHlsl(FileManager.get());
 	GameEngine::get()->Init(rc);
 }
