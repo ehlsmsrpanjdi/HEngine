@@ -31,7 +31,7 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	Actor* act = SpawnActor().get();
-	act->SetMesh("tree");
+	act->SetMesh("triangle");
 	act->SetMaterial("Basic");
 	//MainCamera->AddActorLocation(0.f, 0.f, -2.f);
 	//MainCamera->AddActorRotation(0.f, 0.f, 45.f);
@@ -63,8 +63,6 @@ void GameEngine::Update(float _DeltaTime)
 void GameEngine::Render()
 {
 	EngineTransform trans;
-	//trans.SetScale(2.0f, 2.0f, 1.0f);
-	//WorldMatrix = DirectX::XMMatrixIdentity();
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		WorldMatrix = Act->GetTransform().GetWorldMatrix();
 		WVP = WorldMatrix* ViewMatrix* PerseMatrix;
