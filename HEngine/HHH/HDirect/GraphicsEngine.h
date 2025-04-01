@@ -59,7 +59,6 @@ public:
 	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
 
-	void SetBuffer();
 
 	void Render(struct MT* _Material, struct MH* _Mesh);
 

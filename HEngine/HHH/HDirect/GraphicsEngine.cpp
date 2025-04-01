@@ -64,7 +64,6 @@ bool GraphicsEngine::release()
 void GraphicsEngine::Presnet(float red, float green, float blue, float alpha, bool _bool)
 {
 	m_Context->clearRenderTargetColor(m_SwapChain->m_rtv, m_DepthView->m_dsv, red, green, blue, alpha);
-	SetBuffer();
 	m_SwapChain->present(_bool);
 }
 
@@ -206,43 +205,6 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 
 	// 매핑된 메모리를 해제하여 GPU가 다시 리소스에 접근할 수 있도록 합니다.
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
-}
-
-void GraphicsEngine::SetBuffer()
-{
-
-	//DirectX::XMFLOAT3 list[] = {
-	//	{-0.5f, -0.5f, 0.f},	//좌측 하단
-	//	{-0.5f, 0.5f, 0.f},		//좌측 상단
-	//	{0.5f, -0.5f, 0.f},		//우측 하단
-	//	{0.5f, 0.5f, 0.f}		//우측 상단
-	//};
-
-	//UINT size_list = ARRAYSIZE(list);
-	//UINT vertex_size = sizeof(DirectX::XMFLOAT3);
-
-	//if (BufferMap.find("vsmain") != BufferMap.end() && BufferMap["vsmain"] != nullptr)
-	//{
-	//	UINT stride = vertex_size;
-	//	UINT offset = 0;
-	//	m_Context->Get()->IASetVertexBuffers(0, 1, &BufferMap["vsmain"], &stride, &offset);
-	//}
-	//else
-	//{
-	//	// Handle error: BufferInfo not found or not initialized
-	//}
-	////UpdateConstantBuffer();
-
-	//m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	////m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
-	//m_Context->Get()->IASetIndexBuffer(IndexBufferMap["vsmain"], DXGI_FORMAT_R32_UINT, 0);
-	////m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
-	////m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
-
-	//m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
-
-	//m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
-	//m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 }
 
 void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
