@@ -1,0 +1,40 @@
+﻿빌드 시작: 2025-04-01 오후 2:34:47
+로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>2 노드의 "D:\SMGit\Hengine\HEngine\HHH\HDirect\HDirect.vcxproj" 프로젝트(Build 대상)입니다.
+     1>PrepareForBuild:
+         구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
+         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.tlog\" 디렉터리를 만들고 있습니다.
+       InitializeBuildStatus:
+         "AlwaysCreate"이(가) 지정되었기 때문에 "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\bin\HostX64\x64\CL.exe /c /Zi /nologo /W3 /WX- /diagnostics:column /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /permissive- /Fo"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\\" /Fd"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt BufferInfo.cpp DepthView.cpp DeviceContext.cpp GraphicDevice.cpp GraphicsEngine.cpp SwapChain.cpp
+         BufferInfo.cpp
+         DepthView.cpp
+         DeviceContext.cpp
+         GraphicDevice.cpp
+         GraphicsEngine.cpp
+     1>D:\SMGit\Hengine\HEngine\HHH\HDirect\GraphicsEngine.cpp(161,18): warning C4267: '초기화 중': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         SwapChain.cpp
+       Lib:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\bin\HostX64\x64\Lib.exe /OUT:"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.lib" /NOLOGO /MACHINE:X64 /LTCG D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\BufferInfo.obj
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\DepthView.obj
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\DeviceContext.obj
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\GraphicDevice.obj
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\GraphicsEngine.obj
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\SwapChain.obj
+         HDirect.vcxproj -> D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.lib
+       FinalizeBuildStatus:
+         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.tlog\HDirect.lastbuildstate"에 연결(touching)하고 있습니다.
+     1>"D:\SMGit\Hengine\HEngine\HHH\HDirect\HDirect.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+       "D:\SMGit\Hengine\HEngine\HHH\HDirect\HDirect.vcxproj"(Build 대상)(1) ->
+       (ClCompile 대상) -> 
+         D:\SMGit\Hengine\HEngine\HHH\HDirect\GraphicsEngine.cpp(161,18): warning C4267: '초기화 중': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+
+    경고 1개
+    오류 0개
+
+경과 시간: 00:00:06.19

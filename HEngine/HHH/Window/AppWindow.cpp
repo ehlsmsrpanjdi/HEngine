@@ -41,6 +41,7 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);
 	FBXTool::GetInst().LoadALLFBX(FileManager.get());
+	GraphicsEngine::get()->MeshCreateBuffer(FBXTool::GetInst().GetMesh());
 	GraphicsEngine::get()->CreateHlsl(FileManager.get());
 	GameEngine::get()->Init(rc);
 }

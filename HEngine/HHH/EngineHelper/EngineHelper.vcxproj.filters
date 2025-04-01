@@ -51,6 +51,7 @@
     <ClInclude Include="FBXTool.h">
       <Filter>FBX</Filter>
     </ClInclude>
+    <ClInclude Include="AllStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -80,5 +81,6 @@
     <ClCompile Include="FBXTool.cpp">
       <Filter>FBX</Filter>
     </ClCompile>
+    <ClCompile Include="AllStruct.cpp" />
   </ItemGroup>
 </Project>

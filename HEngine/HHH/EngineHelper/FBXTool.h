@@ -3,8 +3,10 @@
 #include <vector>
 #include <DirectXMath.h>
 #include <Windows.h>
+
 #include "fbxsdk.h"
 #pragma comment(lib, "libfbxsdk.lib")
+
 // Ό³Έν :
 class FBXTool
 {
@@ -23,15 +25,22 @@ public:
 
 
 	void LoadALLFBX(class EngineFile* _fileManager);
-	void LoadFBX(const char* _filename);
+	void LoadFBX(const char* _filename, std::string _Name);
 
-	void ProcessNode(FbxNode* _pNode);
-	void ProcessMesh(FbxMesh* pMesh);
+	void ProcessNode(FbxNode* _pNode, std::string _Name);
+	void ProcessMesh(FbxMesh* pMesh, std::string _Name);
 
-	std::vector<DirectX::XMFLOAT3> vertices;
-	std::vector<DirectX::XMFLOAT3> normals;
-	std::vector<DirectX::XMFLOAT2> uvs;
-	std::vector<UINT> indices;
+	std::vector<struct FBXMesh*> AllMesh;
+
+	std::vector<struct FBXMesh*>& GetMesh() {
+		return AllMesh;
+	}
+
+
+	//std::vector<DirectX::XMFLOAT3> vertices;
+	//std::vector<DirectX::XMFLOAT3> normals;
+	//std::vector<DirectX::XMFLOAT2> uvs;
+	//std::vector<UINT> indices;
 
 protected:
 

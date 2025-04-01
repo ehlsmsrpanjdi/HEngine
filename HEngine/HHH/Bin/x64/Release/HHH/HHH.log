@@ -1,0 +1,29 @@
+﻿빌드 시작: 2025-04-01 오후 2:35:51
+로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>3 노드의 "D:\SMGit\Hengine\HEngine\HHH\HHH\HHH.vcxproj" 프로젝트(Build 대상)입니다.
+     1>PrepareForBuild:
+         구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
+       InitializeBuildStatus:
+         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+       ClCompile:
+         모든 출력이 최신 상태입니다.
+       Link:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\bin\HostX64\x64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /LTCGOUT:"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.iobj" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.lib" /MACHINE:X64 D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\main.obj
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper.lib
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HDirect\HDirect.lib
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\GameEngine\GameEngine.lib
+         D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\Window\Window.lib
+         코드를 생성하고 있습니다.
+         Previous IPDB not found, fall back to full compilation.
+         All 2137 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+         코드를 생성했습니다.
+         HHH.vcxproj -> D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.exe
+       FinalizeBuildStatus:
+         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\HHH\HHH.tlog\HHH.lastbuildstate"에 연결(touching)하고 있습니다.
+     1>"D:\SMGit\Hengine\HEngine\HHH\HHH\HHH.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+    경고 0개
+    오류 0개
+
+경과 시간: 00:00:01.11

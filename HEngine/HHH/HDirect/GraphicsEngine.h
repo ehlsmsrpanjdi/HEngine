@@ -43,8 +43,8 @@ public:
 
 public:
 	void ResizeBuffers();
-#pragma region "½¦ÀÌ´õ"
 public:
+#pragma region "¸â¹öº¯¼ö"
 	std::unordered_map<std::string, ID3DBlob*> VSBlobMap;
 	std::unordered_map<std::string, ID3DBlob*> PSBlobMap;
 
@@ -62,14 +62,18 @@ public:
 
 	std::unordered_map<std::string, ID3D11InputLayout*> LayoutMap;
 
+#pragma endregion
+
+#pragma region "¹öÆÛ"
 	void CreateHlsl(class EngineFile* _fileManager);
 
+	void MeshCreateBuffer(std::vector<struct FBXMesh*>& _AllMesh);
 	void CompileShader(class EngineFile* _fileManager);
 	void CompileShader(EngineFile* _fileManager, class BufferInfo* _Info);
 	void CreateLayout(class BufferInfo* _Info);
-	void CreateBuffer();
+	void CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str);
 	void CreateLayout();
-	void CreateIndexBuffer();
+	void CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str);
 
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);

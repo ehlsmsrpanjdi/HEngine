@@ -30,7 +30,7 @@ void GameEngine::Init(RECT _rc)
 	CreateCamera("temp");
 	SetMainCamera("temp");
 
-	MainCamera->AddActorLocation(0.f, 0.f, -2.f);
+	//MainCamera->AddActorLocation(0.f, 0.f, -2.f);
 	//MainCamera->AddActorRotation(0.f, 0.f, 45.f);
 
 }

@@ -12,6 +12,7 @@
 #include "BufferInfo.h"
 #include "EngineHelper/EngineTransform.h"
 #include "EngineHelper/EngineDebug.h"
+#include "EngineHelper/AllStruct.h"
 
 namespace Cbuffer {
 	std::string WVP = "WVPMatrix";
@@ -145,16 +146,34 @@ void GraphicsEngine::ResizeBuffers()
 void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 {
 	CompileShader(_fileManager);
-	CreateBuffer();
 	CreateLayout();
-	CreateIndexBuffer();
 	CreateAllCBuffer();
+}
+
+void GraphicsEngine::MeshCreateBuffer(std::vector<FBXMesh*>& _AllMesh)
+{
+	for (FBXMesh* mesh : _AllMesh) {
+		mesh->MeshName = mesh->MeshName;
+		mesh->vertices = mesh->vertices;
+
+		UINT Size = sizeof(mesh->vertices[0]);
+		UINT ArraySize = mesh->vertices.size();
+
+		CreateBuffer(ArraySize, Size, (UINT*)mesh->vertices.data(), mesh->MeshName);
+
+		mesh->indices = mesh->indices;
+
+		Size = sizeof(mesh->indices[0]); 
+		ArraySize = mesh->indices.size();
+
+		CreateIndexBuffer(ArraySize, Size, mesh->indices.data(), mesh->MeshName);
+	}
 }
 
 void GraphicsEngine::CompileShader(EngineFile* _fileManager)
 {
 	HRESULT hr;
-	
+
 
 	std::wstring ws = HString::StoWC(_fileManager->GetFile("hlsl", "Shaderfx"));
 	const WCHAR* wcc = ws.c_str();
@@ -264,25 +283,20 @@ void GraphicsEngine::CreateLayout()
 
 }
 
-void GraphicsEngine::CreateIndexBuffer()
+void GraphicsEngine::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str)
 {
-	UINT list[] = {
-	0, 1, 2, // 첫 번째 삼각형
-	2, 1, 3  // 두 번째 삼각형
-	};
-
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_IMMUTABLE;
-	buff_desc.ByteWidth = sizeof(UINT) * ARRAYSIZE(list);
+	buff_desc.ByteWidth = _ArraySize * _Size;
 	buff_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	buff_desc.CPUAccessFlags = 0;
 	buff_desc.MiscFlags = 0;
 	buff_desc.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA init_data = {};
-	init_data.pSysMem = list;
+	init_data.pSysMem = _List;
 
-	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &IndexBufferMap["vsmain"]);
+	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &IndexBufferMap[_str]);
 	if (hr != S_OK)
 	{
 		assert(false);
@@ -336,29 +350,19 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
 }
 
-void GraphicsEngine::CreateBuffer()
+void GraphicsEngine::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str)
 {
-	DirectX::XMFLOAT3 list[] = {
-		{-0.5f, -0.5f, 0.f},	//좌측 하단
-		{-0.5f, 0.5f, 0.f},		//좌측 상단
-		{0.5f, -0.5f, 0.f},		//우측 하단
-		{0.5f, 0.5f, 0.f}		//우측 상단
-	};
-
-	UINT size_vertex = sizeof(DirectX::XMFLOAT3);
-	UINT size_list = ARRAYSIZE(list);
-
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
-	buff_desc.ByteWidth = size_vertex * size_list;
+	buff_desc.ByteWidth = _ArraySize * _Size;
 	buff_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	buff_desc.CPUAccessFlags = 0;
 	buff_desc.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA init_data = {};
-	init_data.pSysMem = list;
+	init_data.pSysMem = _List;
 
-	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &BufferMap["vsmain"]);
+	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &BufferMap[_str]);
 
 	if (hr != S_OK)
 	{

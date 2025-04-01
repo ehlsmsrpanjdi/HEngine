@@ -173,6 +173,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllStruct.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineDebug.h">
       <SubType>
       </SubType>
@@ -190,6 +194,10 @@
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllStruct.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineDebug.cpp">
       <SubType>
       </SubType>
