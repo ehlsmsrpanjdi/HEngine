@@ -12,6 +12,7 @@
 #include "EngineHelper/EngineDebug.h"
 #include "EngineHelper/AllStruct.h"
 #include "EngineMesh.h"
+#include "EngineMaterial.h"
 
 namespace Cbuffer {
 	std::string WVP = "WVPMatrix";
@@ -143,14 +144,20 @@ void GraphicsEngine::ResizeBuffers()
 }
 
 #pragma region "쉐이더"
-void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
+void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 {
 	CreateAllCBuffer();
+	CreateMaterial(_fileManager);
 }
 
-void GraphicsEngine::CreateMesh(std::vector<struct FBXMesh*>& _AllMesh)
+void GraphicsEngine::CreateMesh(std::vector<FBXMesh*>& _AllMesh)
 {
-	EngineMesh::Get().CreateMesh(_AllMesh, m_Device.get());
+	EngineMesh::Get().CreateMesh(_AllMesh, m_Device);
+}
+
+void GraphicsEngine::CreateMaterial(std::shared_ptr<EngineFile> _fileManager)
+{
+	EngineMaterial::Get().CreateMaterial(m_Device	, _fileManager);
 }
 
 
@@ -236,6 +243,16 @@ void GraphicsEngine::SetBuffer()
 
 	//m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
 	//m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
+}
+
+MT* GraphicsEngine::GetMaterial(std::string_view _str)
+{
+	return EngineMaterial::Get().GetMaterial(_str);
+}
+
+MH* GraphicsEngine::GetMesh(std::string_view _str)
+{
+	return EngineMesh::Get().GetMesh(_str);
 }
 
 #pragma endregion

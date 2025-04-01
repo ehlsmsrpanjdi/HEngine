@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineHelper/EngineTransform.h"
+#include "iostream"
 
 // Ό³Έν :
 class Actor
@@ -27,11 +28,15 @@ public:
 	void SetActorScale(float _x, float _y, float _z);
 	void SetActorRotation(float _x, float _y, float _z);
 
+	void SetMesh(std::string _str);
+	void SetMaterial(std::string _str);
+
 	EngineTransform GetTransform();
 protected:
 
 private:
 	EngineTransform ActorTransform = EngineTransform();
 	struct MT* Material = nullptr;
+	struct MH* Mesh = nullptr;
 };
 

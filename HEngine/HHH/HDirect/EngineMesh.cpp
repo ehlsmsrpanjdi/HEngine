@@ -2,6 +2,7 @@
 #include "EngineHelper/AllStruct.h"
 #include <cassert>
 #include "GraphicDevice.h"
+#include "EngineHelper/HString.h"
 
 
 EngineMesh::EngineMesh() 
@@ -13,7 +14,7 @@ EngineMesh::~EngineMesh()
 	MeshMap.clear();
 }
 
-void EngineMesh::CreateMesh(std::vector<FBXMesh*>& _AllMesh, GraphicDevice* _Device)
+void EngineMesh::CreateMesh(std::vector<FBXMesh*>& _AllMesh, std::shared_ptr<GraphicDevice> _Device)
 {
 	for (FBXMesh* mesh : _AllMesh) {
 		std::shared_ptr<MH> meshinfo = std::make_shared<MH>();
@@ -34,7 +35,16 @@ void EngineMesh::CreateMesh(std::vector<FBXMesh*>& _AllMesh, GraphicDevice* _Dev
 	}
 }
 
-ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, GraphicDevice* _Device)
+MH* EngineMesh::GetMesh(std::string_view _str)
+{
+	std::string str = HString::Upper(_str.data());
+	if (MeshMap.contains(str) == false) {
+		assert(false);
+	}
+	return MeshMap[str].get();
+}
+
+ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<GraphicDevice> _Device)
 {
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
@@ -58,7 +68,7 @@ ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List,
 
 }
 
-ID3D11Buffer* EngineMesh::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, GraphicDevice* _Device)
+ID3D11Buffer* EngineMesh::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<GraphicDevice> _Device)
 {
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_IMMUTABLE;

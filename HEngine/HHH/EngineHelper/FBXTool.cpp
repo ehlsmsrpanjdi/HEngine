@@ -36,7 +36,7 @@ void FBXTool::Init()
 
 
 
-void FBXTool::LoadALLFBX(EngineFile* _fileManager)
+void FBXTool::LoadALLFBX(std::shared_ptr<EngineFile> _fileManager)
 {
 	const std::map<std::string, std::string>& map = _fileManager->GetAllFile("fbx");
 	for (const std::pair<const std::string, std::string>& pa : map) {

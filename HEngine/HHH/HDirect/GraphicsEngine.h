@@ -49,14 +49,12 @@ public:
 	std::unordered_map<std::string, ID3D11Buffer*> ConstantBufferMap;
 
 	
-	static std::map<std::string, struct MT*> MaterialMap;
-
-
 #pragma endregion
 
-#pragma region "버퍼"
-	void CreateHlsl(class EngineFile* _fileManager);
+#pragma region "리소스"
+	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateMesh(std::vector<struct FBXMesh*>& _AllMesh);
+	void CreateMaterial(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
@@ -65,7 +63,13 @@ public:
 
 #pragma endregion
 
+#pragma region "게터"
 
+	struct MT* GetMaterial(std::string_view _str);
+
+	struct MH* GetMesh(std::string_view _str);
+
+#pragma endregion
 
 public:
 	UINT m4xMsaaQuality = 0;

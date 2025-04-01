@@ -24,7 +24,7 @@ public:
 	void Init();
 
 
-	void LoadALLFBX(class EngineFile* _fileManager);
+	void LoadALLFBX(std::shared_ptr<class EngineFile> _fileManager);
 	void LoadFBX(const char* _filename, std::string _Name);
 
 	void ProcessNode(FbxNode* _pNode, std::string _Name);

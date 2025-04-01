@@ -35,4 +35,16 @@ struct MT {
 	ID3D11VertexShader* VS;
 	ID3D11PixelShader* PS;
 	ID3D11InputLayout* Layout;
+
+	~MT() {
+		if (VS != nullptr) {
+			VS->Release();
+		}
+		if (PS != nullptr) {
+			PS->Release();
+		}
+		if (Layout != nullptr) {
+			Layout->Release();
+		}
+	}
 };

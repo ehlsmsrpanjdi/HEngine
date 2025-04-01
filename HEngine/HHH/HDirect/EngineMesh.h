@@ -23,11 +23,15 @@ public:
 	EngineMesh(EngineMesh&& _Other) noexcept = delete;
 	EngineMesh& operator=(const EngineMesh& _Other) = delete;
 	EngineMesh& operator=(EngineMesh&& _Other) noexcept = delete;
-	void CreateMesh(std::vector<struct FBXMesh*>& _AllMesh, class GraphicDevice* _Device);
+
+	void CreateMesh(std::vector<struct FBXMesh*>& _AllMesh, std::shared_ptr<class GraphicDevice> _Device);
+	struct MH* GetMesh(std::string_view _str);
+
+
 
 protected:
-	ID3D11Buffer* CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, class GraphicDevice* _Device);
-	ID3D11Buffer* CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, class GraphicDevice* _Device);
+	ID3D11Buffer* CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<class GraphicDevice> _Device);
+	ID3D11Buffer* CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<class GraphicDevice> _Device);
 private:
 	EngineMesh();
 
