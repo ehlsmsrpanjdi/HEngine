@@ -25,6 +25,9 @@
     <Filter Include="Graphic\Buffer">
       <UniqueIdentifier>{0480bc9f-c161-4d14-81d8-446404741baa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic\Material">
+      <UniqueIdentifier>{28286a7b-1599-42c9-9957-6a5bb492f4f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsEngine.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="BufferInfo.cpp">
       <Filter>Graphic\Buffer</Filter>
     </ClCompile>
+    <ClCompile Include="EngineMaterial.cpp">
+      <Filter>Graphic\Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="BufferInfo.h">
       <Filter>Graphic\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMaterial.h">
+      <Filter>Graphic\Material</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
