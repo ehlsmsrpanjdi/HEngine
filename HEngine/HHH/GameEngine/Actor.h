@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineHelper/EngineTransform.h"
+
 // Ό³Έν :
 class Actor
 {
@@ -31,5 +32,6 @@ protected:
 
 private:
 	EngineTransform ActorTransform = EngineTransform();
+	struct MT* Material = nullptr;
 };
 

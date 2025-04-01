@@ -4,6 +4,7 @@
 #include <cassert>
 #include "GraphicDevice.h"
 
+
 EngineMaterial::EngineMaterial() 
 {
 }

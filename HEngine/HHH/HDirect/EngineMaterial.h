@@ -4,12 +4,6 @@
 #include <iostream>
 // Ό³Έν :
 
-struct MT {
-	ID3D11VertexShader* VS;
-	ID3D11PixelShader* PS;
-	ID3D11InputLayout* Layout;
-};
-
 class EngineMaterial
 {
 public:

@@ -28,6 +28,9 @@
     <Filter Include="Graphic\Material">
       <UniqueIdentifier>{28286a7b-1599-42c9-9957-6a5bb492f4f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic\Mesh">
+      <UniqueIdentifier>{c7a71925-15da-455f-b7c6-43b0a2054d7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsEngine.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="EngineMaterial.cpp">
       <Filter>Graphic\Material</Filter>
     </ClCompile>
+    <ClCompile Include="EngineMesh.cpp">
+      <Filter>Graphic\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -73,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="EngineMaterial.h">
       <Filter>Graphic\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMesh.h">
+      <Filter>Graphic\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

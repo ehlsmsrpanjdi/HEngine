@@ -11,6 +11,7 @@ class DeviceContext;
 class GraphicDevice;
 class DepthView;
 
+
 class GraphicsEngine
 {
 private:
@@ -45,22 +46,14 @@ public:
 	void ResizeBuffers();
 public:
 #pragma region "¸â¹öº¯¼ö"
-	std::unordered_map<std::string, ID3DBlob*> VSBlobMap;
-	std::unordered_map<std::string, ID3DBlob*> PSBlobMap;
-
-
-	std::unordered_map<std::string, ID3D11VertexShader*> VSShader;
-	std::unordered_map<std::string, ID3D11PixelShader*> PSShader;
-
-	std::unordered_map<std::string, ID3DBlob*> ErrorBlobMap;
-
 	std::unordered_map<std::string, ID3D11Buffer*> BufferMap;
 	std::unordered_map<std::string, ID3D11Buffer*> IndexBufferMap;
 
 	std::unordered_map<std::string, ID3D11Buffer*> ConstantBufferMap;
 
+	
+	static std::map<std::string, struct MT*> MaterialMap;
 
-	std::unordered_map<std::string, ID3D11InputLayout*> LayoutMap;
 
 #pragma endregion
 
@@ -68,11 +61,7 @@ public:
 	void CreateHlsl(class EngineFile* _fileManager);
 
 	void MeshCreateBuffer(std::vector<struct FBXMesh*>& _AllMesh);
-	void CompileShader(class EngineFile* _fileManager);
-	void CompileShader(EngineFile* _fileManager, class BufferInfo* _Info);
-	void CreateLayout(class BufferInfo* _Info);
 	void CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str);
-	void CreateLayout();
 	void CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str);
 
 	void CreateAllCBuffer();
@@ -80,8 +69,6 @@ public:
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
 
 	void SetBuffer();
-
-	void CreateBuffer(enum class BufferType _Type, std::string _vs = "", std::string _ps = "");
 
 #pragma endregion
 

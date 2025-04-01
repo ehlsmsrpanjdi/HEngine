@@ -145,8 +145,6 @@ void GraphicsEngine::ResizeBuffers()
 #pragma region "쉐이더"
 void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 {
-	CompileShader(_fileManager);
-	CreateLayout();
 	CreateAllCBuffer();
 }
 
@@ -168,119 +166,6 @@ void GraphicsEngine::MeshCreateBuffer(std::vector<FBXMesh*>& _AllMesh)
 
 		CreateIndexBuffer(ArraySize, Size, mesh->indices.data(), mesh->MeshName);
 	}
-}
-
-void GraphicsEngine::CompileShader(EngineFile* _fileManager)
-{
-	HRESULT hr;
-
-
-	std::wstring ws = HString::StoWC(_fileManager->GetFile("hlsl", "Shaderfx"));
-	const WCHAR* wcc = ws.c_str();
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlobMap["vsmain"], &ErrorBlobMap["vsmain"]);
-
-	if (hr != S_OK)
-	{
-		assert(false);
-		return;
-	}
-
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlobMap["psmain"], &ErrorBlobMap["psmain"]);
-
-	if (hr != S_OK)
-	{
-		assert(false);
-		return;
-	}
-
-	for (std::pair<const std::string, ID3DBlob*>& pa : VSBlobMap) {
-		hr = m_Device->Get()->CreateVertexShader(pa.second->GetBufferPointer(), pa.second->GetBufferSize(), nullptr, &VSShader[pa.first]);
-		if (hr != S_OK)
-		{
-			assert(false);
-			return;
-		}
-	}
-
-	for (std::pair<const std::string, ID3DBlob*>& pa : PSBlobMap) {
-		hr = m_Device->Get()->CreatePixelShader(pa.second->GetBufferPointer(), pa.second->GetBufferSize(), nullptr, &PSShader[pa.first]);
-		if (hr != S_OK)
-		{
-			assert(false);
-			return;
-		}
-	}
-}
-
-void GraphicsEngine::CompileShader(EngineFile* _fileManager, BufferInfo* _Info)
-{
-	HRESULT hr;
-	std::wstring ws = HString::StoWC(_fileManager->GetFile("hlsl", "Shaderfx"));
-	const WCHAR* wcc = ws.c_str();
-
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &_Info->VSBlob, &_Info->ErrorBlob);
-	if (hr != S_OK)
-	{
-		assert(false);
-		return;
-	}
-
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &_Info->PSBlob, &_Info->ErrorBlob);
-	if (hr != S_OK)
-	{
-		assert(false);
-		return;
-	}
-
-	hr = m_Device->Get()->CreateVertexShader(_Info->VSBlob->GetBufferPointer(), _Info->VSBlob->GetBufferSize(), nullptr, &_Info->VS);
-	if (hr != S_OK)
-	{
-		assert(false);
-		return;
-	}
-
-	hr = m_Device->Get()->CreatePixelShader(_Info->PSBlob->GetBufferPointer(), _Info->PSBlob->GetBufferSize(), nullptr, &_Info->PS);
-	if (hr != S_OK)
-	{
-		assert(false);
-		return;
-	}
-}
-
-void GraphicsEngine::CreateLayout(BufferInfo* _Info)
-{
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0}
-	};
-
-	UINT size_layout = ARRAYSIZE(layout);
-	HRESULT hr;
-
-	hr = m_Device->Get()->CreateInputLayout(layout, size_layout, _Info->VSBlob->GetBufferPointer(), (UINT)_Info->VSBlob->GetBufferSize(), &_Info->Layout);
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
-}
-
-void GraphicsEngine::CreateLayout()
-{
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0}
-	};
-
-	UINT size_layout = ARRAYSIZE(layout);
-	HRESULT hr;
-	hr = m_Device->Get()->CreateInputLayout(layout, size_layout, VSBlobMap["vsmain"]->GetBufferPointer(), (UINT)VSBlobMap["vsmain"]->GetBufferSize(), &LayoutMap["vsmain"]);
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
-
 }
 
 void GraphicsEngine::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str)
@@ -396,45 +281,15 @@ void GraphicsEngine::SetBuffer()
 	//UpdateConstantBuffer();
 
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
+	//m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
 	m_Context->Get()->IASetIndexBuffer(IndexBufferMap["vsmain"], DXGI_FORMAT_R32_UINT, 0);
-	m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
-	m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
+	//m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
+	//m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
 
 	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
 
 	m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
-}
-
-void GraphicsEngine::CreateBuffer(enum class BufferType _Type, std::string _vs, std::string _ps)
-{
-	BufferInfo* buffer = new BufferInfo(_Type);
-	switch (_Type)
-	{
-	case BufferType::VERTEX:
-		buffer->Layout = LayoutMap[_vs];
-		buffer->VS = VSShader[_vs];
-		buffer->PS = PSShader[_ps];
-
-		break;
-	case BufferType::INDEX:
-		break;
-	case BufferType::CONSTANT:
-		break;
-	case BufferType::STRUCTURED:
-		break;
-	case BufferType::APPEND:
-		break;
-	case BufferType::COUNTER:
-		break;
-	case BufferType::INDIRECT:
-		break;
-	case BufferType::ARGUMENT:
-		break;
-	default:
-		break;
-	}
 }
 
 #pragma endregion

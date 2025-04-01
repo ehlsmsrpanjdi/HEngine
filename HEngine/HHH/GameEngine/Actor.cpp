@@ -1,5 +1,5 @@
 #include "Actor.h"
-
+#include "HDirect/EngineMaterial.h"
 Actor::Actor()
 {
 }
@@ -10,6 +10,9 @@ Actor::~Actor()
 
 void Actor::BeginPlay()
 {
+	if (Material == nullptr) {
+		assert(false);
+	}
 }
 
 void Actor::Tick(float _DeltaTime)
@@ -18,6 +21,7 @@ void Actor::Tick(float _DeltaTime)
 
 void Actor::Render()
 {
+
 }
 
 void Actor::AddActorLocation(float _x, float _y, float _z)
