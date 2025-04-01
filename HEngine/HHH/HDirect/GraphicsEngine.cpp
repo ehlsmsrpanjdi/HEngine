@@ -4,15 +4,14 @@
 #include <d3dcompiler.h>
 #include <cassert>
 #include "DepthView.h"
-#include "unordered_map"
 #include "DirectXMath.h"
 #include "EngineHelper/EngineFile.h"
 #include "EngineHelper/HString.h"
 #include "GraphicDevice.h"
-#include "BufferInfo.h"
 #include "EngineHelper/EngineTransform.h"
 #include "EngineHelper/EngineDebug.h"
 #include "EngineHelper/AllStruct.h"
+#include "EngineMesh.h"
 
 namespace Cbuffer {
 	std::string WVP = "WVPMatrix";
@@ -120,6 +119,7 @@ GraphicsEngine* GraphicsEngine::get()
 	static GraphicsEngine engine;
 	return &engine;
 }
+
 SwapChain* GraphicsEngine::getSwapChain() {
 	return m_SwapChain.get();
 }
@@ -148,45 +148,11 @@ void GraphicsEngine::CreateHlsl(EngineFile* _fileManager)
 	CreateAllCBuffer();
 }
 
-void GraphicsEngine::MeshCreateBuffer(std::vector<FBXMesh*>& _AllMesh)
+void GraphicsEngine::CreateMesh(std::vector<struct FBXMesh*>& _AllMesh)
 {
-	for (FBXMesh* mesh : _AllMesh) {
-		mesh->MeshName = mesh->MeshName;
-		mesh->vertices = mesh->vertices;
-
-		UINT Size = sizeof(mesh->vertices[0]);
-		UINT ArraySize = mesh->vertices.size();
-
-		CreateBuffer(ArraySize, Size, (UINT*)mesh->vertices.data(), mesh->MeshName);
-
-		mesh->indices = mesh->indices;
-
-		Size = sizeof(mesh->indices[0]); 
-		ArraySize = mesh->indices.size();
-
-		CreateIndexBuffer(ArraySize, Size, mesh->indices.data(), mesh->MeshName);
-	}
+	EngineMesh::Get().CreateMesh(_AllMesh, m_Device.get());
 }
 
-void GraphicsEngine::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str)
-{
-	D3D11_BUFFER_DESC buff_desc = {};
-	buff_desc.Usage = D3D11_USAGE_IMMUTABLE;
-	buff_desc.ByteWidth = _ArraySize * _Size;
-	buff_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	buff_desc.CPUAccessFlags = 0;
-	buff_desc.MiscFlags = 0;
-	buff_desc.StructureByteStride = 0;
-
-	D3D11_SUBRESOURCE_DATA init_data = {};
-	init_data.pSysMem = _List;
-
-	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &IndexBufferMap[_str]);
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
-}
 
 void GraphicsEngine::CreateAllCBuffer()
 {
@@ -235,61 +201,41 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
 }
 
-void GraphicsEngine::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str)
-{
-	D3D11_BUFFER_DESC buff_desc = {};
-	buff_desc.Usage = D3D11_USAGE_DEFAULT;
-	buff_desc.ByteWidth = _ArraySize * _Size;
-	buff_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	buff_desc.CPUAccessFlags = 0;
-	buff_desc.MiscFlags = 0;
-
-	D3D11_SUBRESOURCE_DATA init_data = {};
-	init_data.pSysMem = _List;
-
-	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, &init_data, &BufferMap[_str]);
-
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
-}
-
 void GraphicsEngine::SetBuffer()
 {
 
-	DirectX::XMFLOAT3 list[] = {
-		{-0.5f, -0.5f, 0.f},	//좌측 하단
-		{-0.5f, 0.5f, 0.f},		//좌측 상단
-		{0.5f, -0.5f, 0.f},		//우측 하단
-		{0.5f, 0.5f, 0.f}		//우측 상단
-	};
+	//DirectX::XMFLOAT3 list[] = {
+	//	{-0.5f, -0.5f, 0.f},	//좌측 하단
+	//	{-0.5f, 0.5f, 0.f},		//좌측 상단
+	//	{0.5f, -0.5f, 0.f},		//우측 하단
+	//	{0.5f, 0.5f, 0.f}		//우측 상단
+	//};
 
-	UINT size_list = ARRAYSIZE(list);
-	UINT vertex_size = sizeof(DirectX::XMFLOAT3);
+	//UINT size_list = ARRAYSIZE(list);
+	//UINT vertex_size = sizeof(DirectX::XMFLOAT3);
 
-	if (BufferMap.find("vsmain") != BufferMap.end() && BufferMap["vsmain"] != nullptr)
-	{
-		UINT stride = vertex_size;
-		UINT offset = 0;
-		m_Context->Get()->IASetVertexBuffers(0, 1, &BufferMap["vsmain"], &stride, &offset);
-	}
-	else
-	{
-		// Handle error: BufferInfo not found or not initialized
-	}
-	//UpdateConstantBuffer();
+	//if (BufferMap.find("vsmain") != BufferMap.end() && BufferMap["vsmain"] != nullptr)
+	//{
+	//	UINT stride = vertex_size;
+	//	UINT offset = 0;
+	//	m_Context->Get()->IASetVertexBuffers(0, 1, &BufferMap["vsmain"], &stride, &offset);
+	//}
+	//else
+	//{
+	//	// Handle error: BufferInfo not found or not initialized
+	//}
+	////UpdateConstantBuffer();
 
-	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
-	m_Context->Get()->IASetIndexBuffer(IndexBufferMap["vsmain"], DXGI_FORMAT_R32_UINT, 0);
-	//m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
-	//m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
+	//m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	////m_Context->Get()->IASetInputLayout(LayoutMap["vsmain"]);
+	//m_Context->Get()->IASetIndexBuffer(IndexBufferMap["vsmain"], DXGI_FORMAT_R32_UINT, 0);
+	////m_Context->Get()->VSSetShader(VSShader["vsmain"], nullptr, 0);
+	////m_Context->Get()->PSSetShader(PSShader["psmain"], nullptr, 0);
 
-	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
+	//m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
 
-	m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
-	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
+	//m_Context->Get()->DrawIndexed(6, 0, 0); // DrawIndexed를 사용하여 인덱스 버퍼를 사용
+	//m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 }
 
 #pragma endregion

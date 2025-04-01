@@ -54,6 +54,8 @@ ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List,
 	{
 		assert(false);
 	}
+	return buffer;
+
 }
 
 ID3D11Buffer* EngineMesh::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, GraphicDevice* _Device)
@@ -77,5 +79,6 @@ ID3D11Buffer* EngineMesh::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _
 	{
 		assert(false);
 	}
+	return buffer;
 }
 

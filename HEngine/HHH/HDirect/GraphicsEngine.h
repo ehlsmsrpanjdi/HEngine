@@ -46,9 +46,6 @@ public:
 	void ResizeBuffers();
 public:
 #pragma region "멤버변수"
-	std::unordered_map<std::string, ID3D11Buffer*> BufferMap;
-	std::unordered_map<std::string, ID3D11Buffer*> IndexBufferMap;
-
 	std::unordered_map<std::string, ID3D11Buffer*> ConstantBufferMap;
 
 	
@@ -59,11 +56,7 @@ public:
 
 #pragma region "버퍼"
 	void CreateHlsl(class EngineFile* _fileManager);
-
-	void MeshCreateBuffer(std::vector<struct FBXMesh*>& _AllMesh);
-	void CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str);
-	void CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str);
-
+	void CreateMesh(std::vector<struct FBXMesh*>& _AllMesh);
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);

@@ -48,9 +48,6 @@
     <ClCompile Include="DeviceContext.cpp">
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClCompile>
-    <ClCompile Include="BufferInfo.cpp">
-      <Filter>Graphic\Buffer</Filter>
-    </ClCompile>
     <ClCompile Include="EngineMaterial.cpp">
       <Filter>Graphic\Material</Filter>
     </ClCompile>
@@ -73,9 +70,6 @@
     </ClInclude>
     <ClInclude Include="DeviceContext.h">
       <Filter>Graphic\GraphicDevice\Context</Filter>
-    </ClInclude>
-    <ClInclude Include="BufferInfo.h">
-      <Filter>Graphic\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="EngineMaterial.h">
       <Filter>Graphic\Material</Filter>

@@ -2,6 +2,8 @@
 #include <d3d11.h>
 #include <map>
 #include <iostream>
+
+#pragma comment(lib, "d3d11.lib")
 // Ό³Έν :
 
 class EngineMaterial
@@ -30,9 +32,6 @@ private:
 	std::map<std::string, ID3DBlob*> VSBlobMap;
 	std::map<std::string, ID3DBlob*> PSBlobMap;
 
-
-	std::map<std::string, ID3D11VertexShader*> VSShader;
-	std::map<std::string, ID3D11PixelShader*> PSShader;
 	std::map<std::string, ID3D11InputLayout*> LayoutMap;
 
 	std::map<std::string, ID3DBlob*> ErrorBlobMap;
