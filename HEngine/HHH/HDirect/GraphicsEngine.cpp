@@ -156,7 +156,7 @@ void GraphicsEngine::CreateMesh(std::vector<FBXMesh*>& _AllMesh)
 
 void GraphicsEngine::CreateMaterial(std::shared_ptr<EngineFile> _fileManager)
 {
-	EngineMaterial::Get().CreateMaterial(m_Device	, _fileManager);
+	EngineMaterial::Get().CreateMaterial(m_Device, _fileManager);
 }
 
 
@@ -209,6 +209,8 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 
 void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
 {
+	m_Context->clearRenderTargetColor(m_SwapChain->m_rtv, m_DepthView->m_dsv, 1.0f, 0.5, 0.5, 1.0f);
+
 	UINT stride = sizeof(DirectX::XMFLOAT3);
 	UINT offset = 0;
 	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &stride, &offset);
@@ -220,6 +222,7 @@ void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
 	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
+	m_SwapChain->present(true);
 }
 
 MT* GraphicsEngine::GetMaterial(std::string_view _str)

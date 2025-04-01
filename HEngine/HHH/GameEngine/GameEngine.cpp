@@ -31,7 +31,7 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	Actor* act = SpawnActor().get();
-	act->SetMesh("triangle");
+	act->SetMesh("tree");
 	act->SetMaterial("Basic");
 	//MainCamera->AddActorLocation(0.f, 0.f, -2.f);
 	//MainCamera->AddActorRotation(0.f, 0.f, 45.f);
