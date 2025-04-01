@@ -3,6 +3,7 @@
 #include "HDirect/EngineMesh.h"
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/AllStruct.h"
+#include "EngineHelper/HString.h"
 
 
 Actor::Actor()
@@ -29,7 +30,7 @@ void Actor::Tick(float _DeltaTime)
 
 void Actor::Render()
 {
-
+	GraphicsEngine::get()->Render(Material, Mesh);
 }
 
 void Actor::AddActorLocation(float _x, float _y, float _z)
@@ -62,14 +63,16 @@ void Actor::SetActorRotation(float _x, float _y, float _z)
 	ActorTransform.SetRotation(XMFLOAT4(_x, _y, _z, 1.f));
 }
 
-void Actor::SetMesh(std::string _str)
+void Actor::SetMesh(std::string_view _str)
 {
-	Mesh = GraphicsEngine::get()->GetMesh(_str);
+	std::string str = HString::Upper(_str.data());
+	Mesh = GraphicsEngine::get()->GetMesh(str);
 }
 
-void Actor::SetMaterial(std::string _str)
+void Actor::SetMaterial(std::string_view _str)
 {
-	Material = GraphicsEngine::get()->GetMaterial(_str);
+	std::string str = HString::Upper(_str.data());
+	Material = GraphicsEngine::get()->GetMaterial(str);
 }
 
 EngineTransform Actor::GetTransform()

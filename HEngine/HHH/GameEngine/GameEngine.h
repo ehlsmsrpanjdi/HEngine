@@ -48,7 +48,7 @@ private:
 	class Actor* MainCamera = nullptr;
 	GameEngine();
 
-	std::map<std::string, class Actor*> AllCamera;
+	std::map<std::string, std::shared_ptr<class Actor>> AllCamera;
 	std::list<std::shared_ptr<class Actor>> AllActor;
 
 

@@ -30,6 +30,9 @@ void GameEngine::Init(RECT _rc)
 	CreateCamera("temp");
 	SetMainCamera("temp");
 
+	Actor* act = SpawnActor().get();
+	act->SetMesh("tree");
+	act->SetMaterial("Basic");
 	//MainCamera->AddActorLocation(0.f, 0.f, -2.f);
 	//MainCamera->AddActorRotation(0.f, 0.f, 45.f);
 
@@ -49,7 +52,7 @@ void GameEngine::Update(float _DeltaTime)
 	}
 	CameraUpdate();
 	EngineTransform trasn;
-	MainCamera->AddActorLocation(0.01f, 0.0f, 0.f);
+	MainCamera->AddActorLocation(0.0f, 0.0f, -0.1f);
 	//for (std::shared_ptr<Actor> Act : AllActor) {
 	//	Act->Tick(_DeltaTime);
 	//}
@@ -64,11 +67,12 @@ void GameEngine::Render()
 	//WorldMatrix = DirectX::XMMatrixIdentity();
 	WVP = trans.GetWorldMatrix() * ViewMatrix * PerseMatrix;
 	GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
-	//for (std::shared_ptr<Actor> Act : AllActor) {
-	//	WorldMatrix = Act->GetTransform().GetWorldMatrix();
-	//	WVP = WorldMatrix* ViewMatrix* PerseMatrix;
-	//	GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
-	//}
+	for (std::shared_ptr<Actor> Act : AllActor) {
+		WorldMatrix = Act->GetTransform().GetWorldMatrix();
+		WVP = WorldMatrix* ViewMatrix* PerseMatrix;
+		GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
+		Act->Render();
+	}
 }
 
 void GameEngine::CreateCamera(std::string _Name)
@@ -77,15 +81,16 @@ void GameEngine::CreateCamera(std::string _Name)
 	if (AllCamera.contains(str) == true) {
 		return;
 	}
-	std::shared_ptr<Actor> Camera = SpawnActor();
-	AllCamera[str] = Camera.get();
+	/*std::shared_ptr<Actor> Camera = SpawnActor();*/
+	std::shared_ptr<Actor> Camera = std::make_shared<Actor>();
+	AllCamera[str] = Camera;
 }
 
 void GameEngine::SetMainCamera(std::string _Name)
 {
 	std::string str = HString::Upper(_Name);
 	if (AllCamera.contains(str) == true) {
-		MainCamera = AllCamera[str];
+		MainCamera = AllCamera[str].get();
 	}
 	return;
 }

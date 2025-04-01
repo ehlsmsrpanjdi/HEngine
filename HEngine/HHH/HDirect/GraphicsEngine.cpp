@@ -245,6 +245,21 @@ void GraphicsEngine::SetBuffer()
 	//m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 }
 
+void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
+{
+	UINT stride = sizeof(DirectX::XMFLOAT3);
+	UINT offset = 0;
+	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &stride, &offset);
+	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->IASetInputLayout(_Material->Layout);
+	m_Context->Get()->VSSetShader(_Material->VS, nullptr, 0);
+	m_Context->Get()->PSSetShader(_Material->PS, nullptr, 0);
+	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
+	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
+	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
+}
+
 MT* GraphicsEngine::GetMaterial(std::string_view _str)
 {
 	return EngineMaterial::Get().GetMaterial(_str);

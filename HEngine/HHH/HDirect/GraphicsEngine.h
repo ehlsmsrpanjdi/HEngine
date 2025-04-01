@@ -61,6 +61,8 @@ public:
 
 	void SetBuffer();
 
+	void Render(struct MT* _Material, struct MH* _Mesh);
+
 #pragma endregion
 
 #pragma region "╟тем"

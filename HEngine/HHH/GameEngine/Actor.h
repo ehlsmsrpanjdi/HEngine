@@ -28,8 +28,8 @@ public:
 	void SetActorScale(float _x, float _y, float _z);
 	void SetActorRotation(float _x, float _y, float _z);
 
-	void SetMesh(std::string _str);
-	void SetMaterial(std::string _str);
+	void SetMesh(std::string_view _str);
+	void SetMaterial(std::string_view _str);
 
 	EngineTransform GetTransform();
 protected:
