@@ -25,7 +25,8 @@ public:
 	//Release all the resources loaded
 	bool release();
 
-	void Presnet(float red, float green, float blue, float alpha, bool _bool);
+	void Clear(float red, float green, float blue, float alpha);
+	void Present(bool _bool);
 
 	~GraphicsEngine();
 public:

@@ -57,7 +57,7 @@ void AppWindow::onUpdate()
 	if (EngineKey::IsDown('Z') == true) {
 		int a = 0;
 	}
-	//GraphicsEngine::get()->Presnet(1.0f,0.5,0.5,1.0f, true);
+
 
 }
 

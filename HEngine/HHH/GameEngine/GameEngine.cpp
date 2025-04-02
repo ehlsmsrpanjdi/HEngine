@@ -33,9 +33,6 @@ void GameEngine::Init(RECT _rc)
 	Actor* act = SpawnActor().get();
 	act->SetMesh("tree");
 	act->SetMaterial("Basic");
-	//MainCamera->AddActorLocation(0.f, 0.f, -2.f);
-	//MainCamera->AddActorRotation(0.f, 0.f, 45.f);
-
 }
 
 void GameEngine::release()
@@ -50,7 +47,7 @@ void GameEngine::Update(float _DeltaTime)
 		isPersepectiveChange = false;
 		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
 	}
-	CameraUpdate();
+	CameraUpdate(_DeltaTime);
 	EngineTransform trasn;
 	MainCamera->AddActorLocation(0.0f, 0.0f, -0.1f);
 	//for (std::shared_ptr<Actor> Act : AllActor) {
@@ -62,13 +59,15 @@ void GameEngine::Update(float _DeltaTime)
 
 void GameEngine::Render()
 {
+	GraphicsEngine::get()->Clear(1.0f, 0.5, 0.5, 1.0f);
 	EngineTransform trans;
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		WorldMatrix = Act->GetTransform().GetWorldMatrix();
-		WVP = WorldMatrix* ViewMatrix* PerseMatrix;
+		WVP = WorldMatrix * ViewMatrix * PerseMatrix;
 		GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
 		Act->Render();
 	}
+	GraphicsEngine::get()->Present(true);
 }
 
 void GameEngine::CreateCamera(std::string _Name)
@@ -77,7 +76,6 @@ void GameEngine::CreateCamera(std::string _Name)
 	if (AllCamera.contains(str) == true) {
 		return;
 	}
-	/*std::shared_ptr<Actor> Camera = SpawnActor();*/
 	std::shared_ptr<Actor> Camera = std::make_shared<Actor>();
 	AllCamera[str] = Camera;
 }
@@ -91,8 +89,12 @@ void GameEngine::SetMainCamera(std::string _Name)
 	return;
 }
 
-void GameEngine::CameraUpdate()
+void GameEngine::CameraUpdate(float _DeltaTime)
 {
+	for (std::pair<const std::string, std::shared_ptr<Actor>>& pa : AllCamera) {
+		pa.second->Tick(_DeltaTime);
+	}
+
 	if (MainCamera == nullptr) {
 		EngineDebug::Error("카메라 없는데 업데이트중");
 		exit(EXIT_FAILURE);

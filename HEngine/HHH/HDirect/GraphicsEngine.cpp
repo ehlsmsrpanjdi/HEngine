@@ -61,9 +61,15 @@ bool GraphicsEngine::release()
 	return true;
 }
 
-void GraphicsEngine::Presnet(float red, float green, float blue, float alpha, bool _bool)
+
+
+void GraphicsEngine::Clear(float red, float green, float blue, float alpha)
 {
 	m_Context->clearRenderTargetColor(m_SwapChain->m_rtv, m_DepthView->m_dsv, red, green, blue, alpha);
+}
+
+void GraphicsEngine::Present(bool _bool)
+{
 	m_SwapChain->present(_bool);
 }
 
@@ -209,10 +215,9 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 
 void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
 {
-	m_Context->clearRenderTargetColor(m_SwapChain->m_rtv, m_DepthView->m_dsv, 1.0f, 0.5, 0.5, 1.0f);
-
 	UINT stride = sizeof(DirectX::XMFLOAT3);
 	UINT offset = 0;
+	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &stride, &offset);
 	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -221,8 +226,6 @@ void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
 	m_Context->Get()->PSSetShader(_Material->PS, nullptr, 0);
 	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
-	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
-	m_SwapChain->present(true);
 }
 
 MT* GraphicsEngine::GetMaterial(std::string_view _str)

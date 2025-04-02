@@ -44,6 +44,15 @@ bool DepthView::init(HWND hwnd, UINT width, UINT height)
 	m_dsb->Release();
 	m_dsb = nullptr;
 
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
+	depthStencilDesc.DepthEnable = TRUE;
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+	ID3D11DepthStencilState* depthStencilState;
+	GraphicsEngine::get()->m_Device->Get()->CreateDepthStencilState(&depthStencilDesc, &depthStencilState);
+
+
 	return true;
 }
 

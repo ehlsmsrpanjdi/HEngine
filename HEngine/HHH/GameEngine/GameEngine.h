@@ -35,11 +35,12 @@ public:
 		std::cout << "asasdfdf";
 	}
 
+	//template <typename T>
 	void CreateCamera(std::string _Name);
 	void SetMainCamera(std::string _Name);
 
 
-	void CameraUpdate();
+	void CameraUpdate(float _DeltaTime);
 	std::shared_ptr<class Actor> SpawnActor();
 
 protected:
@@ -52,11 +53,10 @@ private:
 	std::list<std::shared_ptr<class Actor>> AllActor;
 
 
-	DirectX::XMMATRIX  WorldMatrix;
-	DirectX::XMMATRIX ViewMatrix;
-	DirectX::XMMATRIX PerseMatrix;
-	DirectX::XMMATRIX WVP;
-	//EngineTransform;
+	DirectX::XMMATRIX  WorldMatrix = DirectX::XMMatrixIdentity();
+	DirectX::XMMATRIX ViewMatrix = DirectX::XMMatrixIdentity();
+	DirectX::XMMATRIX PerseMatrix = DirectX::XMMatrixIdentity();
+	DirectX::XMMATRIX WVP = DirectX::XMMatrixIdentity();
 
 
 	bool isPersepectiveChange = true;
