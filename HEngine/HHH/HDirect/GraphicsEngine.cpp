@@ -42,6 +42,14 @@ bool GraphicsEngine::init(HWND _hwnd, RECT rc)
 
 	m_Context->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
+	//D3D11_RASTERIZER_DESC rasterDesc = {};
+	//rasterDesc.CullMode = D3D11_CULL_NONE;  // 컬링 비활성화
+	//rasterDesc.FillMode = D3D11_FILL_SOLID;
+
+	//ID3D11RasterizerState* rasterState;
+	//m_Device->Get()->CreateRasterizerState(&rasterDesc, &rasterState);
+	//GetContext()->Get()->RSSetState(rasterState);
+
 	return true;
 }
 
@@ -155,7 +163,7 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 	CreateMaterial(_fileManager);
 }
 
-void GraphicsEngine::CreateMesh(std::vector<FBXMesh*>& _AllMesh)
+void GraphicsEngine::CreateMesh(std::vector<FMesh*>& _AllMesh)
 {
 	EngineMesh::Get().CreateMesh(_AllMesh, m_Device);
 }
@@ -215,12 +223,13 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 
 void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
 {
+	//D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
 	UINT stride = sizeof(DirectX::XMFLOAT3);
 	UINT offset = 0;
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &stride, &offset);
 	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
-	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	m_Context->Get()->IASetInputLayout(_Material->Layout);
 	m_Context->Get()->VSSetShader(_Material->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Material->PS, nullptr, 0);

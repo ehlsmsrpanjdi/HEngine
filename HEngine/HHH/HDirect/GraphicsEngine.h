@@ -54,7 +54,7 @@ public:
 
 #pragma region "¸®¼Ò½º"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
-	void CreateMesh(std::vector<struct FBXMesh*>& _AllMesh);
+	void CreateMesh(std::vector<struct FMesh*>& _AllMesh);
 	void CreateMaterial(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);

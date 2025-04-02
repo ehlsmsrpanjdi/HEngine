@@ -14,19 +14,19 @@ EngineMesh::~EngineMesh()
 	MeshMap.clear();
 }
 
-void EngineMesh::CreateMesh(std::vector<FBXMesh*>& _AllMesh, std::shared_ptr<GraphicDevice> _Device)
+void EngineMesh::CreateMesh(std::vector<FMesh*>& _AllMesh, std::shared_ptr<GraphicDevice> _Device)
 {
-	for (FBXMesh* mesh : _AllMesh) {
+	for (FMesh* mesh : _AllMesh) {
 		std::shared_ptr<MH> meshinfo = std::make_shared<MH>();
 
 		UINT Size = sizeof(mesh->vertices[0]);
-		UINT ArraySize = mesh->vertices.size();
+		UINT ArraySize = static_cast<UINT>(mesh->vertices.size());
 
 		meshinfo->BufferSize = Size;
 		meshinfo->Vertex = CreateBuffer(ArraySize, Size, (UINT*)mesh->vertices.data(), mesh->MeshName, _Device);
 
 		Size = sizeof(mesh->indices[0]);
-		ArraySize = mesh->indices.size();
+		ArraySize = static_cast<UINT>(mesh->indices.size());
 
 		meshinfo->IndexBufferSize = ArraySize;
 		meshinfo->Index = CreateIndexBuffer(ArraySize, Size, mesh->indices.data(), mesh->MeshName, _Device);
@@ -63,7 +63,7 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 	{
 		D3D11_BUFFER_DESC buff_desc = {};
 		buff_desc.Usage = D3D11_USAGE_DEFAULT;
-		buff_desc.ByteWidth = vertexBuffer.size() * sizeof(DirectX::XMFLOAT3);
+		buff_desc.ByteWidth = static_cast<UINT>(vertexBuffer.size()) * sizeof(DirectX::XMFLOAT3);
 		buff_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		buff_desc.CPUAccessFlags = 0;
 		buff_desc.MiscFlags = 0;
@@ -90,7 +90,7 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 
 		D3D11_BUFFER_DESC buff_desc = {};
 		buff_desc.Usage = D3D11_USAGE_IMMUTABLE;
-		buff_desc.ByteWidth = indexBuffer.size() * sizeof(UINT);
+		buff_desc.ByteWidth = static_cast<UINT>(indexBuffer.size()) * sizeof(UINT);
 		buff_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		buff_desc.CPUAccessFlags = 0;
 		buff_desc.MiscFlags = 0;
@@ -110,7 +110,7 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 
 	MH* meshinfo = new MH();
 	meshinfo->Index = ibuffer;
-	meshinfo->IndexBufferSize = indexBuffer.size();
+	meshinfo->IndexBufferSize = static_cast<UINT>(indexBuffer.size());
 	meshinfo->Vertex = vbuffer;
 	meshinfo->BufferSize = sizeof(DirectX::XMFLOAT3);
 

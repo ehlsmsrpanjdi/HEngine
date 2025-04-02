@@ -6,7 +6,7 @@
 #include <Windows.h>
 #include <d3d11.h>
 // Ό³Έν :
-struct FBXMesh {
+struct FMesh {
 	std::vector<DirectX::XMFLOAT3> vertices;
 	//std::vector<DirectX::XMFLOAT3> normals;
 	//std::vector<DirectX::XMFLOAT2> uvs;

@@ -30,7 +30,7 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	Actor* act = SpawnActor<Actor>().get();
-	act->SetMesh("tree");
+	act->SetMesh("cube");
 	act->SetMaterial("Basic");
 }
 

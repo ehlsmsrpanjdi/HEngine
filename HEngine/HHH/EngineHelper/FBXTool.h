@@ -30,9 +30,9 @@ public:
 	void ProcessNode(FbxNode* _pNode, std::string _Name);
 	void ProcessMesh(FbxMesh* pMesh, std::string _Name);
 
-	std::vector<struct FBXMesh*> AllMesh;
+	std::vector<struct FMesh*> AllMesh;
 
-	std::vector<struct FBXMesh*>& GetMesh() {
+	std::vector<struct FMesh*>& GetMesh() {
 		return AllMesh;
 	}
 
