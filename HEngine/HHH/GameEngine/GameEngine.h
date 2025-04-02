@@ -75,6 +75,10 @@ private:
 	float AspectRatio;  // 화면 비율 (가로/세로)
 	float NearZ = 1.f;     // 근평면
 	float FarZ = 1000.f;          // 원평면
+
+
+private:
+	std::shared_ptr<class EngineKey> KeyManager = nullptr;
 };
 
 

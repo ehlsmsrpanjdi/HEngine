@@ -8,10 +8,10 @@ FBXTool::FBXTool()
 
 FBXTool::~FBXTool()
 {
-	if (lSdkManager) {
-		lSdkManager->Destroy();
+	if (FBXConverter != nullptr) {
+		delete FBXConverter;
+		FBXConverter = nullptr;
 	}
-	lSdkManager = nullptr;
 
 	for (FMesh* mesh : AllMesh) {
 		if (mesh != nullptr) {
@@ -20,6 +20,12 @@ FBXTool::~FBXTool()
 		}
 	}
 	AllMesh.clear();
+
+	if (lSdkManager) {
+		lSdkManager->Destroy();
+	}
+	lSdkManager = nullptr;
+
 }
 
 FBXTool& FBXTool::GetInst()
@@ -33,6 +39,7 @@ void FBXTool::Init()
 	lSdkManager = FbxManager::Create();
 	ios = FbxIOSettings::Create(lSdkManager, IOSROOT);
 	lSdkManager->SetIOSettings(ios);
+	FBXConverter = new FbxGeometryConverter(lSdkManager);
 }
 
 
@@ -70,9 +77,14 @@ void FBXTool::LoadFBX(const char* _filename, std::string _Name)
 	lImporter->Import(lScene);
 	lImporter->Destroy();
 
+	
+	if (true == FBXConverter->Triangulate(lScene, true)) {
 	AllScene.push_back(lScene);
-	// ∏µ® µ•¿Ã≈Õ ∆ƒΩÃ
 	ProcessNode(lScene->GetRootNode(), _Name);
+	}
+	else {
+		assert(false);
+	}
 }
 
 void LoadNode(FbxNode* node)
@@ -152,7 +164,11 @@ void FBXTool::ProcessMesh(FbxMesh* pMesh, std::string _Name)
 	}
 	// ¿Œµ¶Ω∫ µ•¿Ã≈Õ √ﬂ√‚
 	for (int i = 0; i < pMesh->GetPolygonCount(); i++) {
-		for (int j = 0; j < pMesh->GetPolygonSize(i); j++) {
+		int PolygonSize = pMesh->GetPolygonSize(i);
+		if (PolygonSize != 3) {
+			int a = 0;
+		}
+		for (int j = 0; j < PolygonSize; j++) {
 			mesh->indices.push_back(pMesh->GetPolygonVertex(i, j));
 		}
 	}

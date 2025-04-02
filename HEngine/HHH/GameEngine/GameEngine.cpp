@@ -3,6 +3,7 @@
 #include "assert.h"
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/EngineDebug.h"	
+#include "EngineHelper/EngineKey.h"
 
 GameEngine::GameEngine()
 {
@@ -24,7 +25,9 @@ void GameEngine::Init(RECT _rc)
 		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
 	}
 
+	KeyManager = std::make_shared<EngineKey>();
 
+	KeyManager->Init();
 
 	CreateCamera<Actor>("temp");
 	SetMainCamera("temp");
@@ -46,9 +49,27 @@ void GameEngine::Update(float _DeltaTime)
 		isPersepectiveChange = false;
 		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
 	}
+	KeyManager->Update();
 	CameraUpdate(_DeltaTime);
 	EngineTransform trasn;
-	MainCamera->AddActorLocation(0.0f, 0.0f, -0.1f);
+	if (EngineKey::IsPressed('W')) {
+		MainCamera->AddActorLocation(0.0f, 0.1f * _DeltaTime, 0.f);
+	}
+	if (EngineKey::IsPressed('S')) {
+		MainCamera->AddActorLocation(0.0f, -0.1f * _DeltaTime, 0.f);
+	}
+	if (EngineKey::IsPressed('A')) {
+		MainCamera->AddActorLocation(-0.1f * _DeltaTime, 0.0f, 0.0f);
+	}
+	if (EngineKey::IsPressed('D')) {
+		MainCamera->AddActorLocation(0.1f * _DeltaTime, 0.0f, 0.0f);
+	}
+	if (EngineKey::IsPressed('Q')) {
+		MainCamera->AddActorLocation(0.0f, 0.0f, 0.1f * _DeltaTime);
+	}
+	if (EngineKey::IsPressed('E')) {
+		MainCamera->AddActorLocation(0.0f, 0.0f, -0.1f * _DeltaTime);
+	}
 	//for (std::shared_ptr<Actor> Act : AllActor) {
 	//	Act->Tick(_DeltaTime);
 	//}
