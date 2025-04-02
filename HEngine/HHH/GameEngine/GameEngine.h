@@ -5,6 +5,7 @@
 #include <map>
 #include "Windows.h"
 #include "DirectXMath.h"
+#include "EngineHelper/HString.h"
 
 
 // Ό³Έν :
@@ -31,17 +32,27 @@ public:
 		return &Engine;
 	}
 
-	void test() {
-		std::cout << "asasdfdf";
-	}
 
-	//template <typename T>
-	void CreateCamera(std::string _Name);
+	template <typename T>
+	void CreateCamera(std::string _Name) {
+		std::string str = HString::Upper(_Name);
+		if (AllCamera.contains(str) == true) {
+			return;
+		}
+		std::shared_ptr<T> Camera = std::make_shared<T>();
+		AllCamera[str] = Camera;
+	}
 	void SetMainCamera(std::string _Name);
 
 
 	void CameraUpdate(float _DeltaTime);
-	std::shared_ptr<class Actor> SpawnActor();
+
+	template <typename T>
+	std::shared_ptr<T> SpawnActor() {
+		std::shared_ptr<T> AActor = std::make_shared<T>();
+		AllActor.push_back(AActor);
+		return AActor;
+	}
 
 protected:
 

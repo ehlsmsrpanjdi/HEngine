@@ -1,7 +1,6 @@
 #include "GameEngine.h"
 #include "Actor.h"
 #include "assert.h"
-#include "EngineHelper/HString.h"
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/EngineDebug.h"	
 
@@ -27,10 +26,10 @@ void GameEngine::Init(RECT _rc)
 
 
 
-	CreateCamera("temp");
+	CreateCamera<Actor>("temp");
 	SetMainCamera("temp");
 
-	Actor* act = SpawnActor().get();
+	Actor* act = SpawnActor<Actor>().get();
 	act->SetMesh("tree");
 	act->SetMaterial("Basic");
 }
@@ -70,16 +69,6 @@ void GameEngine::Render()
 	GraphicsEngine::get()->Present(true);
 }
 
-void GameEngine::CreateCamera(std::string _Name)
-{
-	std::string str = HString::Upper(_Name);
-	if (AllCamera.contains(str) == true) {
-		return;
-	}
-	std::shared_ptr<Actor> Camera = std::make_shared<Actor>();
-	AllCamera[str] = Camera;
-}
-
 void GameEngine::SetMainCamera(std::string _Name)
 {
 	std::string str = HString::Upper(_Name);
@@ -105,13 +94,5 @@ void GameEngine::CameraUpdate(float _DeltaTime)
 	}
 
 }
-
-std::shared_ptr<Actor> GameEngine::SpawnActor()
-{
-	std::shared_ptr<Actor> AActor = std::make_shared<Actor>();
-	AllActor.push_back(AActor);
-	return AActor;
-}
-
 
 
