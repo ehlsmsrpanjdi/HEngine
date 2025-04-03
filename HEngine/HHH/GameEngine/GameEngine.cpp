@@ -52,20 +52,20 @@ void GameEngine::Update(float _DeltaTime)
 	CameraUpdate(_DeltaTime);
 	EngineTransform trasn;
 	if (EngineKey::IsPressed('W')) {
-		MainCamera->AddActorLocation(0.0f, 0.0f, 1.f * _DeltaTime);
+		MainCamera->Move(0.0f, 0.0f, 1.f * _DeltaTime);
 	}
 	if (EngineKey::IsPressed('S')) {
-		MainCamera->AddActorLocation(0.0f, 0.0f, -1.f * _DeltaTime);
+		MainCamera->Move(0.0f, 0.0f, -1.f * _DeltaTime);
 	}
 	if (EngineKey::IsPressed('A')) {
-		MainCamera->AddActorLocation(-1.f * _DeltaTime, 0.0f, 0.0f);
+		MainCamera->Move(-1.f * _DeltaTime, 0.0f, 0.0f);
 	}
 	if (EngineKey::IsPressed('D')) {
-		MainCamera->AddActorLocation(1.f * _DeltaTime, 0.0f, 0.0f);
+		MainCamera->Move(1.f * _DeltaTime, 0.0f, 0.0f);
 	}
 
 	if (EngineKey::IsPressed(VK_RBUTTON)) {
-		MainCamera->AddActorRotation(EngineKey::MouseX * _DeltaTime, EngineKey::MouseY  * _DeltaTime, 0.f);
+		MainCamera->Rotate(EngineKey::MouseX * _DeltaTime, EngineKey::MouseY  * _DeltaTime, 0.f);
 	}
 
 	//for (std::shared_ptr<Actor> Act : AllActor) {

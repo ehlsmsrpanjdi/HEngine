@@ -150,7 +150,7 @@ public:
 		return XMMatrixRotationQuaternion(XMLoadFloat4(&rotation));
 	}
 
-	void moveforward(float x, float y, float z) {
+	void Move(float x, float y, float z) {
 		// 1. 회전 행렬 가져오기
 		XMMATRIX rotationMatrix = GetRotationMatrix(rotation);
 
@@ -166,6 +166,24 @@ public:
 		position.x += movement.x;
 		position.y += movement.y;
 		position.z += movement.z;
+	}
+
+	void Rotate(float _x, float _y = 0, float _z = 0) {
+		// X, Y, Z 각각의 축을 기준으로 회전 쿼터니언 생성
+		XMVECTOR additionalRotationX = XMQuaternionRotationAxis(XMVectorSet(1, 0, 0, 0), _y); // X축 (Pitch)
+		XMVECTOR additionalRotationY = XMQuaternionRotationAxis(XMVectorSet(0, 1, 0, 0), _x); // Y축 (Yaw)
+		XMVECTOR additionalRotationZ = XMQuaternionRotationAxis(XMVectorSet(0, 0, 1, 0), _z); // Z축 (Roll)
+
+		// 현재 회전을 로드
+		XMVECTOR currentRotation = XMLoadFloat4(&rotation);
+
+		// 로컬 회전 적용 (추가 회전 * 기존 회전 순서)
+		XMVECTOR newRotation = XMQuaternionMultiply(additionalRotationZ, currentRotation); // Roll
+		newRotation = XMQuaternionMultiply(additionalRotationX, newRotation); // Pitch
+		newRotation = XMQuaternionMultiply(additionalRotationY, newRotation); // Yaw
+
+		// 결과 저장
+		XMStoreFloat4(&rotation, newRotation);
 	}
 };
 

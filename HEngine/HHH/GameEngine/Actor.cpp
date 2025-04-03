@@ -63,6 +63,16 @@ void Actor::SetActorRotation(float _x, float _y, float _z)
 	ActorTransform.SetRotation(XMFLOAT4(_x, _y, _z, 1.f));
 }
 
+void Actor::Move(float _x, float _y, float _z)
+{
+	ActorTransform.Move(_x, _y, _z);
+}
+
+void Actor::Rotate(float _x, float _y, float _z)
+{
+	ActorTransform.Rotate(_x, _y, _z);
+}
+
 void Actor::SetMesh(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());

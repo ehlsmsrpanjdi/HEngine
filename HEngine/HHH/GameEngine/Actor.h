@@ -28,6 +28,9 @@ public:
 	void SetActorScale(float _x, float _y, float _z);
 	void SetActorRotation(float _x, float _y, float _z);
 
+	void Move(float _x, float _y, float _z);
+	void Rotate(float _x, float _y, float _z);
+
 	void SetMesh(std::string_view _str);
 	void SetMaterial(std::string_view _str);
 
