@@ -229,7 +229,7 @@ void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &stride, &offset);
 	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
-	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Context->Get()->IASetInputLayout(_Material->Layout);
 	m_Context->Get()->VSSetShader(_Material->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Material->PS, nullptr, 0);

@@ -43,6 +43,7 @@ private:
 	FBXTool();
 	FbxManager* lSdkManager = nullptr;
 	FbxIOSettings* ios = nullptr;
+	FbxGeometryConverter* FBXConverter = nullptr;
 	std::vector<FbxScene*> AllScene;
 };
 
