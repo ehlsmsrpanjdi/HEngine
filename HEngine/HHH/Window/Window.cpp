@@ -1,6 +1,6 @@
 #include "Window.h"
 #define EngineName "UDirectX"
-
+#include "iostream"
 Window* window = NULL;
 
 
@@ -9,6 +9,8 @@ Window::Window()
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+	window->MouseForceX = 0;
+	window->MouseForceY = 0;
 	switch (msg) {
 	case WM_CREATE: {
 		//When Window Create
@@ -25,6 +27,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	}
 	case WM_SIZE: {
 		window->OnSize();
+		break;
+	}
+	case WM_MOUSEMOVE:
+	{
+		if (window->MouseX == 0) {
+			window->MouseX = LOWORD(lparam);
+			window->MouseY = HIWORD(lparam);
+		}
+		window->MouseForceX = window->MouseX - LOWORD(lparam);
+		window->MouseForceY = window->MouseY - HIWORD(lparam);
+		window->MouseX = LOWORD(lparam);
+		window->MouseY = HIWORD(lparam);
+
+		std::cout << "mouseforceX : " << window->MouseForceX << "    mouseforceY : " << window->MouseForceY << std::endl;
 		break;
 	}
 	default: {

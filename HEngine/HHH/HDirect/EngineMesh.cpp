@@ -82,7 +82,7 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 
 	// 인덱스 버퍼 데이터
 	std::vector<UINT> indexBuffer = {
-		0, 1, 2 // 삼각형 (정점 0, 1, 2를 연결)
+		0,2,1 // 삼각형 (정점 0, 1, 2를 연결)
 	};
 
 	ID3D11Buffer* ibuffer = nullptr;

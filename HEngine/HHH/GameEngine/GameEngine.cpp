@@ -49,27 +49,25 @@ void GameEngine::Update(float _DeltaTime)
 		isPersepectiveChange = false;
 		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
 	}
-	KeyManager->Update();
 	CameraUpdate(_DeltaTime);
 	EngineTransform trasn;
 	if (EngineKey::IsPressed('W')) {
-		MainCamera->AddActorLocation(0.0f, 0.1f * _DeltaTime, 0.f);
+		MainCamera->AddActorLocation(0.0f, 0.0f, 1.f * _DeltaTime);
 	}
 	if (EngineKey::IsPressed('S')) {
-		MainCamera->AddActorLocation(0.0f, -0.1f * _DeltaTime, 0.f);
+		MainCamera->AddActorLocation(0.0f, 0.0f, -1.f * _DeltaTime);
 	}
 	if (EngineKey::IsPressed('A')) {
-		MainCamera->AddActorLocation(-0.1f * _DeltaTime, 0.0f, 0.0f);
+		MainCamera->AddActorLocation(-1.f * _DeltaTime, 0.0f, 0.0f);
 	}
 	if (EngineKey::IsPressed('D')) {
-		MainCamera->AddActorLocation(0.1f * _DeltaTime, 0.0f, 0.0f);
+		MainCamera->AddActorLocation(1.f * _DeltaTime, 0.0f, 0.0f);
 	}
-	if (EngineKey::IsPressed('Q')) {
-		MainCamera->AddActorLocation(0.0f, 0.0f, 0.1f * _DeltaTime);
+
+	if (EngineKey::IsPressed(VK_RBUTTON)) {
+		MainCamera->AddActorRotation(EngineKey::MouseX * _DeltaTime, EngineKey::MouseY  * _DeltaTime, 0.f);
 	}
-	if (EngineKey::IsPressed('E')) {
-		MainCamera->AddActorLocation(0.0f, 0.0f, -0.1f * _DeltaTime);
-	}
+
 	//for (std::shared_ptr<Actor> Act : AllActor) {
 	//	Act->Tick(_DeltaTime);
 	//}

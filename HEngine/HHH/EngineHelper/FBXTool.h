@@ -37,18 +37,12 @@ public:
 	}
 
 
-	//std::vector<DirectX::XMFLOAT3> vertices;
-	//std::vector<DirectX::XMFLOAT3> normals;
-	//std::vector<DirectX::XMFLOAT2> uvs;
-	//std::vector<UINT> indices;
-
 protected:
 
 private:
 	FBXTool();
 	FbxManager* lSdkManager = nullptr;
 	FbxIOSettings* ios = nullptr;
-	FbxGeometryConverter* FBXConverter = nullptr;
 	std::vector<FbxScene*> AllScene;
 };
 

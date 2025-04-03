@@ -15,6 +15,8 @@ public:
 	static bool IsDown(int _Key);
 	static bool IsPressed(int _Key);
 
+	static int MouseX;
+	static int MouseY;
 
 private:
 	static std::map<int, Key> Keys;

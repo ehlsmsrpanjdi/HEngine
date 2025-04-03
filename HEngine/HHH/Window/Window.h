@@ -20,11 +20,19 @@ public:
 	virtual void SetSize(int _x, int _y);
 	virtual void OnSize();
 
+	int MouseX = 0;
+	int MouseY = 0;
+
+	int MouseForceX = 0;
+	int MouseForceY = 0;
+
 protected:
 	HWND m_hwnd = NULL;
 	bool m_is_run = false;;
 
 	int WindowX = 1024;
 	int WindowY = 768;
+
+	
 };
 

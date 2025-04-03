@@ -145,5 +145,27 @@ public:
 		// 뷰 행렬 계산
 		return DirectX::XMMatrixLookToLH(eyePosition, forward, up);
 	}
+
+	XMMATRIX GetRotationMatrix(const XMFLOAT4& rotation) {
+		return XMMatrixRotationQuaternion(XMLoadFloat4(&rotation));
+	}
+
+	void moveforward(float x, float y, float z) {
+		// 1. 회전 행렬 가져오기
+		XMMATRIX rotationMatrix = GetRotationMatrix(rotation);
+
+		// 2. 입력 이동 벡터 생성 (로컬 기준)
+		XMVECTOR localMovement = XMVectorSet(x, y, z, 0);
+
+		// 3. 회전 적용 (로컬 → 월드 변환)
+		XMVECTOR worldMovement = XMVector3TransformNormal(localMovement, rotationMatrix);
+
+		// 4. 변환된 이동 벡터를 위치에 적용
+		XMFLOAT3 movement;
+		XMStoreFloat3(&movement, worldMovement);
+		position.x += movement.x;
+		position.y += movement.y;
+		position.z += movement.z;
+	}
 };
 

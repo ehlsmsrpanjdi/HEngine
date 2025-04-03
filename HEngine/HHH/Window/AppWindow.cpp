@@ -50,15 +50,12 @@ void AppWindow::onCreate()
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
-	GameEngine::get()->Update(1.f);
 	KeyManager->Update();
-	TimeManager->Update();
-
-	if (EngineKey::IsDown('Z') == true) {
-		int a = 0;
-	}
-
-
+	
+	EngineKey::MouseX = -MouseForceX;
+	EngineKey::MouseY = -MouseForceY;
+	
+	GameEngine::get()->Update(TimeManager->Update());
 }
 
 void AppWindow::onDestroy()

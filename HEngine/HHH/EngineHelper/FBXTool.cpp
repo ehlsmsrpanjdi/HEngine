@@ -8,11 +8,6 @@ FBXTool::FBXTool()
 
 FBXTool::~FBXTool()
 {
-	if (FBXConverter != nullptr) {
-		delete FBXConverter;
-		FBXConverter = nullptr;
-	}
-
 	for (FMesh* mesh : AllMesh) {
 		if (mesh != nullptr) {
 			delete mesh;
@@ -39,7 +34,7 @@ void FBXTool::Init()
 	lSdkManager = FbxManager::Create();
 	ios = FbxIOSettings::Create(lSdkManager, IOSROOT);
 	lSdkManager->SetIOSettings(ios);
-	FBXConverter = new FbxGeometryConverter(lSdkManager);
+	//FBXConverter = new FbxGeometryConverter(lSdkManager);
 }
 
 
@@ -77,74 +72,16 @@ void FBXTool::LoadFBX(const char* _filename, std::string _Name)
 	lImporter->Import(lScene);
 	lImporter->Destroy();
 
-	
-	if (true == FBXConverter->Triangulate(lScene, true)) {
 	AllScene.push_back(lScene);
 	ProcessNode(lScene->GetRootNode(), _Name);
-	}
-	else {
-		assert(false);
-	}
+
 }
-
-void LoadNode(FbxNode* node)
-{
-	// 뭔가의 작업을 수행한다.
-
-	FbxNodeAttribute* nodeAttribute = node->GetNodeAttribute();
-
-	if (nodeAttribute) {
-
-		// 이 노드의 속성은 메쉬.
-		if (nodeAttribute->GetAttributeType() == FbxNodeAttribute::eMesh)
-		{
-			// FbxMesh로 캐스팅된 노드 속성의 포인터를 가져온다.
-			FbxMesh* mesh = node->GetMesh();
-		}
-	}
-	const int childCount = node->GetChildCount();
-
-	for (unsigned int i = 0; i < childCount; ++i) {
-		LoadNode(node->GetChild(i));
-	}
-};
-
-void ProcessControlPoints(FbxMesh* mesh)
-{
-
-	// 제어점의 개수를 가져온다.
-	unsigned int count = mesh->GetControlPointsCount();
-
-	std::vector<DirectX::XMFLOAT3> vertices;
-	for (unsigned int i = 0; i < count; ++i)
-	{
-		DirectX::XMFLOAT3 positions;
-		// 제어점을 가져오려면 GetControlPointAt(int index) 멤버 함수를 이용한다.
-		positions.x = static_cast<float>(mesh->GetControlPointAt(i).mData[0]); // x좌표
-		positions.y = static_cast<float>(mesh->GetControlPointAt(i).mData[1]); // y좌표
-		positions.z = static_cast<float>(mesh->GetControlPointAt(i).mData[2]); // z좌표
-
-		vertices.push_back(positions);
-	}
-}
-
 
 
 void FBXTool::ProcessNode(FbxNode* _pNode, std::string _Name)
 {
 	FbxMesh* pMesh = _pNode->GetMesh();
 	if (pMesh) {
-		//std::string str = pMesh->GetName();
-		//std::string nodeName = _pNode->GetName();
-		//FbxNodeAttribute* attr = _pNode->GetNodeAttribute();
-		//FbxNodeAttribute::EType type = attr->GetAttributeType();
-
-		//if (type == FbxNodeAttribute::eMesh) {
-		//	std::cout << nodeName << " is a Mesh (Surface)\n";
-		//}
-		//else if (type == FbxNodeAttribute::eSkeleton) {
-		//	std::cout << nodeName << " is a Joint (Skeleton)\n";
-		//}
 		ProcessMesh(pMesh, _Name);
 	}
 
@@ -165,14 +102,18 @@ void FBXTool::ProcessMesh(FbxMesh* pMesh, std::string _Name)
 	// 인덱스 데이터 추출
 	for (int i = 0; i < pMesh->GetPolygonCount(); i++) {
 		int PolygonSize = pMesh->GetPolygonSize(i);
-		if (PolygonSize != 3) {
-			int a = 0;
-		}
-		for (int j = 0; j < PolygonSize; j++) {
-			mesh->indices.push_back(pMesh->GetPolygonVertex(i, j));
+		int v0 = pMesh->GetPolygonVertex(i, 0);
+
+		for (int j = 1; j < PolygonSize - 1; j++) {
+			int v1 = pMesh->GetPolygonVertex(i, j);
+			int v2 = pMesh->GetPolygonVertex(i, j + 1);
+
+			// 삼각형으로 변환
+			mesh->indices.push_back(v0);
+			mesh->indices.push_back(v1);
+			mesh->indices.push_back(v2);
 		}
 	}
-
 	AllMesh.push_back(mesh);
 }
 

@@ -1,6 +1,8 @@
 #include "EngineKey.h"
 
 std::map<int, Key> EngineKey::Keys;
+int EngineKey::MouseX = 0;
+int EngineKey::MouseY = 0;
 
 void EngineKey::Update() {
 	for (std::pair<const int, Key>& pa : Keys) {
@@ -56,6 +58,7 @@ void EngineKey::Init() {
 	Keys[VK_RIGHT];
 	Keys[VK_UP];
 	Keys[VK_DOWN];
+	Keys[VK_RBUTTON];
 	Keys['Z'];
 }
 
