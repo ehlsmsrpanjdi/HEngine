@@ -55,19 +55,18 @@ public:
 #pragma region "리소스"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateMesh(std::vector<struct FMesh*>& _AllMesh);
-	void CreateMaterial(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
 
 
-	void Render(struct MT* _Material, struct MH* _Mesh);
+	void Render(struct HS* _Material, struct MH* _Mesh);
 
 #pragma endregion
 
 #pragma region "게터"
 
-	struct MT* GetMaterial(std::string_view _str);
+	struct HS* GetHlsl(std::string_view _str);
 
 	struct MH* GetMesh(std::string_view _str);
 

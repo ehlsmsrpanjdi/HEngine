@@ -32,14 +32,14 @@ public:
 	void Rotate(float _x, float _y, float _z);
 
 	void SetMesh(std::string_view _str);
-	void SetMaterial(std::string_view _str);
+	void SetHlsl(std::string_view _str);
 
 	EngineTransform GetTransform();
 protected:
 
 private:
 	EngineTransform ActorTransform = EngineTransform();
-	struct MT* Material = nullptr;
+	struct HS* Hlsl = nullptr;
 	struct MH* Mesh = nullptr;
 };
 

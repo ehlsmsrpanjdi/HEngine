@@ -1,5 +1,5 @@
 #include "Actor.h"
-#include "HDirect/EngineMaterial.h"
+#include "HDirect/EngineHlsl.h"
 #include "HDirect/EngineMesh.h"
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/AllStruct.h"
@@ -12,11 +12,13 @@ Actor::Actor()
 
 Actor::~Actor()
 {
+	Hlsl = nullptr;
+	Mesh = nullptr;
 }
 
 void Actor::BeginPlay()
 {
-	if (Material == nullptr) {
+	if (Hlsl == nullptr) {
 		assert(false);
 	}
 	if (Mesh == nullptr) {
@@ -30,7 +32,7 @@ void Actor::Tick(float _DeltaTime)
 
 void Actor::Render()
 {
-	GraphicsEngine::get()->Render(Material, Mesh);
+	GraphicsEngine::get()->Render(Hlsl, Mesh);
 }
 
 void Actor::AddActorLocation(float _x, float _y, float _z)
@@ -79,10 +81,10 @@ void Actor::SetMesh(std::string_view _str)
 	Mesh = GraphicsEngine::get()->GetMesh(str);
 }
 
-void Actor::SetMaterial(std::string_view _str)
+void Actor::SetHlsl(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	Material = GraphicsEngine::get()->GetMaterial(str);
+	Hlsl = GraphicsEngine::get()->GetHlsl(str);
 }
 
 EngineTransform Actor::GetTransform()

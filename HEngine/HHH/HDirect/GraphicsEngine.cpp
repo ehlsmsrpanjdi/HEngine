@@ -12,7 +12,7 @@
 #include "EngineHelper/EngineDebug.h"
 #include "EngineHelper/AllStruct.h"
 #include "EngineMesh.h"
-#include "EngineMaterial.h"
+#include "EngineHlsl.h"
 
 namespace Cbuffer {
 	std::string WVP = "WVPMatrix";
@@ -160,17 +160,12 @@ void GraphicsEngine::ResizeBuffers()
 void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 {
 	CreateAllCBuffer();
-	CreateMaterial(_fileManager);
+	EngineHlsl::Get().CreateHlsl(m_Device, _fileManager);
 }
 
 void GraphicsEngine::CreateMesh(std::vector<FMesh*>& _AllMesh)
 {
 	EngineMesh::Get().CreateMesh(_AllMesh, m_Device);
-}
-
-void GraphicsEngine::CreateMaterial(std::shared_ptr<EngineFile> _fileManager)
-{
-	EngineMaterial::Get().CreateMaterial(m_Device, _fileManager);
 }
 
 
@@ -221,7 +216,7 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
 }
 
-void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
+void GraphicsEngine::Render(HS* _Material, MH* _Mesh)
 {
 	//D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
 	UINT stride = sizeof(DirectX::XMFLOAT3);
@@ -237,9 +232,9 @@ void GraphicsEngine::Render(MT* _Material, MH* _Mesh)
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 }
 
-MT* GraphicsEngine::GetMaterial(std::string_view _str)
+HS* GraphicsEngine::GetHlsl(std::string_view _str)
 {
-	return EngineMaterial::Get().GetMaterial(_str);
+	return EngineHlsl::Get().GetHlsl(_str);
 }
 
 MH* GraphicsEngine::GetMesh(std::string_view _str)

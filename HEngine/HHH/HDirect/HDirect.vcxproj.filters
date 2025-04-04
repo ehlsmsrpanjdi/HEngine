@@ -45,12 +45,10 @@
     <ClCompile Include="DeviceContext.cpp">
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClCompile>
-    <ClCompile Include="EngineMaterial.cpp">
-      <Filter>Graphic\Material</Filter>
-    </ClCompile>
     <ClCompile Include="EngineMesh.cpp">
       <Filter>Graphic\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="EngineHlsl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -68,11 +66,9 @@
     <ClInclude Include="DeviceContext.h">
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClInclude>
-    <ClInclude Include="EngineMaterial.h">
-      <Filter>Graphic\Material</Filter>
-    </ClInclude>
     <ClInclude Include="EngineMesh.h">
       <Filter>Graphic\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="EngineHlsl.h" />
   </ItemGroup>
 </Project>

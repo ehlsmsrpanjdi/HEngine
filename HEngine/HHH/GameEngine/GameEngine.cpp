@@ -11,6 +11,8 @@ GameEngine::GameEngine()
 
 GameEngine::~GameEngine()
 {
+	AllActor.clear();
+	AllCamera.clear();
 }
 
 void GameEngine::Init(RECT _rc)
@@ -34,7 +36,7 @@ void GameEngine::Init(RECT _rc)
 
 	Actor* act = SpawnActor<Actor>().get();
 	act->SetMesh("tree");
-	act->SetMaterial("Basic");
+	act->SetHlsl("Basic");
 }
 
 void GameEngine::release()

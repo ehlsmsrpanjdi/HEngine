@@ -9,6 +9,11 @@ FBXTool::FBXTool()
 
 FBXTool::~FBXTool()
 {
+	if (FBXConverter != nullptr) {
+		delete FBXConverter;
+		FBXConverter = nullptr;
+	}
+
 	for (FMesh* mesh : AllMesh) {
 		if (mesh != nullptr) {
 			delete mesh;

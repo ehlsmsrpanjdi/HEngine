@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClCompile Include="DepthView.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
-    <ClCompile Include="EngineMaterial.cpp">
+    <ClCompile Include="EngineHlsl.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -179,7 +179,7 @@
   <ItemGroup>
     <ClInclude Include="DepthView.h" />
     <ClInclude Include="DeviceContext.h" />
-    <ClInclude Include="EngineMaterial.h">
+    <ClInclude Include="EngineHlsl.h">
       <SubType>
       </SubType>
     </ClInclude>
