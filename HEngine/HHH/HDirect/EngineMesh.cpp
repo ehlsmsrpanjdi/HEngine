@@ -48,14 +48,16 @@ MH* EngineMesh::GetMesh(std::string_view _str)
 
 struct Vertex {
 	DirectX::XMFLOAT3 position; // 위치값 (x, y, z)
+	DirectX::XMFLOAT2 uv;      // 텍스처 좌표 (u, v)
 };
 
 void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 {
 	std::vector<Vertex> vertexBuffer = {
-	{ DirectX::XMFLOAT3(0.0f,  0.5f, 0.0f) },  // 상단 정점
-	{ DirectX::XMFLOAT3(0.5f, -0.5f, 0.0f) },  // 우측 하단 정점
-	{ DirectX::XMFLOAT3(-0.5f, -0.5f, 0.0f) }   // 좌측 하단 정점
+		{DirectX::XMFLOAT3(-1.0f,1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 0.0f)}, // 정점 0
+		{DirectX::XMFLOAT3(1.0f,1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 0.0f)}, // 정점 1
+		{DirectX::XMFLOAT3(1.0f,-1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 1.0f)}, // 정점 2
+		{DirectX::XMFLOAT3(-1.0f,-1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 1.0f)}, // 정점 3
 	};
 
 
@@ -82,7 +84,8 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 
 	// 인덱스 버퍼 데이터
 	std::vector<UINT> indexBuffer = {
-		0,2,1 // 삼각형 (정점 0, 1, 2를 연결)
+		0,1,3,
+		3,1,2
 	};
 
 	ID3D11Buffer* ibuffer = nullptr;
@@ -114,7 +117,7 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 	meshinfo->Vertex = vbuffer;
 	meshinfo->BufferSize = sizeof(DirectX::XMFLOAT3);
 
-	MeshMap.insert(std::make_pair("TRIANGLE", std::shared_ptr<MH>(meshinfo)));
+	MeshMap.insert(std::make_pair("TEST", std::shared_ptr<MH>(meshinfo)));
 }
 
 ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<GraphicDevice> _Device)

@@ -35,6 +35,7 @@ struct HS {
 	ID3D11VertexShader* VS;
 	ID3D11PixelShader* PS;
 	ID3D11InputLayout* Layout;
+	ID3D11SamplerState* samplerState;
 
 	~HS() {
 		if (VS != nullptr) {
