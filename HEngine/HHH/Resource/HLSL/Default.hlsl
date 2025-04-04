@@ -1,19 +1,19 @@
 struct VS_INPUT
 {
     float4 position : POSITION;
-    float2 Textcoord : TEXCOORD0;
+    float2 Textcoord : TEXCOORD;
 };
 
 struct VS_OUTPUT
 {
     float4 position : SV_POSITION;
-    float2 Textcoord : TEXCOORD0;
+    float2 Textcoord : TEXCOORD;
 };
 
 struct PS_INPUT
 {
     float4 position : SV_POSITION;
-    float2 Textcoord : TEXCOORD0;
+    float2 Textcoord : TEXCOORD;
 };
 
 SamplerState sampler0 : register(s0);
@@ -24,7 +24,7 @@ cbuffer WVP : register(b0)
     float4x4 g_mWorldViewProjection;
 };
 
-VS_OUTPUT vsmain(VS_INPUT input) : SV_Position
+VS_OUTPUT vsmain(VS_INPUT input)
 {
     VS_OUTPUT output;
     output.position = mul(input.position, g_mWorldViewProjection);

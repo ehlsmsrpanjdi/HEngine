@@ -28,8 +28,6 @@ public:
 
 	void CreateHlsl(std::shared_ptr<class GraphicDevice> _Device, std::shared_ptr<class EngineFile> _fileManager);
 
-	void CreateHlsl(std::shared_ptr<class GraphicDevice> _Device, std::shared_ptr<class EngineFile> _fileManager, std::shared_ptr<struct HS> _Material);
-	void CreateLayout(std::shared_ptr<class GraphicDevice> _Device, std::shared_ptr<struct HS> _Hlsl);
 	void createSampler(ID3D11Device* _Device);
 
 	void CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_view _str, std::shared_ptr<HS> _Hlsl);
@@ -38,17 +36,6 @@ protected:
 
 private:
 	EngineHlsl();
-
-
-	std::map<std::string, ID3D11VertexShader*> VSShader;
-	std::map<std::string, ID3D11PixelShader*> PSShader;
-
-	std::map<std::string, ID3DBlob*> VSBlobMap;
-	std::map<std::string, ID3DBlob*> PSBlobMap;
-
-	std::map<std::string, ID3D11InputLayout*> LayoutMap;
-
-	std::map<std::string, ID3DBlob*> ErrorBlobMap;
 
 	std::map<std::string, std::shared_ptr<struct HS>> HlslMap;
 	std::map<std::string, ID3D11SamplerState*> SamplerMap;

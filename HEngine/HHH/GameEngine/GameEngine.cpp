@@ -35,8 +35,8 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	Actor* act = SpawnActor<Actor>().get();
-	act->SetMesh("test");
-	act->SetHlsl("Basic");
+	act->SetMesh("cube");
+	act->SetHlsl("test");
 }
 
 void GameEngine::release()

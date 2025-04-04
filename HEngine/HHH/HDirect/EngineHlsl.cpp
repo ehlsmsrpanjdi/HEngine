@@ -7,7 +7,9 @@
 #include "EngineHelper/HString.h"
 #include "GraphicsEngine.h"
 #include "DeviceContext.h"
+#include "InputElement.h"
 
+std::shared_ptr<HS> test(std::shared_ptr<GraphicDevice> _Device, std::string_view _str);
 
 EngineHlsl::EngineHlsl()
 {
@@ -35,22 +37,24 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_
 
 	ID3DBlob* VSBlob = nullptr;
 	ID3DBlob* PSBlob = nullptr;
-	ID3DBlob* ErrorBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
 
 	std::wstring ws = HString::StoWC(_str.data());
 	const WCHAR* wcc = ws.c_str();
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlob, &ErrorBlob);
+	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlob, &errorBlob);
 
 	if (hr != S_OK)
 	{
+		printf("Shader Compilation Error: %s\n", (char*)errorBlob->GetBufferPointer());
 		assert(false);
 		return;
 	}
 
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlob, &ErrorBlob);
+	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlob, &errorBlob);
 
 	if (hr != S_OK)
 	{
+		printf("Shader Compilation Error: %s\n", (char*)errorBlob->GetBufferPointer());
 		assert(false);
 		return;
 	}
@@ -69,39 +73,30 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_
 		return;
 	}
 
+	std::vector<InputElement> inputElements = ParseHLSLForInputLayout(_str.data());
+	std::vector<D3D11_INPUT_ELEMENT_DESC> layout = CreateInputLayoutFromHLSL(inputElements);
+
+	UINT size_layout = static_cast<UINT>(layout.size());
+	//HRESULT hr;
+	hr = _Device->Get()->CreateInputLayout(layout.data(), size_layout, VSBlob->GetBufferPointer(), (UINT)VSBlob->GetBufferSize(), &_Hlsl->Layout);
+	if (hr != S_OK)
+	{
+		assert(false);
+	}
+
+
+
 	PSBlob->Release();
 	VSBlob->Release();
-	ErrorBlob->Release();
 }
 
 
 EngineHlsl::~EngineHlsl()
 {
-	for (std::pair<const std::string, ID3DBlob*>& pa : VSBlobMap) {
+	HlslMap.clear();
+	for (std::pair<const std::string, ID3D11SamplerState*>& pa : SamplerMap) {
 		if (pa.second != nullptr) {
 			pa.second->Release();
-		}
-	}
-	for (std::pair<const std::string, ID3DBlob*>& pa : PSBlobMap) {
-		if (pa.second != nullptr) {
-			pa.second->Release();
-		}
-	}
-	for (std::pair<const std::string, ID3D11InputLayout*>& pa : LayoutMap) {
-		if (pa.second != nullptr) {
-			pa.second->Release();
-		}
-	}
-	for (std::pair<const std::string, ID3DBlob*>& pa : ErrorBlobMap) {
-		if (pa.second != nullptr) {
-			pa.second->Release();
-		}
-	}
-	for (std::pair<const std::string, std::shared_ptr<HS>>& pa : HlslMap) {
-		if (pa.second != nullptr) {
-			pa.second->PS->Release();
-			pa.second->VS->Release();
-			pa.second->Layout->Release();
 		}
 	}
 }
@@ -118,72 +113,63 @@ HS* EngineHlsl::GetHlsl(std::string_view _str)
 void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::shared_ptr<EngineFile> _fileManager)
 {
 	createSampler(_Device->Get());
-	std::shared_ptr<HS> Hlsl = std::make_shared<HS>();
-	Hlsl->samplerState = SamplerMap["Default"];
-	CreateHlsl(_Device, _fileManager, Hlsl);
-	CreateLayout(_Device, Hlsl);
-	HlslMap.insert(std::make_pair(HString::Upper("Basic"), Hlsl));
-
 
 
 	for (const std::pair<const std::string, std::string>& pa : _fileManager->GetAllFile("hlsl")) {
+		if (pa.first == "TEST") {
+			std::shared_ptr<HS> _hs = test(_Device, pa.second);
+			HlslMap.insert(std::make_pair(HString::Upper(pa.first), _hs));
+		}
+
+
 		std::shared_ptr<HS> Hlsl = std::make_shared<HS>();
 		Hlsl->samplerState = SamplerMap["Default"];
-		CreateHlsl(_Device, _fileManager, Hlsl);
-		CreateLayout(_Device, Hlsl);
+		CreateHlsl(_Device, pa.second, Hlsl);
 		HlslMap.insert(std::make_pair(HString::Upper(pa.first), Hlsl));
 	}
 }
 
-
-void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::shared_ptr<EngineFile> _fileManager, std::shared_ptr<HS> _Hlsl)
-{
+std::shared_ptr<HS> test(std::shared_ptr<GraphicDevice> _Device, std::string_view _str) {
 	HRESULT hr;
 
 	ID3DBlob* VSBlob = nullptr;
 	ID3DBlob* PSBlob = nullptr;
+	ID3DBlob* ErrorBlob = nullptr;
 
-	std::wstring ws = HString::StoWC(_fileManager->GetFile("hlsl", "Shaderfx"));
+	std::shared_ptr<HS> _Hlsl = std::make_shared<HS>();
+
+	std::wstring ws = HString::StoWC(_str.data());
 	const WCHAR* wcc = ws.c_str();
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlobMap["vsmain"], &ErrorBlobMap["vsmain"]);
+	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlob, &ErrorBlob);
 
 	if (hr != S_OK)
 	{
 		assert(false);
-		return;
+		return nullptr;
 	}
 
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlobMap["psmain"], &ErrorBlobMap["psmain"]);
+	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlob, &ErrorBlob);
 
 	if (hr != S_OK)
 	{
 		assert(false);
-		return;
+		return nullptr;
 	}
 
-
-
-	for (std::pair<const std::string, ID3DBlob*>& pa : VSBlobMap) {
-		hr = _Device->Get()->CreateVertexShader(pa.second->GetBufferPointer(), pa.second->GetBufferSize(), nullptr, &_Hlsl->VS);
-		if (hr != S_OK)
-		{
-			assert(false);
-			return;
-		}
+	hr = _Device->Get()->CreateVertexShader(VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), nullptr, &_Hlsl->VS);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return nullptr;
 	}
 
-	for (std::pair<const std::string, ID3DBlob*>& pa : PSBlobMap) {
-		hr = _Device->Get()->CreatePixelShader(pa.second->GetBufferPointer(), pa.second->GetBufferSize(), nullptr, &_Hlsl->PS);
-		if (hr != S_OK)
-		{
-			assert(false);
-			return;
-		}
+	hr = _Device->Get()->CreatePixelShader(PSBlob->GetBufferPointer(), PSBlob->GetBufferSize(), nullptr, &_Hlsl->PS);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return nullptr;
 	}
-}
 
-void EngineHlsl::CreateLayout(std::shared_ptr<GraphicDevice> _Device, std::shared_ptr<HS> _Hlsl)
-{
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
@@ -191,11 +177,14 @@ void EngineHlsl::CreateLayout(std::shared_ptr<GraphicDevice> _Device, std::share
 	};
 
 	UINT size_layout = ARRAYSIZE(layout);
-	HRESULT hr;
-	hr = _Device->Get()->CreateInputLayout(layout, size_layout, VSBlobMap["vsmain"]->GetBufferPointer(), (UINT)VSBlobMap["vsmain"]->GetBufferSize(), &_Hlsl->Layout);
+	hr = _Device->Get()->CreateInputLayout(layout, size_layout, VSBlob->GetBufferPointer(), (UINT)VSBlob->GetBufferSize(), &_Hlsl->Layout);
 	if (hr != S_OK)
 	{
 		assert(false);
 	}
-}
 
+
+
+
+	return _Hlsl;
+}

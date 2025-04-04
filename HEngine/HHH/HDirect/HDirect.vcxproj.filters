@@ -22,11 +22,11 @@
     <Filter Include="Graphic\GraphicDevice\Context">
       <UniqueIdentifier>{983aaf5c-9642-4572-b01c-7eb110342c8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphic\Material">
-      <UniqueIdentifier>{28286a7b-1599-42c9-9957-6a5bb492f4f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphic\Mesh">
       <UniqueIdentifier>{c7a71925-15da-455f-b7c6-43b0a2054d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Hlsl">
+      <UniqueIdentifier>{28286a7b-1599-42c9-9957-6a5bb492f4f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +49,9 @@
       <Filter>Graphic\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="EngineHlsl.cpp" />
+    <ClCompile Include="InputElement.cpp">
+      <Filter>Graphic\Hlsl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -70,5 +73,8 @@
       <Filter>Graphic\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="EngineHlsl.h" />
+    <ClInclude Include="InputElement.h">
+      <Filter>Graphic\Hlsl</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
