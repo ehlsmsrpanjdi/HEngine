@@ -163,7 +163,7 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 	EngineHlsl::Get().CreateHlsl(m_Device, _fileManager);
 }
 
-void GraphicsEngine::CreateMesh(std::vector<FMesh*>& _AllMesh)
+void GraphicsEngine::CreateMesh(std::vector<std::shared_ptr<FMesh>>& _AllMesh)
 {
 	EngineMesh::Get().CreateMesh(_AllMesh, m_Device);
 }

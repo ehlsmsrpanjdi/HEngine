@@ -14,9 +14,9 @@ EngineMesh::~EngineMesh()
 	MeshMap.clear();
 }
 
-void EngineMesh::CreateMesh(std::vector<FMesh*>& _AllMesh, std::shared_ptr<GraphicDevice> _Device)
+void EngineMesh::CreateMesh(std::vector<std::shared_ptr<FMesh>>& _AllMesh, std::shared_ptr<GraphicDevice> _Device)
 {
-	for (FMesh* mesh : _AllMesh) {
+	for (std::shared_ptr<FMesh> mesh : _AllMesh) {
 		std::shared_ptr<MH> meshinfo = std::make_shared<MH>();
 
 		UINT Size = sizeof(mesh->vertices[0]);

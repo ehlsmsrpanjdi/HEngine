@@ -24,7 +24,7 @@ public:
 	EngineMesh& operator=(const EngineMesh& _Other) = delete;
 	EngineMesh& operator=(EngineMesh&& _Other) noexcept = delete;
 
-	void CreateMesh(std::vector<struct FMesh*>& _AllMesh, std::shared_ptr<class GraphicDevice> _Device);
+	void CreateMesh(std::vector<std::shared_ptr<struct FMesh>>& _AllMesh, std::shared_ptr<class GraphicDevice> _Device);
 	struct MH* GetMesh(std::string_view _str);
 
 

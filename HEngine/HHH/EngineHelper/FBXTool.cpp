@@ -1,6 +1,7 @@
 #include "FBXTool.h"
 #include "EngineFile.h"
 #include "AllStruct.h"
+#include <set>
 
 
 FBXTool::FBXTool()
@@ -14,12 +15,6 @@ FBXTool::~FBXTool()
 		FBXConverter = nullptr;
 	}
 
-	for (FMesh* mesh : AllMesh) {
-		if (mesh != nullptr) {
-			delete mesh;
-			mesh = nullptr;
-		}
-	}
 	AllMesh.clear();
 
 	if (lSdkManager) {
@@ -106,7 +101,7 @@ void FBXTool::ProcessNode(FbxNode* _pNode, std::string _Name)
 
 void FBXTool::ProcessMesh(FbxMesh* pMesh, std::string _Name)
 {
-	FMesh* mesh = new FMesh();
+	std::shared_ptr<FMesh> mesh = std::make_shared<FMesh>();
 	mesh->MeshName = _Name;
 
 
@@ -119,37 +114,19 @@ void FBXTool::ProcessMesh(FbxMesh* pMesh, std::string _Name)
 	mesh->indices.reserve(VertexCount);
 	FbxVector4 Vertex;
 
+	for (int i = 0; i < PSize; ++i) {
+		Vertex = ControlledVertex[i];
+		mesh->vertices[i] = DirectX::XMFLOAT3(static_cast<float>(Vertex[0]), static_cast<float>(Vertex[1]), static_cast<float>(Vertex[2]));
+	}
+
 	for (int i = 0; i < Count; ++i) {
 		for (int j = 0; j < 3; ++j) {
 		int index = pMesh->GetPolygonVertex(i, j);
 		mesh->indices.push_back(index);
-		Vertex = ControlledVertex[index];
-		mesh->vertices[index] = DirectX::XMFLOAT3(static_cast<float>(Vertex[0]), static_cast<float>(Vertex[1]), static_cast<float>(Vertex[2]));
 		}
 
 	}
 
-	//// 버텍스 데이터 추출
-	//for (int i = 0; i < pMesh->GetControlPointsCount(); i++) {
-	//	FbxVector4 vertex = pMesh->GetControlPointAt(i);
-	//	mesh->vertices.push_back(DirectX::XMFLOAT3(static_cast<float>(vertex[0]), static_cast<float>(vertex[1]), static_cast<float>(vertex[2])));
-	//}
-
-	//// 인덱스 데이터 추출
-	//for (int i = 0; i < pMesh->GetPolygonCount(); i++) {
-	//	int PolygonSize = pMesh->GetPolygonSize(i);
-	//	int v0 = pMesh->GetPolygonVertex(i, 0);
-
-	//	for (int j = 1; j < PolygonSize - 1; j++) {
-	//		int v1 = pMesh->GetPolygonVertex(i, j);
-	//		int v2 = pMesh->GetPolygonVertex(i, j + 1);
-
-	//		// 삼각형으로 변환
-	//		mesh->indices.push_back(v0);
-	//		mesh->indices.push_back(v2);
-	//		mesh->indices.push_back(v1);
-	//	}
-	//}
 	AllMesh.push_back(mesh);
 }
 

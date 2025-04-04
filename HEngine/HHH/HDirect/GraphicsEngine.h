@@ -54,7 +54,7 @@ public:
 
 #pragma region "¸®¼Ò½º"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
-	void CreateMesh(std::vector<struct FMesh*>& _AllMesh);
+	void CreateMesh(std::vector<std::shared_ptr<struct FMesh>>& _AllMesh);
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
