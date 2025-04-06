@@ -18,4 +18,4 @@ float4 vsmain(VS_INPUT input) : SV_POSITION
 float4 psmain(float4 pos : SV_POSITION) : SV_Target
 {
     return float4(1.f, 1.f, 1.f, 1.0f);
-} 
+}

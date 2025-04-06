@@ -36,7 +36,12 @@ struct InputElement
 
 	InputElement(const std::string& type, const std::string& name) {
 		semanticName = name;
-		format = GetDXGIFormatFromType(type);
+		if (semanticName == "POSITION") {
+			format = DXGI_FORMAT_R32G32B32_FLOAT;
+		}
+		else {
+			format = GetDXGIFormatFromType(type);
+		}
 		offset = SetOffset(format);
 	}
 };

@@ -84,8 +84,6 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_
 		assert(false);
 	}
 
-
-
 	PSBlob->Release();
 	VSBlob->Release();
 }
@@ -118,12 +116,14 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::shared_
 	for (const std::pair<const std::string, std::string>& pa : _fileManager->GetAllFile("hlsl")) {
 		if (pa.first == "TEST") {
 			std::shared_ptr<HS> _hs = test(_Device, pa.second);
+			_hs->samplerState = SamplerMap["Default"];
 			HlslMap.insert(std::make_pair(HString::Upper(pa.first), _hs));
+			continue;
 		}
 
 
 		std::shared_ptr<HS> Hlsl = std::make_shared<HS>();
-		Hlsl->samplerState = SamplerMap["Default"];
+		Hlsl->samplerState = SamplerMap["shaderfx"];
 		CreateHlsl(_Device, pa.second, Hlsl);
 		HlslMap.insert(std::make_pair(HString::Upper(pa.first), Hlsl));
 	}

@@ -72,7 +72,7 @@ private:
 
 	bool isPersepectiveChange = true;
 	float FovAngleY = DirectX::XM_PI / 2.0f;    // 수직 시야각 (라디안)
-	float AspectRatio;  // 화면 비율 (가로/세로)
+	float AspectRatio = 2.0f;  // 화면 비율 (가로/세로)
 	float NearZ = 1.f;     // 근평면
 	float FarZ = 1000.f;          // 원평면
 
