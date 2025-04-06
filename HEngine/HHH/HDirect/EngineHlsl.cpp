@@ -28,7 +28,7 @@ void EngineHlsl::createSampler(ID3D11Device* _Device)
 	_Device->CreateSamplerState(&sampDesc, &samplerState);
 	GraphicsEngine::get()->GetContext()->Get()->PSSetSamplers(0, 1, &samplerState);
 
-	SamplerMap["Default"] = samplerState;
+	SamplerMap["DEFAULT"] = samplerState;
 }
 
 void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_view _str, std::shared_ptr<HS> _Hlsl)
@@ -112,79 +112,10 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::shared_
 {
 	createSampler(_Device->Get());
 
-
 	for (const std::pair<const std::string, std::string>& pa : _fileManager->GetAllFile("hlsl")) {
-		if (pa.first == "TEST") {
-			std::shared_ptr<HS> _hs = test(_Device, pa.second);
-			_hs->samplerState = SamplerMap["Default"];
-			HlslMap.insert(std::make_pair(HString::Upper(pa.first), _hs));
-			continue;
-		}
-
-
 		std::shared_ptr<HS> Hlsl = std::make_shared<HS>();
-		Hlsl->samplerState = SamplerMap["shaderfx"];
+		Hlsl->samplerState = SamplerMap["DEFAULT"];
 		CreateHlsl(_Device, pa.second, Hlsl);
 		HlslMap.insert(std::make_pair(HString::Upper(pa.first), Hlsl));
 	}
-}
-
-std::shared_ptr<HS> test(std::shared_ptr<GraphicDevice> _Device, std::string_view _str) {
-	HRESULT hr;
-
-	ID3DBlob* VSBlob = nullptr;
-	ID3DBlob* PSBlob = nullptr;
-	ID3DBlob* ErrorBlob = nullptr;
-
-	std::shared_ptr<HS> _Hlsl = std::make_shared<HS>();
-
-	std::wstring ws = HString::StoWC(_str.data());
-	const WCHAR* wcc = ws.c_str();
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlob, &ErrorBlob);
-
-	if (hr != S_OK)
-	{
-		assert(false);
-		return nullptr;
-	}
-
-	hr = D3DCompileFromFile(wcc, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlob, &ErrorBlob);
-
-	if (hr != S_OK)
-	{
-		assert(false);
-		return nullptr;
-	}
-
-	hr = _Device->Get()->CreateVertexShader(VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), nullptr, &_Hlsl->VS);
-	if (hr != S_OK)
-	{
-		assert(false);
-		return nullptr;
-	}
-
-	hr = _Device->Get()->CreatePixelShader(PSBlob->GetBufferPointer(), PSBlob->GetBufferSize(), nullptr, &_Hlsl->PS);
-	if (hr != S_OK)
-	{
-		assert(false);
-		return nullptr;
-	}
-
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0}
-	};
-
-	UINT size_layout = ARRAYSIZE(layout);
-	hr = _Device->Get()->CreateInputLayout(layout, size_layout, VSBlob->GetBufferPointer(), (UINT)VSBlob->GetBufferSize(), &_Hlsl->Layout);
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
-
-
-
-
-	return _Hlsl;
 }

@@ -27,7 +27,7 @@ cbuffer WVP : register(b0)
 VS_OUTPUT vsmain(VS_INPUT input)
 {
     VS_OUTPUT output;
-    output.position = mul(input.position, g_mWorldViewProjection);
+    output.position = mul(g_mWorldViewProjection, input.position);
     output.Textcoord = input.Textcoord;
     return output;
 }

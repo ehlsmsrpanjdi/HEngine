@@ -280,8 +280,8 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
 	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
-	//m_Context->Get()->PSSetShaderResources(0, 1, &textureSRV);
-	//m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
+	m_Context->Get()->PSSetShaderResources(0, 1, &textureSRV);
+	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 }
 

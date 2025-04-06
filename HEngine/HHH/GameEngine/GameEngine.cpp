@@ -36,7 +36,7 @@ void GameEngine::Init(RECT _rc)
 
 	Actor* act = SpawnActor<Actor>().get();
 	act->SetMesh("cube");
-	act->SetHlsl("shaderfx");
+	act->SetHlsl("test");
 }
 
 void GameEngine::release()
