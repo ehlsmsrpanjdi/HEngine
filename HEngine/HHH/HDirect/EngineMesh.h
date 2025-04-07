@@ -32,7 +32,7 @@ public:
 
 
 	void Test(std::shared_ptr<GraphicDevice> _Device);
-
+	void Test2(std::shared_ptr<GraphicDevice> _Device);
 
 protected:
 	ID3D11Buffer* CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::shared_ptr<class GraphicDevice> _Device);

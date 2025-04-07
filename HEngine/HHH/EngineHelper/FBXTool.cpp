@@ -73,13 +73,13 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 	lImporter->Import(lScene);
 	lImporter->Destroy();
 
-	if (false == FBXConverter->Triangulate(lScene, true)) {
-		return;
-		if (lScene != nullptr) {
-			lScene->Destroy();
-			lScene = nullptr;
-		}
-	}
+	//if (false == FBXConverter->Triangulate(lScene, true)) {
+	//	return;
+	//	if (lScene != nullptr) {
+	//		lScene->Destroy();
+	//		lScene = nullptr;
+	//	}
+	//}
 
 	AllScene.push_back(lScene);
 	ProcessNode(lScene->GetRootNode(), _Name);
@@ -104,50 +104,89 @@ std::shared_ptr<FMesh> FBXTool::ProcessMesh(FbxMesh* pMesh)
 	std::shared_ptr<FMesh> mesh = std::make_shared<FMesh>();
 	const char* _Name = pMesh->GetName();
 	FBuffer buffer;
-
-
 	int Count = pMesh->GetPolygonCount();
-	int VertexCount = pMesh->GetPolygonVertexCount();
 
-	FbxVector4* ControlledVertex = pMesh->GetControlPoints();
-	int PSize = pMesh->GetControlPointsCount();
-	mesh->vertices.resize(PSize);
-	mesh->indices.reserve(VertexCount);
-	//mesh->uvs.resize(PSize); // 이게 중요함
 
-	FbxVector4 Vertex;
+	//int VertexCount = pMesh->GetPolygonVertexCount();
 
-	for (int i = 0; i < PSize; ++i) {
-		Vertex = ControlledVertex[i];
-		buffer.position = DirectX::XMFLOAT3(static_cast<float>(Vertex[0]), static_cast<float>(Vertex[1]), static_cast<float>(Vertex[2]));
-		mesh->vertices[i].position = buffer.position;
-	}
+	//FbxVector4* ControlledVertex = pMesh->GetControlPoints();
+	//int PSize = pMesh->GetControlPointsCount();
+	//mesh->vertices.resize(PSize);
+	//mesh->indices.reserve(VertexCount);
 
-	int uvIndex = 0;
-	const char* uvSetName = nullptr;
 
-	//if (pMesh->GetElementUVCount() > 0) {
-	//	uvSetName = pMesh->GetElementUV(uvIndex)->GetName();
+	//FbxVector4 Vertex;
+
+	//for (int i = 0; i < PSize; ++i) {
+	//	Vertex = ControlledVertex[i];
+	//	buffer.position = DirectX::XMFLOAT3(static_cast<float>(Vertex[0]), static_cast<float>(Vertex[1]), static_cast<float>(Vertex[2]));
+	//	mesh->vertices[i].position = buffer.position;
+	//}
+
+	//FbxLayer* layer = pMesh->GetLayer(0);
+	//FbxLayerElementUV* uvElement = layer->GetUVs();
+
+	//FbxLayerElement::EMappingMode mappingMode = uvElement->GetMappingMode();
+	//FbxLayerElement::EReferenceMode referenceMode = uvElement->GetReferenceMode();
+
+	//const FbxLayerElementArrayTemplate<FbxVector2>& uvArray = uvElement->GetDirectArray();
+	//const FbxLayerElementArrayTemplate<int>& indexArray = uvElement->GetIndexArray();
+
+	//int mappingindex = 0;
+	//if (mappingMode == FbxLayerElement::eByControlPoint) {
+
 	//}
 
 
+
 	for (int i = 0; i < Count; ++i) {
-		for (int j = 0; j < 3; ++j) {
-			int index = pMesh->GetPolygonVertex(i, j);
-			mesh->indices.push_back(index);
+		int polygonSize = pMesh->GetPolygonSize(i); // 이 폴리곤이 몇 개의 정점을 가지는지
 
-			//if (uvSetName) {
-			//	FbxVector2 uv;
-			//	bool unmapped;
+		// polygonSize가 3 이상일 때만 삼각형으로 분해 가능
+		if (polygonSize >= 3) {
+			// 기준 정점 v0
+			int v0 = pMesh->GetPolygonVertex(i, 0);
 
-			//	pMesh->GetPolygonVertexUV(i, j, uvSetName, uv, unmapped);
-			//	mesh->uvs[PSize] = DirectX::XMFLOAT2(
-			//		static_cast<float>(uv[0]), static_cast<float>(uv[1]));
-			//}
+			for (int j = 1; j < polygonSize - 1; ++j) {
+				int v1 = pMesh->GetPolygonVertex(i, j);
+				int v2 = pMesh->GetPolygonVertex(i, j + 1);
 
+				mesh->indices.push_back(v0);
+				mesh->indices.push_back(v1);
+				mesh->indices.push_back(v2);
+			}
 		}
-
 	}
+
+	mesh->vertices.resize(mesh->indices.size());
+
+	FbxLayer* layer = pMesh->GetLayer(0);
+	FbxLayerElementUV* uvElement = layer->GetUVs();
+
+	if (uvElement && uvElement->GetMappingMode() == FbxLayerElement::eByPolygonVertex)
+	{
+		const FbxLayerElementArrayTemplate<FbxVector2>& uvArray = uvElement->GetDirectArray();
+		const FbxLayerElementArrayTemplate<int>& uvIndexArray = uvElement->GetIndexArray();
+
+		for (int i = 0; i < mesh->indices.size() / 3; i++) // 삼각형 개수만큼
+		{
+			for (int j = 0; j < 3; ++j) // 꼭지점 3개
+			{
+				int index = mesh->indices[i * 3 + j]; // control point 인덱스
+				FbxVector4 pos = pMesh->GetControlPointAt(index); // 위치
+				buffer.position = DirectX::XMFLOAT3(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]));
+
+				// uvIndex는 PolygonVertex 기준으로 계산
+				//int polygonVertexIndex = i * 3 + j;
+				//int uvIndex = uvIndexArray.GetAt(polygonVertexIndex);
+				//FbxVector2 uv = uvArray.GetAt(uvIndex);
+				//buffer.uv = DirectX::XMFLOAT2(static_cast<float>(uv[0]), static_cast<float>(uv[1]));
+				mesh->vertices[index] = buffer;
+			}
+		}
+	}
+
+
 
 	return mesh;
 

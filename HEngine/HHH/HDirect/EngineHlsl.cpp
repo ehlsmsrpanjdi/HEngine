@@ -9,8 +9,6 @@
 #include "DeviceContext.h"
 #include "InputElement.h"
 
-std::shared_ptr<HS> test(std::shared_ptr<GraphicDevice> _Device, std::string_view _str);
-
 EngineHlsl::EngineHlsl()
 {
 }
@@ -88,6 +86,98 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_
 	VSBlob->Release();
 }
 
+void EngineHlsl::Test(ID3D11Device* _Device)
+{
+	HRESULT hr;
+
+	ID3DBlob* VSBlob = nullptr;
+	ID3DBlob* PSBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
+
+	std::shared_ptr<HS> Hlsl = std::make_shared<HS>();
+
+	hr = D3DCompileFromFile(L"D:\\SMGit\\Hengine\\HEngine\\HHH\\Resource\\HLSL\\Copy.hlsl"
+		, nullptr, nullptr, "vsmain", "vs_5_0", NULL, NULL, &VSBlob, &errorBlob);
+
+	if (hr != S_OK)
+	{
+		printf("Shader Compilation Error: %s\n", (char*)errorBlob->GetBufferPointer());
+		assert(false);
+		return;
+	}
+
+	hr = D3DCompileFromFile(L"D:\\SMGit\\Hengine\\HEngine\\HHH\\Resource\\HLSL\\Copy.hlsl"
+		, nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &PSBlob, &errorBlob);
+
+	if (hr != S_OK)
+	{
+		printf("Shader Compilation Error: %s\n", (char*)errorBlob->GetBufferPointer());
+		assert(false);
+		return;
+	}
+
+	hr = _Device->CreateVertexShader(VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), nullptr, &Hlsl->VS);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
+
+	hr = _Device->CreatePixelShader(PSBlob->GetBufferPointer(), PSBlob->GetBufferSize(), nullptr, &Hlsl->PS);
+	if (hr != S_OK)
+	{
+		assert(false);
+		return;
+	}
+
+
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		// POSITION (float3 → 12 bytes)
+		{
+			"POSITION",         // SemanticName
+			0,                  // SemanticIndex
+			DXGI_FORMAT_R32G32B32_FLOAT, // Format
+			0,                  // InputSlot
+			0,                  // AlignedByteOffset
+			D3D11_INPUT_PER_VERTEX_DATA, // InputSlotClass
+			0                   // InstanceDataStepRate
+		},
+
+		// TEXCOORD (float2 → 8 bytes)
+		{
+			"TEXCOORD",
+			0,
+			DXGI_FORMAT_R32G32_FLOAT,
+			0,
+			12, // 오프셋은 POSITION 다음, 즉 12 byte
+			D3D11_INPUT_PER_VERTEX_DATA,
+			0
+		}
+	};
+
+	ID3D11InputLayout* inputLayout = nullptr;
+	UINT layoutSize = ARRAYSIZE(layout);
+
+	// vertexShaderBytecode = 컴파일된 VS 바이트코드 포인터
+	// bytecodeSize = 바이트코드 크기
+
+	hr = _Device->CreateInputLayout(
+		layout,
+		layoutSize,
+		VSBlob->GetBufferPointer(), 
+		(UINT)VSBlob->GetBufferSize(), 
+		&Hlsl->Layout
+	);
+
+	if (FAILED(hr)) {
+		assert(false); // 실패 시 디버그
+	}
+	Hlsl->samplerState = SamplerMap["DEFAULT"];
+
+	HlslMap.insert(std::make_pair("MYTEST", Hlsl));
+}
+
 
 EngineHlsl::~EngineHlsl()
 {
@@ -118,4 +208,5 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::shared_
 		CreateHlsl(_Device, pa.second, Hlsl);
 		HlslMap.insert(std::make_pair(HString::Upper(pa.first), Hlsl));
 	}
+	Test(_Device->Get());
 }

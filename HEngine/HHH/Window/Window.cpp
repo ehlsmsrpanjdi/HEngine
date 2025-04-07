@@ -40,7 +40,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 		window->MouseX = LOWORD(lparam);
 		window->MouseY = HIWORD(lparam);
 
-		std::cout << "mouseforceX : " << window->MouseForceX << "    mouseforceY : " << window->MouseForceY << std::endl;
+		//std::cout << "mouseforceX : " << window->MouseForceX << "    mouseforceY : " << window->MouseForceY << std::endl;
 		break;
 	}
 	default: {

@@ -35,8 +35,8 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	Actor* act = SpawnActor<Actor>().get();
-	act->SetMesh("cube");
-	act->SetHlsl("test");
+	act->SetMesh("test");
+	act->SetHlsl("mytest");
 }
 
 void GameEngine::release()
@@ -54,16 +54,16 @@ void GameEngine::Update(float _DeltaTime)
 	CameraUpdate(_DeltaTime);
 	EngineTransform trasn;
 	if (EngineKey::IsPressed('W')) {
-		MainCamera->Move(0.0f, 0.0f, 1.f * _DeltaTime);
+		MainCamera->Move(0.0f, 0.0f, 10.f * _DeltaTime);
 	}
 	if (EngineKey::IsPressed('S')) {
-		MainCamera->Move(0.0f, 0.0f, -1.f * _DeltaTime);
+		MainCamera->Move(0.0f, 0.0f, -10.f * _DeltaTime);
 	}
 	if (EngineKey::IsPressed('A')) {
-		MainCamera->Move(-1.f * _DeltaTime, 0.0f, 0.0f);
+		MainCamera->Move(-10.f * _DeltaTime, 0.0f, 0.0f);
 	}
 	if (EngineKey::IsPressed('D')) {
-		MainCamera->Move(1.f * _DeltaTime, 0.0f, 0.0f);
+		MainCamera->Move(10.f * _DeltaTime, 0.0f, 0.0f);
 	}
 
 	if (EngineKey::IsPressed(VK_RBUTTON)) {
