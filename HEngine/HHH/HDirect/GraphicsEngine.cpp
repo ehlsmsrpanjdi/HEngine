@@ -166,7 +166,7 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 	CreateTexture(m_Device->Get(), m_Context->Get(), HString::StoWC(_fileManager->GetFile("png", "heart")).c_str());
 }
 
-void GraphicsEngine::CreateMesh(std::vector<std::shared_ptr<FMesh>>& _AllMesh)
+void GraphicsEngine::CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<FMesh>>>& _AllMesh)
 {
 	EngineMesh::Get().CreateMesh(_AllMesh, m_Device);
 }
@@ -290,7 +290,7 @@ HS* GraphicsEngine::GetHlsl(std::string_view _str)
 	return EngineHlsl::Get().GetHlsl(_str);
 }
 
-MH* GraphicsEngine::GetMesh(std::string_view _str)
+std::unordered_map<std::string, std::shared_ptr<MH>>& GraphicsEngine::GetMesh(std::string_view _str)
 {
 	return EngineMesh::Get().GetMesh(_str);
 }

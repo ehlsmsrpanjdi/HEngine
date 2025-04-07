@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include <DirectXMath.h>
+#include "unordered_map"
 #include <Windows.h>
 
 #include "fbxsdk.h"
@@ -25,18 +26,14 @@ public:
 
 
 	void LoadALLFBX(std::shared_ptr<class EngineFile> _fileManager);
-	void LoadFBX(const char* _filename, std::string _Name);
+	void LoadFBX(const char* _filename, std::string_view _Name);
 
-	void ProcessNode(FbxNode* _pNode, std::string _Name);
-	void ProcessMesh(FbxMesh* pMesh, std::string _Name);
+	void ProcessNode(FbxNode* _pNode, std::string_view _Name);
+	std::shared_ptr<struct FMesh> ProcessMesh(FbxMesh* pMesh);
 
-	std::vector<std::shared_ptr<struct FMesh>> AllMesh;
+	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>> AllMeshMap;
 
-	std::vector<std::shared_ptr<struct FMesh>>& GetMesh() {
-		return AllMesh;
-	}
-
-
+	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& GetMesh();
 protected:
 
 private:

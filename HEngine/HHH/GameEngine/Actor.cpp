@@ -13,7 +13,7 @@ Actor::Actor()
 Actor::~Actor()
 {
 	Hlsl = nullptr;
-	Mesh = nullptr;
+	//Meshs = nullptr;
 }
 
 void Actor::BeginPlay()
@@ -21,9 +21,9 @@ void Actor::BeginPlay()
 	if (Hlsl == nullptr) {
 		assert(false);
 	}
-	if (Mesh == nullptr) {
+	/*if (Mesh == nullptr) {
 		assert(false);
-	}
+	}*/
 }
 
 void Actor::Tick(float _DeltaTime)
@@ -32,7 +32,9 @@ void Actor::Tick(float _DeltaTime)
 
 void Actor::Render()
 {
-	GraphicsEngine::get()->Render(Hlsl, Mesh);
+	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : *Meshs) {
+		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
+	}
 }
 
 void Actor::AddActorLocation(float _x, float _y, float _z)
@@ -78,7 +80,8 @@ void Actor::Rotate(float _x, float _y, float _z)
 void Actor::SetMesh(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	Mesh = GraphicsEngine::get()->GetMesh(str);
+	std::unordered_map<std::string, std::shared_ptr<MH>>& mesh = GraphicsEngine::get()->GetMesh(str);
+	Meshs = &mesh;
 }
 
 void Actor::SetHlsl(std::string_view _str)

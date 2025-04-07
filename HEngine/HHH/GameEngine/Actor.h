@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineHelper/EngineTransform.h"
+#include "unordered_map"
 #include "iostream"
 
 // Ό³Έν :
@@ -40,6 +41,6 @@ protected:
 private:
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
-	struct MH* Mesh = nullptr;
+	std::unordered_map<std::string, std::shared_ptr<struct MH>>* Meshs = nullptr;
 };
 

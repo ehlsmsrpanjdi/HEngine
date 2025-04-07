@@ -5,6 +5,8 @@
 #include <map>
 #include "iostream"
 #include <memory>
+#include <unordered_map>
+
 
 // Ό³Έν :
 class EngineMesh
@@ -24,8 +26,8 @@ public:
 	EngineMesh& operator=(const EngineMesh& _Other) = delete;
 	EngineMesh& operator=(EngineMesh&& _Other) noexcept = delete;
 
-	void CreateMesh(std::vector<std::shared_ptr<struct FMesh>>& _AllMesh, std::shared_ptr<class GraphicDevice> _Device);
-	struct MH* GetMesh(std::string_view _str);
+	void CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& _AllMesh, std::shared_ptr<class GraphicDevice> _Device);
+	std::unordered_map<std::string, std::shared_ptr<struct MH>>& GetMesh(std::string_view _str);
 
 
 
@@ -33,11 +35,12 @@ public:
 
 
 protected:
-	ID3D11Buffer* CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<class GraphicDevice> _Device);
-	ID3D11Buffer* CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<class GraphicDevice> _Device);
+	ID3D11Buffer* CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::shared_ptr<class GraphicDevice> _Device);
+	ID3D11Buffer* CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::shared_ptr<class GraphicDevice> _Device);
 private:
 	EngineMesh();
 
-	std::map<std::string, std::shared_ptr<struct MH>> MeshMap;
+
+	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct MH>>> AllMeshMap;
 };
 

@@ -35,8 +35,6 @@ void AppWindow::onCreate()
 	FileManager->AllExtendFileRecursive();
 
 	FBXTool::GetInst().Init();
-	//FileManager->GetAllFile("fbx");
-
 	
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);

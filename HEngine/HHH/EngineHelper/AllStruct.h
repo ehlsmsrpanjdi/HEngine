@@ -5,13 +5,29 @@
 #include "iostream"
 #include <Windows.h>
 #include <d3d11.h>
+#include <map>
 // Ό³Έν :
+struct FMesh;
+struct MH;
+struct HS;
+
+
+struct FScene {
+	std::map<std::string, std::vector<std::shared_ptr<FMesh>>> MeshMap;
+};
+
+struct FBuffer {
+	DirectX::XMFLOAT3 position;
+	//DirectX::XMFLOAT2 uv;
+};
+
 struct FMesh {
-	std::vector<DirectX::XMFLOAT3> vertices;
-	//std::vector<DirectX::XMFLOAT3> normals;
-	//std::vector<DirectX::XMFLOAT2> uvs;
+	std::vector<FBuffer> vertices; // vertex buffer
 	std::vector<UINT> indices;
-	std::string MeshName;
+
+	int GetSize() {
+		sizeof(vertices[0]) + sizeof(indices[0]);
+	}
 };
 
 struct MH {
@@ -19,6 +35,8 @@ struct MH {
 	UINT IndexBufferSize;
 	ID3D11Buffer* Vertex;
 	UINT BufferSize;
+
+	std::string Name;
 
 	~MH() {
 		if (Index != nullptr) {

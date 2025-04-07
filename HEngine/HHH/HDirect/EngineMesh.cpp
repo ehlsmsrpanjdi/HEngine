@@ -11,41 +11,49 @@ EngineMesh::EngineMesh()
 
 EngineMesh::~EngineMesh() 
 {
-	MeshMap.clear();
+	AllMeshMap.clear();
 }
 
-void EngineMesh::CreateMesh(std::vector<std::shared_ptr<FMesh>>& _AllMesh, std::shared_ptr<GraphicDevice> _Device)
+void EngineMesh::CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<FMesh>>>& _AllMesh, std::shared_ptr<class GraphicDevice> _Device)
 {
-	for (std::shared_ptr<FMesh> mesh : _AllMesh) {
-		std::shared_ptr<MH> meshinfo = std::make_shared<MH>();
+	for (std::pair<const std::string, std::unordered_map<std::string, std::shared_ptr<FMesh>>>& mesh : _AllMesh) {
+		for (std::pair<const std::string, std::shared_ptr<FMesh>> meshinfo : mesh.second) {
+			UINT Size = sizeof(meshinfo.second->vertices[0]);
+			UINT arraysize = static_cast<UINT>(meshinfo.second->vertices.size());
 
-		UINT Size = sizeof(mesh->vertices[0]);
-		UINT ArraySize = static_cast<UINT>(mesh->vertices.size());
+			std::shared_ptr<MH> Mesh = std::make_shared<MH>();
+			Mesh->BufferSize = Size;
+			Mesh->Vertex = CreateBuffer(arraysize, Size, (UINT*)meshinfo.second->vertices.data(), _Device);
 
-		meshinfo->BufferSize = Size;
-		meshinfo->Vertex = CreateBuffer(ArraySize, Size, (UINT*)mesh->vertices.data(), mesh->MeshName, _Device);
+			Size = sizeof(meshinfo.second->indices[0]);
+			arraysize = static_cast<UINT>(meshinfo.second->indices.size());
+			Mesh->IndexBufferSize = arraysize;
+			Mesh->Index = CreateIndexBuffer(arraysize, Size, meshinfo.second->indices.data(), _Device);
 
-		Size = sizeof(mesh->indices[0]);
-		ArraySize = static_cast<UINT>(mesh->indices.size());
+			std::unordered_map<std::string, std::shared_ptr<MH>>& MeshMap = AllMeshMap[mesh.first];
 
-		meshinfo->IndexBufferSize = ArraySize;
-		meshinfo->Index = CreateIndexBuffer(ArraySize, Size, mesh->indices.data(), mesh->MeshName, _Device);
-		 
-		MeshMap.insert(std::make_pair(mesh->MeshName, meshinfo));
+			if (MeshMap.contains(meshinfo.first) == false) {
+				AllMeshMap[mesh.first][meshinfo.first] = Mesh;
+			}
+			else {
+				assert(false);
+			}
+		}
 	}
 
 	Test(_Device);
 }
 
-MH* EngineMesh::GetMesh(std::string_view _str)
+std::unordered_map<std::string, std::shared_ptr<MH>>& EngineMesh::GetMesh(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	if (MeshMap.contains(str) == false) {
+	if (AllMeshMap.contains(str) == false) {
 		assert(false);
 	}
-	return MeshMap[str].get();
+	return AllMeshMap[str];
 }
 
+#pragma region "테스트용"
 struct Vertex {
 	DirectX::XMFLOAT3 position; // 위치값 (x, y, z)
 	DirectX::XMFLOAT2 uv;      // 텍스처 좌표 (u, v)
@@ -111,16 +119,17 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 		}
 	}
 
-	MH* meshinfo = new MH();
+	std::shared_ptr<MH> meshinfo = std::make_shared<MH>();
 	meshinfo->Index = ibuffer;
 	meshinfo->IndexBufferSize = static_cast<UINT>(indexBuffer.size());
 	meshinfo->Vertex = vbuffer;
 	meshinfo->BufferSize = sizeof(DirectX::XMFLOAT3);
 
-	MeshMap.insert(std::make_pair("TEST", std::shared_ptr<MH>(meshinfo)));
+	AllMeshMap["TEST"]["DEFAULT"] = meshinfo;
 }
+#pragma endregion
 
-ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<GraphicDevice> _Device)
+ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::shared_ptr<GraphicDevice> _Device)
 {
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
@@ -144,7 +153,7 @@ ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List,
 
 }
 
-ID3D11Buffer* EngineMesh::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::string _str, std::shared_ptr<GraphicDevice> _Device)
+ID3D11Buffer* EngineMesh::CreateIndexBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::shared_ptr<GraphicDevice> _Device)
 {
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_IMMUTABLE;

@@ -15,7 +15,7 @@ FBXTool::~FBXTool()
 		FBXConverter = nullptr;
 	}
 
-	AllMesh.clear();
+	AllMeshMap.clear();
 
 	if (lSdkManager) {
 		lSdkManager->Destroy();
@@ -61,7 +61,7 @@ void FBXTool::LoadALLFBX(std::shared_ptr<EngineFile> _fileManager)
 	}
 }
 
-void FBXTool::LoadFBX(const char* _filename, std::string _Name)
+void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 {
 	FbxImporter* lImporter = FbxImporter::Create(lSdkManager, "");
 	if (!lImporter->Initialize(_filename, -1, lSdkManager->GetIOSettings())) {
@@ -87,11 +87,11 @@ void FBXTool::LoadFBX(const char* _filename, std::string _Name)
 }
 
 
-void FBXTool::ProcessNode(FbxNode* _pNode, std::string _Name)
+void FBXTool::ProcessNode(FbxNode* _pNode, std::string_view _Name)
 {
 	FbxMesh* pMesh = _pNode->GetMesh();
 	if (pMesh) {
-		ProcessMesh(pMesh, _Name);
+		AllMeshMap[_Name.data()][pMesh->GetName()] = ProcessMesh(pMesh);
 	}
 
 	for (int i = 0; i < _pNode->GetChildCount(); i++) {
@@ -99,10 +99,11 @@ void FBXTool::ProcessNode(FbxNode* _pNode, std::string _Name)
 	}
 }
 
-void FBXTool::ProcessMesh(FbxMesh* pMesh, std::string _Name)
+std::shared_ptr<FMesh> FBXTool::ProcessMesh(FbxMesh* pMesh)
 {
 	std::shared_ptr<FMesh> mesh = std::make_shared<FMesh>();
-	mesh->MeshName = _Name;
+	const char* _Name = pMesh->GetName();
+	FBuffer buffer;
 
 
 	int Count = pMesh->GetPolygonCount();
@@ -112,22 +113,49 @@ void FBXTool::ProcessMesh(FbxMesh* pMesh, std::string _Name)
 	int PSize = pMesh->GetControlPointsCount();
 	mesh->vertices.resize(PSize);
 	mesh->indices.reserve(VertexCount);
+	//mesh->uvs.resize(PSize); // 이게 중요함
+
 	FbxVector4 Vertex;
 
 	for (int i = 0; i < PSize; ++i) {
 		Vertex = ControlledVertex[i];
-		mesh->vertices[i] = DirectX::XMFLOAT3(static_cast<float>(Vertex[0]), static_cast<float>(Vertex[1]), static_cast<float>(Vertex[2]));
+		buffer.position = DirectX::XMFLOAT3(static_cast<float>(Vertex[0]), static_cast<float>(Vertex[1]), static_cast<float>(Vertex[2]));
+		mesh->vertices[i].position = buffer.position;
 	}
+
+	int uvIndex = 0;
+	const char* uvSetName = nullptr;
+
+	//if (pMesh->GetElementUVCount() > 0) {
+	//	uvSetName = pMesh->GetElementUV(uvIndex)->GetName();
+	//}
+
 
 	for (int i = 0; i < Count; ++i) {
 		for (int j = 0; j < 3; ++j) {
-		int index = pMesh->GetPolygonVertex(i, j);
-		mesh->indices.push_back(index);
+			int index = pMesh->GetPolygonVertex(i, j);
+			mesh->indices.push_back(index);
+
+			//if (uvSetName) {
+			//	FbxVector2 uv;
+			//	bool unmapped;
+
+			//	pMesh->GetPolygonVertexUV(i, j, uvSetName, uv, unmapped);
+			//	mesh->uvs[PSize] = DirectX::XMFLOAT2(
+			//		static_cast<float>(uv[0]), static_cast<float>(uv[1]));
+			//}
+
 		}
 
 	}
 
-	AllMesh.push_back(mesh);
+	return mesh;
+
+}
+
+std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& FBXTool::GetMesh()
+{
+	return AllMeshMap;
 }
 
 
