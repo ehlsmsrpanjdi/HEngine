@@ -1,23 +1,13 @@
-﻿빌드 시작: 2025-04-01 오후 2:34:38
+﻿빌드 시작: 2025-04-08 오후 9:14:04
 로깅의 세부 정보 표시가 Normal(으)로 설정되었습니다.     1>2 노드의 "D:\SMGit\Hengine\HEngine\HHH\EngineHelper\EngineHelper.vcxproj" 프로젝트(Build 대상)입니다.
      1>PrepareForBuild:
          구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-         "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper\EngineHelper.tlog\" 디렉터리를 만들고 있습니다.
        InitializeBuildStatus:
          "AlwaysCreate"이(가) 지정되었기 때문에 "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper\EngineHelper.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
          "D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper\EngineHelper.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
        ClCompile:
-         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\bin\HostX64\x64\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /diagnostics:column /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /permissive- /Fo"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper\\" /Fd"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt AllStruct.cpp EngineDebug.cpp EngineFile.cpp EngineKey.cpp EnginePath.cpp EngineTime.cpp FBXTool.cpp HString.cpp EngineTransform.cpp Vector3D.cpp
-         AllStruct.cpp
-         EngineDebug.cpp
-         EngineFile.cpp
-         EngineKey.cpp
-         EnginePath.cpp
-         EngineTime.cpp
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\bin\HostX64\x64\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /diagnostics:column /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /permissive- /Fo"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper\\" /Fd"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt FBXTool.cpp
          FBXTool.cpp
-         HString.cpp
-         EngineTransform.cpp
-         Vector3D.cpp
        Lib:
          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\bin\HostX64\x64\Lib.exe /OUT:"D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper.lib" /LIBPATH:D:\SMGit\Hengine\HEngine\HHH\EngineHelper\..\2020.3.7\lib\x64 /NOLOGO /MACHINE:X64 /LTCG D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper\AllStruct.obj
          D:\SMGit\Hengine\HEngine\HHH\Bin\x64\Release\EngineHelper\EngineDebug.obj
@@ -39,4 +29,4 @@
     경고 0개
     오류 0개
 
-경과 시간: 00:00:08.56
+경과 시간: 00:00:03.12

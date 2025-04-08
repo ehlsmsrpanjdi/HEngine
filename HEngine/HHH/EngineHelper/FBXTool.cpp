@@ -3,6 +3,7 @@
 #include "AllStruct.h"
 #include <set>
 
+#define FBXSDK_SHARED
 
 FBXTool::FBXTool()
 {
@@ -73,13 +74,6 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 	lImporter->Import(lScene);
 	lImporter->Destroy();
 
-	//if (false == FBXConverter->Triangulate(lScene, true)) {
-	//	return;
-	//	if (lScene != nullptr) {
-	//		lScene->Destroy();
-	//		lScene = nullptr;
-	//	}
-	//}
 
 	AllScene.push_back(lScene);
 	ProcessNode(lScene->GetRootNode(), _Name);
@@ -91,11 +85,36 @@ void FBXTool::ProcessNode(FbxNode* _pNode, std::string_view _Name)
 {
 	FbxMesh* pMesh = _pNode->GetMesh();
 	if (pMesh) {
+		ProcessMaterial(_pNode, _Name);
+
+		tempmatrix = _pNode->EvaluateGlobalTransform();
 		AllMeshMap[_Name.data()][pMesh->GetName()] = ProcessMesh(pMesh);
 	}
 
 	for (int i = 0; i < _pNode->GetChildCount(); i++) {
 		ProcessNode(_pNode->GetChild(i), _Name);
+	}
+}
+
+void FBXTool::ProcessMaterial(FbxNode* _pNode, std::string_view _Name)
+{
+	FbxMesh* mesh = _pNode->GetMesh();
+	if (!mesh) return;
+
+	int materialCount = _pNode->GetMaterialCount();
+	if (materialCount == 0) return;
+
+	fbxsdk::FbxSurfaceMaterial* material = _pNode->GetMaterial(0); // 하나만 있다고 가정
+	if (!material) return;
+
+
+	FbxProperty prop = material->FindProperty("DiffuseColor");
+	int textureCount = prop.GetSrcObjectCount<FbxFileTexture>();
+	for (int i = 0; i < textureCount; ++i) {
+		FbxFileTexture* tex = prop.GetSrcObject<FbxFileTexture>(i);
+		if (tex) {
+			printf("텍스처 경로: %s\n", tex->GetFileName());
+		}
 	}
 }
 
@@ -120,6 +139,7 @@ std::shared_ptr<FMesh> FBXTool::ProcessMesh(FbxMesh* pMesh)
 			for (int j = 0; j < polygonSize; ++j) {
 				int index = pMesh->GetPolygonVertex(i, j);
 				FbxVector4 pos = pMesh->GetControlPointAt(index);
+				pos = tempmatrix.MultT(pos);
 				buffer.position = DirectX::XMFLOAT3(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]));
 
 				//uvIndex는 PolygonVertex 기준으로 계산

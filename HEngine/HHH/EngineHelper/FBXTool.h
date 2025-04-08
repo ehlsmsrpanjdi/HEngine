@@ -29,11 +29,17 @@ public:
 	void LoadFBX(const char* _filename, std::string_view _Name);
 
 	void ProcessNode(FbxNode* _pNode, std::string_view _Name);
+
+	void ProcessMaterial(FbxNode* _pNode, std::string_view _Name);
+
 	std::shared_ptr<struct FMesh> ProcessMesh(FbxMesh* pMesh);
 
 	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>> AllMeshMap;
 
 	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& GetMesh();
+
+
+	FbxAMatrix tempmatrix = FbxAMatrix();
 protected:
 
 private:
