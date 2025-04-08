@@ -3,7 +3,6 @@
 #include "AllStruct.h"
 #include <set>
 
-#define FBXSDK_SHARED
 
 FBXTool::FBXTool()
 {
@@ -98,9 +97,6 @@ void FBXTool::ProcessNode(FbxNode* _pNode, std::string_view _Name)
 
 void FBXTool::ProcessMaterial(FbxNode* _pNode, std::string_view _Name)
 {
-	FbxMesh* mesh = _pNode->GetMesh();
-	if (!mesh) return;
-
 	int materialCount = _pNode->GetMaterialCount();
 	if (materialCount == 0) return;
 
@@ -109,12 +105,15 @@ void FBXTool::ProcessMaterial(FbxNode* _pNode, std::string_view _Name)
 
 
 	FbxProperty prop = material->FindProperty("DiffuseColor");
-	int textureCount = prop.GetSrcObjectCount<FbxFileTexture>();
+	int textureCount = prop.GetSrcObjectCount();
 	for (int i = 0; i < textureCount; ++i) {
-		FbxFileTexture* tex = prop.GetSrcObject<FbxFileTexture>(i);
-		if (tex) {
-			printf("텍스처 경로: %s\n", tex->GetFileName());
-		}
+		FbxObject* obj = prop.GetSrcObject(i);
+			FbxFileTexture* texture = static_cast<FbxFileTexture*>(obj);
+
+			if (texture) {
+				printf("텍스처 경로: %s\n", texture->GetFileName());
+				int a = 0;
+			}
 	}
 }
 
