@@ -222,8 +222,9 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 void GraphicsEngine::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* context, const wchar_t* filename)
 {
 	Microsoft::WRL::ComPtr<IWICImagingFactory> wicFactory;
-	CoInitialize(nullptr);
-	CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&wicFactory));
+	HRESULT hr;
+	hr = CoInitialize(nullptr);
+	hr = CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&wicFactory));
 
 	Microsoft::WRL::ComPtr<IWICBitmapDecoder> decoder;
 	wicFactory->CreateDecoderFromFilename(filename, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &decoder);
@@ -270,7 +271,6 @@ void GraphicsEngine::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* co
 void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 {
 	//D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
-	UINT stride = sizeof(DirectX::XMFLOAT3);
 	UINT offset = 0;
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &_Mesh->BufferSize, &offset);

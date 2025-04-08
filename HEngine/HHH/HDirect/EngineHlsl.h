@@ -32,8 +32,6 @@ public:
 
 	void CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_view _str, std::shared_ptr<HS> _Hlsl);
 
-	void Test(ID3D11Device* _Device);
-
 protected:
 
 private:

@@ -42,7 +42,6 @@ void EngineMesh::CreateMesh(std::unordered_map<std::string, std::unordered_map<s
 	}
 
 	Test(_Device);
-	Test2(_Device);
 }
 
 std::unordered_map<std::string, std::shared_ptr<MH>>& EngineMesh::GetMesh(std::string_view _str)
@@ -210,149 +209,8 @@ void EngineMesh::Test(std::shared_ptr<GraphicDevice> _Device)
 
 }
 
-struct Vertex2 {
-	DirectX::XMFLOAT3 position; // À§Ä¡°ª (x, y, z)
-};
 
 
-void EngineMesh::Test2(std::shared_ptr<GraphicDevice> _Device)
-{
-	DirectX::XMFLOAT3 position_list[] =
-	{
-		{ DirectX::XMFLOAT3(-0.5f,-0.5f,-0.5f)},
-		{ DirectX::XMFLOAT3(-0.5f,0.5f,-0.5f) },
-		{ DirectX::XMFLOAT3(0.5f,0.5f,-0.5f) },
-		{ DirectX::XMFLOAT3(0.5f,-0.5f,-0.5f)},
-
-		//BACK FACE
-		{ DirectX::XMFLOAT3(0.5f,-0.5f,0.5f) },
-		{ DirectX::XMFLOAT3(0.5f,0.5f,0.5f) },
-		{ DirectX::XMFLOAT3(-0.5f,0.5f,0.5f)},
-		{ DirectX::XMFLOAT3(-0.5f,-0.5f,0.5f) }
-	};
-
-	Vertex2 vertex_list[] =
-	{
-		//X - Y - Z
-		//FRONT FACE
-		{ position_list[0]},
-		{ position_list[1]},
-		{ position_list[2]},
-		{ position_list[3]},
-
-
-		{ position_list[4]},
-		{ position_list[5]},
-		{ position_list[6]},
-		{ position_list[7]},
-
-
-		{ position_list[1]},
-		{ position_list[6]},
-		{ position_list[5]},
-		{ position_list[2]},
-
-		{ position_list[7]},
-		{ position_list[0]},
-		{ position_list[3]},
-		{ position_list[4]},
-
-		{ position_list[3]},
-		{ position_list[2]},
-		{ position_list[5]},
-		{ position_list[4]},
-
-		{ position_list[7]},
-		{ position_list[6]},
-		{ position_list[1]},
-		{ position_list[0] }
-	};
-
-
-
-
-	UINT size_list = ARRAYSIZE(vertex_list);
-
-
-
-
-	ID3D11Buffer* vbuffer = nullptr;
-	{
-		D3D11_BUFFER_DESC buff_desc = {};
-		buff_desc.Usage = D3D11_USAGE_DEFAULT;
-		buff_desc.ByteWidth = size_list * sizeof(Vertex2);
-		buff_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		buff_desc.CPUAccessFlags = 0;
-		buff_desc.MiscFlags = 0;
-
-
-		D3D11_SUBRESOURCE_DATA init_data = {};
-		init_data.pSysMem = vertex_list;
-
-		HRESULT hr = _Device->Get()->CreateBuffer(&buff_desc, &init_data, &vbuffer);
-
-		if (hr != S_OK)
-		{
-			assert(false);
-		}
-	}
-
-
-	unsigned int index_list[] =
-	{
-		//FRONT SIDE
-		0,1,2,  //FIRST TRIANGLE
-		2,3,0,  //SECOND TRIANGLE
-		//BACK SIDE
-		4,5,6,
-		6,7,4,
-		//TOP SIDE
-		8,9,10,
-		10,11,8,
-		//BOTTOM SIDE
-		12,13,14,
-		14,15,12,
-		//RIGHT SIDE
-		16,17,18,
-		18,19,16,
-		//LEFT SIDE
-		20,21,22,
-		22,23,20
-	};
-
-	UINT IndexSize = ARRAYSIZE(index_list);
-
-	ID3D11Buffer* ibuffer = nullptr;
-	{
-
-		D3D11_BUFFER_DESC buff_desc = {};
-		buff_desc.Usage = D3D11_USAGE_IMMUTABLE;
-		buff_desc.ByteWidth = IndexSize * sizeof(unsigned int);
-		buff_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		buff_desc.CPUAccessFlags = 0;
-		buff_desc.MiscFlags = 0;
-		buff_desc.StructureByteStride = 0;
-
-
-
-		D3D11_SUBRESOURCE_DATA init_data = {};
-		init_data.pSysMem = index_list;
-
-		HRESULT hr = _Device->Get()->CreateBuffer(&buff_desc, &init_data, &ibuffer);
-		if (hr != S_OK)
-		{
-			assert(false);
-		}
-	}
-
-	std::shared_ptr<MH> meshinfo = std::make_shared<MH>();
-	meshinfo->Index = ibuffer;
-	meshinfo->IndexBufferSize = IndexSize;
-	meshinfo->Vertex = vbuffer;
-	meshinfo->BufferSize = sizeof(Vertex2);
-
-	AllMeshMap["TEST2"]["DEFAULT"] = meshinfo;
-}
 #pragma endregion
 
 ID3D11Buffer* EngineMesh::CreateBuffer(UINT _ArraySize, UINT _Size, UINT* _List, std::shared_ptr<GraphicDevice> _Device)
