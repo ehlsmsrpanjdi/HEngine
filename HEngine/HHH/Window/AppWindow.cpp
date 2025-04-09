@@ -6,6 +6,7 @@
 #include "GameEngine/GameEngine.h"
 #include "EngineHelper/EngineDebug.h"
 #include "EngineHelper/FBXTool.h"
+#include "EngineHelper/AllStruct.h"
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -39,6 +40,7 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->init(m_hwnd, rc);
 	FBXTool::GetInst().LoadALLFBX(FileManager);
+	GraphicsEngine::get()->CreateTexture(FileManager);
 	GraphicsEngine::get()->CreateMesh(FBXTool::GetInst().GetMesh());
 	GraphicsEngine::get()->CreateHlsl(FileManager);
 	GameEngine::get()->Init(rc);

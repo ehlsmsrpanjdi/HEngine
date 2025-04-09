@@ -30,6 +30,8 @@ void EngineMesh::CreateMesh(std::unordered_map<std::string, std::unordered_map<s
 			Mesh->IndexBufferSize = arraysize;
 			Mesh->Index = CreateIndexBuffer(arraysize, Size, meshinfo.second->indices.data(), _Device);
 
+			Mesh->TextureName = meshinfo.second->TextureName;
+
 			std::unordered_map<std::string, std::shared_ptr<MH>>& MeshMap = AllMeshMap[mesh.first];
 
 			if (MeshMap.contains(meshinfo.first) == false) {

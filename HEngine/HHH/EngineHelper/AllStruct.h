@@ -25,6 +25,8 @@ struct FMesh {
 	std::vector<FBuffer> vertices; // vertex buffer
 	std::vector<UINT> indices;
 
+	std::string TextureName;
+
 	int GetSize() {
 		sizeof(vertices[0]) + sizeof(indices[0]);
 	}
@@ -36,7 +38,7 @@ struct MH {
 	ID3D11Buffer* Vertex;
 	UINT BufferSize;
 
-	std::string Name;
+	std::string TextureName;
 
 	~MH() {
 		if (Index != nullptr) {

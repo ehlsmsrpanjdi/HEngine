@@ -57,6 +57,8 @@ public:
 #pragma region "리소스"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& _AllMesh);
+	void CreateTexture(std::shared_ptr<class EngineFile> _fileManager);
+
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
@@ -75,6 +77,11 @@ public:
 
 	std::unordered_map<std::string, std::shared_ptr<struct MH>>& GetMesh(std::string_view _str);
 
+#pragma endregion
+
+#pragma region " 빌린거 "
+private:
+	std::unordered_map<std::string, std::shared_ptr<struct Tex>>* TextureMap = nullptr;
 #pragma endregion
 
 public:

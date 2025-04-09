@@ -13,11 +13,13 @@
 #include "EngineHelper/AllStruct.h"
 #include "EngineMesh.h"
 #include "EngineHlsl.h"
+#include "EngineTexture.h"
 
 namespace Cbuffer {
 	std::string WVP = "WVPMatrix";
 }
 
+#pragma region "Init"
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -63,7 +65,7 @@ bool GraphicsEngine::release()
 	m_Context = nullptr;
 	m_SwapChain = nullptr;
 	m_DepthView = nullptr;
-
+	TextureMap = nullptr;
 
 
 	return true;
@@ -79,10 +81,6 @@ void GraphicsEngine::Clear(float red, float green, float blue, float alpha)
 void GraphicsEngine::Present(bool _bool)
 {
 	m_SwapChain->present(_bool);
-}
-
-GraphicsEngine::~GraphicsEngine()
-{
 }
 
 bool GraphicsEngine::createD3DDevice()
@@ -122,6 +120,12 @@ bool GraphicsEngine::createD3DDevice()
 	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
 	return true;
 }
+
+GraphicsEngine::~GraphicsEngine()
+{
+}
+
+#pragma endregion
 
 #pragma region "╟тем"
 DeviceContext* GraphicsEngine::GetContext()
@@ -169,6 +173,12 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 void GraphicsEngine::CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<FMesh>>>& _AllMesh)
 {
 	EngineMesh::Get().CreateMesh(_AllMesh, m_Device);
+}
+
+void GraphicsEngine::CreateTexture(std::shared_ptr<class EngineFile> _fileManager)
+{
+	EngineTexture::GetInst().CreateAllTexture(m_Device->Get(), m_Context->Get(), _fileManager);
+	TextureMap = &EngineTexture::GetInst().GetTexture();
 }
 
 
@@ -280,7 +290,10 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
 	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
-	//m_Context->Get()->PSSetShaderResources(0, 1, &textureSRV);
+	std::string str = _Mesh->TextureName;
+	ID3D11ShaderResourceView* tex = (*TextureMap)[str]->textureSRV;
+	 TextureMap->find(str)->second->textureSRV;
+	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
 	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 }

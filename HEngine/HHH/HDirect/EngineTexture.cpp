@@ -23,7 +23,7 @@ void EngineTexture::CreateAllTexture(ID3D11Device* device, ID3D11DeviceContext* 
 	{
 		std::wstring ws = HString::StoWC(pa.second);
 		const WCHAR* wcc = ws.c_str();
-		CreateTexture(device, context, wcc, HString::Upper(pa.first));
+		CreateTexture(device, context, wcc, pa.first);
 	}
 
 	const std::map<std::string, std::string>& jpgFiles = _filemanager->GetAllFile("jpg");
@@ -31,7 +31,7 @@ void EngineTexture::CreateAllTexture(ID3D11Device* device, ID3D11DeviceContext* 
 	{
 		std::wstring ws = HString::StoWC(pa.second);
 		const WCHAR* wcc = ws.c_str();
-		CreateTexture(device, context, wcc, HString::Upper(pa.first));
+		CreateTexture(device, context, wcc, pa.first);
 	}
 }
 
@@ -87,5 +87,11 @@ void EngineTexture::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* con
 	TextureMap[_Origin.data()] = tex;
 
 }
+
+std::unordered_map<std::string, std::shared_ptr<struct Tex>>& EngineTexture::GetTexture()
+{
+	return TextureMap;
+}
+
 
 

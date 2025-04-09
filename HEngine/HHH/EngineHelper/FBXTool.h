@@ -30,7 +30,7 @@ public:
 
 	void ProcessNode(FbxNode* _pNode, std::string_view _Name);
 
-	void ProcessMaterial(FbxNode* _pNode, std::string_view _Name);
+	std::string ProcessMaterial(FbxNode* _pNode);
 
 	std::shared_ptr<struct FMesh> ProcessMesh(FbxMesh* pMesh);
 

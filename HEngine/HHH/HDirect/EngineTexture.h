@@ -13,6 +13,11 @@ public:
 	EngineTexture();
 	~EngineTexture();
 
+	static EngineTexture& GetInst() {
+		static EngineTexture texture;
+		return texture;
+	}
+
 	// delete Function
 	EngineTexture(const EngineTexture& _Other) = delete;
 	EngineTexture(EngineTexture&& _Other) noexcept = delete;
@@ -27,6 +32,7 @@ public:
 protected:
 
 private:
-
+	friend class GraphicsEngine;
+	std::unordered_map<std::string, std::shared_ptr<struct Tex>>& GetTexture();
 };
 
