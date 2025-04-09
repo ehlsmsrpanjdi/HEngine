@@ -61,8 +61,8 @@ public:
 	void CreateConstantBuffer(std::string _str);
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
 
-	void CreateTexture(ID3D11Device* device, ID3D11DeviceContext* context, const wchar_t* filename);
-	ID3D11ShaderResourceView* textureSRV = nullptr;
+	//void CreateTexture(ID3D11Device* device, ID3D11DeviceContext* context, const wchar_t* filename);
+	//ID3D11ShaderResourceView* textureSRV = nullptr;
 
 
 	void Render(struct HS* _Material, struct MH* _Mesh);

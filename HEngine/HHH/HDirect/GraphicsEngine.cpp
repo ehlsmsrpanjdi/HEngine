@@ -161,9 +161,9 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 {
 	CreateAllCBuffer();
 	EngineHlsl::Get().CreateHlsl(m_Device, _fileManager);
+	
 
-
-	CreateTexture(m_Device->Get(), m_Context->Get(), HString::StoWC(_fileManager->GetFile("png", "heart")).c_str());
+	//CreateTexture(m_Device->Get(), m_Context->Get(), HString::StoWC(_fileManager->GetFile("png", "heart")).c_str());
 }
 
 void GraphicsEngine::CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<FMesh>>>& _AllMesh)
@@ -219,54 +219,54 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
 }
 
-void GraphicsEngine::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* context, const wchar_t* filename)
-{
-	Microsoft::WRL::ComPtr<IWICImagingFactory> wicFactory;
-	HRESULT hr;
-	hr = CoInitialize(nullptr);
-	hr = CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&wicFactory));
-
-	Microsoft::WRL::ComPtr<IWICBitmapDecoder> decoder;
-	wicFactory->CreateDecoderFromFilename(filename, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &decoder);
-
-	Microsoft::WRL::ComPtr<IWICBitmapFrameDecode> frame;
-	decoder->GetFrame(0, &frame);
-
-	Microsoft::WRL::ComPtr<IWICFormatConverter> converter;
-	wicFactory->CreateFormatConverter(&converter);
-	converter->Initialize(frame.Get(), GUID_WICPixelFormat32bppRGBA, WICBitmapDitherTypeNone, nullptr, 0, WICBitmapPaletteTypeCustom);
-
-	UINT width, height;
-	frame->GetSize(&width, &height);
-
-	std::vector<UINT8> imageData(width * height * 4);
-	converter->CopyPixels(nullptr, width * 4, imageData.size(), imageData.data());
-
-	D3D11_TEXTURE2D_DESC textureDesc = {};
-	textureDesc.Width = width;
-	textureDesc.Height = height;
-	textureDesc.MipLevels = 1;
-	textureDesc.ArraySize = 1;
-	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	textureDesc.SampleDesc.Count = 1;
-	textureDesc.Usage = D3D11_USAGE_DEFAULT;
-	textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-
-	D3D11_SUBRESOURCE_DATA initData = {};
-	initData.pSysMem = imageData.data();
-	initData.SysMemPitch = width * 4;
-
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
-	device->CreateTexture2D(&textureDesc, &initData, &texture);
-
-	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-	srvDesc.Format = textureDesc.Format;
-	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = 1;
-
-	device->CreateShaderResourceView(texture.Get(), &srvDesc, &textureSRV);
-
-}
+//void GraphicsEngine::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* context, const wchar_t* filename)
+//{
+//	Microsoft::WRL::ComPtr<IWICImagingFactory> wicFactory;
+//	HRESULT hr;
+//	hr = CoInitialize(nullptr);
+//	hr = CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&wicFactory));
+//
+//	Microsoft::WRL::ComPtr<IWICBitmapDecoder> decoder;
+//	wicFactory->CreateDecoderFromFilename(filename, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &decoder);
+//
+//	Microsoft::WRL::ComPtr<IWICBitmapFrameDecode> frame;
+//	decoder->GetFrame(0, &frame);
+//
+//	Microsoft::WRL::ComPtr<IWICFormatConverter> converter;
+//	wicFactory->CreateFormatConverter(&converter);
+//	converter->Initialize(frame.Get(), GUID_WICPixelFormat32bppRGBA, WICBitmapDitherTypeNone, nullptr, 0, WICBitmapPaletteTypeCustom);
+//
+//	UINT width, height;
+//	frame->GetSize(&width, &height);
+//
+//	std::vector<UINT8> imageData(width * height * 4);
+//	converter->CopyPixels(nullptr, width * 4, imageData.size(), imageData.data());
+//
+//	D3D11_TEXTURE2D_DESC textureDesc = {};
+//	textureDesc.Width = width;
+//	textureDesc.Height = height;
+//	textureDesc.MipLevels = 1;
+//	textureDesc.ArraySize = 1;
+//	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+//	textureDesc.SampleDesc.Count = 1;
+//	textureDesc.Usage = D3D11_USAGE_DEFAULT;
+//	textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+//
+//	D3D11_SUBRESOURCE_DATA initData = {};
+//	initData.pSysMem = imageData.data();
+//	initData.SysMemPitch = width * 4;
+//
+//	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
+//	device->CreateTexture2D(&textureDesc, &initData, &texture);
+//
+//	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+//	srvDesc.Format = textureDesc.Format;
+//	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+//	srvDesc.Texture2D.MipLevels = 1;
+//
+//	device->CreateShaderResourceView(texture.Get(), &srvDesc, &textureSRV);
+//
+//}
 
 void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 {
@@ -280,7 +280,7 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
 	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
-	m_Context->Get()->PSSetShaderResources(0, 1, &textureSRV);
+	//m_Context->Get()->PSSetShaderResources(0, 1, &textureSRV);
 	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 }

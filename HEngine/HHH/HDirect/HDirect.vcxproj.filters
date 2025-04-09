@@ -28,6 +28,12 @@
     <Filter Include="Graphic\Hlsl">
       <UniqueIdentifier>{28286a7b-1599-42c9-9957-6a5bb492f4f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic\EngineHlsl">
+      <UniqueIdentifier>{8d3518d9-5a2f-4b82-8f5c-3d184cc1d322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\EngineTexture">
+      <UniqueIdentifier>{a4761a6f-77f8-4dab-b25f-9a4cf80033f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsEngine.cpp">
@@ -48,9 +54,14 @@
     <ClCompile Include="EngineMesh.cpp">
       <Filter>Graphic\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="EngineHlsl.cpp" />
     <ClCompile Include="InputElement.cpp">
       <Filter>Graphic\Hlsl</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineHlsl.cpp">
+      <Filter>Graphic\EngineHlsl</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTexture.cpp">
+      <Filter>Graphic\EngineTexture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,9 +83,14 @@
     <ClInclude Include="EngineMesh.h">
       <Filter>Graphic\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="EngineHlsl.h" />
     <ClInclude Include="InputElement.h">
       <Filter>Graphic\Hlsl</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineHlsl.h">
+      <Filter>Graphic\EngineHlsl</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTexture.h">
+      <Filter>Graphic\EngineTexture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -67,3 +67,16 @@ struct HS {
 		}
 	}
 };
+
+
+struct Tex {
+
+	ID3D11ShaderResourceView* textureSRV = nullptr;
+
+	~Tex() {
+		if (textureSRV != nullptr) {
+			textureSRV->Release();
+		}
+
+	}
+};

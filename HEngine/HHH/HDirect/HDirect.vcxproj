@@ -177,6 +177,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineTexture.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GraphicDevice.cpp">
       <SubType>
       </SubType>
@@ -196,6 +200,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineMesh.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineTexture.h">
       <SubType>
       </SubType>
     </ClInclude>
