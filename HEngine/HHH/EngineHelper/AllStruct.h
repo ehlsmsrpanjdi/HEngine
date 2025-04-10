@@ -50,10 +50,11 @@ struct FMesh {
 };
 
 struct MH {
-	ID3D11Buffer* Index;
-	UINT IndexBufferSize;
 	ID3D11Buffer* Vertex;
 	UINT BufferSize;
+
+	ID3D11Buffer* Index;
+	UINT IndexBufferSize;
 
 	std::string TextureName;
 

@@ -61,6 +61,9 @@
     <ClInclude Include="EngineFMesh.h">
       <Filter>FBX</Filter>
     </ClInclude>
+    <ClInclude Include="EngineAnimation.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -98,6 +101,9 @@
       <Filter>FBX</Filter>
     </ClCompile>
     <ClCompile Include="EngineFMesh.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineAnimation.cpp">
       <Filter>FBX</Filter>
     </ClCompile>
   </ItemGroup>
