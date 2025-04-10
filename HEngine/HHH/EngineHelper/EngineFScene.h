@@ -9,18 +9,18 @@
 #include <unordered_set>
 
 // Ό³Έν :
-class EngineScene
+class EngineFScene
 {
 public:
 	// constrcuter destructer
-	EngineScene();
-	~EngineScene();
+	EngineFScene();
+	~EngineFScene();
 
 	// delete Function
-	EngineScene(const EngineScene& _Other) = delete;
-	EngineScene(EngineScene&& _Other) noexcept = delete;
-	EngineScene& operator=(const EngineScene& _Other) = delete;
-	EngineScene& operator=(EngineScene&& _Other) noexcept = delete;
+	EngineFScene(const EngineFScene& _Other) = delete;
+	EngineFScene(EngineFScene&& _Other) noexcept = delete;
+	EngineFScene& operator=(const EngineFScene& _Other) = delete;
+	EngineFScene& operator=(EngineFScene&& _Other) noexcept = delete;
 
 	void init(FbxScene* _Scene, std::string_view _Name);
 	void ProcessNode(FbxNode* _pNode);
@@ -30,7 +30,9 @@ protected:
 
 
 private:
+	friend class EngineScene;
+
 	std::unordered_map<std::string, std::shared_ptr<class EngineFMesh>> MeshMap;
 	std::string SceneName;
-	std::shared_ptr<class EngineSkeleton> Skeleton = nullptr;
+	std::shared_ptr<class EngineFSkeleton> Skeleton = nullptr;
 };

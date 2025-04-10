@@ -1,7 +1,7 @@
-#include "EngineScene.h"
+#include "EngineFScene.h"
 #include "EngineFMesh.h"
 #include "AllStruct.h"
-#include "EngineSkeleton.h"
+#include "EngineFSkeleton.h"
 #include "HString.h"
 #include "filesystem"
 
@@ -13,17 +13,17 @@ std::string GetFileNameWithoutExtension(const std::string& fullPath)
 }
 
 
-EngineScene::EngineScene()
+EngineFScene::EngineFScene()
 {
 }
 
-EngineScene::~EngineScene()
+EngineFScene::~EngineFScene()
 {
 }
 
-void EngineScene::init(FbxScene* _Scene, std::string_view _Name)
+void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)
 {
-	Skeleton = std::make_shared<EngineSkeleton>();
+	Skeleton = std::make_shared<EngineFSkeleton>();
 	Skeleton->init(_Scene->GetRootNode());
 	if (Skeleton->NoneSkel == true) {
 		Skeleton = nullptr;
@@ -34,7 +34,7 @@ void EngineScene::init(FbxScene* _Scene, std::string_view _Name)
 	SceneName = _Name;
 }
 
-void EngineScene::ProcessNode(FbxNode* _pNode)
+void EngineFScene::ProcessNode(FbxNode* _pNode)
 {
 
 	FbxMesh* pMesh = _pNode->GetMesh();
@@ -56,7 +56,7 @@ void EngineScene::ProcessNode(FbxNode* _pNode)
 }
 
 //
-//std::shared_ptr<EngineFMesh> EngineScene::ProcessMesh(FbxMesh* pMesh)
+//std::shared_ptr<EngineFMesh> EngineFScene::ProcessMesh(FbxMesh* pMesh)
 //{
 //	std::shared_ptr<EngineFMesh> mesh = std::make_shared<EngineFMesh>();
 //	FBuffer buffer;
@@ -111,7 +111,7 @@ void EngineScene::ProcessNode(FbxNode* _pNode)
 
 
 
-std::string EngineScene::ProcessMaterial(FbxNode* _pNode)
+std::string EngineFScene::ProcessMaterial(FbxNode* _pNode)
 {
 	int materialCount = _pNode->GetMaterialCount();
 	if (materialCount == 0) return "DEFAULT";

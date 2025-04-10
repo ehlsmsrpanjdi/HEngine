@@ -11,9 +11,29 @@ EngineFMesh::~EngineFMesh()
 
 int EngineFMesh::GetSize()
 {
-	return sizeof(vertices[0]) + sizeof(indices[0]);
+	return sizeof(FBuffer);
 }
 
+int EngineFMesh::GetArraySize()
+{
+	return vertices.size();
+}
+
+const std::vector<FBuffer>& EngineFMesh::GetVertex()
+{
+	return vertices;
+}
+
+int EngineFMesh::GetIndexSize() {
+	return sizeof(UINT);
+}
+int EngineFMesh::GetIndexArraySize() {
+	return indices.size();
+}
+
+const std::vector<UINT>& EngineFMesh::GetIndices(){
+	return indices;
+}
 
 
 void EngineFMesh::init(FbxNode* pNode)

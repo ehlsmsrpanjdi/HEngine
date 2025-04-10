@@ -24,21 +24,34 @@ public:
 
 	void init(FbxNode* pNode);
 	
+	int GetSize();
+	int GetArraySize();
+
+	int GetIndexSize();
+	int GetIndexArraySize();
+
+	const std::vector<struct FBuffer>& GetVertex();
+	const std::vector<UINT>& GetIndices();
+
+	std::string_view GetTextureName()
+	{
+		return TextureName;
+	}
+
 protected:
 
 
 private:
-	friend class EngineScene;
-	friend class EngineSkeleton;
+	friend class EngineFScene;
+	friend class EngineFSkeleton;
 
 	std::vector<struct FBuffer> vertices; // vertex buffer
 	std::vector<UINT> indices;
 
 	std::string TextureName;
 
-	int GetSize();
 
-	std::shared_ptr<class EngineSkeleton> Skeleton = nullptr;
+	std::shared_ptr<class EngineFSkeleton> Skeleton = nullptr;
 	FbxAMatrix tempmatrix = FbxAMatrix();
 };
 

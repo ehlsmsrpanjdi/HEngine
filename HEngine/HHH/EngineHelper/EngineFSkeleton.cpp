@@ -1,17 +1,17 @@
-#include "EngineSkeleton.h"
+#include "EngineFSkeleton.h"
 #include "algorithm"
 #include "AllStruct.h"
 #include "EngineFMesh.h"
 
-EngineSkeleton::EngineSkeleton() 
+EngineFSkeleton::EngineFSkeleton() 
 {
 }
 
-EngineSkeleton::~EngineSkeleton() 
+EngineFSkeleton::~EngineFSkeleton() 
 {
 }
 
-void EngineSkeleton::init(FbxNode* _Node)
+void EngineFSkeleton::init(FbxNode* _Node)
 {
     FindBones(_Node);
 	if (rootBones.size() == 0) {
@@ -24,7 +24,7 @@ void EngineSkeleton::init(FbxNode* _Node)
     MakeBones();
 }
 
-void EngineSkeleton::FindBones(FbxNode* _Node)
+void EngineFSkeleton::FindBones(FbxNode* _Node)
 {
 	if (boneNodeToIndex.find(_Node) != boneNodeToIndex.end())
 		return;
@@ -51,7 +51,7 @@ void EngineSkeleton::FindBones(FbxNode* _Node)
 		FindBones(_Node->GetChild(i));
 	}
 }
-void EngineSkeleton::MakeBones()
+void EngineFSkeleton::MakeBones()
 {
     Bones.resize(boneNodeToIndex.size());
 
@@ -78,7 +78,7 @@ void EngineSkeleton::MakeBones()
 }
 
 
-void EngineSkeleton::BoneWeight(FbxMesh* pMesh)
+void EngineFSkeleton::BoneWeight(FbxMesh* pMesh)
 {
 	int skinCount = pMesh->GetDeformerCount(FbxDeformer::eSkin);
 	for (int skinIndex = 0; skinIndex < skinCount; ++skinIndex)
@@ -110,7 +110,7 @@ void EngineSkeleton::BoneWeight(FbxMesh* pMesh)
 }
 
 
-void EngineSkeleton::BoneSort(std::vector<FBuffer>& vertices)
+void EngineFSkeleton::BoneSort(std::vector<FBuffer>& vertices)
 {
 
 	for (auto& it : controlPointSkinData)

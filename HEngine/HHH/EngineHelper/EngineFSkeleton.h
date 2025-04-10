@@ -9,7 +9,7 @@
 #include <unordered_set>
 
 // Ό³Έν :
-class EngineSkeleton
+class EngineFSkeleton
 {
 private:
 	struct Bone {
@@ -25,14 +25,14 @@ private:
 
 public:
 	// constrcuter destructer
-	EngineSkeleton();
-	~EngineSkeleton();
+	EngineFSkeleton();
+	~EngineFSkeleton();
 
 	// delete Function
-	EngineSkeleton(const EngineSkeleton& _Other) = delete;
-	EngineSkeleton(EngineSkeleton&& _Other) noexcept = delete;
-	EngineSkeleton& operator=(const EngineSkeleton& _Other) = delete;
-	EngineSkeleton& operator=(EngineSkeleton&& _Other) noexcept = delete;
+	EngineFSkeleton(const EngineFSkeleton& _Other) = delete;
+	EngineFSkeleton(EngineFSkeleton&& _Other) noexcept = delete;
+	EngineFSkeleton& operator=(const EngineFSkeleton& _Other) = delete;
+	EngineFSkeleton& operator=(EngineFSkeleton&& _Other) noexcept = delete;
 
 
 	void init(FbxNode* _Node);

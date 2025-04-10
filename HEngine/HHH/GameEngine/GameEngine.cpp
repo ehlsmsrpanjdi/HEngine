@@ -35,7 +35,7 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	Actor* act = SpawnActor<Actor>().get();
-	act->SetMesh("HipHop");
+	act->SetMesh("woodenbox");
 	act->SetHlsl("test");
 	act->SetActorScale(0.1f, 0.1f, 0.1f);
 }

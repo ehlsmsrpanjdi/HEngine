@@ -188,11 +188,11 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="EnginePath.h" />
-    <ClInclude Include="EngineScene.h">
+    <ClInclude Include="EngineFScene.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineSkeleton.h">
+    <ClInclude Include="EngineFSkeleton.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -221,11 +221,11 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EnginePath.cpp" />
-    <ClCompile Include="EngineScene.cpp">
+    <ClCompile Include="EngineFScene.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EngineSkeleton.cpp">
+    <ClCompile Include="EngineFSkeleton.cpp">
       <SubType>
       </SubType>
     </ClCompile>

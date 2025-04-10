@@ -1,7 +1,7 @@
 #include "FBXTool.h"
 #include "EngineFile.h"
 #include "AllStruct.h"
-#include "EngineScene.h"
+#include "EngineFScene.h"
 #include <set>
 
 
@@ -16,7 +16,7 @@ FBXTool::~FBXTool()
 		FBXConverter = nullptr;
 	}
 
-	AllMeshMap.clear();
+	EngineScenes.clear();
 
 	if (lSdkManager) {
 		lSdkManager->Destroy();
@@ -74,9 +74,14 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 	lImporter->Import(lScene);
 	lImporter->Destroy();
 
-	std::shared_ptr<EngineScene> EScene = std::make_shared<EngineScene>();
+	std::shared_ptr<EngineFScene> EScene = std::make_shared<EngineFScene>();
 	EScene->init(lScene, _Name);
 	EngineScenes.push_back(EScene);
+}
+
+std::vector<std::shared_ptr<class EngineFScene>>& FBXTool::GetScene()
+{
+	return EngineScenes;
 }
 
 
