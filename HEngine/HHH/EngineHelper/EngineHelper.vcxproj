@@ -184,6 +184,10 @@
     <ClInclude Include="EngineFile.h" />
     <ClInclude Include="EngineKey.h" />
     <ClInclude Include="EnginePath.h" />
+    <ClInclude Include="EngineScene.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="FBXTool.h">
       <SubType>
@@ -205,6 +209,10 @@
     <ClCompile Include="EngineFile.cpp" />
     <ClCompile Include="EngineKey.cpp" />
     <ClCompile Include="EnginePath.cpp" />
+    <ClCompile Include="EngineScene.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="FBXTool.cpp">
       <SubType>

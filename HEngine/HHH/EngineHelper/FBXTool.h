@@ -6,6 +6,7 @@
 #include <Windows.h>
 
 #include "fbxsdk.h"
+#include <unordered_set>
 #pragma comment(lib, "libfbxsdk.lib")
 
 // Ό³Έν :
@@ -38,6 +39,16 @@ public:
 
 	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& GetMesh();
 
+
+#pragma region "Bone"
+	void FindBones(FbxNode* _Node);
+	std::unordered_map<FbxNode*, int> boneNodeToIndex;
+	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
+	int boneIndexCounter = 0;
+	void BoneWeight(FbxMesh* pMesh);
+	void BoneSort(std::string_view _str);
+	//std::unordered_map<int, std::vector<struct FBuffer*>> cpToVertices;
+#pragma endregion
 
 	FbxAMatrix tempmatrix = FbxAMatrix();
 protected:

@@ -11,6 +11,10 @@ struct FMesh;
 struct MH;
 struct HS;
 
+struct SkinWeight
+{
+	std::vector<std::pair<int, double>> weights; // (BoneIndex, Weight)
+};
 
 struct FScene {
 	std::map<std::string, std::vector<std::shared_ptr<FMesh>>> MeshMap;
@@ -19,6 +23,11 @@ struct FScene {
 struct FBuffer {
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT2 uv;
+
+	int BoneIndices[4];
+	float BoneWeights[4];
+
+	int controlpointindex;
 };
 
 struct FMesh {

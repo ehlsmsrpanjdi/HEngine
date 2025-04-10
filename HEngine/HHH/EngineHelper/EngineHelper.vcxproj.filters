@@ -52,6 +52,9 @@
       <Filter>FBX</Filter>
     </ClInclude>
     <ClInclude Include="AllStruct.h" />
+    <ClInclude Include="EngineScene.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -82,5 +85,8 @@
       <Filter>FBX</Filter>
     </ClCompile>
     <ClCompile Include="AllStruct.cpp" />
+    <ClCompile Include="EngineScene.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

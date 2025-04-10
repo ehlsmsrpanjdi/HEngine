@@ -83,21 +83,26 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 	AllScene.push_back(lScene);
 	ProcessNode(lScene->GetRootNode(), _Name);
 
+	BoneSort(_Name);
 }
 
 
 void FBXTool::ProcessNode(FbxNode* _pNode, std::string_view _Name)
 {
+	FindBones(_pNode);
+
 	FbxMesh* pMesh = _pNode->GetMesh();
 	if (pMesh) {
-		
+
 		tempmatrix = _pNode->EvaluateGlobalTransform();
 		std::shared_ptr<FMesh> mMesh = ProcessMesh(pMesh);
 		std::string TexName;
 		TexName = ProcessMaterial(_pNode);
-		mMesh->TextureName =  TexName;
+		mMesh->TextureName = TexName;
 
 		AllMeshMap[_Name.data()][pMesh->GetName()] = mMesh;
+
+		BoneWeight(pMesh);
 	}
 
 	for (int i = 0; i < _pNode->GetChildCount(); i++) {
@@ -118,12 +123,12 @@ std::string FBXTool::ProcessMaterial(FbxNode* _pNode)
 	int textureCount = prop.GetSrcObjectCount();
 	for (int i = 0; i < textureCount; ++i) {
 		FbxObject* obj = prop.GetSrcObject(i);
-			FbxFileTexture* texture = static_cast<FbxFileTexture*>(obj);
+		FbxFileTexture* texture = static_cast<FbxFileTexture*>(obj);
 
-			if (texture) {
-				std::string str =GetFileNameWithoutExtension(texture->GetFileName());
-				return str;
-			}
+		if (texture) {
+			std::string str = GetFileNameWithoutExtension(texture->GetFileName());
+			return str;
+		}
 	}
 	return "DEFAULT";
 }
@@ -152,7 +157,7 @@ std::shared_ptr<FMesh> FBXTool::ProcessMesh(FbxMesh* pMesh)
 				FbxVector4 pos = pMesh->GetControlPointAt(index);
 				pos = tempmatrix.MultT(pos);
 				buffer.position = DirectX::XMFLOAT3(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]));
-
+				buffer.controlpointindex = index;
 				//uvIndex는 PolygonVertex 기준으로 계산
 				int polygonVertexIndex = totalVertexCount + j;
 
@@ -188,31 +193,98 @@ std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<
 	return AllMeshMap;
 }
 
+void FBXTool::FindBones(FbxNode* _Node)
+{
+	if (boneNodeToIndex.find(_Node) != boneNodeToIndex.end())
+		return;
+
+	if (_Node->GetNodeAttribute() &&
+		_Node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
+	{
+		// boneIndex 증가시키면서 map에 저장
+		boneNodeToIndex[_Node] = boneIndexCounter++;  // <-- 여기가 핵심!!
+		printf("Bone Name: %s (%p) -> Index: %d\n", _Node->GetName(), _Node, boneNodeToIndex[_Node]);
+	}
+
+	for (int i = 0; i < _Node->GetChildCount(); ++i)
+	{
+		FindBones(_Node->GetChild(i));
+	}
+}
+
+void FBXTool::BoneWeight(FbxMesh* pMesh)
+{
+	int skinCount = pMesh->GetDeformerCount(FbxDeformer::eSkin);
+	for (int skinIndex = 0; skinIndex < skinCount; ++skinIndex)
+	{
+		FbxSkin* pSkin = (FbxSkin*)pMesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
+
+		int clusterCount = pSkin->GetClusterCount();
+		for (int clusterIndex = 0; clusterIndex < clusterCount; ++clusterIndex)
+		{
+			FbxCluster* pCluster = pSkin->GetCluster(clusterIndex);
+
+			FbxNode* boneNode = pCluster->GetLink();
+			int boneIndex = boneNodeToIndex[boneNode]; // 우리가 위에서 만든 map 사용
+
+			int* indices = pCluster->GetControlPointIndices();
+			double* weights = pCluster->GetControlPointWeights();
+			int count = pCluster->GetControlPointIndicesCount();
+
+			for (int i = 0; i < count; ++i)
+			{
+				int controlPointIndex = indices[i];
+				double weight = weights[i];
+
+				controlPointSkinData[controlPointIndex].weights.push_back({ boneIndex, weight });
+				// ctrlPointIndex 번째 버텍스가 pCluster(Bone)에게 weight 만큼 영향받음
+			}
+		}
+	}
+}
+
+void FBXTool::BoneSort(std::string_view _str)
+{
+	for (auto& it : controlPointSkinData)
+	{
+		int controlPointIndex = it.first;
+		auto& weightList = it.second.weights;
+
+		// 내림차순 정렬
+		std::sort(weightList.begin(), weightList.end(),
+			[](const std::pair<int, double>& a, const std::pair<int, double>& b)
+			{
+				return a.second > b.second;
+			});
+
+		int boneIndices[4] = { 0 };
+		float boneWeights[4] = { 0.0f };
+
+		float totalWeight = 0.0f;
+		for (int i = 0; i < 4 && i < weightList.size(); ++i)
+		{
+			boneIndices[i] = weightList[i].first;
+			boneWeights[i] = static_cast<float>(weightList[i].second);
+			totalWeight += boneWeights[i];
+		}
+
+		// 정규화
+		if (totalWeight > 0.0f)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				boneWeights[i] /= totalWeight;
+			}
+		}
+		 AllMeshMap[_str.data()];
+		int a = 0;
+
+		// 이제 이 정보를 해당 controlPointIndex의 버텍스에 저장해주면 돼
+		// 예: vertices[controlPointIndex].BoneIndex = boneIndices;
+		//     vertices[controlPointIndex].BoneWeight = boneWeights;
+	}
 
 
+}
 
-// 노멀 데이터 추출
-//if (pMesh->GetElementNormalCount() > 0) {
-//	FbxGeometryElementNormal* normalElement = pMesh->GetElementNormal(0);
-//	if (normalElement->GetMappingMode() == FbxGeometryElement::eByControlPoint) {
-//		for (int i = 0; i < pMesh->GetControlPointsCount(); i++) {
-//			int normalIndex = (normalElement->GetReferenceMode() == FbxGeometryElement::eDirect) ? i : normalElement->GetIndexArray().GetAt(i);
-//			FbxVector4 normal = normalElement->GetDirectArray().GetAt(normalIndex);
-//			mesh->normals.push_back(DirectX::XMFLOAT3(static_cast<float>(normal[0]), static_cast<float>(normal[1]), static_cast<float>(normal[2])));
-//		}
-//	}
-//}
 
-// 텍스처 좌표 추출
-//if (pMesh->GetElementUVCount() > 0) {
-//	FbxGeometryElementUV* uvElement = pMesh->GetElementUV(0);
-//	if (uvElement->GetMappingMode() == FbxGeometryElement::eByPolygonVertex) {
-//		for (int i = 0; i < pMesh->GetPolygonCount(); i++) {
-//			for (int j = 0; j < pMesh->GetPolygonSize(i); j++) {
-//				int uvIndex = pMesh->GetTextureUVIndex(i, j);
-//				FbxVector2 uv = uvElement->GetDirectArray().GetAt(uvIndex);
-//				mesh->uvs.push_back(DirectX::XMFLOAT2(static_cast<float>(uv[0]), static_cast<float>(uv[1])));
-//			}
-//		}
-//	}
-//}
