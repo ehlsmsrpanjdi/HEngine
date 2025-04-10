@@ -36,6 +36,7 @@ void GameEngine::Init(RECT _rc)
 
 	Actor* act = SpawnActor<Actor>().get();
 	act->SetMesh("cube");
+ 
 	act->SetHlsl("test");
 	act->SetActorScale(0.1f, 0.1f, 0.1f);
 }
@@ -107,7 +108,7 @@ void GameEngine::CameraUpdate(float _DeltaTime)
 	}
 
 	if (MainCamera == nullptr) {
-		EngineDebug::Error("Ä«¸Ş¶ó ¾ø´Âµ¥ ¾÷µ¥ÀÌÆ®Áß");
+		EngineDebug::Error("ì¹´ë©”ë¼ ì—†ëŠ”ë° ì—…ë°ì´íŠ¸ì¤‘");
 		exit(EXIT_FAILURE);
 		return;
 	}
