@@ -2,8 +2,50 @@
 #include "EngineFile.h"
 #include "AllStruct.h"
 #include "EngineFScene.h"
+#include "EngineAnimation.h"
 #include <set>
 
+
+void FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Scene)
+{
+	FbxNode* rootNode = _Scene->GetRootNode();
+	if (rootNode == nullptr) {
+		return;
+	}
+	float frameRate = static_cast<float>(FbxTime::GetFrameRate(_Scene->GetGlobalSettings().GetTimeMode()));
+
+	FbxArray<FbxString*> animationArray;
+
+	FbxDocument* document = dynamic_cast<FbxDocument*>(_Scene);
+
+	if (document != nullptr) {
+		document->FillAnimStackNameArray(animationArray);
+		int cc = animationArray.Size();
+		int a = 0;
+	}
+	int animCount = Importer->GetAnimStackCount();
+	for (int i = 0; i < animCount; ++i) {
+		FbxTakeInfo* animationInfo = Importer->GetTakeInfo(i);
+		std::string animationName = animationInfo->mName.Buffer();
+
+		FbxTimeSpan span = animationInfo->mLocalTimeSpan;
+
+		double startTime = span.GetStart().GetSecondDouble();
+		double endTime = span.GetSignedDuration().GetSecondDouble();
+
+		if (startTime < endTime) {
+			int keyFrames = static_cast<int>((endTime - startTime) * static_cast<double>(frameRate));
+
+			
+		}
+
+
+
+	}
+	animationArray.Clear();
+	int a = 0;
+
+}
 
 FBXTool::FBXTool()
 {
@@ -72,6 +114,8 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 
 	FbxScene* lScene = FbxScene::Create(lSdkManager, "myScene");
 	lImporter->Import(lScene);
+	LoadAnim(lImporter, lScene);
+
 	lImporter->Destroy();
 
 	std::shared_ptr<EngineFScene> EScene = std::make_shared<EngineFScene>();

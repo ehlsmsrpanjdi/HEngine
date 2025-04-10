@@ -1,5 +1,6 @@
 #include "EngineFMesh.h"
 #include "AllStruct.h"
+#include "EngineAnimation.h"
 
 EngineFMesh::EngineFMesh()
 {

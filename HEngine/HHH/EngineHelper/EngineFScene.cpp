@@ -4,6 +4,7 @@
 #include "EngineFSkeleton.h"
 #include "HString.h"
 #include "filesystem"
+#include "EngineAnimation.h"
 
 std::string GetFileNameWithoutExtension(const std::string& fullPath)
 {
@@ -31,7 +32,7 @@ void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)
 		Skeleton = nullptr;
 	}
 
-
+	ProcessAnim(_Scene);
 	ProcessNode(_Scene->GetRootNode());
 	SceneName = _Name;
 }
@@ -57,61 +58,6 @@ void EngineFScene::ProcessNode(FbxNode* _pNode)
 	}
 }
 
-//
-//std::shared_ptr<EngineFMesh> EngineFScene::ProcessMesh(FbxMesh* pMesh)
-//{
-//	std::shared_ptr<EngineFMesh> mesh = std::make_shared<EngineFMesh>();
-//	FBuffer buffer;
-//	int PolygonCount = pMesh->GetPolygonCount();
-//
-//	FbxLayerElementUV* uvs = pMesh->GetLayer(0)->GetUVs();
-//
-//	int totalVertexCount = 0;
-//	if (uvs->GetMappingMode() == FbxLayerElement::eByPolygonVertex) {
-//		for (int i = 0; i < PolygonCount; ++i) {
-//			int polygonSize = pMesh->GetPolygonSize(i); // 이 폴리곤이 몇 개의 정점을 가지는지
-//			for (int j = 0; j < polygonSize - 2; ++j) {
-//				mesh->indices.push_back(totalVertexCount + 0);
-//				mesh->indices.push_back(totalVertexCount + j + 1);
-//				mesh->indices.push_back(totalVertexCount + j + 2);
-//			}
-//			for (int j = 0; j < polygonSize; ++j) {
-//				int index = pMesh->GetPolygonVertex(i, j);
-//				FbxVector4 pos = pMesh->GetControlPointAt(index);
-//				pos = tempmatrix.MultT(pos);
-//				buffer.position = DirectX::XMFLOAT3(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]));
-//				buffer.controlpointindex = index;
-//				//uvIndex는 PolygonVertex 기준으로 계산
-//				int polygonVertexIndex = totalVertexCount + j;
-//
-//				int uvIndex = uvs->GetIndexArray().GetAt(polygonVertexIndex);
-//
-//				if (uvs->GetReferenceMode() == FbxLayerElement::eDirect) {
-//					uvIndex = polygonVertexIndex;
-//				}
-//				else if (uvs->GetReferenceMode() == FbxLayerElement::eIndexToDirect) {
-//					uvIndex = uvs->GetIndexArray().GetAt(polygonVertexIndex);
-//				}
-//				else {
-//					assert(false && "Unsupported ReferenceMode for UVs");
-//				}
-//
-//				FbxVector2 uv = uvs->GetDirectArray().GetAt(uvIndex);
-//				buffer.uv = DirectX::XMFLOAT2(static_cast<float>(uv[0]), static_cast<float>(uv[1]));
-//				buffer.uv.y = 1.0f - buffer.uv.y;
-//				mesh->vertices.push_back(buffer);
-//			}
-//			totalVertexCount += polygonSize;
-//		}
-//	}
-//	else {
-//		assert(false);
-//	}
-//	return mesh;
-//
-//}
-
-
 
 std::string EngineFScene::ProcessMaterial(FbxNode* _pNode)
 {
@@ -134,5 +80,10 @@ std::string EngineFScene::ProcessMaterial(FbxNode* _pNode)
 		}
 	}
 	return "DEFAULT";
+}
+
+void EngineFScene::ProcessAnim(FbxScene* _Scene)
+{
+
 }
 

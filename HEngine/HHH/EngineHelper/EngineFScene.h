@@ -26,6 +26,7 @@ public:
 	void ProcessNode(FbxNode* _pNode);
 	//std::shared_ptr<class EngineFMesh> ProcessMesh(class FbxMesh* pMesh);
 	std::string ProcessMaterial(FbxNode* _pNode);
+	void ProcessAnim(FbxScene* _Scene);
 protected:
 
 
@@ -33,6 +34,7 @@ private:
 	friend class EngineScene;
 
 	std::unordered_map<std::string, std::shared_ptr<class EngineFMesh>> MeshMap;
+	std::unordered_map<std::string, std::shared_ptr<class EngineAnimation>> AnimMap;
 	std::string SceneName;
 	std::shared_ptr<class EngineFSkeleton> Skeleton = nullptr;
 };

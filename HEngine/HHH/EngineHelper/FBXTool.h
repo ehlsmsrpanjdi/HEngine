@@ -32,6 +32,15 @@ public:
 	
 	std::vector<std::shared_ptr<class EngineFScene>>& GetScene();
 
+
+#pragma region "애니메이션"
+
+	//std::shared_ptr<class EngineAnimation> Anim = nullptr;
+
+	void LoadAnim(FbxImporter* Importer, FbxScene* _Scene);
+
+#pragma endregion
+
 private:
 	FBXTool();
 	FbxManager* lSdkManager = nullptr;
@@ -40,6 +49,8 @@ private:
 	std::vector<FbxScene*> AllScene;
 
 	std::vector<std::shared_ptr<class EngineFScene>> EngineScenes;
+
+
 
 public:
 };
