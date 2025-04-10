@@ -183,8 +183,16 @@
     </ClInclude>
     <ClInclude Include="EngineFile.h" />
     <ClInclude Include="EngineKey.h" />
+    <ClInclude Include="EngineFMesh.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EnginePath.h" />
     <ClInclude Include="EngineScene.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineSkeleton.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -208,8 +216,16 @@
     </ClCompile>
     <ClCompile Include="EngineFile.cpp" />
     <ClCompile Include="EngineKey.cpp" />
+    <ClCompile Include="EngineFMesh.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EnginePath.cpp" />
     <ClCompile Include="EngineScene.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineSkeleton.cpp">
       <SubType>
       </SubType>
     </ClCompile>

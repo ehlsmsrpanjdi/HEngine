@@ -55,6 +55,12 @@
     <ClInclude Include="EngineScene.h">
       <Filter>FBX</Filter>
     </ClInclude>
+    <ClInclude Include="EngineSkeleton.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFMesh.h">
+      <Filter>FBX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -86,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="AllStruct.cpp" />
     <ClCompile Include="EngineScene.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSkeleton.cpp">
+      <Filter>FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFMesh.cpp">
       <Filter>FBX</Filter>
     </ClCompile>
   </ItemGroup>

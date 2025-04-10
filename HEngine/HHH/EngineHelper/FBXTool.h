@@ -31,9 +31,6 @@ public:
 
 	void ProcessNode(FbxNode* _pNode, std::string_view _Name);
 
-	std::string ProcessMaterial(FbxNode* _pNode);
-
-	std::shared_ptr<struct FMesh> ProcessMesh(FbxMesh* pMesh);
 
 	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>> AllMeshMap;
 
@@ -41,10 +38,9 @@ public:
 
 
 #pragma region "Bone"
-	void FindBones(FbxNode* _Node);
-	std::unordered_map<FbxNode*, int> boneNodeToIndex;
-	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
-	int boneIndexCounter = 0;
+
+
+
 	void BoneWeight(FbxMesh* pMesh);
 	void BoneSort(std::string_view _str);
 	//std::unordered_map<int, std::vector<struct FBuffer*>> cpToVertices;
@@ -59,5 +55,9 @@ private:
 	FbxIOSettings* ios = nullptr;
 	FbxGeometryConverter* FBXConverter = nullptr;
 	std::vector<FbxScene*> AllScene;
+
+	std::vector<std::shared_ptr<class EngineScene>> EngineScenes;
+
+public:
 };
 
