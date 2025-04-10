@@ -14,13 +14,13 @@ struct HS;
 
 
 struct FBuffer {
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT2 uv;
+	DirectX::XMFLOAT3 position = DirectX::XMFLOAT3();
+	DirectX::XMFLOAT2 uv = DirectX::XMFLOAT2();
 
-	int BoneIndices[4];
-	float BoneWeights[4];
+	int BoneIndices[4] = { 0,0,0,0 };
+	float BoneWeights[4] = { 0,0,0,0 };
 
-	int controlpointindex;
+	int controlpointindex = -1;
 };
 
 //struct alignas(16) FBuffer
