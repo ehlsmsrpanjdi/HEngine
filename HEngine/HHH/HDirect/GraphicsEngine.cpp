@@ -11,9 +11,10 @@
 #include "EngineHelper/EngineTransform.h"
 #include "EngineHelper/EngineDebug.h"
 #include "EngineHelper/AllStruct.h"
-#include "EngineMesh.h"
+#include "EngineScene.h"
 #include "EngineHlsl.h"
 #include "EngineTexture.h"
+#include "EngineHelper/EngineFScene.h"
 
 namespace Cbuffer {
 	std::string WVP = "WVPMatrix";
@@ -170,9 +171,9 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 	//CreateTexture(m_Device->Get(), m_Context->Get(), HString::StoWC(_fileManager->GetFile("png", "heart")).c_str());
 }
 
-void GraphicsEngine::CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<FMesh>>>& _AllMesh)
+void GraphicsEngine::CreateMesh(std::vector<std::shared_ptr<EngineFScene>> _Scenes)
 {
-	EngineMesh::Get().CreateMesh(_AllMesh, m_Device);
+	EngineScene::Get().CreateMesh(_Scenes, m_Device);
 }
 
 void GraphicsEngine::CreateTexture(std::shared_ptr<class EngineFile> _fileManager)
@@ -305,7 +306,7 @@ HS* GraphicsEngine::GetHlsl(std::string_view _str)
 
 std::unordered_map<std::string, std::shared_ptr<MH>>& GraphicsEngine::GetMesh(std::string_view _str)
 {
-	return EngineMesh::Get().GetMesh(_str);
+	return EngineScene::Get().GetMesh(_str);
 }
 
 #pragma endregion

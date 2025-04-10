@@ -29,29 +29,8 @@ public:
 	void LoadALLFBX(std::shared_ptr<class EngineFile> _fileManager);
 	void LoadFBX(const char* _filename, std::string_view _Name);
 
-	void ProcessNode(FbxNode* _pNode, std::string_view _Name);
-
-	std::string ProcessMaterial(FbxNode* _pNode);
-
-	std::shared_ptr<struct FMesh> ProcessMesh(FbxMesh* pMesh);
-
-	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>> AllMeshMap;
-
-	std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& GetMesh();
-
-
-#pragma region "Bone"
-	void FindBones(FbxNode* _Node);
-	std::unordered_map<FbxNode*, int> boneNodeToIndex;
-	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
-	int boneIndexCounter = 0;
-	void BoneWeight(FbxMesh* pMesh);
-	void BoneSort(std::string_view _str);
-	//std::unordered_map<int, std::vector<struct FBuffer*>> cpToVertices;
-#pragma endregion
-
-	FbxAMatrix tempmatrix = FbxAMatrix();
-protected:
+	
+	std::vector<std::shared_ptr<class EngineFScene>>& GetScene();
 
 private:
 	FBXTool();
@@ -59,5 +38,9 @@ private:
 	FbxIOSettings* ios = nullptr;
 	FbxGeometryConverter* FBXConverter = nullptr;
 	std::vector<FbxScene*> AllScene;
+
+	std::vector<std::shared_ptr<class EngineFScene>> EngineScenes;
+
+public:
 };
 

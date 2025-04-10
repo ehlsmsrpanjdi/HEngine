@@ -51,7 +51,7 @@
     <ClCompile Include="DeviceContext.cpp">
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClCompile>
-    <ClCompile Include="EngineMesh.cpp">
+    <ClCompile Include="EngineScene.cpp">
       <Filter>Graphic\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="InputElement.cpp">
@@ -80,7 +80,7 @@
     <ClInclude Include="DeviceContext.h">
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClInclude>
-    <ClInclude Include="EngineMesh.h">
+    <ClInclude Include="EngineScene.h">
       <Filter>Graphic\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="InputElement.h">

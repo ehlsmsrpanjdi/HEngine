@@ -56,7 +56,7 @@ public:
 
 #pragma region "¸®¼Ò½º"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
-	void CreateMesh(std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<struct FMesh>>>& _AllMesh);
+	void CreateMesh(std::vector<std::shared_ptr<class EngineFScene>> _Scenes);
 	void CreateTexture(std::shared_ptr<class EngineFile> _fileManager);
 
 	void CreateAllCBuffer();
