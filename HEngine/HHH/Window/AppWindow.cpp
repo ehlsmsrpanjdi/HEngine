@@ -57,7 +57,7 @@ void AppWindow::onUpdate()
 	EngineKey::MouseX = -MouseForceX;
 	EngineKey::MouseY = -MouseForceY;
 	
-	GameEngine::get()->Update(TimeManager->Update());
+	GameEngine::get()->Update(static_cast<float>(TimeManager->Update()));
 }
 
 void AppWindow::onDestroy()
