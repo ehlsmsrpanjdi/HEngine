@@ -9,6 +9,8 @@ EngineFSkeleton::EngineFSkeleton()
 
 EngineFSkeleton::~EngineFSkeleton() 
 {
+	rootBones.clear();
+	boneNodeToIndex.clear();
 }
 
 void EngineFSkeleton::init(FbxNode* _Node)

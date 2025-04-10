@@ -68,6 +68,10 @@ bool GraphicsEngine::release()
 	m_DepthView = nullptr;
 	TextureMap = nullptr;
 
+	for (std::pair<const std::string, ID3D11Buffer*>& pair : ConstantBufferMap) {
+		pair.second->Release();
+	}
+	ConstantBufferMap.clear();
 
 	return true;
 }

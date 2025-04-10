@@ -96,6 +96,10 @@ EngineHlsl::~EngineHlsl()
 			pa.second->Release();
 		}
 	}
+	for (std::pair<const std::string, ID3D11SamplerState*>& pa : SamplerMap) {
+		pa.second->Release();
+	}
+	SamplerMap.clear();
 }
 
 HS* EngineHlsl::GetHlsl(std::string_view _str)

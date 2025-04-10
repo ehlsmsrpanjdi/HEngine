@@ -13,7 +13,7 @@ Actor::Actor()
 Actor::~Actor()
 {
 	Hlsl = nullptr;
-	//Meshs = nullptr;
+	Meshs = nullptr;
 }
 
 void Actor::BeginPlay()
@@ -21,9 +21,7 @@ void Actor::BeginPlay()
 	if (Hlsl == nullptr) {
 		assert(false);
 	}
-	/*if (Mesh == nullptr) {
-		assert(false);
-	}*/
+
 }
 
 void Actor::Tick(float _DeltaTime)

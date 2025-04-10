@@ -19,6 +19,8 @@ EngineFScene::EngineFScene()
 
 EngineFScene::~EngineFScene()
 {
+	Skeleton = nullptr;
+	MeshMap.clear();
 }
 
 void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)

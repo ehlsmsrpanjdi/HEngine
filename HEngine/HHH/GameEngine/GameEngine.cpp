@@ -1,6 +1,6 @@
 #include "GameEngine.h"
 #include "Actor.h"
-#include "assert.h"
+#include <cassert>
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/EngineDebug.h"	
 #include "EngineHelper/EngineKey.h"
@@ -13,6 +13,7 @@ GameEngine::~GameEngine()
 {
 	AllActor.clear();
 	AllCamera.clear();
+	KeyManager = nullptr;
 }
 
 void GameEngine::Init(RECT _rc)
@@ -108,8 +109,8 @@ void GameEngine::CameraUpdate(float _DeltaTime)
 	}
 
 	if (MainCamera == nullptr) {
-		EngineDebug::Error("카메라 없는데 업데이트중");
-		exit(EXIT_FAILURE);
+		//EngineDebug::Error("카메라 없는데 업데이트중");
+		assert(false);
 		return;
 	}
 	else {

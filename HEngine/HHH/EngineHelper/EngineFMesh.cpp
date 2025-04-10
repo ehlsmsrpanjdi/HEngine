@@ -7,16 +7,17 @@ EngineFMesh::EngineFMesh()
 
 EngineFMesh::~EngineFMesh()
 {
+	Skeleton = nullptr;
 }
 
-int EngineFMesh::GetSize()
+UINT EngineFMesh::GetSize()
 {
 	return sizeof(FBuffer);
 }
 
-int EngineFMesh::GetArraySize()
+UINT EngineFMesh::GetArraySize()
 {
-	return vertices.size();
+	return static_cast<UINT>(vertices.size());
 }
 
 const std::vector<FBuffer>& EngineFMesh::GetVertex()
@@ -24,11 +25,11 @@ const std::vector<FBuffer>& EngineFMesh::GetVertex()
 	return vertices;
 }
 
-int EngineFMesh::GetIndexSize() {
+UINT EngineFMesh::GetIndexSize() {
 	return sizeof(UINT);
 }
-int EngineFMesh::GetIndexArraySize() {
-	return indices.size();
+UINT EngineFMesh::GetIndexArraySize() {
+	return static_cast<UINT>(indices.size());
 }
 
 const std::vector<UINT>& EngineFMesh::GetIndices(){

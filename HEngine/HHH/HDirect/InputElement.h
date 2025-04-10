@@ -103,18 +103,3 @@ std::vector<D3D11_INPUT_ELEMENT_DESC> CreateInputLayoutFromHLSL(const std::vecto
 
 	return layout;
 }
-//
-//int main()
-//{
-//    std::string hlslFile = "shader.hlsl";
-//    std::vector<InputElement> inputElements = ParseHLSLForInputLayout(hlslFile);
-//    std::vector<D3D11_INPUT_ELEMENT_DESC> layout = CreateInputLayoutFromHLSL(inputElements);
-//
-//    // 확인 출력
-//    for (const auto& desc : layout)
-//    {
-//        std::cout << "Semantic: " << desc.SemanticName << " | Format: " << desc.Format << std::endl;
-//    }
-//
-//    return 0;
-//}

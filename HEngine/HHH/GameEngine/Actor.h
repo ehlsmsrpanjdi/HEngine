@@ -41,6 +41,7 @@ protected:
 private:
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
+	//ºô¸°°Í
 	std::unordered_map<std::string, std::shared_ptr<struct MH>>* Meshs = nullptr;
 };
 

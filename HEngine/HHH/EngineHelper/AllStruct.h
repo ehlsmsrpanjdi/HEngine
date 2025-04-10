@@ -50,10 +50,10 @@ struct FMesh {
 };
 
 struct MH {
-	ID3D11Buffer* Vertex;
+	ID3D11Buffer* Vertex = nullptr;
 	UINT BufferSize;
 
-	ID3D11Buffer* Index;
+	ID3D11Buffer* Index = nullptr;
 	UINT IndexBufferSize;
 
 	std::string TextureName;
@@ -70,10 +70,10 @@ struct MH {
 
 
 struct HS {
-	ID3D11VertexShader* VS;
-	ID3D11PixelShader* PS;
-	ID3D11InputLayout* Layout;
-	ID3D11SamplerState* samplerState;
+	ID3D11VertexShader* VS = nullptr;
+	ID3D11PixelShader* PS = nullptr;
+	ID3D11InputLayout* Layout = nullptr;
+	ID3D11SamplerState* samplerState = nullptr;
 
 	~HS() {
 		if (VS != nullptr) {
