@@ -26,6 +26,7 @@ int SetOffset(DXGI_FORMAT _format) {
 	case DXGI_FORMAT_R8G8B8A8_UNORM:     return 4;  // 4 * 1바이트
 	case DXGI_FORMAT_R10G10B10A2_UNORM:  return 4;  // 특별한 10/10/10/2 비트
 	}
+	return -1;
 }
 
 struct InputElement

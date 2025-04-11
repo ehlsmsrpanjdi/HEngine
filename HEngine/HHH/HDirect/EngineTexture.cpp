@@ -56,7 +56,7 @@ void EngineTexture::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* con
 	frame->GetSize(&width, &height);
 
 	std::vector<UINT8> imageData(width * height * 4);
-	converter->CopyPixels(nullptr, width * 4, imageData.size(), imageData.data());
+	converter->CopyPixels(nullptr, width * 4, static_cast<UINT>(imageData.size()), imageData.data());
 
 	D3D11_TEXTURE2D_DESC textureDesc = {};
 	textureDesc.Width = width;

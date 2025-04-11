@@ -32,9 +32,11 @@ protected:
 
 private:
 	friend class EngineScene;
-
+	friend class FBXTool;
+	std::vector<struct AnimMetaData> Anims;
 	std::unordered_map<std::string, std::shared_ptr<class EngineFMesh>> MeshMap;
 	std::unordered_map<std::string, std::shared_ptr<class EngineAnimation>> AnimMap;
 	std::string SceneName;
 	std::shared_ptr<class EngineFSkeleton> Skeleton = nullptr;
+
 };

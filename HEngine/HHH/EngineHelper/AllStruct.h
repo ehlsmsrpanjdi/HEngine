@@ -12,7 +12,7 @@ struct MH;
 struct HS;
 
 
-
+#pragma region "Buffer"
 struct FBuffer {
 	DirectX::XMFLOAT3 position = DirectX::XMFLOAT3();
 	DirectX::XMFLOAT2 uv = DirectX::XMFLOAT2();
@@ -100,7 +100,23 @@ struct Tex {
 
 	}
 };
+#pragma endregion
 
+#pragma region "anim"
+struct AnimMetaData {
+	std::string name;
+	double startTime;
+	double endTime;
+};
+
+struct KeyFrame {
+	double time; // 초 단위
+	DirectX::XMFLOAT3 position;
+	DirectX::XMFLOAT4 rotation;
+};
+#pragma endregion
+
+#pragma region "bone"
 // 정점이 어떤 본에게 영향을 받는지
 struct VertexSkinWeight {
 	int boneIndices[4] = { 0 };
@@ -114,3 +130,4 @@ struct SkinnedVertex {
 	DirectX::XMFLOAT2 uv;
 	VertexSkinWeight skinWeight;
 };
+#pragma endregion

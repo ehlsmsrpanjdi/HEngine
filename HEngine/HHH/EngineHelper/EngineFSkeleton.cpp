@@ -34,6 +34,9 @@ void EngineFSkeleton::FindBones(FbxNode* _Node)
 	if (_Node->GetNodeAttribute() &&
 		_Node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
 	{
+		//HAVETODELETE
+		std::cout << "Bone Name :  " << _Node->GetName() << std::endl;
+		std::string str = _Node->GetName();
 		// 루트 본인지 체크
 		FbxNode* parent = _Node->GetParent();
 		if (parent == nullptr ||
@@ -45,7 +48,7 @@ void EngineFSkeleton::FindBones(FbxNode* _Node)
 
 		// boneIndex 증가시키면서 map에 저장
 		boneNodeToIndex[_Node] = boneIndexCounter++;
-		printf("Bone Name: %s (%p) -> Index: %d\n", _Node->GetName(), _Node, boneNodeToIndex[_Node]);
+		//printf("Bone Name: %s (%p) -> Index: %d\n", _Node->GetName(), _Node, boneNodeToIndex[_Node]);
 	}
 
 	for (int i = 0; i < _Node->GetChildCount(); ++i)

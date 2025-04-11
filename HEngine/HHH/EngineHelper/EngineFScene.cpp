@@ -22,6 +22,7 @@ EngineFScene::~EngineFScene()
 {
 	Skeleton = nullptr;
 	MeshMap.clear();
+	AnimMap.clear();
 }
 
 void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)
@@ -84,6 +85,19 @@ std::string EngineFScene::ProcessMaterial(FbxNode* _pNode)
 
 void EngineFScene::ProcessAnim(FbxScene* _Scene)
 {
+	for (const AnimMetaData& Data : Anims) {
+		FbxAnimStack* stack = _Scene->FindMember<FbxAnimStack>(Data.name.c_str());
+		if(stack != nullptr)
+			_Scene->SetCurrentAnimationStack(stack);
 
+		std::shared_ptr<EngineAnimation> Ani = std::make_shared<EngineAnimation>();
+		Ani->AnimationName = Data.name;
+
+		Ani->ExtractAnimationKeys(_Scene);
+		if (AnimMap.contains(Ani->AnimationName)) {
+			assert(true);
+		}
+		AnimMap[Ani->AnimationName] = Ani;
+	}
 }
 

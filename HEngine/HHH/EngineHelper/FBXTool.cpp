@@ -5,12 +5,13 @@
 #include "EngineAnimation.h"
 #include <set>
 
-
-void FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Scene)
+std::vector<AnimMetaData> FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Scene)
 {
+	std::vector<AnimMetaData> anims;
+
 	FbxNode* rootNode = _Scene->GetRootNode();
 	if (rootNode == nullptr) {
-		return;
+		return anims;
 	}
 	float frameRate = static_cast<float>(FbxTime::GetFrameRate(_Scene->GetGlobalSettings().GetTimeMode()));
 
@@ -20,8 +21,6 @@ void FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Scene)
 
 	if (document != nullptr) {
 		document->FillAnimStackNameArray(animationArray);
-		int cc = animationArray.Size();
-		int a = 0;
 	}
 	int animCount = Importer->GetAnimStackCount();
 	for (int i = 0; i < animCount; ++i) {
@@ -39,13 +38,14 @@ void FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Scene)
 			
 		}
 
-
+		anims.emplace_back(animationName, startTime, endTime);
 
 	}
 	animationArray.Clear();
-	int a = 0;
 
+	return anims;
 }
+
 
 FBXTool::FBXTool()
 {
@@ -114,13 +114,13 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 
 	FbxScene* lScene = FbxScene::Create(lSdkManager, "myScene");
 	lImporter->Import(lScene);
-	LoadAnim(lImporter, lScene);
+	std::shared_ptr<EngineFScene> EScene = std::make_shared<EngineFScene>();
+	EScene->Anims = LoadAnim(lImporter, lScene);
+	EScene->init(lScene, _Name);
+	EngineScenes.push_back(EScene);
 
 	lImporter->Destroy();
 
-	std::shared_ptr<EngineFScene> EScene = std::make_shared<EngineFScene>();
-	EScene->init(lScene, _Name);
-	EngineScenes.push_back(EScene);
 }
 
 std::vector<std::shared_ptr<class EngineFScene>>& FBXTool::GetScene()
