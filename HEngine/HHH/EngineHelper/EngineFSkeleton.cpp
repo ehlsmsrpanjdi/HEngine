@@ -76,9 +76,14 @@ void EngineFSkeleton::MakeBones()
             bone.parentIndex = -1; // 루트
             rootIndex = index;     // 루트로 지정
         }
-
         // 로컬 바인드 포즈 설정
         bone.localBindPose = node->EvaluateLocalTransform();
+
+		FbxAMatrix global = node->EvaluateGlobalTransform();
+		bone.globalBindPose = global;
+		bone.inverseGlobalBindPose = global.Inverse();
+
+		boneNameToIndex[bone.name] = index;
     }
 }
 

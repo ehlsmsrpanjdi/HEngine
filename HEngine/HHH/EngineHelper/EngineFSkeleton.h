@@ -16,6 +16,8 @@ private:
 		std::string name;
 		int parentIndex;
 		FbxAMatrix localBindPose;
+		FbxAMatrix globalBindPose;
+		FbxAMatrix inverseGlobalBindPose; 
 	};
 
 	struct SkinWeight
@@ -42,11 +44,14 @@ public:
 	void BoneSort(std::vector<struct FBuffer>& vertices);
 
 	bool NoneSkel = false;
+
 protected:
 
 private:
+	friend class EngineAnimation;
 	std::vector<FbxNode*> rootBones;
 	std::vector<Bone> Bones;
+	std::unordered_map<std::string, int> boneNameToIndex;
 	std::unordered_map<FbxNode*, int> boneNodeToIndex;
 	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
 	int boneIndexCounter = 0;

@@ -33,8 +33,9 @@ void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)
 		Skeleton = nullptr;
 	}
 
-	ProcessAnim(_Scene);
 	ProcessNode(_Scene->GetRootNode());
+	ProcessAnim(_Scene);
+	AnimMap;
 	SceneName = _Name;
 }
 
@@ -85,13 +86,14 @@ std::string EngineFScene::ProcessMaterial(FbxNode* _pNode)
 
 void EngineFScene::ProcessAnim(FbxScene* _Scene)
 {
-	for (const AnimMetaData& Data : Anims) {
+	for (const AnimMetaData& Data : AnimData) {
 		FbxAnimStack* stack = _Scene->FindMember<FbxAnimStack>(Data.name.c_str());
 		if(stack != nullptr)
 			_Scene->SetCurrentAnimationStack(stack);
 
 		std::shared_ptr<EngineAnimation> Ani = std::make_shared<EngineAnimation>();
 		Ani->AnimationName = Data.name;
+		Ani->Skeleton = Skeleton;
 
 		Ani->ExtractAnimationKeys(_Scene);
 		if (AnimMap.contains(Ani->AnimationName)) {

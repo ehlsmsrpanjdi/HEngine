@@ -26,23 +26,27 @@ public:
 	void SetDuration(float startTime, float endTime);
 	void Update(float deltaTime); // 나중에 애니메이션 재생할 때 사용
 
-	void init(FbxNode* _Node, std::string_view AnimName, float frameRate, float start, float stop);
-
 	void ExtractAnimationKeys(FbxScene* scene);
 	void TraverseAndExtract(FbxNode* node, FbxAnimEvaluator* evaluator, FbxTime time);
 
 	std::string AnimationName;
 
-private:
-	std::unordered_map<std::string, std::vector<struct KeyFrame>> keyframesPerBone;
 
+	std::vector<DirectX::XMMATRIX> EvaluateAnimation(float time);
+
+
+private:
+	friend class EngineFScene;
+	std::unordered_map<int, std::vector<struct KeyFrame>> keyframesPerBoneIndex;
+
+
+	std::shared_ptr<class EngineFSkeleton> Skeleton = nullptr;
 
 	float StartTime = 0.f;
 	float EndTime = 0.f;
 	float CurrentTime = 0.f;
 	
 
-	// bone name -> frame index -> transform
 	std::vector<struct KeyFrame> keyframes;
 };
 

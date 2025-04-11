@@ -115,7 +115,7 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 	FbxScene* lScene = FbxScene::Create(lSdkManager, "myScene");
 	lImporter->Import(lScene);
 	std::shared_ptr<EngineFScene> EScene = std::make_shared<EngineFScene>();
-	EScene->Anims = LoadAnim(lImporter, lScene);
+	EScene->AnimData = LoadAnim(lImporter, lScene);
 	EScene->init(lScene, _Name);
 	EngineScenes.push_back(EScene);
 
