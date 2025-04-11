@@ -23,6 +23,7 @@ EngineFScene::~EngineFScene()
 	Skeleton = nullptr;
 	MeshMap.clear();
 	AnimMap.clear();
+	AnimData.clear();
 }
 
 void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)
@@ -35,7 +36,6 @@ void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)
 
 	ProcessNode(_Scene->GetRootNode());
 	ProcessAnim(_Scene);
-	AnimMap;
 	SceneName = _Name;
 }
 

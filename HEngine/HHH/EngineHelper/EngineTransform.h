@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "DirectXMath.h"
-#include <fbxsdk.h>
+//#include "fbxsdk.h"
 
 using namespace DirectX;
 
@@ -25,27 +25,27 @@ public:
 		return DirectX::XMMatrixIdentity();
 	}
 
-	FbxAMatrix ToFbxMatrix() const {
-		FbxVector4 t(position.x, position.y, position.z);
-		FbxQuaternion q(rotation.x, rotation.y, rotation.z, rotation.w);
-		FbxVector4 s(scale.x, scale.y, scale.z);
+	//FbxAMatrix ToFbxMatrix() const {
+	//	FbxVector4 t(position.x, position.y, position.z);
+	//	FbxQuaternion q(rotation.x, rotation.y, rotation.z, rotation.w);
+	//	FbxVector4 s(scale.x, scale.y, scale.z);
 
-		FbxAMatrix mat;
-		mat.SetT(t);
-		mat.SetQ(q); // 회전
-		mat.SetS(s); // 스케일
-		return mat;
-	}
+	//	FbxAMatrix mat;
+	//	mat.SetT(t);
+	//	mat.SetQ(q); // 회전
+	//	mat.SetS(s); // 스케일
+	//	return mat;
+	//}
 
-	XMMATRIX ToXMMATRIX() const {
-		XMVECTOR pos = XMLoadFloat3(&position);
-		XMVECTOR rot = XMLoadFloat4(&rotation);
-		XMVECTOR scl = XMLoadFloat3(&scale);
+	//XMMATRIX ToXMMATRIX() const {
+	//	XMVECTOR pos = XMLoadFloat3(&position);
+	//	XMVECTOR rot = XMLoadFloat4(&rotation);
+	//	XMVECTOR scl = XMLoadFloat3(&scale);
 
-		return XMMatrixScalingFromVector(scl) *
-			XMMatrixRotationQuaternion(rot) *
-			XMMatrixTranslationFromVector(pos);
-	}
+	//	return XMMatrixScalingFromVector(scl) *
+	//		XMMatrixRotationQuaternion(rot) *
+	//		XMMatrixTranslationFromVector(pos);
+	//}
 
 
 	void AddLocation(const XMFLOAT3& _position) {
