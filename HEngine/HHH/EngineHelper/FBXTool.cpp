@@ -41,6 +41,9 @@ std::vector<AnimMetaData> FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Sc
 		anims.emplace_back(animationName, startTime, endTime);
 
 	}
+	for (int i = 0; i < animationArray.Size(); ++i) {
+		delete animationArray[i];
+	}
 	animationArray.Clear();
 
 	return anims;
