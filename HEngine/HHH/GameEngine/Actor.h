@@ -32,7 +32,7 @@ public:
 	void Move(float _x, float _y, float _z);
 	void Rotate(float _x, float _y, float _z);
 
-	void SetMesh(std::string_view _str);
+	void SetScene(std::string_view _str);
 	void SetHlsl(std::string_view _str);
 
 	EngineTransform GetTransform();

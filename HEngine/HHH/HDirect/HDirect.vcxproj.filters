@@ -63,6 +63,9 @@
     <ClCompile Include="EngineTexture.cpp">
       <Filter>Graphic\EngineTexture</Filter>
     </ClCompile>
+    <ClCompile Include="EngineAnimatinSkeleton.cpp">
+      <Filter>Graphic\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="EngineTexture.h">
       <Filter>Graphic\EngineTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineAnimatinSkeleton.h">
+      <Filter>Graphic\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

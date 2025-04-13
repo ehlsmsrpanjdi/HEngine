@@ -169,6 +169,10 @@
   <ItemGroup>
     <ClCompile Include="DepthView.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
+    <ClCompile Include="EngineAnimatinSkeleton.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineHlsl.cpp">
       <SubType>
       </SubType>
@@ -195,6 +199,10 @@
   <ItemGroup>
     <ClInclude Include="DepthView.h" />
     <ClInclude Include="DeviceContext.h" />
+    <ClInclude Include="EngineAnimatinSkeleton.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineHlsl.h">
       <SubType>
       </SubType>

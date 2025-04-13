@@ -76,7 +76,7 @@ void Actor::Rotate(float _x, float _y, float _z)
 	ActorTransform.Rotate(_x, _y, _z);
 }
 
-void Actor::SetMesh(std::string_view _str)
+void Actor::SetScene(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
 	ActorScene = GraphicsEngine::get()->GetScene(str);
