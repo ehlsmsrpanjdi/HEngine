@@ -175,9 +175,9 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 	//CreateTexture(m_Device->Get(), m_Context->Get(), HString::StoWC(_fileManager->GetFile("png", "heart")).c_str());
 }
 
-void GraphicsEngine::CreateMesh(std::vector<std::shared_ptr<EngineFScene>> _Scenes)
+void GraphicsEngine::CreateScene(std::vector<std::shared_ptr<EngineFScene>> _Scenes)
 {
-	EngineScene::Get().CreateMesh(_Scenes, m_Device);
+	EngineScene::Get().CreateScene(_Scenes, m_Device);
 }
 
 void GraphicsEngine::CreateTexture(std::shared_ptr<class EngineFile> _fileManager)
@@ -234,55 +234,6 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
 }
 
-//void GraphicsEngine::CreateTexture(ID3D11Device* device, ID3D11DeviceContext* context, const wchar_t* filename)
-//{
-//	Microsoft::WRL::ComPtr<IWICImagingFactory> wicFactory;
-//	HRESULT hr;
-//	hr = CoInitialize(nullptr);
-//	hr = CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&wicFactory));
-//
-//	Microsoft::WRL::ComPtr<IWICBitmapDecoder> decoder;
-//	wicFactory->CreateDecoderFromFilename(filename, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &decoder);
-//
-//	Microsoft::WRL::ComPtr<IWICBitmapFrameDecode> frame;
-//	decoder->GetFrame(0, &frame);
-//
-//	Microsoft::WRL::ComPtr<IWICFormatConverter> converter;
-//	wicFactory->CreateFormatConverter(&converter);
-//	converter->Initialize(frame.Get(), GUID_WICPixelFormat32bppRGBA, WICBitmapDitherTypeNone, nullptr, 0, WICBitmapPaletteTypeCustom);
-//
-//	UINT width, height;
-//	frame->GetSize(&width, &height);
-//
-//	std::vector<UINT8> imageData(width * height * 4);
-//	converter->CopyPixels(nullptr, width * 4, imageData.size(), imageData.data());
-//
-//	D3D11_TEXTURE2D_DESC textureDesc = {};
-//	textureDesc.Width = width;
-//	textureDesc.Height = height;
-//	textureDesc.MipLevels = 1;
-//	textureDesc.ArraySize = 1;
-//	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-//	textureDesc.SampleDesc.Count = 1;
-//	textureDesc.Usage = D3D11_USAGE_DEFAULT;
-//	textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-//
-//	D3D11_SUBRESOURCE_DATA initData = {};
-//	initData.pSysMem = imageData.data();
-//	initData.SysMemPitch = width * 4;
-//
-//	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
-//	device->CreateTexture2D(&textureDesc, &initData, &texture);
-//
-//	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-//	srvDesc.Format = textureDesc.Format;
-//	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-//	srvDesc.Texture2D.MipLevels = 1;
-//
-//	device->CreateShaderResourceView(texture.Get(), &srvDesc, &textureSRV);
-//
-//}
-
 void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 {
 	//D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
@@ -308,9 +259,9 @@ HS* GraphicsEngine::GetHlsl(std::string_view _str)
 	return EngineHlsl::Get().GetHlsl(_str);
 }
 
-std::unordered_map<std::string, std::shared_ptr<MH>>& GraphicsEngine::GetMesh(std::string_view _str)
+std::shared_ptr<FScene> GraphicsEngine::GetScene(std::string_view _str)
 {
-	return EngineScene::Get().GetMesh(_str);
+	return EngineScene::Get().GetScene(_str);
 }
 
 #pragma endregion

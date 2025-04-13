@@ -13,7 +13,7 @@ Actor::Actor()
 Actor::~Actor()
 {
 	Hlsl = nullptr;
-	Meshs = nullptr;
+	ActorScene = nullptr;
 	Animator = nullptr;
 }
 
@@ -31,7 +31,7 @@ void Actor::Tick(float _DeltaTime)
 
 void Actor::Render()
 {
-	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : *Meshs) {
+	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
 		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
 	}
 }
@@ -79,8 +79,8 @@ void Actor::Rotate(float _x, float _y, float _z)
 void Actor::SetMesh(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	std::unordered_map<std::string, std::shared_ptr<MH>>& mesh = GraphicsEngine::get()->GetMesh(str);
-	Meshs = &mesh;
+	ActorScene = GraphicsEngine::get()->GetScene(str);
+	//Meshs = &mesh;
 }
 
 void Actor::SetHlsl(std::string_view _str)

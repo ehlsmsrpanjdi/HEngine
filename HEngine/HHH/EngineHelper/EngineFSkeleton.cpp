@@ -2,6 +2,8 @@
 #include "algorithm"
 #include "AllStruct.h"
 #include "EngineFMesh.h"
+#include "EngineFbxMath.h"
+
 
 EngineFSkeleton::EngineFSkeleton() 
 {
@@ -11,6 +13,19 @@ EngineFSkeleton::~EngineFSkeleton()
 {
 	rootBones.clear();
 	boneNodeToIndex.clear();
+}
+
+std::vector<DirectX::XMMATRIX> EngineFSkeleton::EvaluateSkeleton(std::vector<DirectX::XMMATRIX> _AnimValue)
+{
+	std::vector<DirectX::XMMATRIX> result;
+	result.resize(Bones.size());
+
+	for (size_t i = 0; i < Bones.size(); ++i)
+	{
+		result[i] = _AnimValue[i] * EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose);
+	}
+
+	return result;
 }
 
 void EngineFSkeleton::init(FbxNode* _Node)

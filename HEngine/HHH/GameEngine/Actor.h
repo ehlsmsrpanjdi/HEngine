@@ -42,7 +42,8 @@ private:
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
 	//ºô¸°°Í
-	std::unordered_map<std::string, std::shared_ptr<struct MH>>* Meshs = nullptr;
+	std::shared_ptr<class FScene> ActorScene;
+	//std::unordered_map<std::string, std::shared_ptr<struct MH>>* Meshs = nullptr;
 	std::shared_ptr<class EngineAnimator> Animator = nullptr;
 };
 

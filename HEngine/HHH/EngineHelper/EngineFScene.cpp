@@ -49,7 +49,6 @@ void EngineFScene::ProcessNode(FbxNode* _pNode)
 		if (Skeleton != nullptr) {
 		Skeleton->BoneWeight(pMesh);
 		Skeleton->BoneSort(Mesh->vertices);
-		Mesh->Skeleton = Skeleton;
 		}
 		Mesh->TextureName = ProcessMaterial(_pNode);
 		MeshMap[pMesh->GetName()] = Mesh;

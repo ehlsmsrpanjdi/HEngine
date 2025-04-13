@@ -54,28 +54,27 @@ public:
 	
 #pragma endregion
 
-#pragma region "리소스"
+#pragma region "Create"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
-	void CreateMesh(std::vector<std::shared_ptr<class EngineFScene>> _Scenes);
+	void CreateScene(std::vector<std::shared_ptr<class EngineFScene>> _Scenes);
 	void CreateTexture(std::shared_ptr<class EngineFile> _fileManager);
 
 	void CreateAllCBuffer();
 	void CreateConstantBuffer(std::string _str);
+
+
+#pragma endregion
+
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
-
-	//void CreateTexture(ID3D11Device* device, ID3D11DeviceContext* context, const wchar_t* filename);
-	//ID3D11ShaderResourceView* textureSRV = nullptr;
-
 
 	void Render(struct HS* _Material, struct MH* _Mesh);
 
-#pragma endregion
 
 #pragma region "게터"
 
 	struct HS* GetHlsl(std::string_view _str);
 
-	std::unordered_map<std::string, std::shared_ptr<struct MH>>& GetMesh(std::string_view _str);
+	std::shared_ptr<class FScene> GetScene(std::string_view _str);
 	//.
 #pragma endregion
 

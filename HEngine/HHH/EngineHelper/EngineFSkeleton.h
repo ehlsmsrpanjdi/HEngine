@@ -37,6 +37,9 @@ public:
 	EngineFSkeleton& operator=(EngineFSkeleton&& _Other) noexcept = delete;
 
 
+	std::vector<DirectX::XMMATRIX> EvaluateSkeleton(std::vector<DirectX::XMMATRIX> _AnimValue);
+
+
 	void init(FbxNode* _Node);
 	void FindBones(FbxNode* _Node);
 	void MakeBones();

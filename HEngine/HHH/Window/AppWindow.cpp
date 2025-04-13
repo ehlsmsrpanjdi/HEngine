@@ -43,7 +43,7 @@ void AppWindow::onCreate()
 	GraphicsEngine::get()->init(m_hwnd, rc);
 	FBXTool::GetInst().LoadALLFBX(FileManager);
 	GraphicsEngine::get()->CreateTexture(FileManager);
-	GraphicsEngine::get()->CreateMesh(FBXTool::GetInst().GetScene());
+	GraphicsEngine::get()->CreateScene(FBXTool::GetInst().GetScene());
 	GraphicsEngine::get()->CreateHlsl(FileManager);
 	GameEngine::get()->Init(rc);
 }

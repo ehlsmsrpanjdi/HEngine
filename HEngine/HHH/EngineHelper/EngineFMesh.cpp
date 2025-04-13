@@ -8,7 +8,6 @@ EngineFMesh::EngineFMesh()
 
 EngineFMesh::~EngineFMesh()
 {
-	Skeleton = nullptr;
 }
 
 UINT EngineFMesh::GetSize()

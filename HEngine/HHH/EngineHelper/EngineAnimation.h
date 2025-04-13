@@ -24,7 +24,6 @@ public:
 
 	void AddBoneKeyFrame(const std::string& boneName, int frame, const class EngineTransform& transform);
 	void SetDuration(float startTime, float endTime);
-	void Update(float deltaTime); // 나중에 애니메이션 재생할 때 사용
 
 	void ExtractAnimationKeys(FbxScene* scene);
 	void TraverseAndExtract(FbxNode* node, FbxAnimEvaluator* evaluator, FbxTime time);
@@ -33,8 +32,6 @@ public:
 
 
 	std::vector<DirectX::XMMATRIX> EvaluateAnimation(float time);
-
-	float GetDuration() const;
 
 private:
 	friend class EngineFScene;
@@ -45,7 +42,6 @@ private:
 
 	float StartTime = 0.f;
 	float EndTime = 0.f;
-	float CurrentTime = 0.f;
 	
 
 	std::vector<struct KeyFrame> keyframes;

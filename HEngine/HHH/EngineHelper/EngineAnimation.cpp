@@ -2,19 +2,7 @@
 #include "EngineTransform.h"
 #include "AllStruct.h"
 #include "EngineFSkeleton.h"
-
-XMMATRIX ConvertFbxMatrixToXM(const FbxAMatrix& mat)
-{
-    XMFLOAT4X4 xm;
-    for (int row = 0; row < 4; ++row)
-    {
-        for (int col = 0; col < 4; ++col)
-        {
-            xm.m[row][col] = static_cast<float>(mat.Get(row, col));
-        }
-    }
-    return XMLoadFloat4x4(&xm);
-}
+#include "EngineFbxMath.h"
 
 EngineAnimation::EngineAnimation()
 {
@@ -37,12 +25,6 @@ void EngineAnimation::SetDuration(float startTime, float endTime)
 	EndTime = endTime;
 }
 
-void EngineAnimation::Update(float deltaTime)
-{
-}
-
-
-
 void EngineAnimation::ExtractAnimationKeys(FbxScene* scene)
 {
 	FbxAnimEvaluator* evaluator = scene->GetAnimationEvaluator();
@@ -55,6 +37,10 @@ void EngineAnimation::ExtractAnimationKeys(FbxScene* scene)
 
 	FbxTime startTime = timeSpan.GetStart();
 	FbxTime endTime = timeSpan.GetStop();
+
+    SetDuration((float)startTime.GetSecondDouble(), (float)endTime.GetSecondDouble());
+
+
 	FbxTime frameTime;
 	frameTime.SetTime(0, 0, 0, 1, 0, scene->GetGlobalSettings().GetTimeMode());
 
@@ -98,11 +84,11 @@ std::vector<DirectX::XMMATRIX> EngineAnimation::EvaluateAnimation(float time)
 
     for (size_t i = 0; i < boneCount; ++i)
     {
-        const auto& keyframes = keyframesPerBoneIndex[i];
+        const auto& keyframes =  keyframesPerBoneIndex[i];
         if (keyframes.empty())
         {
             // 키프레임이 없으면 바인드 포즈 그대로 사용
-            boneMatrices[i] = ConvertFbxMatrixToXM(Skeleton->Bones[i].globalBindPose);
+            boneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Skeleton->Bones[i].globalBindPose);
             continue;
         }
 
@@ -125,8 +111,8 @@ std::vector<DirectX::XMMATRIX> EngineAnimation::EvaluateAnimation(float time)
         if (!next) next = prev;
 
         // 3. 보간 비율 계산
-        float duration = next->time - prev->time;
-        float lerpFactor = (duration > 0.0f) ? (time - prev->time) / duration : 0.0f;
+        float duration = static_cast<float>(next->time - prev->time);
+        float lerpFactor = static_cast<float>((duration > 0.0f) ? (time - prev->time) / duration : 0.0f);
 
         // 4. position, rotation 보간
         XMVECTOR pos1 = XMLoadFloat3(&prev->position);
@@ -153,23 +139,4 @@ std::vector<DirectX::XMMATRIX> EngineAnimation::EvaluateAnimation(float time)
     }
 
     return boneMatrices;
-}
-
-float EngineAnimation::GetDuration() const
-{
-    float maxTime = 0.0f;
-
-    for (const auto& [boneIndex, keyframes] : keyframesPerBoneIndex)
-    {
-        if (!keyframes.empty())
-        {
-            float lastTime = keyframes.back().time;
-            if (lastTime > maxTime)
-            {
-                maxTime = lastTime;
-            }
-        }
-    }
-
-    return maxTime;
 }

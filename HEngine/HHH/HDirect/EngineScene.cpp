@@ -16,7 +16,7 @@ EngineScene::~EngineScene()
 	AllScene.clear();
 }
 
-void EngineScene::CreateMesh(std::vector<std::shared_ptr<EngineFScene>> _Scenes, std::shared_ptr<class GraphicDevice> _Device)
+void EngineScene::CreateScene(std::vector<std::shared_ptr<EngineFScene>>& _Scenes, std::shared_ptr<class GraphicDevice> _Device)
 {
 	for (std::shared_ptr<EngineFScene> scene : _Scenes) {
 		std::shared_ptr<FScene> fscene = std::make_shared<FScene>();
@@ -43,14 +43,14 @@ void EngineScene::CreateMesh(std::vector<std::shared_ptr<EngineFScene>> _Scenes,
 	//Test(_Device);
 }
 
-std::unordered_map<std::string, std::shared_ptr<MH>>& EngineScene::GetMesh(std::string_view _str)
+std::shared_ptr<FScene> EngineScene::GetScene(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
 
 	if (AllScene.contains(str) == false) {
 		assert(false);
 	}
-	return AllScene[str]->Meshs;
+	return AllScene[str];
 }
 
 //#pragma region "테스트용"
