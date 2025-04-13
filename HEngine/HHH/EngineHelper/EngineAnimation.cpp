@@ -154,3 +154,22 @@ std::vector<DirectX::XMMATRIX> EngineAnimation::EvaluateAnimation(float time)
 
     return boneMatrices;
 }
+
+float EngineAnimation::GetDuration() const
+{
+    float maxTime = 0.0f;
+
+    for (const auto& [boneIndex, keyframes] : keyframesPerBoneIndex)
+    {
+        if (!keyframes.empty())
+        {
+            float lastTime = keyframes.back().time;
+            if (lastTime > maxTime)
+            {
+                maxTime = lastTime;
+            }
+        }
+    }
+
+    return maxTime;
+}

@@ -15,6 +15,7 @@
     <ClInclude Include="Actor.h">
       <Filter>Actor</Filter>
     </ClInclude>
+    <ClInclude Include="EngineAnimator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -23,5 +24,6 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
+    <ClCompile Include="EngineAnimator.cpp" />
   </ItemGroup>
 </Project>

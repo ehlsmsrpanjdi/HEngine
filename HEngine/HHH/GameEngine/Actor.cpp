@@ -14,6 +14,7 @@ Actor::~Actor()
 {
 	Hlsl = nullptr;
 	Meshs = nullptr;
+	Animator = nullptr;
 }
 
 void Actor::BeginPlay()

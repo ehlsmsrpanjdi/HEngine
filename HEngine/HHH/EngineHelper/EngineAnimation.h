@@ -34,6 +34,7 @@ public:
 
 	std::vector<DirectX::XMMATRIX> EvaluateAnimation(float time);
 
+	float GetDuration() const;
 
 private:
 	friend class EngineFScene;
