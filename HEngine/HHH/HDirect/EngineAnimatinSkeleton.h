@@ -3,18 +3,12 @@
 #include <DirectXMath.h>
 #include <unordered_map>
 #include <vector>
+#include "fbxsdk.h"
 
 // Ό³Έν :
 class EngineAnimatinSkeleton
 {
 public:
-	struct Bone {
-		std::string name;
-		int parentIndex;
-		DirectX::XMMATRIX localBindPose;
-		DirectX::XMMATRIX globalBindPose;
-		DirectX::XMMATRIX inverseGlobalBindPose;
-	};
 	// constrcuter destructer
 	EngineAnimatinSkeleton();
 	~EngineAnimatinSkeleton();
@@ -25,18 +19,20 @@ public:
 	EngineAnimatinSkeleton& operator=(const EngineAnimatinSkeleton& _Other) = delete;
 	EngineAnimatinSkeleton& operator=(EngineAnimatinSkeleton&& _Other) noexcept = delete;
 
+	//std::vector<DirectX::XMMATRIX> EvaluateAnimation(float time);
 
-	struct KeyFrame {
-		float time;
-		DirectX::XMMATRIX transform;
-	};
+
 
 private:
-	std::vector<Bone> Bones;
-	std::unordered_map<int, std::vector<KeyFrame>> keyframesPerBoneIndex;
+	friend class EngineScene;
+	std::vector<struct Bone> Bones;
+	std::unordered_map<std::string, std::vector<std::vector<struct KeyFrame>>> keyframesPerBoneMap;
+	std::unordered_map<std::string, std::pair<float, float>> AnimationTime;
 
-	float startTime = 0.f;
-	float endTime = 0.f;
+	std::vector<std::vector<struct KeyFrame>>* SeletectFrame = nullptr;
+	float SelectStartTime = 0.0f;
+	float SelectEndTime = 0.0f;
+
 
 public:
 	//void Evaluate(float time, std::vector<DirectX::XMMATRIX>& outBoneMatrices) const;

@@ -35,6 +35,7 @@ public:
 
 private:
 	friend class EngineFScene;
+	friend class EngineScene;
 	std::unordered_map<int, std::vector<struct KeyFrame>> keyframesPerBoneIndex;
 
 
@@ -42,8 +43,5 @@ private:
 
 	float StartTime = 0.f;
 	float EndTime = 0.f;
-	
-
-	std::vector<struct KeyFrame> keyframes;
 };
 

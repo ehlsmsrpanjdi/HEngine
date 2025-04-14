@@ -179,42 +179,11 @@ void EngineFSkeleton::BoneSort(std::vector<FBuffer>& vertices)
 
 		//for(controlPointIndex)
 	}
+}
 
-	//for (auto& it : controlPointSkinData)
-	//{
-	//	int controlPointIndex = it.first;
-	//	auto& weightList = it.second.weights;
-
-	//	// 내림차순 정렬
-	//	std::sort(weightList.begin(), weightList.end(),
-	//		[](const std::pair<int, double>& a, const std::pair<int, double>& b)
-	//		{
-	//			return a.second > b.second;
-	//		});
-
-	//	int boneIndices[4] = { 0 };
-	//	float boneWeights[4] = { 0.0f };
-
-	//	float totalWeight = 0.0f;
-	//	for (int i = 0; i < 4 && i < weightList.size(); ++i)
-	//	{
-	//		boneIndices[i] = weightList[i].first;
-	//		boneWeights[i] = static_cast<float>(weightList[i].second);
-	//		totalWeight += boneWeights[i];
-	//	}
-
-	//	// 정규화
-	//	if (totalWeight > 0.0f)
-	//	{
-	//		for (int i = 0; i < 4; ++i)
-	//		{
-	//			boneWeights[i] /= totalWeight;
-	//		}
-	//	}
-	//	// 이제 이 정보를 해당 controlPointIndex의 버텍스에 저장해주면 돼
-	//	// 예: vertices[controlPointIndex].BoneIndex = boneIndices;
-	//	//     vertices[controlPointIndex].BoneWeight = boneWeights;
-	//}
+std::vector<Bone> EngineFSkeleton::GetBone()
+{
+	return Bones;
 }
 
 

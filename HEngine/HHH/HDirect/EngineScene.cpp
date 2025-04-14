@@ -5,7 +5,9 @@
 #include "EngineHelper/HString.h"
 #include "EngineHelper/EngineFScene.h"
 #include "EngineHelper/EngineFMesh.h"
-
+#include "EngineAnimatinSkeleton.h"
+#include "EngineHelper/EngineAnimation.h"
+#include "EngineHelper/EngineFSkeleton.h"
 
 EngineScene::EngineScene() 
 {
@@ -37,6 +39,18 @@ void EngineScene::CreateScene(std::vector<std::shared_ptr<EngineFScene>>& _Scene
 
 			fscene->Meshs[meshinfo.first] = Mesh;
 		}
+		std::shared_ptr<EngineAnimatinSkeleton> Skeletonanimation = std::make_shared<EngineAnimatinSkeleton>();
+		Skeletonanimation->Bones = scene->Skeleton->GetBone();
+
+		for (std::pair<const std::string, std::shared_ptr<EngineAnimation>>& pa  : scene->AnimMap) {
+			Skeletonanimation->keyframesPerBoneMap[pa.first];
+			Skeletonanimation->AnimationTime[pa.first] = std::make_pair(pa.second->StartTime, pa.second->EndTime);
+			for (std::pair<const int, std::vector<KeyFrame>>& ppa : pa.second->keyframesPerBoneIndex) {
+				Skeletonanimation->keyframesPerBoneMap[pa.first].push_back(ppa.second);
+			}
+		}
+
+		fscene->AnimSkeleton = Skeletonanimation;
 		AllScene[scene->SceneName] = fscene;
 	}
 

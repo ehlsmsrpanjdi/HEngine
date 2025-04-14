@@ -12,7 +12,6 @@ EngineAnimation::~EngineAnimation()
 {
 	Skeleton = nullptr;
     keyframesPerBoneIndex.clear();
-    keyframes.clear();
 }
 
 void EngineAnimation::AddBoneKeyFrame(const std::string& boneName, int frame, const EngineTransform& transform)

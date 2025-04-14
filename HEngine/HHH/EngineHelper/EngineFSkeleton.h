@@ -8,23 +8,22 @@
 #include "fbxsdk.h"
 #include <unordered_set>
 
-// 설명 :
-class EngineFSkeleton
-{
-private:
-	struct Bone {
-		std::string name;
-		int parentIndex;
-		FbxAMatrix localBindPose;
-		FbxAMatrix globalBindPose;
-		FbxAMatrix inverseGlobalBindPose; 
-	};
-
 	struct SkinWeight
 	{
 		std::vector<std::pair<int, double>> weights; // (BoneIndex, Weight)
 	};
 
+	struct Bone {
+		std::string name;
+		int parentIndex;
+		FbxAMatrix localBindPose;
+		FbxAMatrix globalBindPose;
+		FbxAMatrix inverseGlobalBindPose;
+	};
+
+// 설명 :
+class EngineFSkeleton
+{
 public:
 	// constrcuter destructer
 	EngineFSkeleton();
@@ -45,6 +44,8 @@ public:
 	void MakeBones();
 	void BoneWeight(FbxMesh* pMesh);
 	void BoneSort(std::vector<struct FBuffer>& vertices);
+
+	std::vector<Bone> GetBone();
 
 	bool NoneSkel = false;
 

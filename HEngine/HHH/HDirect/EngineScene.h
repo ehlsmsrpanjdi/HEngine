@@ -11,6 +11,7 @@
 class FScene {
 public:
 	std::unordered_map<std::string, std::shared_ptr<struct MH>> Meshs;
+	std::shared_ptr<class EngineAnimatinSkeleton> AnimSkeleton = nullptr;
 	~FScene() {
 		Meshs.clear();
 	}
