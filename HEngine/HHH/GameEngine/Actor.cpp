@@ -4,6 +4,7 @@
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/AllStruct.h"
 #include "EngineHelper/HString.h"
+#include "HDirect/EngineAnimatinSkeleton.h"
 
 
 Actor::Actor()
@@ -14,19 +15,17 @@ Actor::~Actor()
 {
 	Hlsl = nullptr;
 	ActorScene = nullptr;
-	Animator = nullptr;
 }
 
 void Actor::BeginPlay()
 {
-	if (Hlsl == nullptr) {
-		assert(false);
-	}
-
 }
 
 void Actor::Tick(float _DeltaTime)
 {
+	if (IsAnimation == true) {
+		ActorScene->AnimSkeleton->EvaluateAnimation(_DeltaTime, outBoneMatrices);
+	}
 }
 
 void Actor::Render()
@@ -87,6 +86,16 @@ void Actor::SetHlsl(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
 	Hlsl = GraphicsEngine::get()->GetHlsl(str);
+}
+
+void Actor::SetAnimation(std::string_view _str)
+{
+	ActorScene->AnimSkeleton->SetAnimation(_str);
+}
+
+void Actor::SetAnimationTemp()
+{
+	ActorScene->AnimSkeleton->SetAnimationTemp();
 }
 
 EngineTransform Actor::GetTransform()

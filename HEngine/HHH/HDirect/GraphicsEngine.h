@@ -60,12 +60,14 @@ public:
 	void CreateTexture(std::shared_ptr<class EngineFile> _fileManager);
 
 	void CreateAllCBuffer();
-	void CreateConstantBuffer(std::string _str);
+	void CreateConstantBuffer(std::string_view _str);
+	void CreateConstantBuffer1(std::string_view _str, size_t boneCount);
 
 
 #pragma endregion
 
 	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
+	void UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& matrices, std::string_view _str);
 
 	void Render(struct HS* _Material, struct MH* _Mesh);
 

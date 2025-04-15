@@ -24,6 +24,11 @@ cbuffer WVP : register(b0)
     float4x4 g_mWorldViewProjection;
 };
 
+cbuffer BoneMatrixBuffer : register(b1)
+{
+    matrix boneMatrices[100]; // 최대 본 수에 맞게 설정
+}
+
 VS_OUTPUT vsmain(VS_INPUT input)
 {
     VS_OUTPUT output;
@@ -34,6 +39,8 @@ VS_OUTPUT vsmain(VS_INPUT input)
 
 float4 psmain(PS_INPUT input) : SV_Target
 {
-    float4 color = texture0.Sample(sampler0, input.Textcoord);
-    return color;
+    float factor = boneMatrices[0]._11;
+    return float4(factor, 0, 0, 1);
+    //float4 color = texture0.Sample(sampler0, input.Textcoord);
+    //return color;
 }

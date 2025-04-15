@@ -181,6 +181,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MainPlayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp">
@@ -192,6 +196,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngine.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MainPlayer.cpp">
       <SubType>
       </SubType>
     </ClCompile>

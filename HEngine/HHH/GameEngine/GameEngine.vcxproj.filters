@@ -7,6 +7,9 @@
     <Filter Include="Actor">
       <UniqueIdentifier>{a65bac5a-8b99-4223-8d57-6de0e661e5a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{ffe154eb-3104-4ba9-855e-4f12bed3f2bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -16,6 +19,9 @@
       <Filter>Actor</Filter>
     </ClInclude>
     <ClInclude Include="EngineAnimator.h" />
+    <ClInclude Include="MainPlayer.h">
+      <Filter>Client</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -25,5 +31,8 @@
       <Filter>Actor</Filter>
     </ClCompile>
     <ClCompile Include="EngineAnimator.cpp" />
+    <ClCompile Include="MainPlayer.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

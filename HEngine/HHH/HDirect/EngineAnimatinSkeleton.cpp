@@ -3,78 +3,105 @@
 #include "EngineHelper/EngineFbxMath.h"
 #include "DirectXMath.h"
 #include "EngineHelper/EngineFSkeleton.h"
+#include "EngineHelper/HString.h"
 
-EngineAnimatinSkeleton::EngineAnimatinSkeleton() 
+EngineAnimatinSkeleton::EngineAnimatinSkeleton()
 {
 }
 
-EngineAnimatinSkeleton::~EngineAnimatinSkeleton() 
+EngineAnimatinSkeleton::~EngineAnimatinSkeleton()
 {
 	keyframesPerBoneMap.clear();
 	Bones.clear();
+	SeletedFrame = nullptr;
 }
 
+void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::XMMATRIX>& outBoneMatrices)
+{
+	outBoneMatrices.clear();
+	CurrentAnimatoinTime += time;
+	while (CurrentAnimatoinTime > SelectEndTime) {
+		CurrentAnimatoinTime -= SelectEndTime;
+	}
+	if (SeletedFrame == nullptr) return;
 
-//std::vector<DirectX::XMMATRIX> EngineAnimatinSkeleton::EvaluateAnimation(float time)
-//{
-//    size_t boneCount = Bones.size();
-//    std::vector<DirectX::XMMATRIX> boneMatrices(boneCount);
-//
-//    for (size_t i = 0; i < boneCount; ++i)
-//    {
-//        const auto& keyframes = keyframesPerBoneIndex[i];
-//        if (keyframes.empty())
-//        {
-//            // 키프레임이 없으면 바인드 포즈 그대로 사용
-//            boneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].globalBindPose);
-//            continue;
-//        }
-//
-//        // 1. 현재 시간에 맞는 두 키프레임 찾기
-//        const KeyFrame* prev = nullptr;
-//        const KeyFrame* next = nullptr;
-//
-//        for (size_t k = 0; k < keyframes.size(); ++k)
-//        {
-//            if (keyframes[k].time > time)
-//            {
-//                next = &keyframes[k];
-//                if (k > 0) prev = &keyframes[k - 1];
-//                break;
-//            }
-//        }
-//
-//        // 2. 못 찾았으면 마지막 키프레임 사용
-//        if (!prev) prev = &keyframes.back();
-//        if (!next) next = prev;
-//
-//        // 3. 보간 비율 계산
-//        float duration = static_cast<float>(next->time - prev->time);
-//        float lerpFactor = static_cast<float>((duration > 0.0f) ? (time - prev->time) / duration : 0.0f);
-//
-//        // 4. position, rotation 보간
-//        DirectX::XMVECTOR pos1 = XMLoadFloat3(&prev->position);
-//        DirectX::XMVECTOR pos2 = XMLoadFloat3(&next->position);
-//        DirectX::XMVECTOR lerpedPos = DirectX::XMVectorLerp(pos1, pos2, lerpFactor);
-//
-//        DirectX::XMVECTOR rot1 = XMLoadFloat4(&prev->rotation);
-//        DirectX::XMVECTOR rot2 = XMLoadFloat4(&next->rotation);
-//        DirectX::XMVECTOR lerpedRot = DirectX::XMQuaternionSlerp(rot1, rot2, lerpFactor);
-//
-//        // 5. 로컬 행렬 생성
-//        DirectX::XMMATRIX localTransform = DirectX::XMMatrixRotationQuaternion(lerpedRot) * DirectX::XMMatrixTranslationFromVector(lerpedPos);
-//
-//        // 6. 부모의 최종 행렬과 곱해 월드로 변환
-//        int parentIndex = Bones[i].parentIndex;
-//        if (parentIndex >= 0)
-//        {
-//            boneMatrices[i] = localTransform * boneMatrices[parentIndex];
-//        }
-//        else
-//        {
-//            boneMatrices[i] = localTransform;
-//        }
-//    }
-//
-//    return boneMatrices;
-//}
+	size_t boneCount = Bones.size();
+	outBoneMatrices.resize(boneCount);
+
+	for (size_t boneIndex = 0; boneIndex < boneCount; ++boneIndex)
+	{
+		const std::vector<KeyFrame>& keyframes = (*SeletedFrame)[boneIndex];
+
+		if (keyframes.empty())
+		{
+			outBoneMatrices[boneIndex] = DirectX::XMMatrixIdentity();
+			continue;
+		}
+
+		// 첫 번째 또는 마지막 프레임이면 그대로
+		if (CurrentAnimatoinTime <= keyframes.front().time)
+		{
+			const auto& kf = keyframes.front();
+			auto pos = DirectX::XMLoadFloat3(&kf.position);
+			auto rot = DirectX::XMLoadFloat4(&kf.rotation);
+			outBoneMatrices[boneIndex] = DirectX::XMMatrixRotationQuaternion(rot) * DirectX::XMMatrixTranslationFromVector(pos);
+			continue;
+		}
+		else if (CurrentAnimatoinTime >= keyframes.back().time)
+		{
+			const auto& kf = keyframes.back();
+			auto pos = DirectX::XMLoadFloat3(&kf.position);
+			auto rot = DirectX::XMLoadFloat4(&kf.rotation);
+			outBoneMatrices[boneIndex] = DirectX::XMMatrixRotationQuaternion(rot) * DirectX::XMMatrixTranslationFromVector(pos);
+			continue;
+		}
+
+		// 중간 프레임 보간
+		for (size_t i = 0; i < keyframes.size() - 1; ++i)
+		{
+			const auto& kf1 = keyframes[i];
+			const auto& kf2 = keyframes[i + 1];
+
+			if (CurrentAnimatoinTime >= kf1.time && CurrentAnimatoinTime <= kf2.time)
+			{
+				float t = float((CurrentAnimatoinTime - kf1.time) / (kf2.time - kf1.time));
+
+				auto pos1 = DirectX::XMLoadFloat3(&kf1.position);
+				auto pos2 = DirectX::XMLoadFloat3(&kf2.position);
+				auto lerpedPos = DirectX::XMVectorLerp(pos1, pos2, t);
+
+				auto rot1 = DirectX::XMLoadFloat4(&kf1.rotation);
+				auto rot2 = DirectX::XMLoadFloat4(&kf2.rotation);
+				auto slerpedRot = DirectX::XMQuaternionSlerp(rot1, rot2, t);
+
+				outBoneMatrices[boneIndex] = DirectX::XMMatrixRotationQuaternion(slerpedRot) * DirectX::XMMatrixTranslationFromVector(lerpedPos);
+				break;
+			}
+		}
+	}
+
+	// 본의 부모 자식 관계 반영해서 로컬 → 월드로 누적 변환
+	for (size_t i = 0; i < boneCount; ++i)
+	{
+		int ParentIndex = Bones[i].parentIndex;
+		if (ParentIndex >= 0)
+		{
+			outBoneMatrices[i] = outBoneMatrices[i] * outBoneMatrices[ParentIndex];
+		}
+	}
+}
+
+void EngineAnimatinSkeleton::SetAnimation(std::string_view _str)
+{
+	std::string str = HString::Upper(_str.data());
+	SeletedFrame = &keyframesPerBoneMap[str];
+	SelectStartTime = AnimationTime[str].first;
+	SelectEndTime = AnimationTime[str].second;
+}
+
+void EngineAnimatinSkeleton::SetAnimationTemp()
+{
+	SeletedFrame = &keyframesPerBoneMap["mixamo.com"];
+	SelectStartTime = AnimationTime["mixamo.com"].first;
+	SelectEndTime = AnimationTime["mixamo.com"].second;
+}
