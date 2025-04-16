@@ -5,7 +5,9 @@
 #include "EngineHelper/HString.h"
 #include "EngineHelper/EngineFScene.h"
 #include "EngineHelper/EngineFMesh.h"
-
+#include "EngineAnimatinSkeleton.h"
+#include "EngineHelper/EngineAnimation.h"
+#include "EngineHelper/EngineFSkeleton.h"
 
 EngineScene::EngineScene() 
 {
@@ -16,7 +18,7 @@ EngineScene::~EngineScene()
 	AllScene.clear();
 }
 
-void EngineScene::CreateMesh(std::vector<std::shared_ptr<EngineFScene>> _Scenes, std::shared_ptr<class GraphicDevice> _Device)
+void EngineScene::CreateScene(std::vector<std::shared_ptr<EngineFScene>>& _Scenes, std::shared_ptr<class GraphicDevice> _Device)
 {
 	for (std::shared_ptr<EngineFScene> scene : _Scenes) {
 		std::shared_ptr<FScene> fscene = std::make_shared<FScene>();
@@ -37,20 +39,32 @@ void EngineScene::CreateMesh(std::vector<std::shared_ptr<EngineFScene>> _Scenes,
 
 			fscene->Meshs[meshinfo.first] = Mesh;
 		}
+		std::shared_ptr<EngineAnimatinSkeleton> Skeletonanimation = std::make_shared<EngineAnimatinSkeleton>();
+		Skeletonanimation->Bones = scene->Skeleton->GetBone();
+
+		for (std::pair<const std::string, std::shared_ptr<EngineAnimation>>& pa  : scene->AnimMap) {
+			Skeletonanimation->keyframesPerBoneMap[pa.first];
+			Skeletonanimation->AnimationTime[pa.first] = std::make_pair(pa.second->StartTime, pa.second->EndTime);
+			for (std::pair<const int, std::vector<KeyFrame>>& ppa : pa.second->keyframesPerBoneIndex) {
+				Skeletonanimation->keyframesPerBoneMap[pa.first].push_back(ppa.second);
+			}
+		}
+
+		fscene->AnimSkeleton = Skeletonanimation;
 		AllScene[scene->SceneName] = fscene;
 	}
 
 	//Test(_Device);
 }
 
-std::unordered_map<std::string, std::shared_ptr<MH>>& EngineScene::GetMesh(std::string_view _str)
+std::shared_ptr<FScene> EngineScene::GetScene(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
 
 	if (AllScene.contains(str) == false) {
 		assert(false);
 	}
-	return AllScene[str]->Meshs;
+	return AllScene[str];
 }
 
 //#pragma region "테스트용"

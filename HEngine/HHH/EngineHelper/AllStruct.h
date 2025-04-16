@@ -12,7 +12,7 @@ struct MH;
 struct HS;
 
 
-
+#pragma region "Buffer"
 struct FBuffer {
 	DirectX::XMFLOAT3 position = DirectX::XMFLOAT3();
 	DirectX::XMFLOAT2 uv = DirectX::XMFLOAT2();
@@ -21,32 +21,6 @@ struct FBuffer {
 	float BoneWeights[4] = { 0,0,0,0 };
 
 	int controlpointindex = -1;
-};
-
-//struct alignas(16) FBuffer
-//{
-//	DirectX::XMFLOAT3 position;     // 12 bytes
-//	float pad0 = 0.0f;              // 4 bytes - 정렬용
-//
-//	DirectX::XMFLOAT2 uv;          // 8 bytes
-//	float pad1[2] = { 0.0f, 0.0f }; // 8 bytes - 정렬용
-//
-//	int BoneIndices[4] = { 0, 0, 0, 0 };    // 16 bytes
-//	float BoneWeights[4] = { 0.f, 0.f, 0.f, 0.f }; // 16 bytes
-//
-//	int controlpointindex = -1;     // 4 bytes
-//	float pad2[3] = { 0.0f, 0.0f, 0.0f };  // 12 bytes - 정렬용
-//};
-
-struct FMesh {
-	std::vector<FBuffer> vertices; // vertex buffer
-	std::vector<UINT> indices;
-
-	std::string TextureName;
-
-	int GetSize() {
-		sizeof(vertices[0]) + sizeof(indices[0]);
-	}
 };
 
 struct MH {
@@ -100,7 +74,23 @@ struct Tex {
 
 	}
 };
+#pragma endregion
 
+#pragma region "anim"
+struct AnimMetaData {
+	std::string name;
+	double startTime;
+	double endTime;
+};
+
+struct KeyFrame {
+	double time; // 초 단위
+	DirectX::XMFLOAT3 position;
+	DirectX::XMFLOAT4 rotation;
+};
+#pragma endregion
+
+#pragma region "bone"
 // 정점이 어떤 본에게 영향을 받는지
 struct VertexSkinWeight {
 	int boneIndices[4] = { 0 };
@@ -114,3 +104,4 @@ struct SkinnedVertex {
 	DirectX::XMFLOAT2 uv;
 	VertexSkinWeight skinWeight;
 };
+#pragma endregion

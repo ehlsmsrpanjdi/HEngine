@@ -2,6 +2,8 @@ struct VS_INPUT
 {
     float4 position : POSITION;
     float2 Textcoord : TEXCOORD;
+    uint boneIndices[4] : BONEINDICES;
+    float boneWeights[4] : BONEWEIGHTS;
 };
 
 struct VS_OUTPUT
@@ -23,6 +25,11 @@ cbuffer WVP : register(b0)
 {
     float4x4 g_mWorldViewProjection;
 };
+
+cbuffer BoneMatrixBuffer : register(b1)
+{
+    matrix boneMatrices[100]; // 최대 본 수에 맞게 설정
+}
 
 VS_OUTPUT vsmain(VS_INPUT input)
 {

@@ -17,8 +17,8 @@ public:
 	Actor& operator=(const Actor& _Other) = delete;
 	Actor& operator=(Actor&& _Other) noexcept = delete;
 
-	void BeginPlay();
-	void Tick(float _DeltaTime);
+	virtual void BeginPlay();
+	virtual void Tick(float _DeltaTime);
 	void Render();
 
 	void AddActorLocation(float _x, float _y = 0, float _z = 0);
@@ -32,16 +32,20 @@ public:
 	void Move(float _x, float _y, float _z);
 	void Rotate(float _x, float _y, float _z);
 
-	void SetMesh(std::string_view _str);
+	void SetScene(std::string_view _str);
 	void SetHlsl(std::string_view _str);
+	void SetAnimation(std::string_view _str);
+	void SetAnimationTemp();
 
 	EngineTransform GetTransform();
+	std::string CurrentAnimation = "";
+	bool IsAnimation = false;
 protected:
 
-private:
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
+	std::vector<DirectX::XMMATRIX> outBoneMatrices;
 	//ºô¸°°Í
-	std::unordered_map<std::string, std::shared_ptr<struct MH>>* Meshs = nullptr;
+	std::shared_ptr<class FScene> ActorScene;
 };
 

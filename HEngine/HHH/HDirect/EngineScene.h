@@ -8,16 +8,19 @@
 #include <unordered_map>
 
 
+class FScene {
+public:
+	std::unordered_map<std::string, std::shared_ptr<struct MH>> Meshs;
+	std::shared_ptr<class EngineAnimatinSkeleton> AnimSkeleton = nullptr;
+	~FScene() {
+		Meshs.clear();
+	}
+};
+
 // Ό³Έν :
 class EngineScene
 {
-private:
-	struct FScene {
-		std::unordered_map<std::string, std::shared_ptr<struct MH>> Meshs;
-		~FScene() {
-			Meshs.clear();
-		}
-	};
+
 public:
 	// constrcuter destructer
 	~EngineScene();
@@ -33,8 +36,8 @@ public:
 	EngineScene& operator=(const EngineScene& _Other) = delete;
 	EngineScene& operator=(EngineScene&& _Other) noexcept = delete;
 
-	void CreateMesh(std::vector<std::shared_ptr<class EngineFScene>> _Scenes, std::shared_ptr<class GraphicDevice> _Device);
-	std::unordered_map<std::string, std::shared_ptr<struct MH>>& GetMesh(std::string_view _str);
+	void CreateScene(std::vector<std::shared_ptr<class EngineFScene>>& _Scenes, std::shared_ptr<class GraphicDevice> _Device);
+	std::shared_ptr<FScene> GetScene(std::string_view _str);
 
 
 

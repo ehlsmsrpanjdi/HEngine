@@ -4,6 +4,7 @@
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/EngineDebug.h"	
 #include "EngineHelper/EngineKey.h"
+#include "MainPlayer.h"
 
 GameEngine::GameEngine()
 {
@@ -35,11 +36,7 @@ void GameEngine::Init(RECT _rc)
 	CreateCamera<Actor>("temp");
 	SetMainCamera("temp");
 
-	Actor* act = SpawnActor<Actor>().get();
-	act->SetMesh("cube");
- 
-	act->SetHlsl("test");
-	act->SetActorScale(0.1f, 0.1f, 0.1f);
+	SpawnActor<MainPlayer>();
 }
 
 void GameEngine::release()
@@ -73,9 +70,9 @@ void GameEngine::Update(float _DeltaTime)
 		MainCamera->Rotate(EngineKey::MouseX * _DeltaTime, EngineKey::MouseY  * _DeltaTime, 0.f);
 	}
 
-	//for (std::shared_ptr<Actor> Act : AllActor) {
-	//	Act->Tick(_DeltaTime);
-	//}
+	for (std::shared_ptr<Actor> Act : AllActor) {
+		Act->Tick(_DeltaTime);
+	}
 
 	Render();
 }

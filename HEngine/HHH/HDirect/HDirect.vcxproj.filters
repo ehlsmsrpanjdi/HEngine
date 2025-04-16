@@ -22,9 +22,6 @@
     <Filter Include="Graphic\GraphicDevice\Context">
       <UniqueIdentifier>{983aaf5c-9642-4572-b01c-7eb110342c8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphic\Mesh">
-      <UniqueIdentifier>{c7a71925-15da-455f-b7c6-43b0a2054d7a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphic\Hlsl">
       <UniqueIdentifier>{28286a7b-1599-42c9-9957-6a5bb492f4f4}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="Graphic\EngineTexture">
       <UniqueIdentifier>{a4761a6f-77f8-4dab-b25f-9a4cf80033f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Scene">
+      <UniqueIdentifier>{c7a71925-15da-455f-b7c6-43b0a2054d7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +52,7 @@
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClCompile>
     <ClCompile Include="EngineScene.cpp">
-      <Filter>Graphic\Mesh</Filter>
+      <Filter>Graphic\Scene</Filter>
     </ClCompile>
     <ClCompile Include="InputElement.cpp">
       <Filter>Graphic\Hlsl</Filter>
@@ -62,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="EngineTexture.cpp">
       <Filter>Graphic\EngineTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineAnimatinSkeleton.cpp">
+      <Filter>Graphic\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +84,7 @@
       <Filter>Graphic\GraphicDevice\Context</Filter>
     </ClInclude>
     <ClInclude Include="EngineScene.h">
-      <Filter>Graphic\Mesh</Filter>
+      <Filter>Graphic\Scene</Filter>
     </ClInclude>
     <ClInclude Include="InputElement.h">
       <Filter>Graphic\Hlsl</Filter>
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="EngineTexture.h">
       <Filter>Graphic\EngineTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineAnimatinSkeleton.h">
+      <Filter>Graphic\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

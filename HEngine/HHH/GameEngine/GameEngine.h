@@ -50,6 +50,7 @@ public:
 	template <typename T>
 	std::shared_ptr<T> SpawnActor() {
 		std::shared_ptr<T> AActor = std::make_shared<T>();
+		AActor->BeginPlay();
 		AllActor.push_back(AActor);
 		return AActor;
 	}

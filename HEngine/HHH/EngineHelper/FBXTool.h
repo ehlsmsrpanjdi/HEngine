@@ -7,7 +7,9 @@
 
 #include "fbxsdk.h"
 #include <unordered_set>
-#pragma comment(lib, "libfbxsdk.lib")
+#pragma comment(lib, "libfbxsdk-md.lib")
+#pragma comment(lib, "libxml2-md.lib")
+#pragma comment(lib, "zlib-md.lib")
 
 // 설명 :
 class FBXTool
@@ -31,6 +33,12 @@ public:
 
 	
 	std::vector<std::shared_ptr<class EngineFScene>>& GetScene();
+
+
+#pragma region "애니메이션"
+	std::vector<struct AnimMetaData> LoadAnim(FbxImporter* Importer, FbxScene* _Scene);
+
+#pragma endregion
 
 private:
 	FBXTool();

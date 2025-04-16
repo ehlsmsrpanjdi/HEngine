@@ -9,10 +9,16 @@
 // DXGI_FORMAT을 크기에 따라 매핑하는 함수
 DXGI_FORMAT GetDXGIFormatFromType(const std::string& type)
 {
-	if (type == "float" || type == "half") return DXGI_FORMAT_R32_FLOAT;
+	if (type == "float") return DXGI_FORMAT_R32_FLOAT;
 	if (type == "float2") return DXGI_FORMAT_R32G32_FLOAT;
 	if (type == "float3") return DXGI_FORMAT_R32G32B32_FLOAT;
 	if (type == "float4") return DXGI_FORMAT_R32G32B32A32_FLOAT;
+
+	if (type == "uint")      return DXGI_FORMAT_R32_UINT;
+	if (type == "uint2")     return DXGI_FORMAT_R32G32_UINT;
+	if (type == "uint3")     return DXGI_FORMAT_R32G32B32_UINT;
+	if (type == "uint4")     return DXGI_FORMAT_R32G32B32A32_UINT;
+
 	return DXGI_FORMAT_UNKNOWN;
 }
 
@@ -22,10 +28,41 @@ int SetOffset(DXGI_FORMAT _format) {
 	case DXGI_FORMAT_R32G32B32_FLOAT:    return 12; // 3 * 4바이트
 	case DXGI_FORMAT_R32G32_FLOAT:       return 8;  // 2 * 4바이트
 	case DXGI_FORMAT_R32_FLOAT:          return 4;  // 1 * 4바이트
+
 	case DXGI_FORMAT_R16G16B16A16_FLOAT: return 8;  // 4 * 2바이트
+	case DXGI_FORMAT_R16G16_FLOAT:       return 4;  // 2 * 2바이트
+	case DXGI_FORMAT_R16_FLOAT:          return 2;  // 1 * 2바이트
+
 	case DXGI_FORMAT_R8G8B8A8_UNORM:     return 4;  // 4 * 1바이트
-	case DXGI_FORMAT_R10G10B10A2_UNORM:  return 4;  // 특별한 10/10/10/2 비트
+	case DXGI_FORMAT_R8G8_UNORM:         return 2;  // 2 * 1바이트
+	case DXGI_FORMAT_R8_UNORM:           return 1;  // 1 * 1바이트
+
+	case DXGI_FORMAT_R10G10B10A2_UNORM:  return 4;  // 10/10/10/2비트 합쳐서 32비트
+
+	case DXGI_FORMAT_R32_UINT:           return 4;
+	case DXGI_FORMAT_R32_SINT:           return 4;
+	case DXGI_FORMAT_R32G32_UINT:        return 8;
+	case DXGI_FORMAT_R32G32_SINT:        return 8;
+	case DXGI_FORMAT_R32G32B32_UINT:     return 12;
+	case DXGI_FORMAT_R32G32B32_SINT:     return 12;
+	case DXGI_FORMAT_R32G32B32A32_UINT:  return 16;
+	case DXGI_FORMAT_R32G32B32A32_SINT:  return 16;
+
+	case DXGI_FORMAT_R16_UINT:           return 2;
+	case DXGI_FORMAT_R16_SINT:           return 2;
+	case DXGI_FORMAT_R16G16_UINT:        return 4;
+	case DXGI_FORMAT_R16G16_SINT:        return 4;
+	case DXGI_FORMAT_R16G16B16A16_UINT:  return 8;
+	case DXGI_FORMAT_R16G16B16A16_SINT:  return 8;
+
+	case DXGI_FORMAT_R8_UINT:            return 1;
+	case DXGI_FORMAT_R8_SINT:            return 1;
+	case DXGI_FORMAT_R8G8_UINT:          return 2;
+	case DXGI_FORMAT_R8G8_SINT:          return 2;
+	case DXGI_FORMAT_R8G8B8A8_UINT:      return 4;
+	case DXGI_FORMAT_R8G8B8A8_SINT:      return 4;
 	}
+	return -1;
 }
 
 struct InputElement
@@ -35,6 +72,13 @@ struct InputElement
 	int offset = 0;
 
 	InputElement(const std::string& type, const std::string& name) {
+		std::string resolvedType = type;
+		if (name.find("[4]") != std::string::npos) {
+			if (type == "float") resolvedType = "float4";
+			else if (type == "uint") resolvedType = "uint4";
+		}
+
+
 		semanticName = name;
 		if (semanticName == "POSITION") {
 			format = DXGI_FORMAT_R32G32B32_FLOAT;
