@@ -175,9 +175,6 @@ void EngineFSkeleton::BoneSort(std::vector<FBuffer>& vertices)
 				memcpy(vert.BoneWeights, boneWeights, sizeof(boneWeights));
 			}
 		}
-
-
-		//for(controlPointIndex)
 	}
 }
 

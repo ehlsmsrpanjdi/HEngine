@@ -15,11 +15,12 @@ void MainPlayer::BeginPlay()
 {
 	Actor::BeginPlay();
 	SetHlsl("default");
-	SetScene("hiphop");
+	SetScene("Ball");
 	SetActorScale(0.1f, 0.1f, 0.1f);
 
-	ActorScene->AnimSkeleton->SetAnimationTemp();
-	ActorScene->AnimSkeleton->EvaluateAnimation(0.f, outBoneMatrices);
+	/*ActorScene->AnimSkeleton->SetAnimationTemp();
+	IsAnimation = true;
+	ActorScene->AnimSkeleton->EvaluateAnimation(0.f, outBoneMatrices);*/
 	GraphicsEngine::get()->CreateConstantBuffer1("MainPlayer", outBoneMatrices.size());
 }
 

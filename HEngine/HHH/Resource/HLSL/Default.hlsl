@@ -2,6 +2,8 @@ struct VS_INPUT
 {
     float4 position : POSITION;
     float2 Textcoord : TEXCOORD;
+    uint boneIndices[4] : BONEINDICES;
+    float boneWeights[4] : BONEWEIGHTS;
 };
 
 struct VS_OUTPUT
@@ -39,8 +41,6 @@ VS_OUTPUT vsmain(VS_INPUT input)
 
 float4 psmain(PS_INPUT input) : SV_Target
 {
-    float factor = boneMatrices[0]._11;
-    return float4(factor, 0, 0, 1);
-    //float4 color = texture0.Sample(sampler0, input.Textcoord);
-    //return color;
+    float4 color = texture0.Sample(sampler0, input.Textcoord);
+    return color;
 }
