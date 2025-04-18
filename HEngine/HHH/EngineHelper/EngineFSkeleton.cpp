@@ -132,6 +132,8 @@ void EngineFSkeleton::BoneWeight(FbxMesh* pMesh)
 				//controlpointindex 번호를 갖고있는 버텍스 버퍼가 n번째 본에게 m만큼의 영향을 받음
 
 				//버텍스버퍼 3번은 0번 5번 9번 본에 이정도 영향을 받는다고 저장한것
+
+				//하이
 			}
 		}
 	}
