@@ -42,16 +42,16 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::
 		if (CurrentAnimatoinTime <= keyframes.front().time)
 		{
 			const auto& kf = keyframes.front();
-			auto pos = DirectX::XMLoadFloat3(&kf.position);
-			auto rot = DirectX::XMLoadFloat4(&kf.rotation);
+			DirectX::XMVECTOR pos = DirectX::XMLoadFloat3(&kf.position);
+			DirectX::XMVECTOR rot = DirectX::XMLoadFloat4(&kf.rotation);
 			outBoneMatrices[boneIndex] = DirectX::XMMatrixRotationQuaternion(rot) * DirectX::XMMatrixTranslationFromVector(pos);
 			continue;
 		}
 		else if (CurrentAnimatoinTime >= keyframes.back().time)
 		{
 			const auto& kf = keyframes.back();
-			auto pos = DirectX::XMLoadFloat3(&kf.position);
-			auto rot = DirectX::XMLoadFloat4(&kf.rotation);
+			DirectX::XMVECTOR pos = DirectX::XMLoadFloat3(&kf.position);
+			DirectX::XMVECTOR rot = DirectX::XMLoadFloat4(&kf.rotation);
 			outBoneMatrices[boneIndex] = DirectX::XMMatrixRotationQuaternion(rot) * DirectX::XMMatrixTranslationFromVector(pos);
 			continue;
 		}
@@ -79,17 +79,17 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::
 			}
 		}
 	}
-
+	//outBoneMatrices[0] *= EngineFbxMath::ConvertFbxMatrixToXM(Bones[0].inverseGlobalBindPose);
 	// 본의 부모 자식 관계 반영해서 로컬 → 월드로 누적 변환
 	for (size_t i = 0; i < boneCount; ++i)
 	{
+		outBoneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose) * outBoneMatrices[i];
 		//outBoneMatrices[i] = outBoneMatrices[i]; // bind 역행렬
-		int ParentIndex = Bones[i].parentIndex;
+		/*int ParentIndex = Bones[i].parentIndex;
 		if (ParentIndex >= 0)
 		{
 			outBoneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose) * outBoneMatrices[i];
-			/*outBoneMatrices[i] = outBoneMatrices[ParentIndex] * outBoneMatrices[i] * EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose);*/
-		}
+		}*/
 	}
 
 	//for (size_t i = 2; i < boneCount; ++i)

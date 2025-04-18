@@ -39,7 +39,6 @@ public:
 
 	void init(FbxNode* _Node);
 	void FindBones(FbxNode* _Node);
-	void MakeBones();
 	void BoneWeight(FbxMesh* pMesh);
 	void BoneSort(std::vector<struct FBuffer>& vertices);
 

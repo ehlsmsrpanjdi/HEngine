@@ -121,7 +121,13 @@ void EngineFSkeleton::BoneWeight(FbxMesh* pMesh)
 			{
 				int controlPointIndex = indices[i];
 				double weight = weights[i];
+				if (controlPointSkinData[controlPointIndex].weights.size() != 0) {
+					std::vector<std::pair<int, double>> vec = controlPointSkinData[controlPointIndex].weights;
+					if (weight != 1) {
+					int a = 0;
 
+					}
+				}
 				controlPointSkinData[controlPointIndex].weights.push_back({ boneIndex, weight });
 				//controlpointindex 번호를 갖고있는 버텍스 버퍼가 n번째 본에게 m만큼의 영향을 받음
 

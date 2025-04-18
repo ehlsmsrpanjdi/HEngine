@@ -48,9 +48,6 @@
     <ClInclude Include="EnginePath.h">
       <Filter>EngineFile</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3D.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="EngineTransform.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -92,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="EngineFile.cpp">
       <Filter>EngineFile</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3D.cpp">
-      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="EngineTransform.cpp">
       <Filter>Math</Filter>

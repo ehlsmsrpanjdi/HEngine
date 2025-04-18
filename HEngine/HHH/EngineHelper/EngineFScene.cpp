@@ -46,7 +46,9 @@ void EngineFScene::ProcessNode(FbxNode* _pNode)
 {
 
 	FbxMesh* pMesh = _pNode->GetMesh();
+
 	if (pMesh) {
+	std::string meshname = pMesh->GetName();
 		std::shared_ptr<EngineFMesh> Mesh = std::make_shared<EngineFMesh>();
 		Mesh->init(_pNode);
 		if (Skeleton != nullptr) {
