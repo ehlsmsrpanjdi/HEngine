@@ -191,6 +191,8 @@ void GraphicsEngine::CreateAllCBuffer()
 
 void GraphicsEngine::CreateConstantBuffer(std::string_view  _str)
 {
+
+
 	std::string str = HString::Upper(_str.data());
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DYNAMIC;
@@ -200,6 +202,20 @@ void GraphicsEngine::CreateConstantBuffer(std::string_view  _str)
 	buff_desc.MiscFlags = 0;
 	buff_desc.StructureByteStride = 0;
 	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, nullptr, &ConstantBufferMap[str]);
+	if (hr != S_OK)
+	{
+		assert(false);
+	}
+
+	str = HString::Upper("tempmatrix");
+	buff_desc = {};
+	buff_desc.Usage = D3D11_USAGE_DYNAMIC;
+	buff_desc.ByteWidth = sizeof(DirectX::XMMATRIX);
+	buff_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	buff_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	buff_desc.MiscFlags = 0;
+	buff_desc.StructureByteStride = 0;
+	hr = m_Device->Get()->CreateBuffer(&buff_desc, nullptr, &ConstantBufferMap[str]);
 	if (hr != S_OK)
 	{
 		assert(false);
@@ -279,14 +295,19 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &_Mesh->BufferSize, &offset);
 	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 	m_Context->Get()->IASetInputLayout(_Hlsl->Layout);
 	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
 	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
 	m_Context->Get()->VSSetConstantBuffers(1, 1, &ConstantBufferMap[HString::Upper("MainPlayer")]);
-	m_Context->Get()->PSSetConstantBuffers(1, 1, &ConstantBufferMap[HString::Upper("MainPlayer")]);
+	m_Context->Get()->VSSetConstantBuffers(2, 1, &ConstantBufferMap[HString::Upper("tempmatrix")]);
 
 	std::string str = _Mesh->TextureName;
+	if (TextureMap->contains(str) == false) {
+		_Mesh->TextureName = "DEFAULT";
+		str = "DEFAULT";
+	}
 	ID3D11ShaderResourceView* tex = (*TextureMap)[str]->textureSRV;
 	 TextureMap->find(str)->second->textureSRV;
 	m_Context->Get()->PSSetShaderResources(0, 1, &tex);

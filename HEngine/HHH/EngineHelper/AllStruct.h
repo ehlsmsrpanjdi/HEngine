@@ -32,6 +32,8 @@ struct MH {
 
 	std::string TextureName;
 
+	DirectX::XMMATRIX tempmatrix;
+
 	~MH() {
 		if (Index != nullptr) {
 		Index->Release();

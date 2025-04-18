@@ -8,12 +8,13 @@
 #include "EngineAnimatinSkeleton.h"
 #include "EngineHelper/EngineAnimation.h"
 #include "EngineHelper/EngineFSkeleton.h"
+#include "EngineHelper/EngineFbxMath.h"
 
-EngineScene::EngineScene() 
+EngineScene::EngineScene()
 {
 }
 
-EngineScene::~EngineScene() 
+EngineScene::~EngineScene()
 {
 	AllScene.clear();
 }
@@ -36,21 +37,28 @@ void EngineScene::CreateScene(std::vector<std::shared_ptr<EngineFScene>>& _Scene
 			Mesh->Index = CreateIndexBuffer(arraysize, Size, (UINT*)meshinfo.second->GetIndices().data(), _Device);
 
 			Mesh->TextureName = meshinfo.second->GetTextureName();
-
+			Mesh->tempmatrix = EngineFbxMath::ConvertFbxMatrixToXM(meshinfo.second->tempmatrix);
 			fscene->Meshs[meshinfo.first] = Mesh;
 		}
-		std::shared_ptr<EngineAnimatinSkeleton> Skeletonanimation = std::make_shared<EngineAnimatinSkeleton>();
-		Skeletonanimation->Bones = scene->Skeleton->GetBone();
+		if (scene->Skeleton != nullptr) {
+			std::shared_ptr<EngineAnimatinSkeleton> Skeletonanimation = std::make_shared<EngineAnimatinSkeleton>();
+			Skeletonanimation->Bones = scene->Skeleton->GetBone();
 
-		for (std::pair<const std::string, std::shared_ptr<EngineAnimation>>& pa  : scene->AnimMap) {
-			Skeletonanimation->keyframesPerBoneMap[pa.first];
-			Skeletonanimation->AnimationTime[pa.first] = std::make_pair(pa.second->StartTime, pa.second->EndTime);
-			for (std::pair<const int, std::vector<KeyFrame>>& ppa : pa.second->keyframesPerBoneIndex) {
-				Skeletonanimation->keyframesPerBoneMap[pa.first].push_back(ppa.second);
+			for (std::pair<const std::string, std::shared_ptr<EngineAnimation>>& pa : scene->AnimMap) {
+
+				if (Skeletonanimation->keyframesPerBoneMap.find(pa.first) == Skeletonanimation->keyframesPerBoneMap.end()) {
+					Skeletonanimation->keyframesPerBoneMap[pa.first] = std::vector<std::vector<KeyFrame>>();
+				}
+
+				Skeletonanimation->AnimationTime[pa.first] = std::make_pair(pa.second->StartTime, pa.second->EndTime);
+
+				for (std::pair<const int, std::vector<KeyFrame>>& ppa : pa.second->keyframesPerBoneIndex) {
+					Skeletonanimation->keyframesPerBoneMap[pa.first].push_back(ppa.second);
+				}
 			}
-		}
 
-		fscene->AnimSkeleton = Skeletonanimation;
+			fscene->AnimSkeleton = Skeletonanimation;
+		}
 		AllScene[scene->SceneName] = fscene;
 	}
 

@@ -83,12 +83,19 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::
 	// 본의 부모 자식 관계 반영해서 로컬 → 월드로 누적 변환
 	for (size_t i = 0; i < boneCount; ++i)
 	{
+		//outBoneMatrices[i] = outBoneMatrices[i]; // bind 역행렬
 		int ParentIndex = Bones[i].parentIndex;
 		if (ParentIndex >= 0)
 		{
-			outBoneMatrices[i] = outBoneMatrices[i] * outBoneMatrices[ParentIndex];
+			outBoneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose) * outBoneMatrices[i];
+			/*outBoneMatrices[i] = outBoneMatrices[ParentIndex] * outBoneMatrices[i] * EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose);*/
 		}
 	}
+
+	//for (size_t i = 2; i < boneCount; ++i)
+	//{
+	//	outBoneMatrices[i] = DirectX::XMMatrixIdentity();
+	//}
 }
 
 void EngineAnimatinSkeleton::SetAnimation(std::string_view _str)
@@ -104,4 +111,8 @@ void EngineAnimatinSkeleton::SetAnimationTemp()
 	SeletedFrame = &keyframesPerBoneMap["mixamo.com"];
 	SelectStartTime = AnimationTime["mixamo.com"].first;
 	SelectEndTime = AnimationTime["mixamo.com"].second;
+
+	//SeletedFrame = &keyframesPerBoneMap["Take 001"];
+	//SelectStartTime = AnimationTime["Take 001"].first;
+	//SelectEndTime = AnimationTime["Take 001"].second;
 }

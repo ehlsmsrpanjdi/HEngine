@@ -38,6 +38,7 @@ public:
 		return TextureName;
 	}
 
+	FbxAMatrix tempmatrix = FbxAMatrix();
 protected:
 
 
@@ -50,6 +51,5 @@ private:
 
 	std::string TextureName;
 
-	FbxAMatrix tempmatrix = FbxAMatrix();
 };
 
