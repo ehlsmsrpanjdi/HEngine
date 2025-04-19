@@ -101,6 +101,9 @@ void EngineFSkeleton::FindBones(FbxNode* _Node)
 
 void EngineFSkeleton::BoneWeight(FbxMesh* pMesh)
 {
+	std::string str = pMesh->GetName();
+	AllcontrolPointSkinData[str];
+	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
 	int skinCount = pMesh->GetDeformerCount(FbxDeformer::eSkin);
 	for (int skinIndex = 0; skinIndex < skinCount; ++skinIndex)		//피부 정보를 가져오고 (보통 1개)
 	{
@@ -124,7 +127,7 @@ void EngineFSkeleton::BoneWeight(FbxMesh* pMesh)
 				if (controlPointSkinData[controlPointIndex].weights.size() != 0) {
 					std::vector<std::pair<int, double>> vec = controlPointSkinData[controlPointIndex].weights;
 					if (weight != 1) {
-					int a = 0;
+						int a = 0;
 
 					}
 				}
@@ -137,47 +140,49 @@ void EngineFSkeleton::BoneWeight(FbxMesh* pMesh)
 			}
 		}
 	}
+	AllcontrolPointSkinData[str] = std::move(controlPointSkinData);
 }
 
 
 void EngineFSkeleton::BoneSort(std::vector<FBuffer>& vertices)
 {
-
-	for (auto& it : controlPointSkinData)
-	{
-		int controlPointIndex = it.first;
-		auto& weightList = it.second.weights;
-
-		std::sort(weightList.begin(), weightList.end(),
-			[](const std::pair<int, double>& a, const std::pair<int, double>& b)
-			{
-				return a.second > b.second;
-			});
-
-		int boneIndices[4] = { 0 };
-		float boneWeights[4] = { 0.0f };
-		float totalWeight = 0.0f;
-
-		for (int i = 0; i < 4 && i < weightList.size(); ++i)
+	for (auto& [name, element] : AllcontrolPointSkinData) {
+		for (auto& it : element)
 		{
-			boneIndices[i] = weightList[i].first;
-			boneWeights[i] = static_cast<float>(weightList[i].second);
-			totalWeight += boneWeights[i];
-		}
+			int controlPointIndex = it.first;
+			auto& weightList = it.second.weights;
 
-		// 정규화
-		if (totalWeight > 0.0f)
-		{
+			std::sort(weightList.begin(), weightList.end(),
+				[](const std::pair<int, double>& a, const std::pair<int, double>& b)
+				{
+					return a.second > b.second;
+				});
+
+			int boneIndices[4] = { 0 };
+			float boneWeights[4] = { 0.0f };
+			float totalWeight = 0.0f;
+
 			for (int i = 0; i < 4 && i < weightList.size(); ++i)
 			{
-				boneWeights[i] /= totalWeight;
+				boneIndices[i] = weightList[i].first;
+				boneWeights[i] = static_cast<float>(weightList[i].second);
+				totalWeight += boneWeights[i];
 			}
-		}
 
-		for (FBuffer& vert : vertices) {
-			if (vert.controlpointindex == controlPointIndex) {
-				memcpy(vert.BoneIndices, boneIndices, sizeof(boneIndices));
-				memcpy(vert.BoneWeights, boneWeights, sizeof(boneWeights));
+			// 정규화
+			if (totalWeight > 0.0f)
+			{
+				for (int i = 0; i < 4 && i < weightList.size(); ++i)
+				{
+					boneWeights[i] /= totalWeight;
+				}
+			}
+
+			for (FBuffer& vert : vertices) {
+				if (vert.controlpointindex == controlPointIndex) {
+					memcpy(vert.BoneIndices, boneIndices, sizeof(boneIndices));
+					memcpy(vert.BoneWeights, boneWeights, sizeof(boneWeights));
+				}
 			}
 		}
 	}

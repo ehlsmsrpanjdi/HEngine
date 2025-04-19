@@ -54,7 +54,8 @@ private:
 	std::unordered_map<std::string, int> boneNameToIndex;
 	std::unordered_map<int, Bone> IndexToBone;
 	std::unordered_map<FbxNode*, int> boneNodeToIndex;
-	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
+	std::unordered_map<std::string, std::unordered_map<int, struct SkinWeight>> AllcontrolPointSkinData;
+
 
 	int boneIndexCounter = 0;
 	int rootIndex = 0;
