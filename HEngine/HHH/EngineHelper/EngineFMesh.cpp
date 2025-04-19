@@ -39,7 +39,7 @@ const std::vector<UINT>& EngineFMesh::GetIndices(){
 
 void EngineFMesh::init(FbxNode* pNode)
 {
-	tempmatrix = pNode->EvaluateGlobalTransform();
+	MeshMatrix = pNode->EvaluateGlobalTransform();
 	FbxMesh* pMesh = pNode->GetMesh();
 	if (pMesh == nullptr) {
 		assert(false);
@@ -107,4 +107,10 @@ void EngineFMesh::init(FbxNode* pNode)
 		assert(false);
 	}
 
+}
+
+void EngineFMesh::BoneValueDelete() {
+	for (FBuffer& Buf : vertices) {
+		Buf.BoneIndices[0] = -1;
+	}
 }

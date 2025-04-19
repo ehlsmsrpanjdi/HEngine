@@ -31,9 +31,9 @@ cbuffer BoneMatrixBuffer : register(b1)
     matrix boneMatrices[100]; // 최대 본 수에 맞게 설정
 }
 
-cbuffer tempmatrix : register(b2)
+cbuffer MeshMatrix : register(b2)
 {
-    float4x4 globalmatrix; // 메쉬들 부모위치 적용행렬
+    float4x4 MeshGlobalMatrix; // 메쉬들 부모위치 적용행렬
 }
 
 VS_OUTPUT vsmain(VS_INPUT input)
@@ -48,7 +48,14 @@ VS_OUTPUT vsmain(VS_INPUT input)
     {
         uint boneIndex = input.boneIndices[i];
         float weight = input.boneWeights[i];
-
+        if (boneIndex == -1)
+        {
+            input.position = mul(MeshGlobalMatrix, input.position);
+    
+            output.position = mul(g_mWorldViewProjection, input.position);
+            output.Textcoord = input.Textcoord;
+            return output;
+        }
         // 유효한 가중치만 반영
         if (weight > 0.0001f)
         {
@@ -57,7 +64,7 @@ VS_OUTPUT vsmain(VS_INPUT input)
         }
     }
 
-    // 최종 위치에 WVP 행렬 적용
+  
     output.position = mul(g_mWorldViewProjection, skinnedPos);
     output.Textcoord = input.Textcoord;
     return output;

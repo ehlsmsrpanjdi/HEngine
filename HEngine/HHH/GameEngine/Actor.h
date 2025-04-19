@@ -19,7 +19,7 @@ public:
 
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
-	void Render();
+	void Render(float _DeltaTime);
 
 	void AddActorLocation(float _x, float _y = 0, float _z = 0);
 	void AddActorScale(float _x, float _y = 0, float _z = 0);

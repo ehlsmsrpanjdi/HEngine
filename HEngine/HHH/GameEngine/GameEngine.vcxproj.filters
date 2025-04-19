@@ -10,6 +10,9 @@
     <Filter Include="Client">
       <UniqueIdentifier>{ffe154eb-3104-4ba9-855e-4f12bed3f2bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client\Object">
+      <UniqueIdentifier>{0bf2255e-2afa-47c3-9941-2014eef4c390}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -22,6 +25,9 @@
     <ClInclude Include="MainPlayer.h">
       <Filter>Client</Filter>
     </ClInclude>
+    <ClInclude Include="WoodenBox.h">
+      <Filter>Client\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -33,6 +39,9 @@
     <ClCompile Include="EngineAnimator.cpp" />
     <ClCompile Include="MainPlayer.cpp">
       <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenBox.cpp">
+      <Filter>Client\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -32,7 +32,7 @@ struct MH {
 
 	std::string TextureName;
 
-	DirectX::XMMATRIX tempmatrix;
+	DirectX::XMMATRIX MeshMatrix;
 
 	~MH() {
 		if (Index != nullptr) {

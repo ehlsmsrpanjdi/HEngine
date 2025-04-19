@@ -105,14 +105,3 @@ void EngineAnimatinSkeleton::SetAnimation(std::string_view _str)
 	SelectStartTime = AnimationTime[str].first;
 	SelectEndTime = AnimationTime[str].second;
 }
-
-void EngineAnimatinSkeleton::SetAnimationTemp()
-{
-	SeletedFrame = &keyframesPerBoneMap["mixamo.com"];
-	SelectStartTime = AnimationTime["mixamo.com"].first;
-	SelectEndTime = AnimationTime["mixamo.com"].second;
-
-	//SeletedFrame = &keyframesPerBoneMap["Take 001"];
-	//SelectStartTime = AnimationTime["Take 001"].first;
-	//SelectEndTime = AnimationTime["Take 001"].second;
-}

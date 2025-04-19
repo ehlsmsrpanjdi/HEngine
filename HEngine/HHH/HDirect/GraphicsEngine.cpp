@@ -15,10 +15,9 @@
 #include "EngineHlsl.h"
 #include "EngineTexture.h"
 #include "EngineHelper/EngineFScene.h"
+#include "EngineHelper/EngineNamespace.h"
 
-namespace Cbuffer {
-	std::string WVP = "WVPMatrix";
-}
+
 
 #pragma region "Init"
 
@@ -69,7 +68,9 @@ bool GraphicsEngine::release()
 	TextureMap = nullptr;
 
 	for (std::pair<const std::string, ID3D11Buffer*>& pair : ConstantBufferMap) {
-		pair.second->Release();
+		if (pair.second != nullptr) {
+			pair.second->Release();
+		}
 	}
 	ConstantBufferMap.clear();
 
@@ -172,7 +173,7 @@ void GraphicsEngine::CreateHlsl(std::shared_ptr<EngineFile> _fileManager)
 	EngineHlsl::Get().CreateHlsl(m_Device, _fileManager);
 }
 
-void GraphicsEngine::CreateScene(std::vector<std::shared_ptr<EngineFScene>> _Scenes)
+void GraphicsEngine::CreateScene(std::vector<std::shared_ptr<EngineFScene>>& _Scenes)
 {
 	EngineScene::Get().CreateScene(_Scenes, m_Device);
 }
@@ -186,14 +187,14 @@ void GraphicsEngine::CreateTexture(std::shared_ptr<class EngineFile> _fileManage
 
 void GraphicsEngine::CreateAllCBuffer()
 {
-	CreateConstantBuffer(Cbuffer::WVP);
+	CreateWVPBuffer();
+	CreateMeshBuffer();
+	CreateAnimationBuffer();
 }
 
-void GraphicsEngine::CreateConstantBuffer(std::string_view  _str)
+void GraphicsEngine::CreateWVPBuffer()
 {
-
-
-	std::string str = HString::Upper(_str.data());
+	std::string str = Cbuffer::WVP;
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DYNAMIC;
 	buff_desc.ByteWidth = sizeof(DirectX::XMMATRIX);
@@ -206,29 +207,33 @@ void GraphicsEngine::CreateConstantBuffer(std::string_view  _str)
 	{
 		assert(false);
 	}
-
-	str = HString::Upper("tempmatrix");
-	buff_desc = {};
-	buff_desc.Usage = D3D11_USAGE_DYNAMIC;
-	buff_desc.ByteWidth = sizeof(DirectX::XMMATRIX);
-	buff_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	buff_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	buff_desc.MiscFlags = 0;
-	buff_desc.StructureByteStride = 0;
-	hr = m_Device->Get()->CreateBuffer(&buff_desc, nullptr, &ConstantBufferMap[str]);
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
 }
 
-void GraphicsEngine::CreateConstantBuffer1(std::string_view _str, size_t boneCount)
+void GraphicsEngine::CreateMeshBuffer()
 {
-	std::string upperName = HString::Upper(_str.data());
+	std::string upperName = Cbuffer::MESH;
 
 	D3D11_BUFFER_DESC desc = {};
 	desc.Usage = D3D11_USAGE_DYNAMIC;
-	desc.ByteWidth = static_cast<UINT>(sizeof(DirectX::XMMATRIX) * boneCount);
+	desc.ByteWidth = sizeof(DirectX::XMMATRIX);
+	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	desc.MiscFlags = 0;
+
+	HRESULT hr = m_Device->Get()->CreateBuffer(&desc, nullptr, &ConstantBufferMap[upperName]);
+	if (FAILED(hr))
+	{
+		assert(false && "CreateBoneMatrixBuffer Failed");
+	}
+}
+
+void GraphicsEngine::CreateAnimationBuffer()
+{
+	std::string upperName = Cbuffer::ANI;
+
+	D3D11_BUFFER_DESC desc = {};
+	desc.Usage = D3D11_USAGE_DYNAMIC;
+	desc.ByteWidth = static_cast<UINT>(sizeof(DirectX::XMMATRIX) * 100);
 	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	desc.MiscFlags = 0;
@@ -256,8 +261,6 @@ void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_v
 	{
 		assert(false);
 	}
-
-
 	// 매핑된 메모리 공간에 WorldViewProj 행렬 데이터를 씁니다.
 	memcpy(mappedResource.pData, &_Matrix, sizeof(DirectX::XMMATRIX));
 
@@ -273,7 +276,6 @@ void GraphicsEngine::UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& 
 		return;
 	}
 
-	// 버퍼 크기 검사 (선택사항)
 	size_t bufferSize = sizeof(DirectX::XMMATRIX) * matrices.size();
 
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -289,19 +291,17 @@ void GraphicsEngine::UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& 
 
 void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 {
-	//D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
 	UINT offset = 0;
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
 	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &_Mesh->BufferSize, &offset);
 	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
 	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 	m_Context->Get()->IASetInputLayout(_Hlsl->Layout);
 	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
-	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[HString::Upper(Cbuffer::WVP)]);
-	m_Context->Get()->VSSetConstantBuffers(1, 1, &ConstantBufferMap[HString::Upper("MainPlayer")]);
-	m_Context->Get()->VSSetConstantBuffers(2, 1, &ConstantBufferMap[HString::Upper("tempmatrix")]);
+	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[Cbuffer::WVP]);
+	m_Context->Get()->VSSetConstantBuffers(1, 1, &ConstantBufferMap[Cbuffer::ANI]);
+	m_Context->Get()->VSSetConstantBuffers(2, 1, &ConstantBufferMap[Cbuffer::MESH]);
 
 	std::string str = _Mesh->TextureName;
 	if (TextureMap->contains(str) == false) {
@@ -309,7 +309,7 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 		str = "DEFAULT";
 	}
 	ID3D11ShaderResourceView* tex = (*TextureMap)[str]->textureSRV;
-	 TextureMap->find(str)->second->textureSRV;
+	TextureMap->find(str)->second->textureSRV;
 	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
 	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);

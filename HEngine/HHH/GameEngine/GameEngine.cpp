@@ -4,6 +4,10 @@
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/EngineDebug.h"	
 #include "EngineHelper/EngineKey.h"
+#include "EngineHelper/EngineNamespace.h"
+
+
+#include "WoodenBox.h"
 #include "MainPlayer.h"
 
 GameEngine::GameEngine()
@@ -37,6 +41,7 @@ void GameEngine::Init(RECT _rc)
 	SetMainCamera("temp");
 
 	SpawnActor<MainPlayer>();
+	SpawnActor<WoodenBox>();
 }
 
 void GameEngine::release()
@@ -74,18 +79,18 @@ void GameEngine::Update(float _DeltaTime)
 		Act->Tick(_DeltaTime);
 	}
 
-	Render();
+	Render(_DeltaTime);
 }
 
-void GameEngine::Render()
+void GameEngine::Render(float _DeltaTime)
 {
 	GraphicsEngine::get()->Clear(1.0f, 0.5, 0.5, 1.0f);
 	EngineTransform trans;
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		WorldMatrix = Act->GetTransform().GetWorldMatrix();
 		WVP = WorldMatrix * ViewMatrix * PerseMatrix;
-		GraphicsEngine::get()->UpdateConstantBuffer(WVP, "WVPMatrix");
-		Act->Render();
+		GraphicsEngine::get()->UpdateConstantBuffer(WVP, Cbuffer::WVP);
+		Act->Render(_DeltaTime);
 	}
 	GraphicsEngine::get()->Present(true);
 }
