@@ -31,6 +31,17 @@ void Actor::Tick(float _DeltaTime)
 void Actor::Render()
 {
 	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
+
+		if (IsAnimation == false) {
+			for (size_t i = 0; i < outBoneMatrices.size(); ++i)
+			{
+				outBoneMatrices[i] = DirectX::XMMatrixIdentity();
+			}
+			GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->tempmatrix, "tempmatrix");
+		}
+		else {
+		}
+			GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), "tempmatrix");
 		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
 	}
 }

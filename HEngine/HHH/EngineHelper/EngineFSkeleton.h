@@ -36,19 +36,15 @@ public:
 	EngineFSkeleton& operator=(EngineFSkeleton&& _Other) noexcept = delete;
 
 
-	std::vector<DirectX::XMMATRIX> EvaluateSkeleton(std::vector<DirectX::XMMATRIX> _AnimValue);
-
 
 	void init(FbxNode* _Node);
 	void FindBones(FbxNode* _Node);
-	void MakeBones();
 	void BoneWeight(FbxMesh* pMesh);
 	void BoneSort(std::vector<struct FBuffer>& vertices);
 
 	std::vector<Bone> GetBone();
 
 	bool NoneSkel = false;
-
 protected:
 
 private:
@@ -56,8 +52,11 @@ private:
 	std::vector<FbxNode*> rootBones;
 	std::vector<Bone> Bones;
 	std::unordered_map<std::string, int> boneNameToIndex;
+	std::unordered_map<int, Bone> IndexToBone;
 	std::unordered_map<FbxNode*, int> boneNodeToIndex;
-	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
+	std::unordered_map<std::string, std::unordered_map<int, struct SkinWeight>> AllcontrolPointSkinData;
+
+
 	int boneIndexCounter = 0;
 	int rootIndex = 0;
 
