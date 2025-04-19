@@ -11,6 +11,9 @@ std::vector<AnimMetaData> FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Sc
 
 
 	FbxAnimStack* currAnimStack = _Scene->GetSrcObject<FbxAnimStack>(1);
+	if (currAnimStack == nullptr) {
+		return anims;
+	}
 	if (currAnimStack != nullptr) {
 		FbxString animStackName = currAnimStack->GetName();
 	}
@@ -30,19 +33,19 @@ std::vector<AnimMetaData> FBXTool::LoadAnim(FbxImporter* Importer, FbxScene* _Sc
 	}
 	int animCount = Importer->GetAnimStackCount();
 	for (int i = 0; i < animCount; ++i) {
-	FbxTakeInfo* animationInfo = Importer->GetTakeInfo(1);
-	std::string animationName = animationInfo->mName.Buffer();
+		FbxTakeInfo* animationInfo = Importer->GetTakeInfo(1);
+		std::string animationName = animationInfo->mName.Buffer();
 
-	FbxTimeSpan span = animationInfo->mLocalTimeSpan;
+		FbxTimeSpan span = animationInfo->mLocalTimeSpan;
 
-	double startTime = span.GetStart().GetSecondDouble();
-	double endTime = span.GetSignedDuration().GetSecondDouble();
+		double startTime = span.GetStart().GetSecondDouble();
+		double endTime = span.GetSignedDuration().GetSecondDouble();
 
-	if (startTime < endTime) {
-		int keyFrames = static_cast<int>((endTime - startTime) * static_cast<double>(frameRate));
-	}
+		if (startTime < endTime) {
+			int keyFrames = static_cast<int>((endTime - startTime) * static_cast<double>(frameRate));
+		}
 
-	anims.emplace_back(animationName, startTime, endTime);
+		anims.emplace_back(animationName, startTime, endTime);
 
 	}
 	for (int i = 0; i < animationArray.Size(); ++i) {
@@ -122,13 +125,18 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 	FbxScene* lScene = FbxScene::Create(lSdkManager, "myScene");
 	lImporter->Import(lScene);
 
-	//FbxGeometryConverter Converter(lSdkManager);
-	//bool check = Converter.Triangulate(lScene, true);
-	//if (check == false) {
-	//	assert(false);
-	//}
-
 	std::shared_ptr<EngineFScene> EScene = std::make_shared<EngineFScene>();
+
+	if (_Name.find('_') != std::string::npos) {
+		EScene->SceneType = type::Anim;
+		ProcessAnimScene(EScene, _Name, lImporter, lScene	);
+	}
+	else {
+		EScene->SceneType = type::Mesh;
+		ProcessMeshScene(EScene, _Name, lScene);
+	}
+
+
 	EScene->AnimData = LoadAnim(lImporter, lScene);
 	EScene->init(lScene, _Name);
 	EngineScenes.push_back(EScene);
@@ -140,6 +148,29 @@ void FBXTool::LoadFBX(const char* _filename, std::string_view _Name)
 std::vector<std::shared_ptr<class EngineFScene>>& FBXTool::GetScene()
 {
 	return EngineScenes;
+}
+
+void FBXTool::ProcessMeshScene(std::shared_ptr<class EngineFScene> EScene, std::string_view _Name, FbxScene* lScene)
+{
+	EScene->init(lScene, _Name);
+	EngineScenes.push_back(EScene);
+}
+
+void FBXTool::ProcessAnimScene(std::shared_ptr<class EngineFScene> EScene, std::string_view _Name, FbxImporter* Importer, FbxScene* lScene)
+{
+	int index = _Name.find('_');
+	std::string_view SceneName = _Name.substr(0, index);
+	std::string_view AnimName = _Name.substr(index + 1);
+
+	if (SceneMap.contains(SceneName.data()) != true) {
+		ProcessMeshScene(EScene, SceneName, lScene);
+	}
+
+	EScene->AnimData = LoadAnim(Importer, lScene);
+	if (EScene->AnimData.size() == 0) assert(false); // 애니메이션이 있는 scene만 여기 함수에 와야하는데 이게 0이면 안됨
+
+
+
 }
 
 

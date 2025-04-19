@@ -28,10 +28,12 @@ EngineFScene::~EngineFScene()
 
 void EngineFScene::init(FbxScene* _Scene, std::string_view _Name)
 {
-	Skeleton = std::make_shared<EngineFSkeleton>();
-	Skeleton->init(_Scene->GetRootNode());
-	if (Skeleton->NoneSkel == true) {
-		Skeleton = nullptr;
+	if (AnimData.size() != 0) {
+		Skeleton = std::make_shared<EngineFSkeleton>();
+		Skeleton->init(_Scene->GetRootNode());
+		if (Skeleton->NoneSkel == true) {
+			Skeleton = nullptr;
+		}
 	}
 
 	ProcessNode(_Scene->GetRootNode());
@@ -109,5 +111,27 @@ void EngineFScene::ProcessAnim(FbxScene* _Scene)
 		}
 		AnimMap[Ani->AnimationName] = Ani;
 	}
+}
+
+void EngineFScene::AnimInit(FbxScene* _Scene, std::string_view _Name)
+{
+	if (AnimData.size() != 0) {
+		Skeleton = std::make_shared<EngineFSkeleton>();
+		Skeleton->init(_Scene->GetRootNode());
+		if (Skeleton->NoneSkel == true) {
+			Skeleton = nullptr;
+		}
+	}
+
+	ProcessNode(_Scene->GetRootNode());
+
+	if (Skeleton != nullptr) {
+		ProcessAnim(_Scene);
+	}
+	SceneName = _Name;
+}
+
+void EngineFScene::MeshInit(FbxScene* _Scene, std::string_view _Name)
+{
 }
 
