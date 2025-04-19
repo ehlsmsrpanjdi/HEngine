@@ -8,7 +8,6 @@ EngineFMesh::EngineFMesh()
 
 EngineFMesh::~EngineFMesh()
 {
-	Skeleton = nullptr;
 }
 
 UINT EngineFMesh::GetSize()
@@ -65,12 +64,22 @@ void EngineFMesh::init(FbxNode* pNode)
 			}
 
 			for (int j = 0; j < polygonSize; ++j) {
-				int index = pMesh->GetPolygonVertex(i, j);
+				int index = pMesh->GetPolygonVertex(i, j); //이건 
+				/*
+				* n번째 폴리곤의 m번째 정점을 가리키는 컨트롤 포인트 인덱스를 반환하는데
+				* control points는 모델의 모든 고유한 위치 좌표들 (중복제거)
+				*  polygon vertex 어떤 컨트롤 포인트를 사용해서 폴리곤의 꼭짓점을 구성할지를 지정 한다고하는데
+				*  getpolygonvertex(n,m)은 이 폴리곤의 m번재 꼭지점은 control point의 몇 번을 사용하는가? 에 대한 뜻임
+				*/
+
+
 				FbxVector4 pos = pMesh->GetControlPointAt(index);
-				pos = tempmatrix.MultT(pos);			//여러개의 메쉬가 있을 때 위치 이동
+				//pos = tempmatrix.MultT(pos);			//여러개의 메쉬가 있을 때 위치 이동
 				buffer.position = DirectX::XMFLOAT3(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]));
 				buffer.controlpointindex = index;		//버텍스가 여러개지만, 인덱스상 같은 위치에 있을 수 있음 컨트롤 포인트 상 위치
 															// 컨트롤 포인트는 버텍스 버퍼가 아니라 실제 겹치는 점을 제외한 모든 점의 개수
+															// 이거 index를 저장하는 이유는 해당 버퍼가 몇 번째의 뼈와 연결되어있는지 알기 위해서
+															// 
 				//uvIndex는 PolygonVertex 기준으로 계산
 				int polygonVertexIndex = totalVertexCount + j;
 

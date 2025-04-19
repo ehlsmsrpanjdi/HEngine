@@ -4,6 +4,7 @@
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/AllStruct.h"
 #include "EngineHelper/HString.h"
+#include "HDirect/EngineAnimatinSkeleton.h"
 
 
 Actor::Actor()
@@ -13,25 +14,34 @@ Actor::Actor()
 Actor::~Actor()
 {
 	Hlsl = nullptr;
-	Meshs = nullptr;
-	Animator = nullptr;
+	ActorScene = nullptr;
 }
 
 void Actor::BeginPlay()
 {
-	if (Hlsl == nullptr) {
-		assert(false);
-	}
-
 }
 
 void Actor::Tick(float _DeltaTime)
 {
+	if (IsAnimation == true) {
+		ActorScene->AnimSkeleton->EvaluateAnimation(_DeltaTime, outBoneMatrices);
+	}
 }
 
 void Actor::Render()
 {
-	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : *Meshs) {
+	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
+
+		if (IsAnimation == false) {
+			for (size_t i = 0; i < outBoneMatrices.size(); ++i)
+			{
+				outBoneMatrices[i] = DirectX::XMMatrixIdentity();
+			}
+			GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->tempmatrix, "tempmatrix");
+		}
+		else {
+		}
+			GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), "tempmatrix");
 		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
 	}
 }
@@ -76,17 +86,27 @@ void Actor::Rotate(float _x, float _y, float _z)
 	ActorTransform.Rotate(_x, _y, _z);
 }
 
-void Actor::SetMesh(std::string_view _str)
+void Actor::SetScene(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	std::unordered_map<std::string, std::shared_ptr<MH>>& mesh = GraphicsEngine::get()->GetMesh(str);
-	Meshs = &mesh;
+	ActorScene = GraphicsEngine::get()->GetScene(str);
+	//Meshs = &mesh;
 }
 
 void Actor::SetHlsl(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
 	Hlsl = GraphicsEngine::get()->GetHlsl(str);
+}
+
+void Actor::SetAnimation(std::string_view _str)
+{
+	ActorScene->AnimSkeleton->SetAnimation(_str);
+}
+
+void Actor::SetAnimationTemp()
+{
+	ActorScene->AnimSkeleton->SetAnimationTemp();
 }
 
 EngineTransform Actor::GetTransform()

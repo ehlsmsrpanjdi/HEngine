@@ -74,6 +74,38 @@ void EngineHlsl::CreateHlsl(std::shared_ptr<GraphicDevice> _Device, std::string_
 	std::vector<InputElement> inputElements = ParseHLSLForInputLayout(_str.data());
 	std::vector<D3D11_INPUT_ELEMENT_DESC> layout = CreateInputLayoutFromHLSL(inputElements);
 
+	fs::path pa = _str.data();
+	std::string str = pa.stem().string();
+
+	if (HString::Upper(str) == "DEFAULT") {
+		D3D11_INPUT_ELEMENT_DESC temp[] =
+		{
+			{ "POSITION",     0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD",     0, DXGI_FORMAT_R32G32_FLOAT,       0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+			{ "BONEINDICES",  0, DXGI_FORMAT_R32_UINT,           0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BONEINDICES",  1, DXGI_FORMAT_R32_UINT,           0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BONEINDICES",  2, DXGI_FORMAT_R32_UINT,           0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BONEINDICES",  3, DXGI_FORMAT_R32_UINT,           0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+			{ "BONEWEIGHTS",  0, DXGI_FORMAT_R32_FLOAT,          0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BONEWEIGHTS",  1, DXGI_FORMAT_R32_FLOAT,          0, 40, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BONEWEIGHTS",  2, DXGI_FORMAT_R32_FLOAT,          0, 44, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BONEWEIGHTS",  3, DXGI_FORMAT_R32_FLOAT,          0, 48, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		size_t layoutsize = ARRAYSIZE(temp);
+
+		hr = _Device->Get()->CreateInputLayout(temp, layoutsize, VSBlob->GetBufferPointer(), (UINT)VSBlob->GetBufferSize(), &_Hlsl->Layout);
+		if (hr != S_OK)
+		{
+			assert(false);
+		}
+		PSBlob->Release();
+		VSBlob->Release();
+		return;
+
+	}
+
 	UINT size_layout = static_cast<UINT>(layout.size());
 	//HRESULT hr;
 	hr = _Device->Get()->CreateInputLayout(layout.data(), size_layout, VSBlob->GetBufferPointer(), (UINT)VSBlob->GetBufferSize(), &_Hlsl->Layout);

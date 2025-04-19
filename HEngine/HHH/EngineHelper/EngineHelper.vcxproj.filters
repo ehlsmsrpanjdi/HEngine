@@ -22,6 +22,18 @@
     <Filter Include="FBX">
       <UniqueIdentifier>{9f7863bd-c213-4489-bffd-be37de969ab3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FBX\EngineScene">
+      <UniqueIdentifier>{eb8faa68-5056-4492-ae61-f635355a3d3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBX\EngineScene\EngineMesh">
+      <UniqueIdentifier>{3f4ae9c6-227d-43ff-a7bb-eba0a21e2096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBX\EngineScene\EngineSkeleton">
+      <UniqueIdentifier>{675a0520-f83e-4087-a144-6d830496e30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBX\EngineScene\EngineAnimation">
+      <UniqueIdentifier>{b12b5187-b8ac-40cc-808e-5111c735cf38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineKey.h">
@@ -36,9 +48,6 @@
     <ClInclude Include="EnginePath.h">
       <Filter>EngineFile</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3D.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="EngineTransform.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -52,17 +61,20 @@
       <Filter>FBX</Filter>
     </ClInclude>
     <ClInclude Include="AllStruct.h" />
-    <ClInclude Include="EngineFScene.h">
-      <Filter>FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineFSkeleton.h">
-      <Filter>FBX</Filter>
+    <ClInclude Include="EngineAnimation.h">
+      <Filter>FBX\EngineScene\EngineAnimation</Filter>
     </ClInclude>
     <ClInclude Include="EngineFMesh.h">
-      <Filter>FBX</Filter>
+      <Filter>FBX\EngineScene\EngineMesh</Filter>
     </ClInclude>
-    <ClInclude Include="EngineAnimation.h">
-      <Filter>FBX</Filter>
+    <ClInclude Include="EngineFScene.h">
+      <Filter>FBX\EngineScene</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFSkeleton.h">
+      <Filter>FBX\EngineScene\EngineSkeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFbxMath.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +90,6 @@
     <ClCompile Include="EngineFile.cpp">
       <Filter>EngineFile</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3D.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="EngineTransform.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -94,17 +103,20 @@
       <Filter>FBX</Filter>
     </ClCompile>
     <ClCompile Include="AllStruct.cpp" />
-    <ClCompile Include="EngineFScene.cpp">
-      <Filter>FBX</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineFSkeleton.cpp">
-      <Filter>FBX</Filter>
+    <ClCompile Include="EngineAnimation.cpp">
+      <Filter>FBX\EngineScene\EngineAnimation</Filter>
     </ClCompile>
     <ClCompile Include="EngineFMesh.cpp">
-      <Filter>FBX</Filter>
+      <Filter>FBX\EngineScene\EngineMesh</Filter>
     </ClCompile>
-    <ClCompile Include="EngineAnimation.cpp">
-      <Filter>FBX</Filter>
+    <ClCompile Include="EngineFScene.cpp">
+      <Filter>FBX\EngineScene</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFSkeleton.cpp">
+      <Filter>FBX\EngineScene\EngineSkeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFbxMath.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

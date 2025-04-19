@@ -23,32 +23,6 @@ struct FBuffer {
 	int controlpointindex = -1;
 };
 
-//struct alignas(16) FBuffer
-//{
-//	DirectX::XMFLOAT3 position;     // 12 bytes
-//	float pad0 = 0.0f;              // 4 bytes - 정렬용
-//
-//	DirectX::XMFLOAT2 uv;          // 8 bytes
-//	float pad1[2] = { 0.0f, 0.0f }; // 8 bytes - 정렬용
-//
-//	int BoneIndices[4] = { 0, 0, 0, 0 };    // 16 bytes
-//	float BoneWeights[4] = { 0.f, 0.f, 0.f, 0.f }; // 16 bytes
-//
-//	int controlpointindex = -1;     // 4 bytes
-//	float pad2[3] = { 0.0f, 0.0f, 0.0f };  // 12 bytes - 정렬용
-//};
-
-struct FMesh {
-	std::vector<FBuffer> vertices; // vertex buffer
-	std::vector<UINT> indices;
-
-	std::string TextureName;
-
-	int GetSize() {
-		sizeof(vertices[0]) + sizeof(indices[0]);
-	}
-};
-
 struct MH {
 	ID3D11Buffer* Vertex = nullptr;
 	UINT BufferSize;
@@ -57,6 +31,8 @@ struct MH {
 	UINT IndexBufferSize;
 
 	std::string TextureName;
+
+	DirectX::XMMATRIX tempmatrix;
 
 	~MH() {
 		if (Index != nullptr) {

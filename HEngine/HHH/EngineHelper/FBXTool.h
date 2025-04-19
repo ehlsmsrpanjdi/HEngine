@@ -34,6 +34,9 @@ public:
 	
 	std::vector<std::shared_ptr<class EngineFScene>>& GetScene();
 
+	void ProcessMeshScene(std::shared_ptr<class EngineFScene> EScene, std::string_view _Name, FbxScene* lScene);
+	void ProcessAnimScene(std::shared_ptr<class EngineFScene> EScene, std::string_view _Name, FbxImporter* Importer, FbxScene* lScene);
+
 
 #pragma region "애니메이션"
 	std::vector<struct AnimMetaData> LoadAnim(FbxImporter* Importer, FbxScene* _Scene);
@@ -48,6 +51,7 @@ private:
 	std::vector<FbxScene*> AllScene;
 
 	std::vector<std::shared_ptr<class EngineFScene>> EngineScenes;
+	std::unordered_map<std::string, std::shared_ptr<class EngineFScene>> SceneMap;
 
 public:
 };

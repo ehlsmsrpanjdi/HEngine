@@ -38,6 +38,7 @@ public:
 		return TextureName;
 	}
 
+	FbxAMatrix tempmatrix = FbxAMatrix();
 protected:
 
 
@@ -50,8 +51,5 @@ private:
 
 	std::string TextureName;
 
-
-	std::shared_ptr<EngineFSkeleton> Skeleton = nullptr;
-	FbxAMatrix tempmatrix = FbxAMatrix();
 };
 

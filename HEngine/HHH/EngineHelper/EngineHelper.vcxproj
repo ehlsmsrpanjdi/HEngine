@@ -187,6 +187,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineFbxMath.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineFile.h" />
     <ClInclude Include="EngineKey.h" />
     <ClInclude Include="EngineFMesh.h">
@@ -209,7 +213,6 @@
     </ClInclude>
     <ClInclude Include="HString.h" />
     <ClInclude Include="EngineTransform.h" />
-    <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllStruct.cpp">
@@ -221,6 +224,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineDebug.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineFbxMath.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -246,7 +253,6 @@
     </ClCompile>
     <ClCompile Include="HString.cpp" />
     <ClCompile Include="EngineTransform.cpp" />
-    <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

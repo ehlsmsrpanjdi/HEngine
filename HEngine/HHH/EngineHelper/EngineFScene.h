@@ -8,9 +8,18 @@
 #include "fbxsdk.h"
 #include <unordered_set>
 
+
+enum class type {
+	None = -1,
+	Mesh = 0,
+	Anim,
+};
+
 // Ό³Έν :
 class EngineFScene
 {
+	
+
 public:
 	// constrcuter destructer
 	EngineFScene();
@@ -27,6 +36,14 @@ public:
 	//std::shared_ptr<class EngineFMesh> ProcessMesh(class FbxMesh* pMesh);
 	std::string ProcessMaterial(FbxNode* _pNode);
 	void ProcessAnim(FbxScene* _Scene);
+
+	type SceneType = type::None;
+
+
+	void AnimInit(FbxScene* _Scene, std::string_view _Name);
+	void MeshInit(FbxScene* _Scene, std::string_view _Name);
+
+
 protected:
 
 

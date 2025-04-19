@@ -2,19 +2,7 @@
 #include "EngineTransform.h"
 #include "AllStruct.h"
 #include "EngineFSkeleton.h"
-
-XMMATRIX ConvertFbxMatrixToXM(const FbxAMatrix& mat)
-{
-    XMFLOAT4X4 xm;
-    for (int row = 0; row < 4; ++row)
-    {
-        for (int col = 0; col < 4; ++col)
-        {
-            xm.m[row][col] = static_cast<float>(mat.Get(row, col));
-        }
-    }
-    return XMLoadFloat4x4(&xm);
-}
+#include "EngineFbxMath.h"
 
 EngineAnimation::EngineAnimation()
 {
@@ -24,7 +12,6 @@ EngineAnimation::~EngineAnimation()
 {
 	Skeleton = nullptr;
     keyframesPerBoneIndex.clear();
-    keyframes.clear();
 }
 
 void EngineAnimation::AddBoneKeyFrame(const std::string& boneName, int frame, const EngineTransform& transform)
@@ -37,48 +24,45 @@ void EngineAnimation::SetDuration(float startTime, float endTime)
 	EndTime = endTime;
 }
 
-void EngineAnimation::Update(float deltaTime)
-{
-}
-
-
-
 void EngineAnimation::ExtractAnimationKeys(FbxScene* scene)
 {
 	FbxAnimEvaluator* evaluator = scene->GetAnimationEvaluator();
+    //특정 시간에 본이 어떤 위치, 회전을 가지는지 계산을 해주는 객체
 	FbxNode* rootNode = scene->GetRootNode();
 	if (!rootNode) return;
 
 	FbxAnimStack* animStack = scene->GetCurrentAnimationStack();
-	FbxTimeSpan timeSpan = animStack->GetLocalTimeSpan();
+    fbxsdk::FbxTimeSpan timeSpan = animStack->GetLocalTimeSpan();
 
 
-	FbxTime startTime = timeSpan.GetStart();
-	FbxTime endTime = timeSpan.GetStop();
-	FbxTime frameTime;
+    fbxsdk::FbxTime startTime = timeSpan.GetStart();
+    fbxsdk::FbxTime endTime = timeSpan.GetStop();
+
+    SetDuration((float)startTime.GetSecondDouble(), (float)endTime.GetSecondDouble());
+
+
+    fbxsdk::FbxTime frameTime;
 	frameTime.SetTime(0, 0, 0, 1, 0, scene->GetGlobalSettings().GetTimeMode());
-
-	for (FbxTime currentTime = startTime; currentTime <= endTime; currentTime += frameTime) {
+    for (fbxsdk::FbxTime currentTime = startTime; currentTime <= endTime; currentTime += frameTime) {
 		TraverseAndExtract(rootNode, evaluator, currentTime);
 	}
 }
 
-void EngineAnimation::TraverseAndExtract(FbxNode* node, FbxAnimEvaluator* evaluator, FbxTime time)
+void EngineAnimation::TraverseAndExtract(FbxNode* node, FbxAnimEvaluator* evaluator, fbxsdk::FbxTime time)
 {
 	if (!node) return;
 
 	std::string name = node->GetName();
-
 	if (Skeleton->boneNameToIndex.contains(name) != false) {
 		int boneindex = Skeleton->boneNameToIndex[name];
-		FbxAMatrix localTransform = evaluator->GetNodeLocalTransform(node, time);
+		FbxAMatrix localTransform = evaluator->GetNodeGlobalTransform(node, time);
 		FbxVector4 translation = localTransform.GetT();
 		FbxQuaternion rotation = localTransform.GetQ();
 
 		KeyFrame kf;
 		kf.time = time.GetSecondDouble();
 		kf.position = { (float)translation[0], (float)translation[1], (float)translation[2] };
-		kf.rotation = { (float)rotation[0], (float)rotation[1], (float)rotation[2], (float)rotation[3] };
+		kf.rotation = { (float)rotation.GetAt(0), (float)rotation.GetAt(1), (float)rotation.GetAt(2), (float)rotation.GetAt(3)};
 
 		keyframesPerBoneIndex[boneindex].emplace_back(kf); // 본 이름별로 저장 (Map<string, vector<KeyFrame>>)
 
@@ -98,11 +82,11 @@ std::vector<DirectX::XMMATRIX> EngineAnimation::EvaluateAnimation(float time)
 
     for (size_t i = 0; i < boneCount; ++i)
     {
-        const auto& keyframes = keyframesPerBoneIndex[i];
+        const auto& keyframes =  keyframesPerBoneIndex[i];
         if (keyframes.empty())
         {
             // 키프레임이 없으면 바인드 포즈 그대로 사용
-            boneMatrices[i] = ConvertFbxMatrixToXM(Skeleton->Bones[i].globalBindPose);
+            boneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Skeleton->Bones[i].globalBindPose);
             continue;
         }
 
@@ -125,8 +109,8 @@ std::vector<DirectX::XMMATRIX> EngineAnimation::EvaluateAnimation(float time)
         if (!next) next = prev;
 
         // 3. 보간 비율 계산
-        float duration = next->time - prev->time;
-        float lerpFactor = (duration > 0.0f) ? (time - prev->time) / duration : 0.0f;
+        float duration = static_cast<float>(next->time - prev->time);
+        float lerpFactor = static_cast<float>((duration > 0.0f) ? (time - prev->time) / duration : 0.0f);
 
         // 4. position, rotation 보간
         XMVECTOR pos1 = XMLoadFloat3(&prev->position);
@@ -153,23 +137,4 @@ std::vector<DirectX::XMMATRIX> EngineAnimation::EvaluateAnimation(float time)
     }
 
     return boneMatrices;
-}
-
-float EngineAnimation::GetDuration() const
-{
-    float maxTime = 0.0f;
-
-    for (const auto& [boneIndex, keyframes] : keyframesPerBoneIndex)
-    {
-        if (!keyframes.empty())
-        {
-            float lastTime = keyframes.back().time;
-            if (lastTime > maxTime)
-            {
-                maxTime = lastTime;
-            }
-        }
-    }
-
-    return maxTime;
 }

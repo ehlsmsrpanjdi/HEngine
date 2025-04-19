@@ -8,23 +8,22 @@
 #include "fbxsdk.h"
 #include <unordered_set>
 
-// 설명 :
-class EngineFSkeleton
-{
-private:
-	struct Bone {
-		std::string name;
-		int parentIndex;
-		FbxAMatrix localBindPose;
-		FbxAMatrix globalBindPose;
-		FbxAMatrix inverseGlobalBindPose; 
-	};
-
 	struct SkinWeight
 	{
 		std::vector<std::pair<int, double>> weights; // (BoneIndex, Weight)
 	};
 
+	struct Bone {
+		std::string name;
+		int parentIndex;
+		FbxAMatrix localBindPose;
+		FbxAMatrix globalBindPose;
+		FbxAMatrix inverseGlobalBindPose;
+	};
+
+// 설명 :
+class EngineFSkeleton
+{
 public:
 	// constrcuter destructer
 	EngineFSkeleton();
@@ -37,14 +36,15 @@ public:
 	EngineFSkeleton& operator=(EngineFSkeleton&& _Other) noexcept = delete;
 
 
+
 	void init(FbxNode* _Node);
 	void FindBones(FbxNode* _Node);
-	void MakeBones();
 	void BoneWeight(FbxMesh* pMesh);
 	void BoneSort(std::vector<struct FBuffer>& vertices);
 
-	bool NoneSkel = false;
+	std::vector<Bone> GetBone();
 
+	bool NoneSkel = false;
 protected:
 
 private:
@@ -52,8 +52,11 @@ private:
 	std::vector<FbxNode*> rootBones;
 	std::vector<Bone> Bones;
 	std::unordered_map<std::string, int> boneNameToIndex;
+	std::unordered_map<int, Bone> IndexToBone;
 	std::unordered_map<FbxNode*, int> boneNodeToIndex;
-	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
+	std::unordered_map<std::string, std::unordered_map<int, struct SkinWeight>> AllcontrolPointSkinData;
+
+
 	int boneIndexCounter = 0;
 	int rootIndex = 0;
 

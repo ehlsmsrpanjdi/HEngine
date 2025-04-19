@@ -2,20 +2,25 @@
 #include "algorithm"
 #include "AllStruct.h"
 #include "EngineFMesh.h"
+#include "EngineFbxMath.h"
+#include "iostream"
 
-EngineFSkeleton::EngineFSkeleton() 
+
+EngineFSkeleton::EngineFSkeleton()
 {
 }
 
-EngineFSkeleton::~EngineFSkeleton() 
+EngineFSkeleton::~EngineFSkeleton()
 {
 	rootBones.clear();
 	boneNodeToIndex.clear();
 }
 
+
+
 void EngineFSkeleton::init(FbxNode* _Node)
 {
-    FindBones(_Node);
+	FindBones(_Node);
 	if (rootBones.size() == 0) {
 		NoneSkel = true;
 		assert(true);
@@ -23,32 +28,69 @@ void EngineFSkeleton::init(FbxNode* _Node)
 	if (rootBones.size() > 1) {
 		assert(true);
 	}
-    MakeBones();
+
+
+	//for (auto& [node , index] : boneNodeToIndex) {
+	//	std::cout << "본이름  :  " << node->GetName() << "  ==   " << Bones[index].name  << std::endl;
+	//	std::cout << "본index  :  " <<  index << "  ==  " << boneNameToIndex[node->GetName()] <<   std::endl;
+	//	std::cout << "본parent  :  " << node->GetParent()->GetName() << "  ==  " << Bones[boneNameToIndex[node->GetName()]].parentIndex << std::endl;
+	//	std::cout << "\n\n";
+	//}
+
+	//for (int i = 0; i < Bones.size(); ++i) {
+	//	std::cout << i <<"번 본  :  " << Bones[i].name << " " << Bones[i].parentIndex << "\n";
+	//}
+	//std::cout << "\n\n";
+
 }
 
 void EngineFSkeleton::FindBones(FbxNode* _Node)
 {
-	if (boneNodeToIndex.find(_Node) != boneNodeToIndex.end())
-		return;
+	FbxSkeleton* fbxSkeleton = _Node->GetSkeleton();
 
-	if (_Node->GetNodeAttribute() &&
-		_Node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
-	{
-		//HAVETODELETE
-		std::cout << "Bone Name :  " << _Node->GetName() << std::endl;
-		std::string str = _Node->GetName();
-		// 루트 본인지 체크
+	if (fbxSkeleton != nullptr) {
 		FbxNode* parent = _Node->GetParent();
-		if (parent == nullptr ||
-			parent->GetNodeAttribute() == nullptr ||
-			parent->GetNodeAttribute()->GetAttributeType() != FbxNodeAttribute::eSkeleton)
-		{
-			rootBones.push_back(_Node);
+
+		// 부모가 없거나, 부모가 스켈레톤이 아니라면 => 루트 스켈레톤 본이다
+		if (parent == nullptr || parent->GetSkeleton() == nullptr) {
+			int a = 0;
+		}
+	}
+	if (fbxSkeleton != nullptr) {
+		Bone bone;
+		int parentBoneIndex = -1;
+
+		FbxNode* parent = _Node->GetParent();
+
+		if (parent != nullptr) {
+			std::string parentName = parent->GetName();
+			if (boneNameToIndex.contains(parentName) != false) {
+				parentBoneIndex = boneNameToIndex[parentName];
+			}
+			else {
+				assert(true);
+			}
 		}
 
-		// boneIndex 증가시키면서 map에 저장
-		boneNodeToIndex[_Node] = boneIndexCounter++;
-		//printf("Bone Name: %s (%p) -> Index: %d\n", _Node->GetName(), _Node, boneNodeToIndex[_Node]);
+		std::string boneName = _Node->GetName();
+
+		bone.parentIndex = parentBoneIndex;
+		boneNodeToIndex[_Node] = boneIndexCounter;
+		boneNameToIndex[boneName] = boneIndexCounter;
+		bone.name = boneName;
+
+		bone.localBindPose = _Node->EvaluateLocalTransform();
+		FbxAMatrix global = _Node->EvaluateGlobalTransform();
+		bone.globalBindPose = global;
+
+		bone.inverseGlobalBindPose = global.Inverse();
+
+		if (parentBoneIndex == -1) {
+			rootBones.push_back(_Node);
+		}
+		Bones.push_back(bone);
+		IndexToBone[boneIndexCounter++] = bone;
+
 	}
 
 	for (int i = 0; i < _Node->GetChildCount(); ++i)
@@ -56,150 +98,99 @@ void EngineFSkeleton::FindBones(FbxNode* _Node)
 		FindBones(_Node->GetChild(i));
 	}
 }
-void EngineFSkeleton::MakeBones()
-{
-    Bones.resize(boneNodeToIndex.size());
-
-    for (const auto& [node, index] : boneNodeToIndex)
-    {
-        Bone& bone = Bones[index];
-        bone.name = node->GetName();
-
-        // 부모가 본인지 확인해서 parentIndex 설정
-        FbxNode* parent = node->GetParent();
-        if (parent && boneNodeToIndex.find(parent) != boneNodeToIndex.end())
-        {
-            bone.parentIndex = boneNodeToIndex[parent];
-        }
-        else
-        {
-            bone.parentIndex = -1; // 루트
-            rootIndex = index;     // 루트로 지정
-        }
-        // 로컬 바인드 포즈 설정
-        bone.localBindPose = node->EvaluateLocalTransform();
-
-		FbxAMatrix global = node->EvaluateGlobalTransform();
-		bone.globalBindPose = global;
-		bone.inverseGlobalBindPose = global.Inverse();
-
-		boneNameToIndex[bone.name] = index;
-    }
-}
-
 
 void EngineFSkeleton::BoneWeight(FbxMesh* pMesh)
 {
+	std::string str = pMesh->GetName();
+	AllcontrolPointSkinData[str];
+	std::unordered_map<int, struct SkinWeight> controlPointSkinData;
 	int skinCount = pMesh->GetDeformerCount(FbxDeformer::eSkin);
-	for (int skinIndex = 0; skinIndex < skinCount; ++skinIndex)
+	for (int skinIndex = 0; skinIndex < skinCount; ++skinIndex)		//피부 정보를 가져오고 (보통 1개)
 	{
 		FbxSkin* pSkin = (FbxSkin*)pMesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
 
-		int clusterCount = pSkin->GetClusterCount();
+		int clusterCount = pSkin->GetClusterCount();		// 각각의 bone에 대한 정보들임 bone이 65개면 cluster도 65개
 		for (int clusterIndex = 0; clusterIndex < clusterCount; ++clusterIndex)
 		{
-			FbxCluster* pCluster = pSkin->GetCluster(clusterIndex);
-
+			FbxCluster* pCluster = pSkin->GetCluster(clusterIndex);  //n번째 cluster가져오고
 			FbxNode* boneNode = pCluster->GetLink();
 			int boneIndex = boneNodeToIndex[boneNode]; // 우리가 위에서 만든 map 사용
 
-			int* indices = pCluster->GetControlPointIndices();
-			double* weights = pCluster->GetControlPointWeights();
-			int count = pCluster->GetControlPointIndicesCount();
+			int* indices = pCluster->GetControlPointIndices();		//해당 bone이 영향을 주는 control point 인덱스들을 가져옴  0,5,8이면 0,5,8번의 controlpoint에 영향을 줌
+			double* weights = pCluster->GetControlPointWeights();	//해당 control point에 얼마나 영향을 주는지에 대한 배열 0.5,0.4,0.3 이면 0번 controlpoint는 50% 1번은 40% 
+			int count = pCluster->GetControlPointIndicesCount();		//위 배열의 길이
 
 			for (int i = 0; i < count; ++i)
 			{
 				int controlPointIndex = indices[i];
 				double weight = weights[i];
+				if (controlPointSkinData[controlPointIndex].weights.size() != 0) {
+					std::vector<std::pair<int, double>> vec = controlPointSkinData[controlPointIndex].weights;
+					if (weight != 1) {
+						int a = 0;
 
+					}
+				}
 				controlPointSkinData[controlPointIndex].weights.push_back({ boneIndex, weight });
-				// ctrlPointIndex 번째 버텍스가 pCluster(Bone)에게 weight 만큼 영향받음
+				//controlpointindex 번호를 갖고있는 버텍스 버퍼가 n번째 본에게 m만큼의 영향을 받음
+
+				//버텍스버퍼 3번은 0번 5번 9번 본에 이정도 영향을 받는다고 저장한것
+
+				//하이
 			}
 		}
 	}
+	AllcontrolPointSkinData[str] = std::move(controlPointSkinData);
 }
 
 
 void EngineFSkeleton::BoneSort(std::vector<FBuffer>& vertices)
 {
-
-	for (auto& it : controlPointSkinData)
-	{
-		int controlPointIndex = it.first;
-		auto& weightList = it.second.weights;
-
-		std::sort(weightList.begin(), weightList.end(),
-			[](const std::pair<int, double>& a, const std::pair<int, double>& b)
-			{
-				return a.second > b.second;
-			});
-
-		int boneIndices[4] = { 0 };
-		float boneWeights[4] = { 0.0f };
-		float totalWeight = 0.0f;
-
-		for (int i = 0; i < 4 && i < weightList.size(); ++i)
+	for (auto& [name, element] : AllcontrolPointSkinData) {
+		for (auto& it : element)
 		{
-			boneIndices[i] = weightList[i].first;
-			boneWeights[i] = static_cast<float>(weightList[i].second);
-			totalWeight += boneWeights[i];
-		}
+			int controlPointIndex = it.first;
+			auto& weightList = it.second.weights;
 
-		// 정규화
-		if (totalWeight > 0.0f)
-		{
-			for (int i = 0; i < 4; ++i)
+			std::sort(weightList.begin(), weightList.end(),
+				[](const std::pair<int, double>& a, const std::pair<int, double>& b)
+				{
+					return a.second > b.second;
+				});
+
+			int boneIndices[4] = { 0 };
+			float boneWeights[4] = { 0.0f };
+			float totalWeight = 0.0f;
+
+			for (int i = 0; i < 4 && i < weightList.size(); ++i)
 			{
-				boneWeights[i] /= totalWeight;
+				boneIndices[i] = weightList[i].first;
+				boneWeights[i] = static_cast<float>(weightList[i].second);
+				totalWeight += boneWeights[i];
+			}
+
+			// 정규화
+			if (totalWeight > 0.0f)
+			{
+				for (int i = 0; i < 4 && i < weightList.size(); ++i)
+				{
+					boneWeights[i] /= totalWeight;
+				}
+			}
+
+			for (FBuffer& vert : vertices) {
+				if (vert.controlpointindex == controlPointIndex) {
+					memcpy(vert.BoneIndices, boneIndices, sizeof(boneIndices));
+					memcpy(vert.BoneWeights, boneWeights, sizeof(boneWeights));
+				}
 			}
 		}
-
-		for (FBuffer& vert : vertices) {
-			if (vert.controlpointindex == controlPointIndex) {
-				memcpy(vert.BoneIndices, boneIndices, sizeof(boneIndices));
-				memcpy(vert.BoneWeights, boneWeights, sizeof(boneWeights));
-			}
-		}
-
-
-		//for(controlPointIndex)
 	}
+}
 
-	//for (auto& it : controlPointSkinData)
-	//{
-	//	int controlPointIndex = it.first;
-	//	auto& weightList = it.second.weights;
-
-	//	// 내림차순 정렬
-	//	std::sort(weightList.begin(), weightList.end(),
-	//		[](const std::pair<int, double>& a, const std::pair<int, double>& b)
-	//		{
-	//			return a.second > b.second;
-	//		});
-
-	//	int boneIndices[4] = { 0 };
-	//	float boneWeights[4] = { 0.0f };
-
-	//	float totalWeight = 0.0f;
-	//	for (int i = 0; i < 4 && i < weightList.size(); ++i)
-	//	{
-	//		boneIndices[i] = weightList[i].first;
-	//		boneWeights[i] = static_cast<float>(weightList[i].second);
-	//		totalWeight += boneWeights[i];
-	//	}
-
-	//	// 정규화
-	//	if (totalWeight > 0.0f)
-	//	{
-	//		for (int i = 0; i < 4; ++i)
-	//		{
-	//			boneWeights[i] /= totalWeight;
-	//		}
-	//	}
-	//	// 이제 이 정보를 해당 controlPointIndex의 버텍스에 저장해주면 돼
-	//	// 예: vertices[controlPointIndex].BoneIndex = boneIndices;
-	//	//     vertices[controlPointIndex].BoneWeight = boneWeights;
-	//}
+std::vector<Bone> EngineFSkeleton::GetBone()
+{
+	return Bones;
 }
 
 
