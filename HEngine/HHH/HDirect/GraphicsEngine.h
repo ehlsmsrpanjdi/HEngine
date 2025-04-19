@@ -56,17 +56,18 @@ public:
 
 #pragma region "Create"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
-	void CreateScene(std::vector<std::shared_ptr<class EngineFScene>> _Scenes);
+	void CreateScene(std::vector<std::shared_ptr<class EngineFScene>>& _Scenes);
 	void CreateTexture(std::shared_ptr<class EngineFile> _fileManager);
 
 	void CreateAllCBuffer();
-	void CreateConstantBuffer(std::string_view _str);
-	void CreateConstantBuffer1(std::string_view _str, size_t boneCount);
+	void CreateWVPBuffer();
+	void CreateMeshBuffer();
+	void CreateAnimationBuffer();
 
 
 #pragma endregion
 
-	void UpdateConstantBuffer(const XMMATRIX& _transform, std::string_view _str);
+	void UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str);
 	void UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& matrices, std::string_view _str);
 
 	void Render(struct HS* _Material, struct MH* _Mesh);

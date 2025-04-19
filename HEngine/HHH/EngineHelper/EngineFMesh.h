@@ -23,6 +23,8 @@ public:
 
 
 	void init(FbxNode* pNode);
+	void BoneValueDelete();
+
 	
 	UINT GetSize();
 	UINT GetArraySize();
@@ -38,7 +40,7 @@ public:
 		return TextureName;
 	}
 
-	FbxAMatrix tempmatrix = FbxAMatrix();
+	FbxAMatrix MeshMatrix = FbxAMatrix();
 protected:
 
 

@@ -5,7 +5,7 @@
 #include "EngineHelper/AllStruct.h"
 #include "EngineHelper/HString.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
-
+#include "EngineHelper/EngineNamespace.h"
 
 Actor::Actor()
 {
@@ -23,25 +23,27 @@ void Actor::BeginPlay()
 
 void Actor::Tick(float _DeltaTime)
 {
-	if (IsAnimation == true) {
-		ActorScene->AnimSkeleton->EvaluateAnimation(_DeltaTime, outBoneMatrices);
-	}
+
 }
 
-void Actor::Render()
+void Actor::Render(float _DeltaTime)
 {
+	if (IsAnimation == true) {
+		ActorScene->AnimSkeleton->EvaluateAnimation(_DeltaTime, outBoneMatrices);
+
+		GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, Cbuffer::ANI);
+		GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), Cbuffer::MESH);
+	}
+	else {
+		for (size_t i = 0; i < outBoneMatrices.size(); ++i)
+		{
+			outBoneMatrices[i] = DirectX::XMMatrixIdentity();
+		}
+	}
+
 	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
 
-		if (IsAnimation == false) {
-			for (size_t i = 0; i < outBoneMatrices.size(); ++i)
-			{
-				outBoneMatrices[i] = DirectX::XMMatrixIdentity();
-			}
-			GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->tempmatrix, "tempmatrix");
-		}
-		else {
-		}
-			GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), "tempmatrix");
+		GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->MeshMatrix, Cbuffer::MESH);
 		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
 	}
 }
@@ -104,10 +106,6 @@ void Actor::SetAnimation(std::string_view _str)
 	ActorScene->AnimSkeleton->SetAnimation(_str);
 }
 
-void Actor::SetAnimationTemp()
-{
-	ActorScene->AnimSkeleton->SetAnimationTemp();
-}
 
 EngineTransform Actor::GetTransform()
 {

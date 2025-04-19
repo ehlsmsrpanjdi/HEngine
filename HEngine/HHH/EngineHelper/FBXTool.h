@@ -40,6 +40,7 @@ public:
 
 #pragma region "애니메이션"
 	std::vector<struct AnimMetaData> LoadAnim(FbxImporter* Importer, FbxScene* _Scene);
+	std::vector<struct AnimMetaData> LoadMixamo(FbxImporter* Importer, FbxScene* _Scene);
 
 #pragma endregion
 

@@ -25,7 +25,7 @@ public:
 	void release();
 
 	void Update(float _DeltaTime);
-	void Render();
+	void Render(float _DeltaTime);
 
 	static GameEngine* get() {
 		static GameEngine Engine;

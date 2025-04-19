@@ -21,7 +21,6 @@ public:
 
 	void EvaluateAnimation(float time, std::vector<DirectX::XMMATRIX>& outBoneMatrices);
 	void SetAnimation(std::string_view _str);
-	void SetAnimationTemp();
 
 private:
 	friend class EngineScene;

@@ -37,7 +37,7 @@ void EngineScene::CreateScene(std::vector<std::shared_ptr<EngineFScene>>& _Scene
 			Mesh->Index = CreateIndexBuffer(arraysize, Size, (UINT*)meshinfo.second->GetIndices().data(), _Device);
 
 			Mesh->TextureName = meshinfo.second->GetTextureName();
-			Mesh->tempmatrix = EngineFbxMath::ConvertFbxMatrixToXM(meshinfo.second->tempmatrix);
+			Mesh->MeshMatrix = EngineFbxMath::ConvertFbxMatrixToXM(meshinfo.second->MeshMatrix);
 			fscene->Meshs[meshinfo.first] = Mesh;
 		}
 		if (scene->Skeleton != nullptr) {

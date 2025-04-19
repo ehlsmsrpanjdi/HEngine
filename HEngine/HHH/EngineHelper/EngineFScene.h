@@ -18,7 +18,7 @@ enum class type {
 // Ό³Έν :
 class EngineFScene
 {
-	
+
 
 public:
 	// constrcuter destructer
@@ -31,9 +31,7 @@ public:
 	EngineFScene& operator=(const EngineFScene& _Other) = delete;
 	EngineFScene& operator=(EngineFScene&& _Other) noexcept = delete;
 
-	void init(FbxScene* _Scene, std::string_view _Name);
 	void ProcessNode(FbxNode* _pNode);
-	//std::shared_ptr<class EngineFMesh> ProcessMesh(class FbxMesh* pMesh);
 	std::string ProcessMaterial(FbxNode* _pNode);
 	void ProcessAnim(FbxScene* _Scene);
 

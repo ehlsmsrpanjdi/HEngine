@@ -21,27 +21,6 @@ EngineFSkeleton::~EngineFSkeleton()
 void EngineFSkeleton::init(FbxNode* _Node)
 {
 	FindBones(_Node);
-	if (rootBones.size() == 0) {
-		NoneSkel = true;
-		assert(true);
-	}
-	if (rootBones.size() > 1) {
-		assert(true);
-	}
-
-
-	//for (auto& [node , index] : boneNodeToIndex) {
-	//	std::cout << "본이름  :  " << node->GetName() << "  ==   " << Bones[index].name  << std::endl;
-	//	std::cout << "본index  :  " <<  index << "  ==  " << boneNameToIndex[node->GetName()] <<   std::endl;
-	//	std::cout << "본parent  :  " << node->GetParent()->GetName() << "  ==  " << Bones[boneNameToIndex[node->GetName()]].parentIndex << std::endl;
-	//	std::cout << "\n\n";
-	//}
-
-	//for (int i = 0; i < Bones.size(); ++i) {
-	//	std::cout << i <<"번 본  :  " << Bones[i].name << " " << Bones[i].parentIndex << "\n";
-	//}
-	//std::cout << "\n\n";
-
 }
 
 void EngineFSkeleton::FindBones(FbxNode* _Node)
