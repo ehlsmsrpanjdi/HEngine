@@ -14,7 +14,7 @@ void WoodenBox::BeginPlay()
 	SetHlsl("default");
 	SetScene("woodenbox");
 	SetActorScale(0.1f, 0.1f, 0.1f);
-
+	Name = "woodenbox";
 }
 
 void WoodenBox::Tick(float _deltatime)

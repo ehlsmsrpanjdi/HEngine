@@ -6,6 +6,8 @@
 #include "EngineHelper/HString.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
 #include "EngineHelper/EngineNamespace.h"
+#include "Collision.h"
+#include "Level.h"
 
 Actor::Actor()
 {
@@ -15,6 +17,7 @@ Actor::~Actor()
 {
 	Hlsl = nullptr;
 	ActorScene = nullptr;
+	World = nullptr;
 }
 
 void Actor::BeginPlay()
@@ -106,8 +109,49 @@ void Actor::SetAnimation(std::string_view _str)
 	ActorScene->AnimSkeleton->SetAnimation(_str);
 }
 
+Level* Actor::GetWorld()
+{
+	if (World != nullptr) {
+	return World;
+	}
+	else {
+		assert(false);
+	}
+}
+
+
+Collision* Actor::CreateCollision(CollisionType _Type)
+{
+	Level* Lv = GetWorld();
+	if (Lv == nullptr) {
+		assert(false);
+	}
+
+	int type = static_cast<int>(_Type);
+
+	std::shared_ptr<Collision> Col = std::make_shared<Collision>();
+	Col->SetOwner(this);
+	Col->SetCollisionType(_Type);
+	Lv->Collisions[type].push_back(Col);
+
+	return Col.get();
+}
+
+const std::shared_ptr<FScene> Actor::GetScene() const
+{
+	return ActorScene;
+}
+
 
 EngineTransform Actor::GetTransform()
 {
 	return ActorTransform;
+}
+
+void Actor::SetWorld(Level* _Lv)
+{
+	if (_Lv == nullptr) {
+		assert(false);
+	}
+	World = _Lv;
 }

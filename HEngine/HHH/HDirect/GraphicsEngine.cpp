@@ -309,7 +309,26 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 		str = "DEFAULT";
 	}
 	ID3D11ShaderResourceView* tex = (*TextureMap)[str]->textureSRV;
-	TextureMap->find(str)->second->textureSRV;
+	//TextureMap->find(str)->second->textureSRV;
+	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
+	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
+	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
+}
+
+void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh)
+{
+	UINT offset = 0;
+	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
+	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &_Mesh->BufferSize, &offset);
+	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->IASetInputLayout(_Hlsl->Layout);
+	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
+	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
+	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[Cbuffer::WVP]);
+	m_Context->Get()->VSSetConstantBuffers(1, 1, &ConstantBufferMap[Cbuffer::ANI]);
+	m_Context->Get()->VSSetConstantBuffers(2, 1, &ConstantBufferMap[Cbuffer::MESH]);
+	ID3D11ShaderResourceView* tex = (*TextureMap)["DEFAULT"]->textureSRV;
 	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
 	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);

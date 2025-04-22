@@ -70,7 +70,8 @@ public:
 	void UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str);
 	void UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& matrices, std::string_view _str);
 
-	void Render(struct HS* _Material, struct MH* _Mesh);
+	void Render(struct HS* _Hlsl, struct MH* _Mesh);
+	void CollisionRender(struct HS* _Hlsl, struct MH* _Mesh);
 
 
 #pragma region "╟тем"

@@ -173,7 +173,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineAnimator.h">
+    <ClInclude Include="Collision.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -181,7 +181,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Level.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MainPlayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TestLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -195,7 +203,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EngineAnimator.cpp">
+    <ClCompile Include="Collision.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -203,7 +211,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MainPlayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TestLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

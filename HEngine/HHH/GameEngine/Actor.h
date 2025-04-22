@@ -35,17 +35,29 @@ public:
 	void SetScene(std::string_view _str);
 	void SetHlsl(std::string_view _str);
 	void SetAnimation(std::string_view _str);
-	void SetAnimationTemp();
+
+
+	class Level* GetWorld();
+	class Collision* CreateCollision(enum class CollisionType _Type);
+
+
+	const std::shared_ptr<class FScene> GetScene() const;
 
 	EngineTransform GetTransform();
 	std::string CurrentAnimation = "";
 	bool IsAnimation = false;
 protected:
+	friend class Level;
+	std::string Name;
+
+	void SetWorld(class Level* _Lv);
 
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
 	std::vector<DirectX::XMMATRIX> outBoneMatrices;
 	//ºô¸°°Í
 	std::shared_ptr<class FScene> ActorScene;
+
+	class Level* World = nullptr;
 };
 

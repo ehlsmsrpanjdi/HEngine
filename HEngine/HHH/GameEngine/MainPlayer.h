@@ -19,6 +19,6 @@ public:
 protected:
 
 private:
-
+	Collision* boxcollision = nullptr;
 };
 

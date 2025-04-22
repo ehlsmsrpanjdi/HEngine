@@ -7,11 +7,17 @@
     <Filter Include="Actor">
       <UniqueIdentifier>{a65bac5a-8b99-4223-8d57-6de0e661e5a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client">
-      <UniqueIdentifier>{ffe154eb-3104-4ba9-855e-4f12bed3f2bb}</UniqueIdentifier>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{7176d80d-ebda-43bd-afb6-02b2ea6c22f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client\Object">
+    <Filter Include="Level">
+      <UniqueIdentifier>{70fa5b95-265c-42cc-b6ad-d09de3e6b2c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Client">
       <UniqueIdentifier>{0bf2255e-2afa-47c3-9941-2014eef4c390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Client">
+      <UniqueIdentifier>{5debb460-ed2c-457e-8123-cc6e02696aec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,12 +27,20 @@
     <ClInclude Include="Actor.h">
       <Filter>Actor</Filter>
     </ClInclude>
-    <ClInclude Include="EngineAnimator.h" />
-    <ClInclude Include="MainPlayer.h">
-      <Filter>Client</Filter>
-    </ClInclude>
     <ClInclude Include="WoodenBox.h">
-      <Filter>Client\Object</Filter>
+      <Filter>Actor\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="MainPlayer.h">
+      <Filter>Actor\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="TestLevel.h">
+      <Filter>Level\Client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -36,12 +50,20 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
-    <ClCompile Include="EngineAnimator.cpp" />
-    <ClCompile Include="MainPlayer.cpp">
-      <Filter>Client</Filter>
-    </ClCompile>
     <ClCompile Include="WoodenBox.cpp">
-      <Filter>Client\Object</Filter>
+      <Filter>Actor\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="MainPlayer.cpp">
+      <Filter>Actor\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLevel.cpp">
+      <Filter>Level\Client</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

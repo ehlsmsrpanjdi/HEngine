@@ -25,44 +25,41 @@ public:
 	void release();
 
 	void Update(float _DeltaTime);
-	void Render(float _DeltaTime);
 
 	static GameEngine* get() {
 		static GameEngine Engine;
 		return &Engine;
 	}
 
+	std::shared_ptr<class Level> ChangeLevel(std::string_view _Name);
 
 	template <typename T>
-	void CreateCamera(std::string _Name) {
-		std::string str = HString::Upper(_Name);
-		if (AllCamera.contains(str) == true) {
-			return;
+	std::shared_ptr<T> CreateLevel(std::string_view _Name) {
+		std::string str = HString::Upper(_Name.data());
+
+		std::shared_ptr<T> Lv = std::make_shared<T>();
+		if (Levels.contains(str) == false) {
+			Levels[str] = std::static_pointer_cast<class Level>(Lv);
 		}
-		std::shared_ptr<T> Camera = std::make_shared<T>();
-		AllCamera[str] = Camera;
+		else {
+			assert(true);
+		}
+		Lv->BeginPlay();
+		return Lv;
 	}
-	void SetMainCamera(std::string _Name);
 
 
-	void CameraUpdate(float _DeltaTime);
-
-	template <typename T>
-	std::shared_ptr<T> SpawnActor() {
-		std::shared_ptr<T> AActor = std::make_shared<T>();
-		AActor->BeginPlay();
-		AllActor.push_back(AActor);
-		return AActor;
-	}
 
 protected:
 
 private:
-	class Actor* MainCamera = nullptr;
+	friend class Actor;
+	friend class Level;
 	GameEngine();
 
-	std::map<std::string, std::shared_ptr<class Actor>> AllCamera;
-	std::list<std::shared_ptr<class Actor>> AllActor;
+	std::map<std::string, std::shared_ptr<class Level>> Levels;
+
+	std::shared_ptr<class Level> SelectedLevel = nullptr;
 
 
 	DirectX::XMMATRIX  WorldMatrix = DirectX::XMMatrixIdentity();

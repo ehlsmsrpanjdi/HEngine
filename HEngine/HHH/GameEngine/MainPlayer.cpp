@@ -2,6 +2,7 @@
 #include "HDirect/GraphicsEngine.h"
 #include "HDirect/EngineScene.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
+#include "Collision.h"
 
 MainPlayer::MainPlayer() 
 {
@@ -20,6 +21,9 @@ void MainPlayer::BeginPlay()
 
 	ActorScene->AnimSkeleton->SetAnimation("dance");
 	IsAnimation = true;
+	Name = "Player";
+
+	CreateCollision(CollisionType::Normal);
 }
 
 void MainPlayer::Tick(float _deltatime)
