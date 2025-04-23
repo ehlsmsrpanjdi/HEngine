@@ -19,7 +19,8 @@ public:
 
 
 	class MainPlayer* Player = nullptr;
-
+	class TestActor* tester = nullptr;
+	class TestTestActor* testtester = nullptr;
 protected:
 
 private:

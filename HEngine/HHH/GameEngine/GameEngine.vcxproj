@@ -189,7 +189,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TestActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TestLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TestTestActor.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -219,7 +227,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="TestActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TestLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TestTestActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>

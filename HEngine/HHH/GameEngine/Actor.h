@@ -40,6 +40,9 @@ public:
 	class Level* GetWorld();
 	class Collision* CreateCollision(enum class CollisionType _Type);
 
+	void SetRoot(Actor* _Act);
+	Actor* GetRoot();
+
 
 	const std::shared_ptr<class FScene> GetScene() const;
 
@@ -51,6 +54,8 @@ protected:
 	std::string Name;
 
 	void SetWorld(class Level* _Lv);
+	Actor* RootActor = nullptr;
+
 
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;

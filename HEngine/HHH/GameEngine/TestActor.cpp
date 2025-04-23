@@ -1,36 +1,37 @@
-#include "MainPlayer.h"
+#include "TestActor.h"
 #include "HDirect/GraphicsEngine.h"
 #include "HDirect/EngineScene.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
 #include "Collision.h"
 
-MainPlayer::MainPlayer() 
+TestActor::TestActor() 
 {
 }
 
-MainPlayer::~MainPlayer() 
+TestActor::~TestActor() 
 {
 }
 
-void MainPlayer::BeginPlay()
+
+void TestActor::BeginPlay()
 {
 	Actor::BeginPlay();
 	SetHlsl("default");
 	SetScene("boxcollision");
-	SetActorScale(0.1f, 0.1f, 0.1f);
+	//SetActorScale(0.1f, 0.1f, 0.1f);
+	AddActorLocation(0.f, 300.f);
 
 	//ActorScene->AnimSkeleton->SetAnimation("dance");
 	//IsAnimation = true;
-	Name = "Player";
+	Name = "Test";
 
 	//CreateCollision(CollisionType::Normal);
 }
 
-void MainPlayer::Tick(float _deltatime)
+void TestActor::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
-	AddActorRotation(2.f * _deltatime);
+	AddActorRotation(0.f,0.f,10.f * _deltatime);
 	//GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, "MainPlayer");
 
 }
-

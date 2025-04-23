@@ -119,6 +119,24 @@ Level* Actor::GetWorld()
 	}
 }
 
+void Actor::SetRoot(Actor* _Act)
+{
+	if (_Act == nullptr) {
+		assert(false);
+	}
+	RootActor = _Act;
+}
+
+Actor* Actor::GetRoot()
+{
+	if (RootActor == nullptr) {
+	return nullptr;
+	}
+	else {
+		return RootActor;
+	}
+}
+
 
 Collision* Actor::CreateCollision(CollisionType _Type)
 {
@@ -145,6 +163,10 @@ const std::shared_ptr<FScene> Actor::GetScene() const
 
 EngineTransform Actor::GetTransform()
 {
+	if (RootActor != nullptr) {
+		EngineTransform parentTransform = RootActor->GetTransform();
+		return this->ActorTransform.CombineWithParent(parentTransform);
+	}
 	return ActorTransform;
 }
 

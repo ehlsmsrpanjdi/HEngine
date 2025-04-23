@@ -25,28 +25,25 @@ public:
 		return DirectX::XMMatrixIdentity();
 	}
 
-	//FbxAMatrix ToFbxMatrix() const {
-	//	FbxVector4 t(position.x, position.y, position.z);
-	//	FbxQuaternion q(rotation.x, rotation.y, rotation.z, rotation.w);
-	//	FbxVector4 s(scale.x, scale.y, scale.z);
+	EngineTransform CombineWithParent(const EngineTransform& parent) const
+	{
+		// 1. 두 Transform을 각각 행렬로 변환
+		XMMATRIX parentMat = parent.GetWorldMatrix(); // 부모 월드 행렬
+		XMMATRIX localMat = this->GetWorldMatrix();   // 자기 자신의 로컬 행렬
 
-	//	FbxAMatrix mat;
-	//	mat.SetT(t);
-	//	mat.SetQ(q); // 회전
-	//	mat.SetS(s); // 스케일
-	//	return mat;
-	//}
+		// 2. 행렬 곱: Local * Parent
+		XMMATRIX combinedMat = localMat * parentMat;
 
-	//XMMATRIX ToXMMATRIX() const {
-	//	XMVECTOR pos = XMLoadFloat3(&position);
-	//	XMVECTOR rot = XMLoadFloat4(&rotation);
-	//	XMVECTOR scl = XMLoadFloat3(&scale);
+		// 3. 결과 행렬에서 다시 position, rotation, scale을 추출
+		EngineTransform result;
+		XMVECTOR scale, rotationQuat, translation;
+		XMMatrixDecompose(&scale, &rotationQuat, &translation, combinedMat);
+		XMStoreFloat3(&result.scale, scale);
+		XMStoreFloat4(&result.rotation, rotationQuat);
+		XMStoreFloat3(&result.position, translation);
 
-	//	return XMMatrixScalingFromVector(scl) *
-	//		XMMatrixRotationQuaternion(rot) *
-	//		XMMatrixTranslationFromVector(pos);
-	//}
-
+		return result;
+	}
 
 	void AddLocation(const XMFLOAT3& _position) {
 		position.x += _position.x;

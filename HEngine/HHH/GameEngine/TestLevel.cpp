@@ -1,6 +1,9 @@
 #include "TestLevel.h"
-#include "MainPlayer.h"
 #include <EngineHelper/EngineKey.h>
+#include "MainPlayer.h"
+#include "TestActor.h"
+#include "TestTestActor.h"
+
 TestLevel::TestLevel()
 {
 }
@@ -15,6 +18,12 @@ void TestLevel::BeginPlay()
 	Player = SpawnActor<MainPlayer>().get();
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");
+
+	tester = SpawnActor<TestActor>().get();
+	tester->SetRoot(Player);
+
+	testtester = SpawnActor<TestTestActor>().get();
+	testtester->SetRoot(tester);
 
 }
 

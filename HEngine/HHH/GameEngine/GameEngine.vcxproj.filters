@@ -42,6 +42,12 @@
     <ClInclude Include="TestLevel.h">
       <Filter>Level\Client</Filter>
     </ClInclude>
+    <ClInclude Include="TestActor.h">
+      <Filter>Actor\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="TestTestActor.h">
+      <Filter>Actor\Client</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -64,6 +70,12 @@
     </ClCompile>
     <ClCompile Include="TestLevel.cpp">
       <Filter>Level\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor.cpp">
+      <Filter>Actor\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTestActor.cpp">
+      <Filter>Actor\Client</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
