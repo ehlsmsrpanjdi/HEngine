@@ -16,11 +16,11 @@ void MainPlayer::BeginPlay()
 {
 	Actor::BeginPlay();
 	SetHlsl("default");
-	SetScene("character");
+	SetScene("boxcollision");
 	SetActorScale(0.1f, 0.1f, 0.1f);
 
-	ActorScene->AnimSkeleton->SetAnimation("dance");
-	IsAnimation = true;
+	//ActorScene->AnimSkeleton->SetAnimation("dance");
+	//IsAnimation = true;
 	Name = "Player";
 
 	CreateCollision(CollisionType::Normal);
@@ -29,7 +29,7 @@ void MainPlayer::BeginPlay()
 void MainPlayer::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
-
+	AddActorRotation(10.f * _deltatime);
 	//GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, "MainPlayer");
 
 }

@@ -64,6 +64,8 @@ void GameEngine::Update(float _DeltaTime)
 
 	SelectedLevel->Render(_DeltaTime);
 
+	SelectedLevel->CollisionRender(_DeltaTime);
+
 	GraphicsEngine::get()->Present(true);
 }
 

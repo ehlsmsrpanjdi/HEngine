@@ -3,6 +3,7 @@
 #include <EngineHelper/EngineNamespace.h>
 #include <GameEngine/GameEngine.h>
 #include "Actor.h"
+#include "Collision.h"
 
 Level::Level() 
 {
@@ -33,9 +34,7 @@ void Level::Tick(float _DeltaTime)
 
 void Level::Render(float _DeltaTime)
 {
-
 	CameraMatrixUpdate(_DeltaTime);
-	EngineTransform trans;
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		if (Act->GetScene() == nullptr) {
 			continue;
@@ -45,6 +44,23 @@ void Level::Render(float _DeltaTime)
 		GraphicsEngine::get()->UpdateConstantBuffer(WVP, Cbuffer::WVP);
 		Act->Render(_DeltaTime);
 	}
+}
+
+void Level::CollisionRender(float _DeltaTime)
+{
+	CameraMatrixUpdate(_DeltaTime);
+	for (auto& [index, element] : Collisions) {
+		for (std::shared_ptr<Collision> Col : element) {
+			if (Col->GetScene() == nullptr) {
+				continue;
+			}
+			WorldMatrix = Col->GetTransform().GetWorldMatrix();
+			WVP = WorldMatrix * ViewMatrix * PerseMatrix;
+			GraphicsEngine::get()->UpdateConstantBuffer(WVP, Cbuffer::WVP);
+			Col->CollisionRender(_DeltaTime);
+		}
+	}
+
 
 }
 

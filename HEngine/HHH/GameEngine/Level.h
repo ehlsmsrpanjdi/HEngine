@@ -29,6 +29,7 @@ public:
 	virtual void EndPlay();
 	virtual void Tick(float _DeltaTime);
 	void Render(float _DeltaTime);
+	void CollisionRender(float _DeltaTime);
 	void SetMainCamera(std::string _Name);
 	virtual void StartLevel();
 	virtual void EndLevel();
