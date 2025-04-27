@@ -8,7 +8,7 @@ Window::Window()
 {
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	window->MouseForceX = 0;
 	window->MouseForceY = 0;
 	switch (msg) {
@@ -46,11 +46,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	default: {
 		return ::DefWindowProc(hwnd, msg, wparam, lparam);
 	}
-
-
 		   return NULL;
-
-
 	}
 	return NULL;
 }

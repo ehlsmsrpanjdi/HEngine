@@ -134,17 +134,7 @@ void FBXTool::LoadALLFBX(std::shared_ptr<EngineFile> _fileManager)
 	}
 	ios->Destroy();
 	ios = nullptr;
-	if (!AllScene.empty()) {
-		for (FbxScene* Scene : AllScene) {
-			if (Scene != nullptr) {
-				if (Scene->GetRootNode() != nullptr) {
-					Scene->Destroy();
-				}
-				Scene = nullptr;
-			}
-		}
-		AllScene.clear();
-	}
+
 
 	for (auto& [name, element] : SceneMap) {
 		EngineScenes.push_back(element);

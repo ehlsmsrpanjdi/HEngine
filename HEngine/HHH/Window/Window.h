@@ -26,9 +26,11 @@ public:
 	int MouseForceX = 0;
 	int MouseForceY = 0;
 
+	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+
 protected:
 	HWND m_hwnd = NULL;
-	bool m_is_run = false;;
+	bool m_is_run = false;
 
 	int WindowX = 1024;
 	int WindowY = 768;

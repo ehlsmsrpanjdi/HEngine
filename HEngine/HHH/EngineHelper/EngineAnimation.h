@@ -22,7 +22,6 @@ public:
 	EngineAnimation& operator=(EngineAnimation&& _Other) noexcept = delete;
 
 
-	void AddBoneKeyFrame(const std::string& boneName, int frame, const class EngineTransform& transform);
 	void SetDuration(float startTime, float endTime);
 
 	void ExtractAnimationKeys(FbxScene* scene);
@@ -30,8 +29,6 @@ public:
 
 	std::string AnimationName;
 
-
-	std::vector<DirectX::XMMATRIX> EvaluateAnimation(float time);
 
 private:
 	friend class EngineFScene;

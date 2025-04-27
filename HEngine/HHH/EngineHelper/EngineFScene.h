@@ -33,7 +33,6 @@ public:
 
 	void ProcessNode(FbxNode* _pNode);
 	std::string ProcessMaterial(FbxNode* _pNode);
-	void ProcessAnim(FbxScene* _Scene);
 
 	type SceneType = type::None;
 

@@ -49,7 +49,6 @@ private:
 	FbxManager* lSdkManager = nullptr;
 	FbxIOSettings* ios = nullptr;
 	FbxGeometryConverter* FBXConverter = nullptr;
-	std::vector<FbxScene*> AllScene;
 
 	std::vector<std::shared_ptr<class EngineFScene>> EngineScenes;
 	std::unordered_map<std::string, std::shared_ptr<class EngineFScene>> SceneMap;

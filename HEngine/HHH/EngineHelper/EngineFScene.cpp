@@ -75,28 +75,6 @@ std::string EngineFScene::ProcessMaterial(FbxNode* _pNode)
 	return "DEFAULT";
 }
 
-void EngineFScene::ProcessAnim(FbxScene* _Scene)
-{
-	for (const AnimMetaData& Data : AnimData) {
-		FbxAnimStack* stack = _Scene->FindMember<FbxAnimStack>(Data.name.c_str());
-		//애니메이션을 가져오는데, stack이라는 것에 애니메이션을 저장해서 Scene이 그 애니메이션을 선택된 상태로 만든다
-		if (stack != nullptr)
-			_Scene->SetCurrentAnimationStack(stack);
-		//스택이 있다면 애니메이션이 있는거니까 현재 애니메이션을 해당 stack으로 바꾸기
-		else {
-			assert(false);
-		}
-
-		std::shared_ptr<EngineAnimation> Ani = std::make_shared<EngineAnimation>();
-		Ani->AnimationName = Data.name;
-		Ani->Skeleton = Skeleton;
-		Ani->ExtractAnimationKeys(_Scene);
-		if (AnimMap.contains(Ani->AnimationName)) {
-			assert(true);
-		}
-		AnimMap[Ani->AnimationName] = Ani;
-	}
-}
 
 void EngineFScene::AnimInit(FbxScene* _Scene, std::string_view _Name)
 {
@@ -115,7 +93,7 @@ void EngineFScene::AnimInit(FbxScene* _Scene, std::string_view _Name)
 		Ani->Skeleton = Skeleton;
 		Ani->ExtractAnimationKeys(_Scene);
 		if (AnimMap.contains(_Name.data())) {
-			assert(true);
+			assert(false);
 		}
 		AnimMap[_Name.data()] = Ani;
 	}
