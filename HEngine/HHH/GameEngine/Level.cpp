@@ -89,7 +89,8 @@ void Level::CameraMatrixUpdate(float _DeltaTime)
 		return;
 	}
 	else {
-		ViewMatrix = MainCamera->GetTransform().GetInverseMatrix();
+		EngineTransform transform = MainCamera->GetTransform();
+		ViewMatrix = transform.GetInverseMatrix();
 	}
 
 }

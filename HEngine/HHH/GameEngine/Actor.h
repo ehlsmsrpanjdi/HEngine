@@ -46,8 +46,7 @@ public:
 
 	const std::shared_ptr<class FScene> GetScene() const;
 
-	EngineTransform GetTransform();
-	std::string CurrentAnimation = "";
+	const EngineTransform& GetTransform();
 	bool IsAnimation = false;
 protected:
 	friend class Level;
@@ -56,6 +55,8 @@ protected:
 	void SetWorld(class Level* _Lv);
 	Actor* RootActor = nullptr;
 
+	float EndAnimTime = 0.0f;
+	float CurrentAnimTime = 0.0f;
 
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;

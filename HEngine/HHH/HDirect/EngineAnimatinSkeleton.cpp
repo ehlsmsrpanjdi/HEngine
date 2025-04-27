@@ -19,9 +19,9 @@ EngineAnimatinSkeleton::~EngineAnimatinSkeleton()
 void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::XMMATRIX>& outBoneMatrices)
 {
 	outBoneMatrices.clear();
-	CurrentAnimatoinTime += time;
-	while (CurrentAnimatoinTime > SelectEndTime) {
-		CurrentAnimatoinTime -= SelectEndTime;
+	CurrentAnimatoinTime = time;
+	if(CurrentAnimatoinTime > SelectEndTime) {
+		assert(false);
 	}
 	if (SeletedFrame == nullptr) return;
 
@@ -98,10 +98,11 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::
 	//}
 }
 
-void EngineAnimatinSkeleton::SetAnimation(std::string_view _str)
+float EngineAnimatinSkeleton::SetAnimation(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
 	SeletedFrame = &keyframesPerBoneMap[str];
 	SelectStartTime = AnimationTime[str].first;
 	SelectEndTime = AnimationTime[str].second;
+	return SelectEndTime;
 }

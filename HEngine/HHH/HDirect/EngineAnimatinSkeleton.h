@@ -20,7 +20,7 @@ public:
 	EngineAnimatinSkeleton& operator=(EngineAnimatinSkeleton&& _Other) noexcept = delete;
 
 	void EvaluateAnimation(float time, std::vector<DirectX::XMMATRIX>& outBoneMatrices);
-	void SetAnimation(std::string_view _str);
+	float SetAnimation(std::string_view _str);
 
 private:
 	friend class EngineScene;

@@ -6,12 +6,12 @@
 #include "HDirect/EngineAnimatinSkeleton.h"
 #include "EngineHelper/EngineNamespace.h"
 #include "Collision.h"
+#include "Actor.h"
 
 Collision::Collision()
 {
 	SetScene("Boxcollision");
 	SetHlsl("Default");
-	SetActorScale(0.1f, 0.1f, 0.1f);
 }
 
 Collision::~Collision()
@@ -25,7 +25,7 @@ void Collision::CollisionRender(float _DeltaTime)
 {
 	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : CollisionScene->Meshs) {
 		GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->MeshMatrix, Cbuffer::MESH);
-		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
+		GraphicsEngine::get()->CollisionRender(Hlsl, mesh.second.get());
 	}
 }
 
@@ -62,32 +62,32 @@ std::shared_ptr<FScene>Collision::GetScene()
 	return CollisionScene;
 }
 
-void Collision::AddActorLocation(float _x, float _y, float _z)
+void Collision::AddLocation(float _x, float _y, float _z)
 {
 	CollisionTransform.AddLocation(_x, _y, _z);
 }
 
-void Collision::AddActorScale(float _x, float _y, float _z)
+void Collision::AddScale(float _x, float _y, float _z)
 {
 	CollisionTransform.AddScale(_x, _y, _z);
 }
 
-void Collision::AddActorRotation(float _x, float _y, float _z)
+void Collision::AddRotation(float _x, float _y, float _z)
 {
 	CollisionTransform.AddRotation(_x, _y, _z);
 }
 
-void Collision::SetActorLocation(float _x, float _y, float _z)
+void Collision::SetLocation(float _x, float _y, float _z)
 {
 	CollisionTransform.SetLocation(_x, _y, _z);
 }
 
-void Collision::SetActorScale(float _x, float _y, float _z)
+void Collision::SetScale(float _x, float _y, float _z)
 {
 	CollisionTransform.SetScale(XMFLOAT3(_x, _y, _z));
 }
 
-void Collision::SetActorRotation(float _x, float _y, float _z)
+void Collision::SetRotation(float _x, float _y, float _z)
 {
 	CollisionTransform.SetRotation(XMFLOAT4(_x, _y, _z, 1.f));
 }
@@ -102,7 +102,12 @@ void Collision::Rotate(float _x, float _y, float _z)
 	CollisionTransform.Rotate(_x, _y, _z);
 }
 
-EngineTransform& Collision::GetTransform()
+const EngineTransform& Collision::GetTransform()
 {
-	return CollisionTransform;
+	if (Owner == nullptr) {
+		assert(false);
+	}
+	const EngineTransform& Transform = Owner->GetTransform();
+	const EngineTransform& CombineTransform = CollisionTransform.CombineWithParent(Transform);
+	return CombineTransform;
 }

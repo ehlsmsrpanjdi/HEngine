@@ -32,7 +32,13 @@ void Actor::Tick(float _DeltaTime)
 void Actor::Render(float _DeltaTime)
 {
 	if (IsAnimation == true) {
-		ActorScene->AnimSkeleton->EvaluateAnimation(_DeltaTime, outBoneMatrices);
+		CurrentAnimTime += _DeltaTime;
+
+		while (CurrentAnimTime > EndAnimTime) {
+			CurrentAnimTime -= EndAnimTime;
+		}
+
+		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, outBoneMatrices);
 
 		GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, Cbuffer::ANI);
 		GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), Cbuffer::MESH);
@@ -106,13 +112,14 @@ void Actor::SetHlsl(std::string_view _str)
 
 void Actor::SetAnimation(std::string_view _str)
 {
-	ActorScene->AnimSkeleton->SetAnimation(_str);
+	EndAnimTime = ActorScene->AnimSkeleton->SetAnimation(_str);
+	CurrentAnimTime = 0.f;
 }
 
 Level* Actor::GetWorld()
 {
 	if (World != nullptr) {
-	return World;
+		return World;
 	}
 	else {
 		assert(false);
@@ -130,7 +137,7 @@ void Actor::SetRoot(Actor* _Act)
 Actor* Actor::GetRoot()
 {
 	if (RootActor == nullptr) {
-	return nullptr;
+		return nullptr;
 	}
 	else {
 		return RootActor;
@@ -161,11 +168,12 @@ const std::shared_ptr<FScene> Actor::GetScene() const
 }
 
 
-EngineTransform Actor::GetTransform()
+const EngineTransform& Actor::GetTransform()
 {
 	if (RootActor != nullptr) {
-		EngineTransform parentTransform = RootActor->GetTransform();
-		return this->ActorTransform.CombineWithParent(parentTransform);
+		const EngineTransform& parentTransform = RootActor->GetTransform();
+		const EngineTransform& Result = this->ActorTransform.CombineWithParent(parentTransform);
+		return Result;
 	}
 	return ActorTransform;
 }

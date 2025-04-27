@@ -26,7 +26,7 @@ void TestTestActor::BeginPlay()
 	//IsAnimation = true;
 	Name = "Test";
 
-	//CreateCollision(CollisionType::Normal);
+	CreateCollision(CollisionType::Normal)->AddLocation(300.f);
 }
 
 void TestTestActor::Tick(float _deltatime)

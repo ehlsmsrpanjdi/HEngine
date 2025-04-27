@@ -23,18 +23,18 @@ public:
 	Collision& operator=(const Collision& _Other) = delete;
 	Collision& operator=(Collision&& _Other) noexcept = delete;
 
-	void AddActorLocation(float _x, float _y = 0, float _z = 0);
-	void AddActorScale(float _x, float _y = 0, float _z = 0);
-	void AddActorRotation(float _x, float _y = 0, float _z = 0);
+	void AddLocation(float _x, float _y = 0, float _z = 0);
+	void AddScale(float _x, float _y = 0, float _z = 0);
+	void AddRotation(float _x, float _y = 0, float _z = 0);
 
-	void SetActorLocation(float _x, float _y, float _z);
-	void SetActorScale(float _x, float _y, float _z);
-	void SetActorRotation(float _x, float _y, float _z);
+	void SetLocation(float _x, float _y, float _z);
+	void SetScale(float _x, float _y, float _z);
+	void SetRotation(float _x, float _y, float _z);
 
 	void Move(float _x, float _y, float _z);
 	void Rotate(float _x, float _y, float _z);
 
-	EngineTransform& GetTransform();
+	const EngineTransform& GetTransform();
 
 	void CollisionRender(float _DeltaTime);
 	void SetScene(std::string_view _str);
