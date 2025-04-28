@@ -15,11 +15,13 @@ MainPlayer::~MainPlayer()
 void MainPlayer::BeginPlay()
 {
 	Actor::BeginPlay();
+
 	SetHlsl("default");
 	SetScene("character");
+	SetAnimation("dance");
+
 	SetActorScale(0.1f, 0.1f, 0.1f);
 
-	SetAnimation("dance");
 	IsAnimation = true;
 	Name = "Player";
 
@@ -30,8 +32,5 @@ void MainPlayer::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
 	AddActorRotation(1.f * _deltatime);
-
-	//GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, "MainPlayer");
-
 }
 

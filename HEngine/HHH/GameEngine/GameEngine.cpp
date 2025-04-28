@@ -18,7 +18,6 @@ GameEngine::~GameEngine()
 {
 	Levels.clear();
 	SelectedLevel = nullptr;
-	KeyManager = nullptr;
 }
 
 void GameEngine::Init(RECT _rc)
@@ -32,10 +31,6 @@ void GameEngine::Init(RECT _rc)
 		isPersepectiveChange = false;
 		PerseMatrix = XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ);
 	}
-
-	KeyManager = std::make_shared<EngineKey>();
-
-	KeyManager->Init();
 
 
 	CreateLevel<TestLevel>("TestLevel");

@@ -50,7 +50,6 @@ private:
 
 	EngineTransform CollisionTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
-	std::vector<DirectX::XMMATRIX> outBoneMatrices;
 	std::shared_ptr<class FScene> CollisionScene;
 
 	class Actor* Owner = nullptr;

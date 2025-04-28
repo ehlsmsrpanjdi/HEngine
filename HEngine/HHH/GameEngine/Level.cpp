@@ -64,9 +64,9 @@ void Level::CollisionRender(float _DeltaTime)
 
 }
 
-void Level::SetMainCamera(std::string _Name)
+void Level::SetMainCamera(std::string_view _Name)
 {
-	std::string str = HString::Upper(_Name);
+	std::string str = HString::Upper(_Name.data());
 	if (AllCamera.contains(str) == true) {
 		MainCamera = AllCamera[str].get();
 	}

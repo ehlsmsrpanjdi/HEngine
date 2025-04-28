@@ -30,15 +30,15 @@ public:
 	virtual void Tick(float _DeltaTime);
 	void Render(float _DeltaTime);
 	void CollisionRender(float _DeltaTime);
-	void SetMainCamera(std::string _Name);
+	void SetMainCamera(std::string_view _Name);
 	virtual void StartLevel();
 	virtual void EndLevel();
 
 	void CameraMatrixUpdate(float _DeltaTime);
 
 	template <typename T>
-	std::shared_ptr<T> CreateCamera(std::string _Name) {
-		std::string str = HString::Upper(_Name);
+	std::shared_ptr<T> CreateCamera(std::string_view _Name) {
+		std::string str = HString::Upper(_Name.data());
 		if (AllCamera.contains(str) == true) {
 			assert(false);
 			return nullptr;

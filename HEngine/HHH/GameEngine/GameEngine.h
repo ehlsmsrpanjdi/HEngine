@@ -76,7 +76,6 @@ private:
 
 
 private:
-	std::shared_ptr<class EngineKey> KeyManager = nullptr;
 };
 
 
