@@ -6,11 +6,11 @@
 #include "memory"
 #include "EngineHelper/EngineTransform.h"
 
-MainPlayer::MainPlayer() 
+MainPlayer::MainPlayer()
 {
 }
 
-MainPlayer::~MainPlayer() 
+MainPlayer::~MainPlayer()
 {
 }
 
@@ -31,14 +31,21 @@ void MainPlayer::BeginPlay()
 	col->AddFunction([col]() {
 		std::list<std::shared_ptr<Collision>> list = col->GetCollisionList(CollisionType::Normal);
 		for (std::shared_ptr<Collision> collision : list) {
-			if (col->GetTransform().SphereCollision(collision->GetTransform())) {
-				EngineTransform A = col->GetTransform();
-				EngineTransform B = collision->GetTransform();
-				printf("Collision\n");
+			EngineTransform A = col->GetTransform();
+			EngineTransform B = collision->GetTransform();
+			//if (EngineTransform::SphereCollision(A, B)) {
+			//	printf("Collision\n");
+			//}
+			//else {
+			//	int a = 0;
+			//}
+			if (EngineTransform::OBB(A, B)) {
+				printf("CollisionOBB\n");
 			}
 			else {
 				int a = 0;
 			}
+
 		}
 		});
 }
@@ -46,6 +53,6 @@ void MainPlayer::BeginPlay()
 void MainPlayer::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
-	//AddActorLocation(10.f * _deltatime);
+	AddActorLocation(10.f * _deltatime);
 }
 

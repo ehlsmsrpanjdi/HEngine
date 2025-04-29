@@ -6,20 +6,27 @@ EngineTransform::~EngineTransform()
     scaleB = XMFLOAT3(scaleB.x, scaleB.y, scaleB.z);*/
 }
 
-bool EngineTransform::OBB(const EngineTransform& other) const {
+bool EngineTransform::OBB(const EngineTransform& A, const EngineTransform& B)
+{
     // 월드 좌표계로 변환된 중심 좌표
-    XMVECTOR posA = XMLoadFloat3(&this->position);
-    XMVECTOR posB = XMLoadFloat3(&other.position);
+    XMVECTOR posA = XMLoadFloat3(&A.position);
+    XMVECTOR posB = XMLoadFloat3(&B.position);
 
-    XMVECTOR quatA = XMLoadFloat4(&this->rotation);
-    XMVECTOR quatB = XMLoadFloat4(&other.rotation);
+    XMVECTOR quatA = XMLoadFloat4(&A.rotation);
+    XMVECTOR quatB = XMLoadFloat4(&B.rotation);
 
     XMMATRIX rotA = XMMatrixRotationQuaternion(quatA);
     XMMATRIX rotB = XMMatrixRotationQuaternion(quatB);
 
+
     // 스케일 반영
-    XMFLOAT3 scaleA = this->scale;
-    XMFLOAT3 scaleB = other.scale;
+    XMFLOAT3 scaleA = A.scale;
+    XMFLOAT3 scaleB = B.scale;
+
+    float Value = 200.0f;
+
+    scaleA = XMFLOAT3(scaleA.x * Value, scaleA.y * Value, scaleA.z * Value);
+    scaleB = XMFLOAT3(scaleB.x * Value, scaleB.y * Value, scaleB.z * Value);
 
     // OBB의 반사이즈 계산
     float halfA[3] = { scaleA.x * 0.5f, scaleA.y * 0.5f, scaleA.z * 0.5f };
@@ -67,19 +74,19 @@ bool EngineTransform::OBB(const EngineTransform& other) const {
     return true; // 15개 축 전부 겹침 → 충돌
 }
 
-
-bool EngineTransform::SphereCollision(const EngineTransform& other) const {
+bool EngineTransform::SphereCollision(const EngineTransform& A, const EngineTransform& B)
+{
     // A 원의 중심 (position)과 B 원의 중심 (other.position)
-    XMVECTOR posA = XMLoadFloat3(&this->position);
-    XMVECTOR posB = XMLoadFloat3(&other.position);
+    XMVECTOR posA = XMLoadFloat3(&A.position);
+    XMVECTOR posB = XMLoadFloat3(&B.position);
 
     // 두 중심 간 거리 계산
     XMVECTOR distanceVec = XMVectorSubtract(posB, posA);
     float distance = XMVectorGetX(XMVector3Length(distanceVec));
 
     // 반지름 계산 (여기서는 scale.x가 반지름으로 가정)
-    float radiusA = this->scale.x * 0.5f; // scale.x를 반지름으로 사용
-    float radiusB = other.scale.x * 0.5f;
+    float radiusA = A.scale.x * 89.f; // scale.x를 반지름으로 사용
+    float radiusB = B.scale.x * 89.f;
 
     // 중심 간 거리가 두 원의 반지름 합보다 작으면 충돌
     return distance < (radiusA + radiusB);

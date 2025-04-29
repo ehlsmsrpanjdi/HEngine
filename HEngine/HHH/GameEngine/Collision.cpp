@@ -11,7 +11,7 @@
 
 Collision::Collision()
 {
-	SetScene("SphereCollision");
+	SetScene("boxcollision");
 	SetHlsl("Default");
 }
 

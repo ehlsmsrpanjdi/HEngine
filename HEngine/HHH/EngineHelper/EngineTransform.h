@@ -25,11 +25,11 @@ public:
 		return DirectX::XMMatrixIdentity();
 	}
 
-	bool OBB(const EngineTransform& other) const;
+	static bool OBB(const EngineTransform& A, const EngineTransform& B);
 
-	bool IsOverLapOnAxis(const XMVECTOR& axis, const XMVECTOR& D,
+	static bool IsOverLapOnAxis(const XMVECTOR& axis, const XMVECTOR& D,
 		const XMVECTOR* axisA, const float* halfA,
-		const XMVECTOR* axisB, const float* halfB) const {
+		const XMVECTOR* axisB, const float* halfB){
 		float projA = 0.0f;
 		float projB = 0.0f;
 
@@ -47,7 +47,9 @@ public:
 		return centerDist <= (projA + projB);
 	}
 
-	bool SphereCollision(const EngineTransform& other) const;
+	//bool SphereCollision(const EngineTransform& other) const;
+
+	static bool SphereCollision(const EngineTransform& A, const EngineTransform& B);
 
 	EngineTransform CombineWithParent(const EngineTransform& parent) const
 	{

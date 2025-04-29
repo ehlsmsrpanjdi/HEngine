@@ -19,7 +19,7 @@ void TestLevel::BeginPlay()
 	SpawnActor<TestActor>()->AddActorLocation(100.f);
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");
-	camera->AddActorLocation(0.f, 0.f, -100.f);
+	camera->AddActorLocation(100.f, 0.f, -50.f);
 
 }
 
