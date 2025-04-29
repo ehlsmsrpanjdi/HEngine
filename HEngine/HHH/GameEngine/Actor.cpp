@@ -18,6 +18,7 @@ Actor::~Actor()
 	Hlsl = nullptr;
 	ActorScene = nullptr;
 	World = nullptr;
+	SeletedFrame = nullptr;
 }
 
 void Actor::BeginPlay()
@@ -38,7 +39,7 @@ void Actor::Render(float _DeltaTime)
 			CurrentAnimTime -= EndAnimTime;
 		}
 
-		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, outBoneMatrices);
+		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, SeletedFrame, outBoneMatrices);
 
 		GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, Cbuffer::ANI);
 		GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), Cbuffer::MESH);
@@ -112,7 +113,8 @@ void Actor::SetHlsl(std::string_view _str)
 
 void Actor::SetAnimation(std::string_view _str)
 {
-	EndAnimTime = ActorScene->AnimSkeleton->SetAnimation(_str);
+	SeletedFrame = ActorScene->AnimSkeleton->GetKeyFrame(_str);
+	EndAnimTime = ActorScene->AnimSkeleton->GetEndTime(_str);
 	CurrentAnimTime = 0.f;
 }
 
@@ -123,7 +125,9 @@ Level* Actor::GetWorld()
 	}
 	else {
 		assert(false);
+		return nullptr;
 	}
+	
 }
 
 void Actor::SetRoot(Actor* _Act)
@@ -150,6 +154,7 @@ Collision* Actor::CreateCollision(CollisionType _Type)
 	Level* Lv = GetWorld();
 	if (Lv == nullptr) {
 		assert(false);
+		return nullptr;
 	}
 
 	int type = static_cast<int>(_Type);
@@ -157,6 +162,7 @@ Collision* Actor::CreateCollision(CollisionType _Type)
 	std::shared_ptr<Collision> Col = std::make_shared<Collision>();
 	Col->SetOwner(this);
 	Col->SetCollisionType(_Type);
+	Col->SetWorld(Lv);
 	Lv->Collisions[type].push_back(Col);
 
 	return Col.get();

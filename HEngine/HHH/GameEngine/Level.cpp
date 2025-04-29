@@ -29,6 +29,8 @@ void Level::Tick(float _DeltaTime)
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		Act->Tick(_DeltaTime);
 	}
+
+	CollisionCheck();
 }
 
 
@@ -93,6 +95,15 @@ void Level::CameraMatrixUpdate(float _DeltaTime)
 		ViewMatrix = transform.GetInverseMatrix();
 	}
 
+}
+
+void Level::CollisionCheck()
+{
+	for (auto& [enumIndex, element] : Collisions) {
+		for (std::shared_ptr<Collision> Col : element) {
+			Col->CollisionCheck();
+		}
+	}
 }
 
 

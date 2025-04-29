@@ -83,6 +83,7 @@ std::shared_ptr<Level> GameEngine::ChangeLevel(std::string_view _Name)
 		CurrentLv->StartLevel();
 
 		SelectedLevel = CurrentLv;
+		return SelectedLevel;
 	}
 }
 

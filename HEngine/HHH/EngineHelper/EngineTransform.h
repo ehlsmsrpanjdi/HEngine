@@ -25,6 +25,30 @@ public:
 		return DirectX::XMMatrixIdentity();
 	}
 
+	bool OBB(const EngineTransform& other) const;
+
+	bool IsOverLapOnAxis(const XMVECTOR& axis, const XMVECTOR& D,
+		const XMVECTOR* axisA, const float* halfA,
+		const XMVECTOR* axisB, const float* halfB) const {
+		float projA = 0.0f;
+		float projB = 0.0f;
+
+		// A박스의 반사이즈 투영 합
+		for (int i = 0; i < 3; ++i)
+			projA += fabs(XMVectorGetX(XMVector3Dot(axis, axisA[i]))) * halfA[i];
+
+		// B박스의 반사이즈 투영 합
+		for (int i = 0; i < 3; ++i)
+			projB += fabs(XMVectorGetX(XMVector3Dot(axis, axisB[i]))) * halfB[i];
+
+		// 중심 벡터 D의 투영
+		float centerDist = fabs(XMVectorGetX(XMVector3Dot(axis, D)));
+
+		return centerDist <= (projA + projB);
+	}
+
+	bool SphereCollision(const EngineTransform& other) const;
+
 	EngineTransform CombineWithParent(const EngineTransform& parent) const
 	{
 		// 1. 두 Transform을 각각 행렬로 변환

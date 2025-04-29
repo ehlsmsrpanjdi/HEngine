@@ -19,8 +19,11 @@ public:
 	EngineAnimatinSkeleton& operator=(const EngineAnimatinSkeleton& _Other) = delete;
 	EngineAnimatinSkeleton& operator=(EngineAnimatinSkeleton&& _Other) noexcept = delete;
 
-	void EvaluateAnimation(float time, std::vector<DirectX::XMMATRIX>& outBoneMatrices);
-	float SetAnimation(std::string_view _str);
+	void EvaluateAnimation(float time, std::vector<std::vector<struct KeyFrame>>* SeletedFrame, std::vector<DirectX::XMMATRIX>& outBoneMatrices);
+
+	std::vector<std::vector<struct KeyFrame>>* GetKeyFrame(std::string_view _str);
+
+	float GetEndTime(std::string_view _str);
 
 private:
 	friend class EngineScene;
@@ -28,7 +31,6 @@ private:
 	std::unordered_map<std::string, std::vector<std::vector<struct KeyFrame>>> keyframesPerBoneMap;
 	std::unordered_map<std::string, std::pair<float, float>> AnimationTime;
 
-	std::vector<std::vector<struct KeyFrame>>* SeletedFrame = nullptr;
 	float SelectStartTime = 0.0f;
 	float SelectEndTime = 0.0f;
 

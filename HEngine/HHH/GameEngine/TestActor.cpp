@@ -16,22 +16,24 @@ TestActor::~TestActor()
 void TestActor::BeginPlay()
 {
 	Actor::BeginPlay();
+
+
 	SetHlsl("default");
-	SetScene("boxcollision");
-	//SetActorScale(0.1f, 0.1f, 0.1f);
-	AddActorLocation(0.f, 300.f);
+	SetScene("character");
+	SetAnimation("hello");
 
-	//ActorScene->AnimSkeleton->SetAnimation("dance");
-	//IsAnimation = true;
+	IsAnimation = true;
 	Name = "Test";
+	SetActorScale(0.1f, 0.1f, 0.1f);
 
-	//CreateCollision(CollisionType::Normal);
+
+	CreateCollision(CollisionType::Normal);
 }
 
 void TestActor::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
-	AddActorRotation(0.f,0.f,10.f * _deltatime);
+	//AddActorRotation(0.f,0.f,10.f * _deltatime);
 	//GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, "MainPlayer");
 
 }

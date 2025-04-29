@@ -13,16 +13,13 @@ EngineAnimatinSkeleton::~EngineAnimatinSkeleton()
 {
 	keyframesPerBoneMap.clear();
 	Bones.clear();
-	SeletedFrame = nullptr;
 }
 
-void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::XMMATRIX>& outBoneMatrices)
+void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<std::vector<struct KeyFrame>>* SeletedFrame, std::vector<DirectX::XMMATRIX>& outBoneMatrices)
 {
 	outBoneMatrices.clear();
 	CurrentAnimatoinTime = time;
-	if(CurrentAnimatoinTime > SelectEndTime) {
-		assert(false);
-	}
+
 	if (SeletedFrame == nullptr) return;
 
 	size_t boneCount = Bones.size();
@@ -98,11 +95,14 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<DirectX::
 	//}
 }
 
-float EngineAnimatinSkeleton::SetAnimation(std::string_view _str)
+std::vector<std::vector<struct KeyFrame>>* EngineAnimatinSkeleton::GetKeyFrame(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	SeletedFrame = &keyframesPerBoneMap[str];
-	SelectStartTime = AnimationTime[str].first;
-	SelectEndTime = AnimationTime[str].second;
-	return SelectEndTime;
+	return &keyframesPerBoneMap[str];
+}
+
+float EngineAnimatinSkeleton::GetEndTime(std::string_view _str)
+{
+	std::string str = HString::Upper(_str.data());
+	return AnimationTime[str].second;
 }

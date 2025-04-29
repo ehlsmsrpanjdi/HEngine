@@ -7,10 +7,11 @@
 #include "EngineHelper/EngineNamespace.h"
 #include "Collision.h"
 #include "Actor.h"
+#include "Level.h"
 
 Collision::Collision()
 {
-	SetScene("Boxcollision");
+	SetScene("SphereCollision");
 	SetHlsl("Default");
 }
 
@@ -19,6 +20,7 @@ Collision::~Collision()
 	CollisionScene = nullptr;
 	Owner = nullptr;
 	Hlsl = nullptr;
+	CollisionCheckFunc.clear();
 }
 
 void Collision::CollisionRender(float _DeltaTime)
@@ -60,6 +62,18 @@ std::shared_ptr<FScene>Collision::GetScene()
 		assert(false);
 	}
 	return CollisionScene;
+}
+
+void Collision::SetType(CollisionType _Type)
+{
+	std::shared_ptr<Collision> self = shared_from_this();
+	World->Collisions[static_cast<int>(ColType)].remove(self);
+	World->Collisions[static_cast<int>(_Type)].push_back(self);
+}
+
+std::list<std::shared_ptr<Collision>>& Collision::GetCollisionList(CollisionType _Type)
+{
+	return World->Collisions[static_cast<int>(_Type)];
 }
 
 void Collision::AddLocation(float _x, float _y, float _z)
@@ -110,4 +124,18 @@ const EngineTransform& Collision::GetTransform()
 	const EngineTransform& Transform = Owner->GetTransform();
 	const EngineTransform& CombineTransform = CollisionTransform.CombineWithParent(Transform);
 	return CombineTransform;
+}
+
+void Collision::CollisionCheck()
+{
+	for (std::function<void(void)> func : CollisionCheckFunc) {
+		func();
+	}
+}
+
+
+
+void Collision::AddFunction(std::function<void(void)> _Fun)
+{
+	CollisionCheckFunc.push_back(_Fun);
 }

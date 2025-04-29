@@ -2,15 +2,18 @@
 #include "EngineHelper/EngineTransform.h"
 #include "unordered_map"
 #include "iostream"
+#include "functional"
+#include "list"
 
 enum class CollisionType {
 	None = -1,
 	Normal = 0,
+	Player = 1,
 
 };
 
 // Ό³Έν :
-class Collision
+class Collision : std::enable_shared_from_this<Collision>
 {
 public:
 	// constrcuter destructer
@@ -36,6 +39,11 @@ public:
 
 	const EngineTransform& GetTransform();
 
+	void CollisionCheck();
+
+
+	void AddFunction(std::function<void(void)> _Fun);
+
 	void CollisionRender(float _DeltaTime);
 	void SetScene(std::string_view _str);
 	void SetHlsl(std::string_view _str);
@@ -43,16 +51,27 @@ public:
 	void SetOwner(class Actor* _Actor);
 	std::shared_ptr<class FScene> GetScene();
 
-protected:
+	CollisionType GetType() { return ColType; }
 
+	void SetType(CollisionType _Type);
+
+	void SetWorld(class Level* _Lv) { World = _Lv; }
+
+	std::list<std::shared_ptr<Collision>>& GetCollisionList(CollisionType _Type);
+
+protected:
+	std::vector<std::function<void(void)>> CollisionCheckFunc;
 private:
 	friend class Actor;
+	friend class Level;
 
 	EngineTransform CollisionTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
 	std::shared_ptr<class FScene> CollisionScene;
 
 	class Actor* Owner = nullptr;
+
+	class Level* World = nullptr;
 
 	CollisionType ColType = CollisionType::None;
 };

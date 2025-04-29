@@ -65,5 +65,7 @@ protected:
 	std::shared_ptr<class FScene> ActorScene;
 
 	class Level* World = nullptr;
+
+	std::vector<std::vector<struct KeyFrame>>* SeletedFrame = nullptr;
 };
 

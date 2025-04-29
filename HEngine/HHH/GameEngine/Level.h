@@ -59,6 +59,8 @@ public:
 		return AActor;
 	}
 
+	void CollisionCheck();
+
 
 
 	class Actor* MainCamera = nullptr;
@@ -71,8 +73,9 @@ public:
 
 protected:
 	friend class Actor;
+	friend class Collision;
 
-	std::unordered_map<int, std::vector<std::shared_ptr<class Collision>>> Collisions;
+	std::unordered_map<int, std::list<std::shared_ptr<class Collision>>> Collisions;
 	std::list<std::shared_ptr<class Actor>> AllActor;
 	std::unordered_map<std::string, std::shared_ptr<class Actor>> AllCamera;
 private:
