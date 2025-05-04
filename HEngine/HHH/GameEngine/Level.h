@@ -59,9 +59,10 @@ public:
 		return AActor;
 	}
 
+
+	std::shared_ptr<class LightActor> CreateLight(enum class LightType _LightType);
+
 	void CollisionCheck();
-
-
 
 	class Actor* MainCamera = nullptr;
 

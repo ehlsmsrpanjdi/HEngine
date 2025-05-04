@@ -64,6 +64,8 @@ public:
 	void CreateMeshBuffer();
 	void CreateAnimationBuffer();
 
+	void CreateLight();
+
 
 #pragma endregion
 

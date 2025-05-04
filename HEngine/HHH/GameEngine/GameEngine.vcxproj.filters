@@ -48,6 +48,9 @@
     <ClInclude Include="TestTestActor.h">
       <Filter>Actor\Client</Filter>
     </ClInclude>
+    <ClInclude Include="LightActor.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="TestTestActor.cpp">
       <Filter>Actor\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="LightActor.cpp">
+      <Filter>Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

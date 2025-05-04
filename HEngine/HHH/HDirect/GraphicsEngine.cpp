@@ -245,6 +245,10 @@ void GraphicsEngine::CreateAnimationBuffer()
 	}
 }
 
+void GraphicsEngine::CreateLight()
+{
+}
+
 void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());

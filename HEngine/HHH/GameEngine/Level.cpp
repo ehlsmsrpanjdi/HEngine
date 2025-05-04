@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngine.h>
 #include "Actor.h"
 #include "Collision.h"
+#include "LightActor.h"
 
 Level::Level() 
 {
@@ -96,6 +97,17 @@ void Level::CameraMatrixUpdate(float _DeltaTime)
 	}
 
 }
+
+std::shared_ptr<class LightActor> Level::CreateLight(LightType _LightType)
+{
+	std::shared_ptr<class LightActor> Light = std::make_shared<class LightActor>();
+	Light->SetWorld(this);
+	Light->SetType(_LightType);
+	Light->BeginPlay();
+	AllActor.push_back(Light);
+	return Light;
+}
+
 
 void Level::CollisionCheck()
 {
