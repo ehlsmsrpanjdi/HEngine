@@ -245,9 +245,23 @@ void GraphicsEngine::CreateAnimationBuffer()
 	}
 }
 
-void GraphicsEngine::CreateLight()
+void GraphicsEngine::CreateDirectionalLightBuffer()
 {
+	std::string upperName = Cbuffer::DirectLight;
+
+	D3D11_BUFFER_DESC bufferDesc = {};
+	bufferDesc.Usage = D3D11_USAGE_DYNAMIC; // 업데이트 가능
+	bufferDesc.ByteWidth = sizeof(DirectionalLightBuffer);
+	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+	HRESULT hr = m_Device->Get()->CreateBuffer(&bufferDesc, nullptr, &ConstantBufferMap[upperName]);
+	if (FAILED(hr))
+	{
+		// 에러 처리
+	}
 }
+
 
 void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str)
 {
@@ -291,6 +305,28 @@ void GraphicsEngine::UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& 
 
 	memcpy(mappedResource.pData, matrices.data(), bufferSize);
 	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
+}
+
+void GraphicsEngine::UpdateConstantBuffer(const DirectionalLightBuffer& _Data, std::string_view _str)
+{
+	std::string upperName = Cbuffer::DirectLight;
+
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT hr = m_Context->Get()->Map(ConstantBufferMap[upperName], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	if (FAILED(hr)) {
+		assert(false && "상수버퍼 매핑 실패");
+		return;
+	}
+
+	memcpy(mappedResource.pData, &_Data, sizeof(DirectionalLightBuffer));
+
+	m_Context->Get()->Unmap(ConstantBufferMap[upperName], 0);
+}
+
+void GraphicsEngine::SetConstantBuffer(std::string_view _str)
+{
+	m_Context->Get()->PSSetConstantBuffers(3, 1, &ConstantBufferMap[Cbuffer::DirectLight]);
+
 }
 
 void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)

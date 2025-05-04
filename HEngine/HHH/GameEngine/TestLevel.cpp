@@ -3,6 +3,7 @@
 #include "MainPlayer.h"
 #include "TestActor.h"
 #include "TestTestActor.h"
+#include "LightActor.h"
 
 TestLevel::TestLevel()
 {
@@ -20,6 +21,8 @@ void TestLevel::BeginPlay()
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");
 	camera->AddActorLocation(100.f, 0.f, -50.f);
+
+	CreateLight(LightType::Directional);
 
 }
 

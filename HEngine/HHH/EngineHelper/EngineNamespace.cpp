@@ -4,4 +4,5 @@ namespace Cbuffer {
 	std::string WVP = "WVP";
 	std::string ANI = "ANIMATION";
 	std::string MESH = "MESHMATRIX";
+	std::string DirectLight = "DIRECTIONLIGHT";
 }

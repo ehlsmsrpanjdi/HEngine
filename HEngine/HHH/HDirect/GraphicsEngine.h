@@ -64,13 +64,18 @@ public:
 	void CreateMeshBuffer();
 	void CreateAnimationBuffer();
 
-	void CreateLight();
+	void CreateDirectionalLightBuffer();
+
 
 
 #pragma endregion
 
 	void UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str);
 	void UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& matrices, std::string_view _str);
+	void UpdateConstantBuffer(const struct DirectionalLightBuffer& _Data, std::string_view _str);
+
+	void SetConstantBuffer(std::string_view _str);
+
 
 	void Render(struct HS* _Hlsl, struct MH* _Mesh);
 	void CollisionRender(struct HS* _Hlsl, struct MH* _Mesh);

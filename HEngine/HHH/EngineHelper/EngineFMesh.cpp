@@ -75,7 +75,7 @@ void EngineFMesh::init(FbxNode* pNode)
 
 				FbxVector4 pos = pMesh->GetControlPointAt(index);
 				//pos = tempmatrix.MultT(pos);			//여러개의 메쉬가 있을 때 위치 이동
-				buffer.position = DirectX::XMFLOAT3(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]));
+				buffer.position = DirectX::XMFLOAT4(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]), 1.0f);
 				buffer.controlpointindex = index;		//버텍스가 여러개지만, 인덱스상 같은 위치에 있을 수 있음 컨트롤 포인트 상 위치
 															// 컨트롤 포인트는 버텍스 버퍼가 아니라 실제 겹치는 점을 제외한 모든 점의 개수
 															// 이거 index를 저장하는 이유는 해당 버퍼가 몇 번째의 뼈와 연결되어있는지 알기 위해서
