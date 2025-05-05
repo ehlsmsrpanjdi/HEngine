@@ -80,7 +80,7 @@ VS_OUTPUT vsmain(VS_INPUT input)
     output.Textcoord = input.Textcoord;
     
     //¹Ø¿¡²¨°¡ »ý±ä°Å
-    output.normal = mul(input.normal, (float3x3) g_mWorldViewProjection);
+    output.normal = mul((float3x3) g_mWorldViewProjection, input.normal);
 
     return output;
 }
@@ -88,26 +88,23 @@ VS_OUTPUT vsmain(VS_INPUT input)
 float4 psmain(PS_INPUT input) : SV_Target
 {
 
-    //float ka = 0.5f; // Ambient light intensity
+    float ka = 0.5f; // Ambient light intensity
     
-    //float3 ia = float3(1.0, 1.0, 1.0);
+    float3 ia = float3(1.0, 1.0, 1.0);
     
-    //float3 ambiend_light = ka * ia;
+    float3 ambiend_light = ka * ia;
     
-    //float kd = 1.0f;
-    //float3 id = float3(1.0, 1.0, 1.0);
-    //float amount_diffuse_light = max(0.0, dot(LightDirection, input.normal));
+    float kd = 1.0f;
+    float3 id = float3(1.0, 1.0, 1.0);
+    float amount_diffuse_light = max(0.0, dot(LightDirection, input.normal));
     
-    //float3 diffuse_light = kd * amount_diffuse_light * id;
+    float3 diffuse_light = kd * amount_diffuse_light * id;
     
-    //float3 final_light = ambiend_light + diffuse_light;
+    float3 final_light = ambiend_light + diffuse_light;
     
-    //return float4(final_light, 1.0f);
-    
-    
-    //return float4(ambiend_light, 1.0f);
+    return float4(final_light, 1.0f);
     
     
-    float4 color = texture0.Sample(sampler0, input.Textcoord);
-    return color;
+    //float4 color = texture0.Sample(sampler0, input.Textcoord);
+    //return color;
 }
