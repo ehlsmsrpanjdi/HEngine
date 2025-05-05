@@ -87,8 +87,8 @@ VS_OUTPUT vsmain(VS_INPUT input)
 
 float4 psmain(PS_INPUT input) : SV_Target
 {
-
-    float ka = 0.5f; // Ambient light intensity
+    
+    float ka = 0.7f; // Ambient light intensity
     
     float3 ia = float3(1.0, 1.0, 1.0);
     

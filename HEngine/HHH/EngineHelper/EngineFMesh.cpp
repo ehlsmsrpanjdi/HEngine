@@ -32,7 +32,7 @@ UINT EngineFMesh::GetIndexArraySize() {
 	return static_cast<UINT>(indices.size());
 }
 
-const std::vector<UINT>& EngineFMesh::GetIndices(){
+const std::vector<UINT>& EngineFMesh::GetIndices() {
 	return indices;
 }
 
@@ -49,6 +49,7 @@ void EngineFMesh::init(FbxNode* pNode)
 	int PolygonCount = pMesh->GetPolygonCount();
 
 	FbxLayerElementUV* uvs = pMesh->GetLayer(0)->GetUVs();
+	FbxLayerElementNormal* normals = pMesh->GetLayer(0)->GetNormals();
 
 	int totalVertexCount = 0;
 
@@ -77,9 +78,9 @@ void EngineFMesh::init(FbxNode* pNode)
 				//pos = tempmatrix.MultT(pos);			//여러개의 메쉬가 있을 때 위치 이동
 				buffer.position = DirectX::XMFLOAT4(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]), 1.0f);
 				buffer.controlpointindex = index;		//버텍스가 여러개지만, 인덱스상 같은 위치에 있을 수 있음 컨트롤 포인트 상 위치
-															// 컨트롤 포인트는 버텍스 버퍼가 아니라 실제 겹치는 점을 제외한 모든 점의 개수
-															// 이거 index를 저장하는 이유는 해당 버퍼가 몇 번째의 뼈와 연결되어있는지 알기 위해서
-															// 
+				// 컨트롤 포인트는 버텍스 버퍼가 아니라 실제 겹치는 점을 제외한 모든 점의 개수
+				// 이거 index를 저장하는 이유는 해당 버퍼가 몇 번째의 뼈와 연결되어있는지 알기 위해서
+				// 
 				//uvIndex는 PolygonVertex 기준으로 계산
 				int polygonVertexIndex = totalVertexCount + j;
 
@@ -98,6 +99,21 @@ void EngineFMesh::init(FbxNode* pNode)
 				FbxVector2 uv = uvs->GetDirectArray().GetAt(uvIndex);
 				buffer.uv = DirectX::XMFLOAT2(static_cast<float>(uv[0]), static_cast<float>(uv[1]));
 				buffer.uv.y = 1.0f - buffer.uv.y;
+
+				FbxVector4 normal;
+
+				if (normals->GetMappingMode() == FbxLayerElement::eByControlPoint) {
+					normal = normals->GetDirectArray().GetAt(index); // control point index
+				}
+				else if (normals->GetMappingMode() == FbxLayerElement::eByPolygonVertex) {
+					normal = normals->GetDirectArray().GetAt(polygonVertexIndex); // polygon vertex index
+				}
+				else {
+					assert(false && "Unsupported normal mapping mode");
+				}
+
+				buffer.Normal = DirectX::XMFLOAT3(static_cast<float>(normal[0]), static_cast<float>(normal[1]), static_cast<float>(normal[2]));
+
 				vertices.push_back(buffer);
 			}
 			totalVertexCount += polygonSize;
