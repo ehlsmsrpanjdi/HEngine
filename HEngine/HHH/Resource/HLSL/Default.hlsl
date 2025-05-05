@@ -80,32 +80,34 @@ VS_OUTPUT vsmain(VS_INPUT input)
     output.Textcoord = input.Textcoord;
     
     //밑에꺼가 생긴거
-    
-    float3x3 normalMatrix = (float3x3) MeshGlobalMatrix;
-    output.normal = normalize(mul(normalMatrix, input.normal));
+    output.normal = mul(input.normal, (float3x3) g_mWorldViewProjection);
 
     return output;
 }
 
 float4 psmain(PS_INPUT input) : SV_Target
 {
-        // 조명 방향과 법선 벡터를 이용해 디퓨즈 값 계산
-    float3 lightDir = normalize(LightDirection); // 라이트 방향 (단위 벡터)
-    float3 norm = normalize(input.normal); // 표면 법선 벡터 (단위 벡터)
 
-    // 디퓨즈 조명 계산
-    float diffuse = max(dot(norm, lightDir), 0.0f);
-
-    // 텍스처 샘플링
-    float4 textureColor = texture0.Sample(sampler0, input.Textcoord);
-
-    // 조명 적용: 색상에 디퓨즈 조명 값을 곱하기
-    float4 color = textureColor * diffuse * float4(LightColor, 1.0f) * LightIntensity;
-
-    color = float4(diffuse.xxx, 1.0f);
-
-    return color;
+    //float ka = 0.5f; // Ambient light intensity
     
-    //float4 color = texture0.Sample(sampler0, input.Textcoord);
-    //return color;
+    //float3 ia = float3(1.0, 1.0, 1.0);
+    
+    //float3 ambiend_light = ka * ia;
+    
+    //float kd = 1.0f;
+    //float3 id = float3(1.0, 1.0, 1.0);
+    //float amount_diffuse_light = max(0.0, dot(LightDirection, input.normal));
+    
+    //float3 diffuse_light = kd * amount_diffuse_light * id;
+    
+    //float3 final_light = ambiend_light + diffuse_light;
+    
+    //return float4(final_light, 1.0f);
+    
+    
+    //return float4(ambiend_light, 1.0f);
+    
+    
+    float4 color = texture0.Sample(sampler0, input.Textcoord);
+    return color;
 }

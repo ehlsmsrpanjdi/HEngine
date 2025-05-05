@@ -23,8 +23,8 @@ void LightActor::BeginPlay()
 
 	lightBuffer.Color = XMFLOAT3(1.f, 1.f,1.f);
 	lightBuffer.Padding1 = 0.f; // 16바이트 정렬을 위한 패딩
-	lightBuffer.Intensity = 10.f;
-	lightBuffer.Direction = XMFLOAT3(180.f, 180.f, 180.f); // 빛의 방향을 설정합니다.
+	lightBuffer.Intensity = 1.f;
+	lightBuffer.Direction = XMFLOAT3(0.f, 0.f, 1.f); // 빛의 방향을 설정합니다.
 
 	GraphicsEngine::get()->UpdateConstantBuffer(lightBuffer, Cbuffer::DirectLight);
 	GraphicsEngine::get()->SetConstantBuffer(Cbuffer::DirectLight);

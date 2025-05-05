@@ -27,7 +27,7 @@ void TestActor::BeginPlay()
 	SetActorScale(0.1f, 0.1f, 0.1f);
 
 
-	CreateCollision(CollisionType::Normal);
+	//CreateCollision(CollisionType::Normal);
 }
 
 void TestActor::Tick(float _deltatime)

@@ -16,7 +16,7 @@ TestLevel::~TestLevel()
 void TestLevel::BeginPlay()
 {
 	Level::BeginPlay();
-	Player = SpawnActor<MainPlayer>().get();
+	//Player = SpawnActor<MainPlayer>().get();
 	SpawnActor<TestActor>()->AddActorLocation(100.f);
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");
