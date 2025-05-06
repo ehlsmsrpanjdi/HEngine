@@ -88,7 +88,9 @@ VS_OUTPUT vsmain(VS_INPUT input)
 float4 psmain(PS_INPUT input) : SV_Target
 {
     
-    float ka = 0.7f; // Ambient light intensity
+    float4 color = texture0.Sample(sampler0, input.Textcoord);
+    
+    float ka = 1.f; // Ambient light intensity
     
     float3 ia = float3(1.0, 1.0, 1.0);
     
@@ -102,7 +104,9 @@ float4 psmain(PS_INPUT input) : SV_Target
     
     float3 final_light = ambiend_light + diffuse_light;
     
-    return float4(final_light, 1.0f);
+    float3 final_color = color.rgb * final_light;
+    
+    return float4(final_color, 1.0f);
     
     
     //float4 color = texture0.Sample(sampler0, input.Textcoord);
