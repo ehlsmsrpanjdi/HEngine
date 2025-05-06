@@ -22,7 +22,7 @@ void TestActor::BeginPlay()
 	SetScene("character");
 	SetAnimation("hello");
 
-	IsAnimation = false;
+	IsAnimation = true;
 	Name = "Test";
 	SetActorScale(0.1f, 0.1f, 0.1f);
 

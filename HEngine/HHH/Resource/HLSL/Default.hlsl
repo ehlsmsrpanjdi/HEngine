@@ -77,9 +77,8 @@ VS_OUTPUT vsmain(VS_INPUT input)
             skinnedPos += transformed * weight;
         }
     }
-    //output.position = mul(WVPMatrix, input.position);
-  
     output.position = mul(WVPMatrix, skinnedPos);
+    //output.position = mul(WVPMatrix, input.position);
     output.Textcoord = input.Textcoord;
     
     //¹Ø¿¡²¨°¡ »ý±ä°Å
