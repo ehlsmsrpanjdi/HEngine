@@ -29,6 +29,7 @@ cbuffer WVP : register(b0)
     float4x4 WorldMatrix;
     float4x4 ViewMatrix;
     float4x4 ProjectionMatrix;
+    float4x4 WVPMatrix;
 };
 
 cbuffer BoneMatrixBuffer : register(b1)
@@ -53,16 +54,44 @@ VS_OUTPUT vsmain(VS_INPUT input)
 {
     VS_OUTPUT output;
     
-    float4x4 g_mWorldViewProjection = ProjectionMatrix * ViewMatrix * WorldMatrix;
+    // 스키닝된 위치 초기화
+    float4 skinnedPos = float4(0, 0, 0, 0);
 
-    output.position = mul(g_mWorldViewProjection, input.position);
+    // 본 인덱스/가중치를 사용한 스키닝
+    for (int i = 0; i < 4; ++i)
+    {
+        uint boneIndex = input.boneIndices[i];
+        float weight = input.boneWeights[i];
+        if (boneIndex == -1)
+        {
+            input.position = mul(MeshGlobalMatrix, input.position);
+    
+            output.position = mul(WVPMatrix, input.position);
+            output.Textcoord = input.Textcoord;
+            return output;
+        }
+        // 유효한 가중치만 반영
+        if (weight > 0.0001f)
+        {
+            float4 transformed = mul(boneMatrices[boneIndex], input.position);
+            skinnedPos += transformed * weight;
+        }
+    }
+
+  
+    output.position = mul(WVPMatrix, skinnedPos);
+    output.Textcoord = input.Textcoord;
+    
+    //밑에꺼가 생긴거
+    output.normal = mul((float3x3) WVPMatrix, input.normal);
+
+    output.position = mul(WVPMatrix, input.position);
     
     return output;
 }
 
 float4 psmain(PS_INPUT input) : SV_Target
 {    
-    //float4 color = texture0.Sample(sampler0, input.Textcoord);
-    float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    float4 color = texture0.Sample(sampler0, input.Textcoord);
     return color;
 }

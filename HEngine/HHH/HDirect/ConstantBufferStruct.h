@@ -15,6 +15,7 @@ struct WVP {
 	DirectX::XMMATRIX WorldMatrix = DirectX::XMMATRIX();
 	DirectX::XMMATRIX ViewMatrix = DirectX::XMMATRIX();
 	DirectX::XMMATRIX ProjectionMatrix = DirectX::XMMATRIX();
+	DirectX::XMMATRIX WVPMatrix = DirectX::XMMATRIX();
 };
 
 struct ANI {

@@ -66,14 +66,7 @@ bool GraphicsEngine::release()
 	m_SwapChain = nullptr;
 	m_DepthView = nullptr;
 	TextureMap = nullptr;
-
-	for (std::pair<const std::string, ID3D11Buffer*>& pair : ConstantBufferMap) {
-		if (pair.second != nullptr) {
-			pair.second->Release();
-		}
-	}
-	ConstantBufferMap.clear();
-
+	TestVertex->Release();
 	return true;
 }
 
@@ -144,6 +137,35 @@ GraphicsEngine* GraphicsEngine::get()
 	return &engine;
 }
 
+struct SimpleVertex
+{
+	DirectX::XMFLOAT4 Position;
+};
+
+void GraphicsEngine::Test()
+{
+	SimpleVertex vertices[] =
+	{
+		{ DirectX::XMFLOAT4(0.0f, 0.5f, 0.0f,1.0f)}, // top
+		{ DirectX::XMFLOAT4(0.5f, -0.5f, 0.0f,1.0f)}, // right
+		{ DirectX::XMFLOAT4(-0.5f, -0.5f, 0.0f,1.0f)}  // left
+	};
+	D3D11_BUFFER_DESC bd = {};
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(vertices);
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA initData = {};
+	initData.pSysMem = vertices;
+
+	HRESULT hr = m_Device->Get()->CreateBuffer(&bd, &initData, &TestVertex);
+	if (FAILED(hr))
+	{
+		assert(false);
+	}
+}
+
 SwapChain* GraphicsEngine::getSwapChain() {
 	return m_SwapChain.get();
 }
@@ -190,6 +212,7 @@ void GraphicsEngine::CreateAllCBuffer()
 	AllConstantBufferRes AllRes;
 	AllRes.Init();
 	AllRes.CreateAllBuffer(m_Device);
+	Test();
 }
 
 void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
@@ -215,6 +238,13 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
 	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
+
+
+	UINT stride = sizeof(SimpleVertex);
+	offset = 0;
+	m_Context->Get()->IASetVertexBuffers(0, 1, &TestVertex, &stride, &offset);
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->Draw(3, 0);
 }
 
 void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh)

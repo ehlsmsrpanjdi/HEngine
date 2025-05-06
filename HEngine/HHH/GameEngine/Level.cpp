@@ -52,6 +52,7 @@ void Level::Render(float _DeltaTime)
 		WVPBuffer.WorldMatrix = WorldMatrix;
 		WVPBuffer.ViewMatrix = ViewMatrix;
 		WVPBuffer.ProjectionMatrix = PerseMatrix;
+		WVPBuffer.WVPMatrix = WorldMatrix * ViewMatrix * PerseMatrix;
 
 
 		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&WVPBuffer), Cbuffer::WVP);

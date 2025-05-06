@@ -44,16 +44,16 @@ public:
 
 #pragma endregion
 
+#pragma region "게터"
+	void Test();
+	ID3D11Buffer* TestVertex = nullptr;
+#pragma endregion
+
+
 
 public:
 	void ResizeBuffers();
 public:
-#pragma region "멤버변수"
-	std::unordered_map<std::string, ID3D11Buffer*> ConstantBufferMap;
-
-	
-#pragma endregion
-
 #pragma region "Create"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateScene(std::vector<std::shared_ptr<class EngineFScene>>& _Scenes);

@@ -23,7 +23,7 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<std::vect
 	if (SeletedFrame == nullptr) return;
 
 	size_t boneCount = Bones.size();
-	outBoneMatrices.resize(boneCount);
+	outBoneMatrices.resize(100, DirectX::XMMatrixIdentity());
 
 	for (size_t boneIndex = 0; boneIndex < boneCount; ++boneIndex)
 	{
