@@ -197,10 +197,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineNamespace.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="EnginePath.h" />
     <ClInclude Include="EngineFScene.h">
       <SubType>
@@ -238,10 +234,6 @@
     <ClCompile Include="EngineFile.cpp" />
     <ClCompile Include="EngineKey.cpp" />
     <ClCompile Include="EngineFMesh.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="EngineNamespace.cpp">
       <SubType>
       </SubType>
     </ClCompile>

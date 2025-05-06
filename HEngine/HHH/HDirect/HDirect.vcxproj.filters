@@ -34,6 +34,18 @@
     <Filter Include="Graphic\Scene">
       <UniqueIdentifier>{c7a71925-15da-455f-b7c6-43b0a2054d7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic\EngineHlsl\HlslResource">
+      <UniqueIdentifier>{6176aa5b-0333-4ee7-a908-727674167990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\ConstantBuffer">
+      <UniqueIdentifier>{635aa7c6-1dda-47a8-942b-90ddf1216996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{bb96772f-20d1-4284-ac06-12a0ccb2bf10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\ConstantBuffer\Resource">
+      <UniqueIdentifier>{5884f789-3059-423b-a59f-a06022dfafa5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsEngine.cpp">
@@ -66,6 +78,42 @@
     <ClCompile Include="EngineAnimatinSkeleton.cpp">
       <Filter>Graphic\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="EngineHlslResource.cpp">
+      <Filter>Graphic\EngineHlsl</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultResource.cpp">
+      <Filter>Graphic\EngineHlsl\HlslResource</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyResource.cpp">
+      <Filter>Graphic\EngineHlsl\HlslResource</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBufferResource.cpp">
+      <Filter>Graphic\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBufferStruct.cpp">
+      <Filter>Graphic\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="WVPConstantBuffer.cpp">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeConstantBuffer.cpp">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationConstantBuffer.cpp">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalMeshMatrixConstantBuffer.cpp">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="AllConstantBufferRes.cpp">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionLightBuffer.cpp">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -97,6 +145,42 @@
     </ClInclude>
     <ClInclude Include="EngineAnimatinSkeleton.h">
       <Filter>Graphic\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineHlslResource.h">
+      <Filter>Graphic\EngineHlsl</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultResource.h">
+      <Filter>Graphic\EngineHlsl\HlslResource</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyResource.h">
+      <Filter>Graphic\EngineHlsl\HlslResource</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBufferResource.h">
+      <Filter>Graphic\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBufferStruct.h">
+      <Filter>Graphic\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="WVPConstantBuffer.h">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeConstantBuffer.h">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationConstantBuffer.h">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalMeshMatrixConstantBuffer.h">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="AllConstantBufferRes.h">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionLightBuffer.h">
+      <Filter>Graphic\ConstantBuffer\Resource</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

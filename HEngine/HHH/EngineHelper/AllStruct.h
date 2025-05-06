@@ -46,14 +46,6 @@ struct MH {
 	}
 };
 
-struct DirectionalLightBuffer
-{
-	DirectX::XMFLOAT3 Direction; // 빛 방향
-	float Padding1;              // 16바이트 정렬
-	DirectX::XMFLOAT3 Color;     // 색상
-	float Intensity;             // 밝기
-};
-
 #pragma endregion
 
 

@@ -15,9 +15,9 @@
 #include "EngineHlsl.h"
 #include "EngineTexture.h"
 #include "EngineHelper/EngineFScene.h"
-#include "EngineHelper/EngineNamespace.h"
-
-
+#include "HDirect/ConstantBufferStruct.h"
+#include "AllConstantBufferRes.h"
+#include "ConstantBufferResource.h"
 
 #pragma region "Init"
 
@@ -187,146 +187,9 @@ void GraphicsEngine::CreateTexture(std::shared_ptr<class EngineFile> _fileManage
 
 void GraphicsEngine::CreateAllCBuffer()
 {
-	CreateWVPBuffer();
-	CreateMeshBuffer();
-	CreateAnimationBuffer();
-}
-
-void GraphicsEngine::CreateWVPBuffer()
-{
-	std::string str = Cbuffer::WVP;
-	D3D11_BUFFER_DESC buff_desc = {};
-	buff_desc.Usage = D3D11_USAGE_DYNAMIC;
-	buff_desc.ByteWidth = sizeof(DirectX::XMMATRIX);
-	buff_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	buff_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	buff_desc.MiscFlags = 0;
-	buff_desc.StructureByteStride = 0;
-	HRESULT hr = m_Device->Get()->CreateBuffer(&buff_desc, nullptr, &ConstantBufferMap[str]);
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
-}
-
-void GraphicsEngine::CreateMeshBuffer()
-{
-	std::string upperName = Cbuffer::MESH;
-
-	D3D11_BUFFER_DESC desc = {};
-	desc.Usage = D3D11_USAGE_DYNAMIC;
-	desc.ByteWidth = sizeof(DirectX::XMMATRIX);
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	desc.MiscFlags = 0;
-
-	HRESULT hr = m_Device->Get()->CreateBuffer(&desc, nullptr, &ConstantBufferMap[upperName]);
-	if (FAILED(hr))
-	{
-		assert(false && "CreateBoneMatrixBuffer Failed");
-	}
-}
-
-void GraphicsEngine::CreateAnimationBuffer()
-{
-	std::string upperName = Cbuffer::ANI;
-
-	D3D11_BUFFER_DESC desc = {};
-	desc.Usage = D3D11_USAGE_DYNAMIC;
-	desc.ByteWidth = static_cast<UINT>(sizeof(DirectX::XMMATRIX) * 100);
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	desc.MiscFlags = 0;
-
-	HRESULT hr = m_Device->Get()->CreateBuffer(&desc, nullptr, &ConstantBufferMap[upperName]);
-	if (FAILED(hr))
-	{
-		assert(false && "CreateBoneMatrixBuffer Failed");
-	}
-}
-
-void GraphicsEngine::CreateDirectionalLightBuffer()
-{
-	std::string upperName = Cbuffer::DirectLight;
-
-	D3D11_BUFFER_DESC bufferDesc = {};
-	bufferDesc.Usage = D3D11_USAGE_DYNAMIC; // 업데이트 가능
-	bufferDesc.ByteWidth = sizeof(DirectionalLightBuffer);
-	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-	HRESULT hr = m_Device->Get()->CreateBuffer(&bufferDesc, nullptr, &ConstantBufferMap[upperName]);
-	if (FAILED(hr))
-	{
-		// 에러 처리
-	}
-}
-
-
-void GraphicsEngine::UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str)
-{
-	std::string str = HString::Upper(_str.data());
-	if (ConstantBufferMap.contains(str) == false) {
-		EngineDebug::Error("없는상수버퍼업데이트");
-		return;
-	}
-	// D3D11_MAPPED_SUBRESOURCE 구조체를 선언합니다.
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-
-	// Constant Buffer를 매핑하여 CPU 메모리 공간에 접근할 수 있도록 합니다.
-	HRESULT hr = m_Context->Get()->Map(ConstantBufferMap[str], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (hr != S_OK)
-	{
-		assert(false);
-	}
-	// 매핑된 메모리 공간에 WorldViewProj 행렬 데이터를 씁니다.
-	memcpy(mappedResource.pData, &_Matrix, sizeof(DirectX::XMMATRIX));
-
-	// 매핑된 메모리를 해제하여 GPU가 다시 리소스에 접근할 수 있도록 합니다.
-	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
-}
-
-void GraphicsEngine::UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& matrices, std::string_view _str)
-{
-	std::string str = HString::Upper(_str.data());
-	if (!ConstantBufferMap.contains(str)) {
-		EngineDebug::Error("없는 상수버퍼 업데이트");
-		return;
-	}
-
-	size_t bufferSize = sizeof(DirectX::XMMATRIX) * matrices.size();
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT hr = m_Context->Get()->Map(ConstantBufferMap[str], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(hr)) {
-		assert(false && "상수버퍼 매핑 실패");
-		return;
-	}
-
-	memcpy(mappedResource.pData, matrices.data(), bufferSize);
-	m_Context->Get()->Unmap(ConstantBufferMap[str], 0);
-}
-
-void GraphicsEngine::UpdateConstantBuffer(const DirectionalLightBuffer& _Data, std::string_view _str)
-{
-	std::string upperName = Cbuffer::DirectLight;
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT hr = m_Context->Get()->Map(ConstantBufferMap[upperName], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(hr)) {
-		assert(false && "상수버퍼 매핑 실패");
-		return;
-	}
-
-	memcpy(mappedResource.pData, &_Data, sizeof(DirectionalLightBuffer));
-
-	m_Context->Get()->Unmap(ConstantBufferMap[upperName], 0);
-}
-
-void GraphicsEngine::SetConstantBuffer(std::string_view _str)
-{
-	m_Context->Get()->PSSetConstantBuffers(3, 1, &ConstantBufferMap[Cbuffer::DirectLight]);
-
+	AllConstantBufferRes AllRes;
+	AllRes.Init();
+	AllRes.CreateAllBuffer(m_Device);
 }
 
 void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
@@ -339,9 +202,8 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->IASetInputLayout(_Hlsl->Layout);
 	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
-	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[Cbuffer::WVP]);
-	m_Context->Get()->VSSetConstantBuffers(1, 1, &ConstantBufferMap[Cbuffer::ANI]);
-	m_Context->Get()->VSSetConstantBuffers(2, 1, &ConstantBufferMap[Cbuffer::MESH]);
+
+
 
 	std::string str = _Mesh->TextureName;
 	if (TextureMap->contains(str) == false) {
@@ -365,13 +227,11 @@ void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->IASetInputLayout(_Hlsl->Layout);
 	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
-	m_Context->Get()->VSSetConstantBuffers(0, 1, &ConstantBufferMap[Cbuffer::WVP]);
-	m_Context->Get()->VSSetConstantBuffers(1, 1, &ConstantBufferMap[Cbuffer::ANI]);
-	m_Context->Get()->VSSetConstantBuffers(2, 1, &ConstantBufferMap[Cbuffer::MESH]);
 	ID3D11ShaderResourceView* tex = (*TextureMap)["DEFAULT"]->textureSRV;
 	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
 	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
+
 }
 
 HS* GraphicsEngine::GetHlsl(std::string_view _str)

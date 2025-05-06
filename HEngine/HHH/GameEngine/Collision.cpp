@@ -4,10 +4,11 @@
 #include "EngineHelper/AllStruct.h"
 #include "EngineHelper/HString.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
-#include "EngineHelper/EngineNamespace.h"
+#include "HDirect/ConstantBufferStruct.h"
 #include "Collision.h"
 #include "Actor.h"
 #include "Level.h"
+#include "HDirect/ConstantBufferResource.h"
 
 Collision::Collision()
 {
@@ -26,7 +27,7 @@ Collision::~Collision()
 void Collision::CollisionRender(float _DeltaTime)
 {
 	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : CollisionScene->Meshs) {
-		GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->MeshMatrix, Cbuffer::MESH);
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::WVP);
 		GraphicsEngine::get()->CollisionRender(Hlsl, mesh.second.get());
 	}
 }

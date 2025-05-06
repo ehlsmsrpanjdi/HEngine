@@ -4,7 +4,7 @@
 #include "HDirect/GraphicsEngine.h"
 #include "EngineHelper/EngineDebug.h"	
 #include "EngineHelper/EngineKey.h"
-#include "EngineHelper/EngineNamespace.h"
+#include "HDirect/ConstantBufferStruct.h"
 #include "Level.h"
 
 #include "TestLevel.h"

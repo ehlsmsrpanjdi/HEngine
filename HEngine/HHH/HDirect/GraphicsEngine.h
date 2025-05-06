@@ -60,21 +60,8 @@ public:
 	void CreateTexture(std::shared_ptr<class EngineFile> _fileManager);
 
 	void CreateAllCBuffer();
-	void CreateWVPBuffer();
-	void CreateMeshBuffer();
-	void CreateAnimationBuffer();
-
-	void CreateDirectionalLightBuffer();
-
-
 
 #pragma endregion
-
-	void UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str);
-	void UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& matrices, std::string_view _str);
-	void UpdateConstantBuffer(const struct DirectionalLightBuffer& _Data, std::string_view _str);
-
-	void SetConstantBuffer(std::string_view _str);
 
 
 	void Render(struct HS* _Hlsl, struct MH* _Mesh);

@@ -5,9 +5,10 @@
 #include "EngineHelper/AllStruct.h"
 #include "EngineHelper/HString.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
-#include "EngineHelper/EngineNamespace.h"
+#include "HDirect/ConstantBufferStruct.h"
 #include "Collision.h"
 #include "Level.h"
+#include "HDirect/ConstantBufferResource.h"
 
 Actor::Actor()
 {
@@ -41,8 +42,13 @@ void Actor::Render(float _DeltaTime)
 
 		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, SeletedFrame, outBoneMatrices);
 
-		GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, Cbuffer::ANI);
-		GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), Cbuffer::MESH);
+		DirectX::XMMATRIX* AnimationArr = outBoneMatrices.data();
+
+
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(AnimationArr), Cbuffer::ANI);
+		XMMATRIX MashMatrix = DirectX::XMMatrixIdentity();
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&MashMatrix), Cbuffer::MESH);
+
 	}
 	else {
 		for (size_t i = 0; i < outBoneMatrices.size(); ++i)
@@ -52,8 +58,7 @@ void Actor::Render(float _DeltaTime)
 	}
 
 	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
-
-		GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->MeshMatrix, Cbuffer::MESH);
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::MESH);
 		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
 	}
 }

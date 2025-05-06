@@ -167,8 +167,32 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllConstantBufferRes.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="AnimationConstantBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ConstantBufferResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ConstantBufferStruct.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DefaultResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DepthView.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
+    <ClCompile Include="DirectionLightBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineAnimatinSkeleton.cpp">
       <SubType>
       </SubType>
@@ -177,11 +201,23 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineHlslResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineScene.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineTexture.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GlobalMeshMatrixConstantBuffer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -194,11 +230,47 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SkyResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SwapChain.cpp" />
+    <ClCompile Include="TimeConstantBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WVPConstantBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllConstantBufferRes.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="AnimationConstantBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ConstantBufferResource.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ConstantBufferStruct.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DefaultResource.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DepthView.h" />
     <ClInclude Include="DeviceContext.h" />
+    <ClInclude Include="DirectionLightBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineAnimatinSkeleton.h">
       <SubType>
       </SubType>
@@ -207,11 +279,23 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineHlslResource.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineResource.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineScene.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineTexture.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GlobalMeshMatrixConstantBuffer.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -224,7 +308,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SkyResource.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SwapChain.h" />
+    <ClInclude Include="TimeConstantBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="WVPConstantBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EngineHelper\EngineHelper.vcxproj">
