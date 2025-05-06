@@ -3,6 +3,7 @@
 #include "GraphicDevice.h"
 #include <memory>
 #include "DeviceContext.h"
+#include "ConstantBufferStruct.h"
 //#include ""
 
 

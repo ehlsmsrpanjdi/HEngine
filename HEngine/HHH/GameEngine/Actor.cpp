@@ -42,10 +42,7 @@ void Actor::Render(float _DeltaTime)
 
 		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, SeletedFrame, outBoneMatrices);
 
-		DirectX::XMMATRIX* AnimationArr = outBoneMatrices.data();
-
-
-		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(AnimationArr), Cbuffer::ANI);
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(outBoneMatrices.data()), Cbuffer::ANI);
 		XMMATRIX MashMatrix = DirectX::XMMatrixIdentity();
 		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&MashMatrix), Cbuffer::MESH);
 

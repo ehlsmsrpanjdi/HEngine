@@ -240,11 +240,11 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 
 
-	UINT stride = sizeof(SimpleVertex);
-	offset = 0;
-	m_Context->Get()->IASetVertexBuffers(0, 1, &TestVertex, &stride, &offset);
-	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_Context->Get()->Draw(3, 0);
+	//UINT stride = sizeof(SimpleVertex);
+	//offset = 0;
+	//m_Context->Get()->IASetVertexBuffers(0, 1, &TestVertex, &stride, &offset);
+	//m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//m_Context->Get()->Draw(3, 0);
 }
 
 void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh)

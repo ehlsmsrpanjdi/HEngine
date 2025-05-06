@@ -77,7 +77,7 @@ VS_OUTPUT vsmain(VS_INPUT input)
             skinnedPos += transformed * weight;
         }
     }
-
+    //output.position = mul(WVPMatrix, input.position);
   
     output.position = mul(WVPMatrix, skinnedPos);
     output.Textcoord = input.Textcoord;
@@ -85,13 +85,13 @@ VS_OUTPUT vsmain(VS_INPUT input)
     //¹Ø¿¡²¨°¡ »ý±ä°Å
     output.normal = mul((float3x3) WVPMatrix, input.normal);
 
-    output.position = mul(WVPMatrix, input.position);
-    
     return output;
 }
 
 float4 psmain(PS_INPUT input) : SV_Target
 {    
     float4 color = texture0.Sample(sampler0, input.Textcoord);
+    
+    
     return color;
 }
