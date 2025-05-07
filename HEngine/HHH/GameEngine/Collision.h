@@ -18,7 +18,7 @@ class Collision : std::enable_shared_from_this<Collision>
 public:
 	// constrcuter destructer
 	Collision();
-	~Collision();
+	virtual ~Collision();
 
 	// delete Function
 	Collision(const Collision& _Other) = delete;
@@ -72,6 +72,9 @@ private:
 	class Actor* Owner = nullptr;
 
 	class Level* World = nullptr;
+
+	//ºô¸°°Í
+	class ID3D11SamplerState* Sampler = nullptr;
 
 	CollisionType ColType = CollisionType::None;
 };

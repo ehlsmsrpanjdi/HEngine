@@ -23,7 +23,7 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<std::vect
 	if (SeletedFrame == nullptr) return;
 
 	size_t boneCount = Bones.size();
-	outBoneMatrices.resize(boneCount);
+	outBoneMatrices.resize(100, DirectX::XMMatrixIdentity());
 
 	for (size_t boneIndex = 0; boneIndex < boneCount; ++boneIndex)
 	{
@@ -81,18 +81,7 @@ void EngineAnimatinSkeleton::EvaluateAnimation(float time, std::vector<std::vect
 	for (size_t i = 0; i < boneCount; ++i)
 	{
 		outBoneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose) * outBoneMatrices[i];
-		//outBoneMatrices[i] = outBoneMatrices[i]; // bind ¿ªÇà·Ä
-		/*int ParentIndex = Bones[i].parentIndex;
-		if (ParentIndex >= 0)
-		{
-			outBoneMatrices[i] = EngineFbxMath::ConvertFbxMatrixToXM(Bones[i].inverseGlobalBindPose) * outBoneMatrices[i];
-		}*/
 	}
-
-	//for (size_t i = 2; i < boneCount; ++i)
-	//{
-	//	outBoneMatrices[i] = DirectX::XMMatrixIdentity();
-	//}
 }
 
 std::vector<std::vector<struct KeyFrame>>* EngineAnimatinSkeleton::GetKeyFrame(std::string_view _str)

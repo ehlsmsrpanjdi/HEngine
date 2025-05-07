@@ -44,47 +44,31 @@ public:
 
 #pragma endregion
 
+#pragma region "게터"
+	void Test();
+	ID3D11Buffer* TestVertex = nullptr;
+#pragma endregion
+
+
 
 public:
 	void ResizeBuffers();
 public:
-#pragma region "멤버변수"
-	std::unordered_map<std::string, ID3D11Buffer*> ConstantBufferMap;
-
-	
-#pragma endregion
-
 #pragma region "Create"
 	void CreateHlsl(std::shared_ptr<class EngineFile> _fileManager);
 	void CreateScene(std::vector<std::shared_ptr<class EngineFScene>>& _Scenes);
 	void CreateTexture(std::shared_ptr<class EngineFile> _fileManager);
 
 	void CreateAllCBuffer();
-	void CreateWVPBuffer();
-	void CreateMeshBuffer();
-	void CreateAnimationBuffer();
-
-	void CreateDirectionalLightBuffer();
-
-
 
 #pragma endregion
 
-	void UpdateConstantBuffer(const XMMATRIX& _Matrix, std::string_view _str);
-	void UpdateConstantBuffer(const std::vector<DirectX::XMMATRIX>& matrices, std::string_view _str);
-	void UpdateConstantBuffer(const struct DirectionalLightBuffer& _Data, std::string_view _str);
 
-	void SetConstantBuffer(std::string_view _str);
-
-
-	void Render(struct HS* _Hlsl, struct MH* _Mesh);
-	void CollisionRender(struct HS* _Hlsl, struct MH* _Mesh);
+	void Render(struct HS* _Hlsl, struct MH* _Mesh, ID3D11SamplerState* _Sampler);
+	void CollisionRender(struct HS* _Hlsl, struct MH* _Mesh, ID3D11SamplerState* _Sampler);
 
 
 #pragma region "게터"
-
-	struct HS* GetHlsl(std::string_view _str);
-
 	std::shared_ptr<class FScene> GetScene(std::string_view _str);
 	//.
 #pragma endregion

@@ -1,16 +1,17 @@
 #include "Level.h"
 #include <HDirect/GraphicsEngine.h>
-#include <EngineHelper/EngineNamespace.h>
+#include "HDirect/ConstantBufferStruct.h"
 #include <GameEngine/GameEngine.h>
 #include "Actor.h"
 #include "Collision.h"
 #include "LightActor.h"
+#include "HDirect/ConstantBufferResource.h"
 
-Level::Level() 
+Level::Level()
 {
 }
 
-Level::~Level() 
+Level::~Level()
 {
 	AllActor.clear();
 	Collisions.clear();
@@ -37,14 +38,30 @@ void Level::Tick(float _DeltaTime)
 
 void Level::Render(float _DeltaTime)
 {
+	ConstantBufferResource::SetVSConstantBuffer(0, Cbuffer::WVP);
+	ConstantBufferResource::SetVSConstantBuffer(1, Cbuffer::ANI);
+	ConstantBufferResource::SetVSConstantBuffer(2, Cbuffer::MESH);
+	ConstantBufferResource::SetVSConstantBuffer(3, Cbuffer::LIGHT);
+
+	ConstantBufferResource::SetPSConstantBuffer(0, Cbuffer::WVP);
+	ConstantBufferResource::SetPSConstantBuffer(1, Cbuffer::ANI);
+	ConstantBufferResource::SetPSConstantBuffer(2, Cbuffer::MESH);
+	ConstantBufferResource::SetPSConstantBuffer(3, Cbuffer::LIGHT);
+
+
 	CameraMatrixUpdate(_DeltaTime);
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		if (Act->GetScene() == nullptr) {
 			continue;
 		}
 		WorldMatrix = Act->GetTransform().GetWorldMatrix();
-		WVP = WorldMatrix * ViewMatrix * PerseMatrix;
-		GraphicsEngine::get()->UpdateConstantBuffer(WVP, Cbuffer::WVP);
+		WVPBuffer.WorldMatrix = WorldMatrix;
+		WVPBuffer.ViewMatrix = ViewMatrix;
+		WVPBuffer.ProjectionMatrix = PerseMatrix;
+		WVPBuffer.WVPMatrix = WorldMatrix * ViewMatrix * PerseMatrix;
+		WVP* Data = &WVPBuffer;
+
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(Data), Cbuffer::WVP);
 		Act->Render(_DeltaTime);
 	}
 }
@@ -57,9 +74,13 @@ void Level::CollisionRender(float _DeltaTime)
 			if (Col->GetScene() == nullptr) {
 				continue;
 			}
+
 			WorldMatrix = Col->GetTransform().GetWorldMatrix();
-			WVP = WorldMatrix * ViewMatrix * PerseMatrix;
-			GraphicsEngine::get()->UpdateConstantBuffer(WVP, Cbuffer::WVP);
+			WVPBuffer.WorldMatrix = WorldMatrix;
+			WVPBuffer.ViewMatrix = ViewMatrix;
+			WVPBuffer.ProjectionMatrix = PerseMatrix;
+
+			ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&WVPBuffer), Cbuffer::WVP);
 			Col->CollisionRender(_DeltaTime);
 		}
 	}

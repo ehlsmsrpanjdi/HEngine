@@ -34,9 +34,6 @@
     <Filter Include="FBX\EngineScene\EngineAnimation">
       <UniqueIdentifier>{b12b5187-b8ac-40cc-808e-5111c735cf38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NameSpace">
-      <UniqueIdentifier>{ca05eda4-caad-48aa-9d5b-85edf377205b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineKey.h">
@@ -79,9 +76,6 @@
     <ClInclude Include="EngineFbxMath.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="EngineNamespace.h">
-      <Filter>NameSpace</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineKey.cpp">
@@ -123,9 +117,6 @@
     </ClCompile>
     <ClCompile Include="EngineFbxMath.cpp">
       <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineNamespace.cpp">
-      <Filter>NameSpace</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

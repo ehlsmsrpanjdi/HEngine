@@ -46,22 +46,13 @@ struct MH {
 	}
 };
 
-struct DirectionalLightBuffer
-{
-	DirectX::XMFLOAT3 Direction; // 빛 방향
-	float Padding1;              // 16바이트 정렬
-	DirectX::XMFLOAT3 Color;     // 색상
-	float Intensity;             // 밝기
-};
-
 #pragma endregion
 
 
 struct HS {
-	ID3D11VertexShader* VS = nullptr;
-	ID3D11PixelShader* PS = nullptr;
-	ID3D11InputLayout* Layout = nullptr;
-	ID3D11SamplerState* samplerState = nullptr;
+	ID3D11VertexShader* VS = nullptr;  //만든거
+	ID3D11PixelShader* PS = nullptr;	  //만든거
+	ID3D11InputLayout* Layout = nullptr;     //만든거
 
 	~HS() {
 		if (VS != nullptr) {

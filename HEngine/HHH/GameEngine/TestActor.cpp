@@ -20,7 +20,7 @@ void TestActor::BeginPlay()
 
 	SetHlsl("default");
 	SetScene("character");
-	SetAnimation("hello");
+	SetAnimation("dance");
 
 	IsAnimation = true;
 	Name = "Test";
@@ -33,7 +33,7 @@ void TestActor::BeginPlay()
 void TestActor::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
+	AddActorRotation(0.f, 5.0f * _deltatime, 0.f);
 	//AddActorRotation(0.f,0.f,10.f * _deltatime);
-	//GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, "MainPlayer");
-
+	//ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(AnimationArr), Cbuffer::ANI);
 }

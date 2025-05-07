@@ -5,9 +5,12 @@
 #include "EngineHelper/AllStruct.h"
 #include "EngineHelper/HString.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
-#include "EngineHelper/EngineNamespace.h"
+#include "HDirect/ConstantBufferStruct.h"
 #include "Collision.h"
 #include "Level.h"
+#include "HDirect/ConstantBufferResource.h"
+#include "HDirect/EngineHlslResource.h"
+#include "HDirect/EngineSamplerResource.h"
 
 Actor::Actor()
 {
@@ -23,6 +26,7 @@ Actor::~Actor()
 
 void Actor::BeginPlay()
 {
+	Sampler = EngineSamplerResource::GetResource(SamplerNameSpace::DEFAULT)->GetSampler();
 }
 
 void Actor::Tick(float _DeltaTime)
@@ -41,8 +45,12 @@ void Actor::Render(float _DeltaTime)
 
 		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, SeletedFrame, outBoneMatrices);
 
-		GraphicsEngine::get()->UpdateConstantBuffer(outBoneMatrices, Cbuffer::ANI);
-		GraphicsEngine::get()->UpdateConstantBuffer(DirectX::XMMatrixIdentity(), Cbuffer::MESH);
+		XMMATRIX* Data = outBoneMatrices.data();
+
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(Data), Cbuffer::ANI);
+		XMMATRIX MashMatrix = DirectX::XMMatrixIdentity();
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&MashMatrix), Cbuffer::MESH);
+
 	}
 	else {
 		for (size_t i = 0; i < outBoneMatrices.size(); ++i)
@@ -52,9 +60,8 @@ void Actor::Render(float _DeltaTime)
 	}
 
 	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
-
-		GraphicsEngine::get()->UpdateConstantBuffer(mesh.second->MeshMatrix, Cbuffer::MESH);
-		GraphicsEngine::get()->Render(Hlsl, mesh.second.get());
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::MESH);
+		GraphicsEngine::get()->Render(Hlsl, mesh.second.get(), Sampler);
 	}
 }
 
@@ -108,7 +115,8 @@ void Actor::SetScene(std::string_view _str)
 void Actor::SetHlsl(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	Hlsl = GraphicsEngine::get()->GetHlsl(str);
+
+	Hlsl = EngineHlslResource::GetResource(str)->GetHlsl().get();
 }
 
 void Actor::SetAnimation(std::string_view _str)

@@ -8,7 +8,7 @@
 #include "EngineHelper/HString.h"
 #include "vector"
 #include "unordered_map"
-
+#include "HDirect/ConstantBufferStruct.h"
 
 // Ό³Έν :
 class Level
@@ -66,10 +66,11 @@ public:
 
 	class Actor* MainCamera = nullptr;
 
+
+	WVP WVPBuffer;
 	DirectX::XMMATRIX  WorldMatrix = DirectX::XMMatrixIdentity();
 	DirectX::XMMATRIX ViewMatrix = DirectX::XMMatrixIdentity();
 	DirectX::XMMATRIX PerseMatrix = DirectX::XMMatrixIdentity();
-	DirectX::XMMATRIX WVP = DirectX::XMMatrixIdentity();
 
 
 protected:
