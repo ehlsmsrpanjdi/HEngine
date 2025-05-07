@@ -3,6 +3,15 @@
 #include "iostream"
 #include "EngineResource.h"
 // Ό³Έν :
+
+namespace Cbuffer {
+	extern std::string Animation;
+	extern std::string NoneAnimation;
+	extern std::string SkyBox;
+	extern std::string Light;
+}
+
+
 class ConstantBufferResource : public EngineResource<ConstantBufferResource>, public std::enable_shared_from_this<ConstantBufferResource>
 {
 public:

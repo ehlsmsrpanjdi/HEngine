@@ -22,7 +22,7 @@ void TestLevel::BeginPlay()
 	SetMainCamera("main");
 	camera->AddActorLocation(100.f, 0.f, -50.f);
 
-	//CreateLight(LightType::Directional);
+	CreateLight(LightType::Directional);
 
 }
 

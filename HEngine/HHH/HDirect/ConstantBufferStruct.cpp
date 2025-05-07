@@ -1,9 +1,10 @@
 #include "ConstantBufferStruct.h"
 
+
+
 namespace Cbuffer {
-	std::string WVP = "WVP";
-	std::string ANI = "ANIMATION";
-	std::string MESH = "MESHMATRIX";
-	std::string LIGHT = "LIGHT";
-	std::string TIME = "TIME";
+	std::string Animation = "ANIMATION";
+	std::string NoneAnimation = "NONEANIMATION";
+	std::string SkyBox = "SKYBOX";
+	std::string Light = "LIGHT";
 }

@@ -142,6 +142,9 @@ struct SimpleVertex
 	DirectX::XMFLOAT4 Position;
 };
 
+/// <summary>
+/// TestFunction
+/// </summary>
 void GraphicsEngine::Test()
 {
 	SimpleVertex vertices[] =
@@ -215,7 +218,7 @@ void GraphicsEngine::CreateAllCBuffer()
 	Test();
 }
 
-void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
+void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh, ID3D11SamplerState* _Sampler)
 {
 	UINT offset = 0;
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
@@ -236,10 +239,11 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	ID3D11ShaderResourceView* tex = (*TextureMap)[str]->textureSRV;
 	//TextureMap->find(str)->second->textureSRV;
 	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
-	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
+	m_Context->Get()->PSSetSamplers(0, 1, &_Sampler);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 
 
+	///Test Triangle
 	//UINT stride = sizeof(SimpleVertex);
 	//offset = 0;
 	//m_Context->Get()->IASetVertexBuffers(0, 1, &TestVertex, &stride, &offset);
@@ -247,7 +251,7 @@ void GraphicsEngine::Render(HS* _Hlsl, MH* _Mesh)
 	//m_Context->Get()->Draw(3, 0);
 }
 
-void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh)
+void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh, ID3D11SamplerState* _Sampler)
 {
 	UINT offset = 0;
 	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
@@ -259,14 +263,9 @@ void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh)
 	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
 	ID3D11ShaderResourceView* tex = (*TextureMap)["DEFAULT"]->textureSRV;
 	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
-	m_Context->Get()->PSSetSamplers(0, 1, &_Hlsl->samplerState);
+	m_Context->Get()->PSSetSamplers(0, 1, &_Sampler);
 	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
 
-}
-
-HS* GraphicsEngine::GetHlsl(std::string_view _str)
-{
-	return EngineHlsl::Get().GetHlsl(_str);
 }
 
 std::shared_ptr<FScene> GraphicsEngine::GetScene(std::string_view _str)

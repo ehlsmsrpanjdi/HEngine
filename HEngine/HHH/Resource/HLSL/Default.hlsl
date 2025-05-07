@@ -88,9 +88,8 @@ VS_OUTPUT vsmain(VS_INPUT input)
 }
 
 float4 psmain(PS_INPUT input) : SV_Target
-{    
+{   
+    
     float4 color = texture0.Sample(sampler0, input.Textcoord);
-    
-    
     return color;
 }

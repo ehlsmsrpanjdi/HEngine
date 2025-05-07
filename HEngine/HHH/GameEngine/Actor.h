@@ -9,7 +9,7 @@ class Actor
 public:
 	// constrcuter destructer
 	Actor();
-	~Actor();
+	virtual ~Actor();
 
 	// delete Function
 	Actor(const Actor& _Other) = delete;
@@ -65,6 +65,9 @@ protected:
 	std::shared_ptr<class FScene> ActorScene;
 
 	class Level* World = nullptr;
+
+	//ºô¸°°Å
+	class ID3D11SamplerState* Sampler = nullptr;
 
 	std::vector<std::vector<struct KeyFrame>>* SeletedFrame = nullptr;
 };

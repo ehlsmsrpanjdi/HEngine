@@ -4,8 +4,14 @@
 #include <memory>
 #include "DeviceContext.h"
 #include "ConstantBufferStruct.h"
-//#include ""
 
+namespace Cbuffer {
+	std::string WVP = "WVP";
+	std::string ANI = "ANIMATION";
+	std::string MESH = "MESHMATRIX";
+	std::string LIGHT = "LIGHT";
+	std::string TIME = "TIME";
+}
 
 ConstantBufferResource::ConstantBufferResource()
 {

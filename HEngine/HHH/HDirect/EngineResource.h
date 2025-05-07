@@ -11,7 +11,7 @@ class EngineResource
 public:
 	// constrcuter destructer
 	EngineResource() = default;
-	~EngineResource() = default;
+	virtual ~EngineResource() = default;
 
 	// delete Function
 	EngineResource(const EngineResource& _Other) = delete;

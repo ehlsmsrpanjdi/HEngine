@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineHlslResource.h"
 // Ό³Έν :
+
 class DefaultResource : public EngineHlslResource
 {
 public:
@@ -16,7 +17,7 @@ public:
 
 	void Init() override;
 protected:
-
+	
 private:
 
 };

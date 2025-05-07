@@ -50,10 +50,9 @@ struct MH {
 
 
 struct HS {
-	ID3D11VertexShader* VS = nullptr;
-	ID3D11PixelShader* PS = nullptr;
-	ID3D11InputLayout* Layout = nullptr;
-	ID3D11SamplerState* samplerState = nullptr;
+	ID3D11VertexShader* VS = nullptr;  //만든거
+	ID3D11PixelShader* PS = nullptr;	  //만든거
+	ID3D11InputLayout* Layout = nullptr;     //만든거
 
 	~HS() {
 		if (VS != nullptr) {

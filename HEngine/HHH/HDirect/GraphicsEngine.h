@@ -64,14 +64,11 @@ public:
 #pragma endregion
 
 
-	void Render(struct HS* _Hlsl, struct MH* _Mesh);
-	void CollisionRender(struct HS* _Hlsl, struct MH* _Mesh);
+	void Render(struct HS* _Hlsl, struct MH* _Mesh, ID3D11SamplerState* _Sampler);
+	void CollisionRender(struct HS* _Hlsl, struct MH* _Mesh, ID3D11SamplerState* _Sampler);
 
 
 #pragma region "╟тем"
-
-	struct HS* GetHlsl(std::string_view _str);
-
 	std::shared_ptr<class FScene> GetScene(std::string_view _str);
 	//.
 #pragma endregion

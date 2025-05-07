@@ -22,9 +22,6 @@
     <Filter Include="Graphic\GraphicDevice\Context">
       <UniqueIdentifier>{983aaf5c-9642-4572-b01c-7eb110342c8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphic\Hlsl">
-      <UniqueIdentifier>{28286a7b-1599-42c9-9957-6a5bb492f4f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphic\EngineHlsl">
       <UniqueIdentifier>{8d3518d9-5a2f-4b82-8f5c-3d184cc1d322}</UniqueIdentifier>
     </Filter>
@@ -46,6 +43,9 @@
     <Filter Include="Graphic\ConstantBuffer\Resource">
       <UniqueIdentifier>{5884f789-3059-423b-a59f-a06022dfafa5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic\EngineSamplerResource">
+      <UniqueIdentifier>{2cdb284a-5e11-429d-b92c-dd08895af722}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsEngine.cpp">
@@ -65,9 +65,6 @@
     </ClCompile>
     <ClCompile Include="EngineScene.cpp">
       <Filter>Graphic\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="InputElement.cpp">
-      <Filter>Graphic\Hlsl</Filter>
     </ClCompile>
     <ClCompile Include="EngineHlsl.cpp">
       <Filter>Graphic\EngineHlsl</Filter>
@@ -114,6 +111,18 @@
     <ClCompile Include="DirectionLightBuffer.cpp">
       <Filter>Graphic\ConstantBuffer\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="NoneAnimationResource.cpp">
+      <Filter>Graphic\EngineHlsl\HlslResource</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderNameSpace.cpp">
+      <Filter>Graphic\EngineHlsl</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSamplerResource.cpp">
+      <Filter>Graphic\EngineSamplerResource</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultSampler.cpp">
+      <Filter>Graphic\EngineSamplerResource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -133,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="EngineScene.h">
       <Filter>Graphic\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="InputElement.h">
-      <Filter>Graphic\Hlsl</Filter>
     </ClInclude>
     <ClInclude Include="EngineHlsl.h">
       <Filter>Graphic\EngineHlsl</Filter>
@@ -181,6 +187,18 @@
     </ClInclude>
     <ClInclude Include="DirectionLightBuffer.h">
       <Filter>Graphic\ConstantBuffer\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="NoneAnimationResource.h">
+      <Filter>Graphic\EngineHlsl\HlslResource</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderNameSpace.h">
+      <Filter>Graphic\EngineHlsl</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSamplerResource.h">
+      <Filter>Graphic\EngineSamplerResource</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultSampler.h">
+      <Filter>Graphic\EngineSamplerResource</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

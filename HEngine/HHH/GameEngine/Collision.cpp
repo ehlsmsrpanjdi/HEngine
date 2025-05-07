@@ -9,11 +9,14 @@
 #include "Actor.h"
 #include "Level.h"
 #include "HDirect/ConstantBufferResource.h"
+#include "HDirect/EngineHlslResource.h"
+#include "HDirect/EngineSamplerResource.h"
 
 Collision::Collision()
 {
 	SetScene("boxcollision");
 	SetHlsl("Default");
+	Sampler = EngineSamplerResource::GetResource(SamplerNameSpace::DEFAULT)->GetSampler();
 }
 
 Collision::~Collision()
@@ -28,7 +31,7 @@ void Collision::CollisionRender(float _DeltaTime)
 {
 	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : CollisionScene->Meshs) {
 		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::WVP);
-		GraphicsEngine::get()->CollisionRender(Hlsl, mesh.second.get());
+		GraphicsEngine::get()->CollisionRender(Hlsl, mesh.second.get(), Sampler);
 	}
 }
 
@@ -41,7 +44,7 @@ void Collision::SetScene(std::string_view _str)
 void Collision::SetHlsl(std::string_view _str)
 {
 	std::string str = HString::Upper(_str.data());
-	Hlsl = GraphicsEngine::get()->GetHlsl(str);
+	Hlsl = EngineHlslResource::GetResource(str)->GetHlsl().get();
 }
 
 void Collision::SetCollisionType(CollisionType _Type)

@@ -41,10 +41,12 @@ void Level::Render(float _DeltaTime)
 	ConstantBufferResource::SetVSConstantBuffer(0, Cbuffer::WVP);
 	ConstantBufferResource::SetVSConstantBuffer(1, Cbuffer::ANI);
 	ConstantBufferResource::SetVSConstantBuffer(2, Cbuffer::MESH);
+	ConstantBufferResource::SetVSConstantBuffer(3, Cbuffer::LIGHT);
 
 	ConstantBufferResource::SetPSConstantBuffer(0, Cbuffer::WVP);
 	ConstantBufferResource::SetPSConstantBuffer(1, Cbuffer::ANI);
 	ConstantBufferResource::SetPSConstantBuffer(2, Cbuffer::MESH);
+	ConstantBufferResource::SetPSConstantBuffer(3, Cbuffer::LIGHT);
 
 
 	CameraMatrixUpdate(_DeltaTime);
