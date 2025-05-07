@@ -26,6 +26,9 @@ void LightActor::BeginPlay()
 	lightBuffer.Padding1 = 0.f; // 16바이트 정렬을 위한 패딩
 	lightBuffer.Intensity = 1.f;
 	lightBuffer.DirectionOrPosition = XMFLOAT3(0.f, 0.f, 1.f); // 빛의 방향을 설정합니다.
+	DirectX::XMMATRIX test = DirectX::XMMatrixIdentity();
+	
+
 
 	ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&lightBuffer), Cbuffer::LIGHT);
 }
