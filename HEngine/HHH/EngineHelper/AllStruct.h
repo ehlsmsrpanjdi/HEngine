@@ -17,12 +17,12 @@ struct FBuffer {
 	DirectX::XMFLOAT4 position = DirectX::XMFLOAT4();
 	DirectX::XMFLOAT2 uv = DirectX::XMFLOAT2();
 	DirectX::XMFLOAT2 padding = DirectX::XMFLOAT2();
+	DirectX::XMFLOAT3 Normal = DirectX::XMFLOAT3(0.f, 0.f, 1.f);
+	int controlpointindex = -1;
 
 	int BoneIndices[4] = { 0,0,0,0 };
 	float BoneWeights[4] = { 0,0,0,0 };
 
-	DirectX::XMFLOAT3 Normal = DirectX::XMFLOAT3(0.f,0.f,1.f);
-	int controlpointindex = -1;
 };
 
 struct MH {
@@ -38,7 +38,7 @@ struct MH {
 
 	~MH() {
 		if (Index != nullptr) {
-		Index->Release();
+			Index->Release();
 		}
 		if (Vertex != nullptr) {
 			Vertex->Release();

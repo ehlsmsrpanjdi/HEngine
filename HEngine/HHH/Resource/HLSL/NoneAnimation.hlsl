@@ -4,8 +4,6 @@ struct VS_INPUT
     float2 Textcoord : TEXCOORD;
     float2 Padding : PADDING;
     float3 normal : NORMAL;
-    uint boneIndices[4] : BONEINDICES;
-    float boneWeights[4] : BONEWEIGHTS;
 };
 
 struct VS_OUTPUT
@@ -58,25 +56,11 @@ VS_OUTPUT vsmain(VS_INPUT input)
     // 스키닝된 위치 초기화
     float4 skinnedPos = float4(0, 0, 0, 0);
 
-    // 본 인덱스/가중치를 사용한 스키닝
-    for (int i = 0; i < 4; ++i)
-    {
-        uint boneIndex = input.boneIndices[i];
-        float weight = input.boneWeights[i];
-        // 유효한 가중치만 반영
-        if (weight > 0.0001f)
-        {
-            float4 transformed = mul(boneMatrices[boneIndex], input.position);
-            skinnedPos += transformed * weight;
-        }
-    }
-    output.position = mul(WVPMatrix, skinnedPos);
-    //output.position = mul(WVPMatrix, input.position);
-    output.Textcoord = input.Textcoord;
     
-    //밑에꺼가 생긴거
+    input.position = mul(MeshGlobalMatrix, input.position);
+    output.position = mul(WVPMatrix, input.position);
+    output.Textcoord = input.Textcoord;
     output.normal = mul((float3x3) WVPMatrix, input.normal);
-
     return output;
 }
 

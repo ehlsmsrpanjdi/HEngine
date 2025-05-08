@@ -114,9 +114,6 @@
     <ClCompile Include="NoneAnimationResource.cpp">
       <Filter>Graphic\EngineHlsl\HlslResource</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderNameSpace.cpp">
-      <Filter>Graphic\EngineHlsl</Filter>
-    </ClCompile>
     <ClCompile Include="EngineSamplerResource.cpp">
       <Filter>Graphic\EngineSamplerResource</Filter>
     </ClCompile>
@@ -190,9 +187,6 @@
     </ClInclude>
     <ClInclude Include="NoneAnimationResource.h">
       <Filter>Graphic\EngineHlsl\HlslResource</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderNameSpace.h">
-      <Filter>Graphic\EngineHlsl</Filter>
     </ClInclude>
     <ClInclude Include="EngineSamplerResource.h">
       <Filter>Graphic\EngineSamplerResource</Filter>
