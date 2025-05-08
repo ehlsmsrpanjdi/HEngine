@@ -22,7 +22,6 @@ void MainPlayer::BeginPlay()
 	SetScene("character");
 
 	SetAnimation("dance");
-	IsAnimation = true;
 
 	Name = "Player";
 	SetActorScale(0.1f, 0.1f, 0.1f);

@@ -22,9 +22,9 @@ void TestActor::BeginPlay()
 	SetHlsl(HlslNamespace::Default);
 	SetScene("character");
 	SetAnimation("dance");
-
-	IsAnimation = true;
 	Name = "Test";
+
+	OffAnimation();
 	SetActorScale(0.1f, 0.1f, 0.1f);
 
 

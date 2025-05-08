@@ -35,6 +35,7 @@ public:
 	void SetScene(std::string_view _str);
 	void SetHlsl(std::string_view _str);
 	void SetAnimation(std::string_view _str);
+	void OffAnimation();
 
 
 	class Level* GetWorld();
@@ -47,6 +48,7 @@ public:
 	const std::shared_ptr<class FScene> GetScene() const;
 
 	const EngineTransform& GetTransform();
+private:
 	bool IsAnimation = false;
 protected:
 	friend class Level;

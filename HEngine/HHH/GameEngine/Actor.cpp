@@ -44,25 +44,19 @@ void Actor::Render(float _DeltaTime)
 		}
 
 		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, SeletedFrame, outBoneMatrices);
-
-		XMMATRIX* Data = outBoneMatrices.data();
-
-		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(Data), Cbuffer::ANI);
-		XMMATRIX MashMatrix = DirectX::XMMatrixIdentity();
-		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&MashMatrix), Cbuffer::MESH);
-
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(outBoneMatrices.data()), Cbuffer::ANI);
+		for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
+			ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::MESH);
+			GraphicsEngine::get()->Render(Hlsl, mesh.second.get(), Sampler);
+		}
 	}
 	else {
-		for (size_t i = 0; i < outBoneMatrices.size(); ++i)
-		{
-			outBoneMatrices[i] = DirectX::XMMatrixIdentity();
+		for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
+			ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::MESH);
+			GraphicsEngine::get()->Render(Hlsl, mesh.second.get(), Sampler);
 		}
 	}
 
-	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
-		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::MESH);
-		GraphicsEngine::get()->Render(Hlsl, mesh.second.get(), Sampler);
-	}
 }
 
 void Actor::AddActorLocation(float _x, float _y, float _z)
@@ -124,6 +118,14 @@ void Actor::SetAnimation(std::string_view _str)
 	SeletedFrame = ActorScene->AnimSkeleton->GetKeyFrame(_str);
 	EndAnimTime = ActorScene->AnimSkeleton->GetEndTime(_str);
 	CurrentAnimTime = 0.f;
+	IsAnimation = true;
+	SetHlsl(HlslNamespace::Default);
+}
+
+void Actor::OffAnimation()
+{
+	IsAnimation = false;
+	SetHlsl(HlslNamespace::NoneAnimation);
 }
 
 Level* Actor::GetWorld()
@@ -135,7 +137,7 @@ Level* Actor::GetWorld()
 		assert(false);
 		return nullptr;
 	}
-	
+
 }
 
 void Actor::SetRoot(Actor* _Act)
