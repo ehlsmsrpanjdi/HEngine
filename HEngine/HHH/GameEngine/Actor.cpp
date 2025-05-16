@@ -37,10 +37,13 @@ void Actor::Tick(float _DeltaTime)
 void Actor::Render(float _DeltaTime)
 {
 	if (IsAnimation == true) {
-		CurrentAnimTime += _DeltaTime;
 
-		while (CurrentAnimTime > EndAnimTime) {
-			CurrentAnimTime -= EndAnimTime;
+		if (AnimStop == false) {
+			CurrentAnimTime += _DeltaTime;
+
+			while (CurrentAnimTime > EndAnimTime) {
+				CurrentAnimTime -= EndAnimTime;
+			}
 		}
 
 		ActorScene->AnimSkeleton->EvaluateAnimation(CurrentAnimTime, SeletedFrame, outBoneMatrices);
@@ -126,6 +129,25 @@ void Actor::OffAnimation()
 {
 	IsAnimation = false;
 	SetHlsl(HlslNamespace::NoneAnimation);
+}
+
+void Actor::OnAnimation()
+{
+	if (EndAnimTime <= 0.01f) {
+		std::cout << "Animation Is Not Set" << __LINE__ << "\n" << __FUNCTION__ << "\n";
+	}
+	IsAnimation = true;
+	SetHlsl(HlslNamespace::Default);
+}
+
+void Actor::StopAnim()
+{
+	AnimStop = true;
+}
+
+void Actor::RunAnim()
+{
+	AnimStop = false;
 }
 
 Level* Actor::GetWorld()

@@ -4,6 +4,7 @@
 #include "HDirect/EngineAnimatinSkeleton.h"
 #include "Collision.h"
 #include "HDirect/EngineHlslResource.h"
+#include "EngineHelper/EngineKey.h"
 
 TestActor::TestActor() 
 {
@@ -34,6 +35,21 @@ void TestActor::BeginPlay()
 void TestActor::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
+	if (EngineKey::IsDown('P')) {
+		OnAnimation();
+	}
+
+	if (EngineKey::IsDown('O')) {
+		OffAnimation();
+	}
+
+	if (EngineKey::IsDown('I')) {
+		RunAnim();
+	}
+
+	if (EngineKey::IsDown('U')) {
+		StopAnim();
+	}
 	//AddActorRotation(0.f, 5.0f * _deltatime, 0.f);
 	//AddActorRotation(0.f,0.f,10.f * _deltatime);
 	//ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(AnimationArr), Cbuffer::ANI);

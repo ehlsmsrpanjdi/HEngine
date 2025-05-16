@@ -36,6 +36,9 @@ public:
 	void SetHlsl(std::string_view _str);
 	void SetAnimation(std::string_view _str);
 	void OffAnimation();
+	void OnAnimation();
+	void StopAnim();
+	void RunAnim();
 
 
 	class Level* GetWorld();
@@ -59,6 +62,7 @@ protected:
 
 	float EndAnimTime = 0.0f;
 	float CurrentAnimTime = 0.0f;
+	bool AnimStop = false;
 
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
