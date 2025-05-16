@@ -22,7 +22,7 @@ void TestActor::BeginPlay()
 
 	SetHlsl(HlslNamespace::Default);
 	SetScene("character");
-	//SetAnimation("dance");
+	SetAnimation("dance");
 	Name = "Test";
 
 	OffAnimation();
@@ -35,5 +35,15 @@ void TestActor::BeginPlay()
 void TestActor::Tick(float _deltatime)
 {
 	Actor::Tick(_deltatime);
+
+	if (EngineKey::IsDown('O') == true) {
+		OnAnimation();
+	}
+
+	if (EngineKey::IsDown('I') == true) {
+		OffAnimation();
+	}
+
+	//if(EngineKey::)
 
 }

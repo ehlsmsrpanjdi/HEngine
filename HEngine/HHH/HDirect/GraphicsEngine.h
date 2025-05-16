@@ -96,6 +96,9 @@ private:
 	IDXGIAdapter* m_dxgi_adapter = nullptr;
 	IDXGIFactory* m_dxgi_factory = nullptr;
 
+	ID3D11RasterizerState* BackFaceCull = nullptr;
+	ID3D11RasterizerState* FrontFaceCull = nullptr;
+
 private:
 	HWND m_hwnd = NULL;
 

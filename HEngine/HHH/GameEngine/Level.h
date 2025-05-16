@@ -36,6 +36,7 @@ public:
 
 	void CameraMatrixUpdate(float _DeltaTime);
 	void SetMainCamera(std::string_view _Name);
+	void SetMainBackGround(std::string_view _Name);
 
 	template <typename T>
 	std::shared_ptr<T> CreateCamera(std::string_view _Name) {
@@ -47,7 +48,11 @@ public:
 		std::shared_ptr<T> Camera = std::make_shared<T>();
 		Camera->SetWorld(this);
 		AllActor.push_back(Camera);
+		Camera->BeginPlay();
 		AllCamera[str] = Camera;
+		if (MainCamera == nullptr) {
+			MainCamera = Camera.get();
+		}
 		return Camera;
 	}
 
@@ -60,8 +65,11 @@ public:
 		}
 		std::shared_ptr<T> BackGround = std::make_shared<T>();
 		BackGround->SetWorld(this);
-		AllActor.push_back(BackGround);
+		BackGround->BeginPlay();
 		AllBackGround[str] = BackGround;
+		if (MainBackGround == nullptr) {
+			MainBackGround = BackGround.get();
+		}
 		return BackGround;
 	}
 

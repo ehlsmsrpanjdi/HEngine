@@ -15,6 +15,8 @@ Level::~Level()
 {
 	AllActor.clear();
 	Collisions.clear();
+	AllBackGround.clear();
+	AllCamera.clear();
 }
 
 void Level::BeginPlay()
@@ -38,15 +40,7 @@ void Level::Tick(float _DeltaTime)
 
 void Level::Render(float _DeltaTime)
 {
-	ConstantBufferResource::SetVSConstantBuffer(0, Cbuffer::WVP);
-	ConstantBufferResource::SetVSConstantBuffer(1, Cbuffer::ANI);
-	ConstantBufferResource::SetVSConstantBuffer(2, Cbuffer::MESH);
-	ConstantBufferResource::SetVSConstantBuffer(3, Cbuffer::LIGHT);
 
-	ConstantBufferResource::SetPSConstantBuffer(0, Cbuffer::WVP);
-	ConstantBufferResource::SetPSConstantBuffer(1, Cbuffer::ANI);
-	ConstantBufferResource::SetPSConstantBuffer(2, Cbuffer::MESH);
-	ConstantBufferResource::SetPSConstantBuffer(3, Cbuffer::LIGHT);
 
 
 	for (std::shared_ptr<Actor> Act : AllActor) {
@@ -88,8 +82,26 @@ void Level::CollisionRender(float _DeltaTime)
 
 void Level::BackGroundRender(float _DeltaTime)
 {
+	ConstantBufferResource::SetVSConstantBuffer(0, Cbuffer::WVP);
+	ConstantBufferResource::SetVSConstantBuffer(1, Cbuffer::ANI);
+	ConstantBufferResource::SetVSConstantBuffer(2, Cbuffer::MESH);
+	ConstantBufferResource::SetVSConstantBuffer(3, Cbuffer::LIGHT);
+
+	ConstantBufferResource::SetPSConstantBuffer(0, Cbuffer::WVP);
+	ConstantBufferResource::SetPSConstantBuffer(1, Cbuffer::ANI);
+	ConstantBufferResource::SetPSConstantBuffer(2, Cbuffer::MESH);
+	ConstantBufferResource::SetPSConstantBuffer(3, Cbuffer::LIGHT);
+
 	CameraMatrixUpdate(_DeltaTime);
 	if (MainBackGround != nullptr) {
+		WorldMatrix = MainBackGround->GetTransform().GetWorldMatrix();
+		WVPBuffer.WorldMatrix = WorldMatrix;
+		WVPBuffer.ViewMatrix = ViewMatrix;
+		WVPBuffer.ProjectionMatrix = PerseMatrix;
+		WVPBuffer.WVPMatrix = WorldMatrix * ViewMatrix * PerseMatrix;
+		WVP* Data = &WVPBuffer;
+
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(Data), Cbuffer::WVP);
 		MainBackGround->BackGroundRender(_DeltaTime);
 	}
 }
@@ -99,6 +111,15 @@ void Level::SetMainCamera(std::string_view _Name)
 	std::string str = HString::Upper(_Name.data());
 	if (AllCamera.contains(str) == true) {
 		MainCamera = AllCamera[str].get();
+	}
+	return;
+}
+
+void Level::SetMainBackGround(std::string_view _Name)
+{
+	std::string str = HString::Upper(_Name.data());
+	if (AllBackGround.contains(str) == true) {
+		MainBackGround = AllBackGround[str].get();
 	}
 	return;
 }

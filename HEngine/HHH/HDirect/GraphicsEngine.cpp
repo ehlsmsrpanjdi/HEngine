@@ -44,13 +44,17 @@ bool GraphicsEngine::init(HWND _hwnd, RECT rc)
 
 	m_Context->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
-	//D3D11_RASTERIZER_DESC rasterDesc = {};
-	//rasterDesc.CullMode = D3D11_CULL_NONE;  // 컬링 비활성화
-	//rasterDesc.FillMode = D3D11_FILL_SOLID;
+	D3D11_RASTERIZER_DESC BackrasterDesc = {};
+	BackrasterDesc.CullMode = D3D11_CULL_BACK;  // 컬링 비활성화
+	BackrasterDesc.FillMode = D3D11_FILL_SOLID;
 
-	//ID3D11RasterizerState* rasterState;
-	//m_Device->Get()->CreateRasterizerState(&rasterDesc, &rasterState);
-	//GetContext()->Get()->RSSetState(rasterState);
+	D3D11_RASTERIZER_DESC FrontrasterDesc = {};
+	FrontrasterDesc.CullMode = D3D11_CULL_FRONT;  // 컬링 비활성화
+	FrontrasterDesc.FillMode = D3D11_FILL_SOLID;
+
+	m_Device->Get()->CreateRasterizerState(&FrontrasterDesc, &FrontFaceCull);
+	m_Device->Get()->CreateRasterizerState(&BackrasterDesc, &BackFaceCull);
+	GetContext()->Get()->RSSetState(BackFaceCull);
 
 	return true;
 }
@@ -270,7 +274,34 @@ void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh, ID3D11SamplerState* _
 
 void GraphicsEngine::SkyBoxRender(HS* _Hlsl, MH* _Mesh, ID3D11SamplerState* _Sampler)
 {
-	int a = 0;
+	UINT offset = 0;
+
+	GetContext()->Get()->RSSetState(FrontFaceCull);
+	
+	m_Context->Get()->OMSetRenderTargets(1, &m_SwapChain->m_rtv, m_DepthView->m_dsv);
+	m_Context->Get()->IASetVertexBuffers(0, 1, &_Mesh->Vertex, &_Mesh->BufferSize, &offset);
+	m_Context->Get()->IASetIndexBuffer(_Mesh->Index, DXGI_FORMAT_R32_UINT, 0);
+	m_Context->Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_Context->Get()->IASetInputLayout(_Hlsl->Layout);
+	m_Context->Get()->VSSetShader(_Hlsl->VS, nullptr, 0);
+	m_Context->Get()->PSSetShader(_Hlsl->PS, nullptr, 0);
+
+
+
+	std::string str = _Mesh->TextureName;
+	if (TextureMap->contains(str) == false) {
+		_Mesh->TextureName = "DEFAULT";
+		str = "DEFAULT";
+	}
+	ID3D11ShaderResourceView* tex = (*TextureMap)[str]->textureSRV;
+	//TextureMap->find(str)->second->textureSRV;
+	m_Context->Get()->PSSetShaderResources(0, 1, &tex);
+	m_Context->Get()->PSSetSamplers(0, 1, &_Sampler);
+	m_Context->Get()->DrawIndexed(_Mesh->IndexBufferSize, 0, 0);
+
+
+	GetContext()->Get()->RSSetState(BackFaceCull);
+
 }
 
 std::shared_ptr<FScene> GraphicsEngine::GetScene(std::string_view _str)

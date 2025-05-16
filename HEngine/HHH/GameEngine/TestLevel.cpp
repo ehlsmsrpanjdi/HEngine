@@ -15,10 +15,13 @@ TestLevel::~TestLevel()
 void TestLevel::BeginPlay()
 {
 	Level::BeginPlay();
-	SpawnActor<TestActor>()->SetActorScale(0.1f,0.1f,0.1f);
+	SpawnActor<TestActor>();
+	Actor* act = CreateBackGround<TestActor>("Sky").get();
+	act->SetActorScale(0.1f, 0.1f, 0.1f);
+
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");
-	camera->AddActorLocation(0.f, 0.f, -50.f);
+	camera->AddActorLocation(0.f, 0.f, -20.f);
 
 	CreateLight(LightType::Directional);
 
