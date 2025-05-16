@@ -30,11 +30,12 @@ public:
 	virtual void Tick(float _DeltaTime);
 	void Render(float _DeltaTime);
 	void CollisionRender(float _DeltaTime);
-	void SetMainCamera(std::string_view _Name);
+	void BackGroundRender(float _DeltaTime);
 	virtual void StartLevel();
 	virtual void EndLevel();
 
 	void CameraMatrixUpdate(float _DeltaTime);
+	void SetMainCamera(std::string_view _Name);
 
 	template <typename T>
 	std::shared_ptr<T> CreateCamera(std::string_view _Name) {
@@ -48,6 +49,20 @@ public:
 		AllActor.push_back(Camera);
 		AllCamera[str] = Camera;
 		return Camera;
+	}
+
+	template <typename T>
+	std::shared_ptr<T> CreateBackGround(std::string_view _Name) {
+		std::string str = HString::Upper(_Name.data());
+		if (AllBackGround.contains(str) == true) {
+			assert(false);
+			return nullptr;
+		}
+		std::shared_ptr<T> BackGround = std::make_shared<T>();
+		BackGround->SetWorld(this);
+		AllActor.push_back(BackGround);
+		AllBackGround[str] = BackGround;
+		return BackGround;
 	}
 
 	template <typename T>
@@ -65,6 +80,7 @@ public:
 	void CollisionCheck();
 
 	class Actor* MainCamera = nullptr;
+	class Actor* MainBackGround = nullptr;
 
 
 	WVP WVPBuffer;
@@ -80,6 +96,7 @@ protected:
 	std::unordered_map<int, std::list<std::shared_ptr<class Collision>>> Collisions;
 	std::list<std::shared_ptr<class Actor>> AllActor;
 	std::unordered_map<std::string, std::shared_ptr<class Actor>> AllCamera;
+	std::unordered_map<std::string, std::shared_ptr<class Actor>> AllBackGround;
 private:
 
 };

@@ -49,7 +49,6 @@ void Level::Render(float _DeltaTime)
 	ConstantBufferResource::SetPSConstantBuffer(3, Cbuffer::LIGHT);
 
 
-	CameraMatrixUpdate(_DeltaTime);
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		if (Act->GetScene() == nullptr) {
 			continue;
@@ -68,7 +67,6 @@ void Level::Render(float _DeltaTime)
 
 void Level::CollisionRender(float _DeltaTime)
 {
-	CameraMatrixUpdate(_DeltaTime);
 	for (auto& [index, element] : Collisions) {
 		for (std::shared_ptr<Collision> Col : element) {
 			if (Col->GetScene() == nullptr) {
@@ -86,6 +84,14 @@ void Level::CollisionRender(float _DeltaTime)
 	}
 
 
+}
+
+void Level::BackGroundRender(float _DeltaTime)
+{
+	CameraMatrixUpdate(_DeltaTime);
+	if (MainBackGround != nullptr) {
+		MainBackGround->BackGroundRender(_DeltaTime);
+	}
 }
 
 void Level::SetMainCamera(std::string_view _Name)

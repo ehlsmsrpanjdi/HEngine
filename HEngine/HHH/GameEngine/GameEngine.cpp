@@ -57,6 +57,8 @@ void GameEngine::Update(float _DeltaTime)
 
 	GraphicsEngine::get()->Clear(1.0f, 0.5, 0.5, 1.0f);
 
+	SelectedLevel->BackGroundRender(_DeltaTime);
+
 	SelectedLevel->Render(_DeltaTime);
 
 	SelectedLevel->CollisionRender(_DeltaTime);

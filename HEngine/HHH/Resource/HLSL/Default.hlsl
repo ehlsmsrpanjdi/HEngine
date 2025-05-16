@@ -3,7 +3,7 @@ struct VS_INPUT
     float4 position : POSITION;
     float2 Textcoord : TEXCOORD;
     float2 Padding : PADDING;
-    float3 normal : NORMAL;
+    float4 normal : NORMAL;
     uint boneIndices[4] : BONEINDICES;
     float boneWeights[4] : BONEWEIGHTS;
 };

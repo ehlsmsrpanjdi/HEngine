@@ -62,6 +62,14 @@ void Actor::Render(float _DeltaTime)
 
 }
 
+void Actor::BackGroundRender(float _DeltaTime)
+{
+	for (std::pair<const std::string, std::shared_ptr<MH>>& mesh : ActorScene->Meshs) {
+		ConstantBufferResource::UpdateConstantBuffer(static_cast<void*>(&mesh.second->MeshMatrix), Cbuffer::MESH);
+		GraphicsEngine::get()->SkyBoxRender(Hlsl, mesh.second.get(), Sampler);
+	}
+}
+
 void Actor::AddActorLocation(float _x, float _y, float _z)
 {
 	ActorTransform.AddLocation(_x, _y, _z);

@@ -268,6 +268,11 @@ void GraphicsEngine::CollisionRender(HS* _Hlsl, MH* _Mesh, ID3D11SamplerState* _
 
 }
 
+void GraphicsEngine::SkyBoxRender(HS* _Hlsl, MH* _Mesh, ID3D11SamplerState* _Sampler)
+{
+	int a = 0;
+}
+
 std::shared_ptr<FScene> GraphicsEngine::GetScene(std::string_view _str)
 {
 	return EngineScene::Get().GetScene(_str);

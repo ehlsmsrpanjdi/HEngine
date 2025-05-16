@@ -66,7 +66,7 @@ public:
 
 	void Render(struct HS* _Hlsl, struct MH* _Mesh, ID3D11SamplerState* _Sampler);
 	void CollisionRender(struct HS* _Hlsl, struct MH* _Mesh, ID3D11SamplerState* _Sampler);
-
+	void SkyBoxRender(struct HS* _Hlsl, struct MH* _Mesh, ID3D11SamplerState* _Sampler);
 
 #pragma region "╟тем"
 	std::shared_ptr<class FScene> GetScene(std::string_view _str);
