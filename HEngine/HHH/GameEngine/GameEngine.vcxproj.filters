@@ -27,9 +27,6 @@
     <ClInclude Include="Actor.h">
       <Filter>Actor</Filter>
     </ClInclude>
-    <ClInclude Include="WoodenBox.h">
-      <Filter>Actor\Client</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Collision</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
     <ClInclude Include="TestActor.h">
       <Filter>Actor\Client</Filter>
     </ClInclude>
-    <ClInclude Include="TestTestActor.h">
-      <Filter>Actor\Client</Filter>
-    </ClInclude>
     <ClInclude Include="LightActor.h">
       <Filter>Actor</Filter>
     </ClInclude>
@@ -58,9 +52,6 @@
     </ClCompile>
     <ClCompile Include="Actor.cpp">
       <Filter>Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="WoodenBox.cpp">
-      <Filter>Actor\Client</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Collision</Filter>
@@ -75,9 +66,6 @@
       <Filter>Level\Client</Filter>
     </ClCompile>
     <ClCompile Include="TestActor.cpp">
-      <Filter>Actor\Client</Filter>
-    </ClCompile>
-    <ClCompile Include="TestTestActor.cpp">
       <Filter>Actor\Client</Filter>
     </ClCompile>
     <ClCompile Include="LightActor.cpp">

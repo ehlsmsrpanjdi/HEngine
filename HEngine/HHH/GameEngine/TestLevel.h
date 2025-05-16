@@ -18,7 +18,6 @@ public:
 	void Tick(float _DeltaTime) override;
 
 
-	class MainPlayer* Player = nullptr;
 protected:
 
 private:

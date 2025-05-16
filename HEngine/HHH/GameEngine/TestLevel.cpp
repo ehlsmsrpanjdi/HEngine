@@ -2,7 +2,6 @@
 #include <EngineHelper/EngineKey.h>
 #include "MainPlayer.h"
 #include "TestActor.h"
-#include "TestTestActor.h"
 #include "LightActor.h"
 
 TestLevel::TestLevel()
@@ -16,11 +15,10 @@ TestLevel::~TestLevel()
 void TestLevel::BeginPlay()
 {
 	Level::BeginPlay();
-	//Player = SpawnActor<MainPlayer>().get();
-	SpawnActor<TestActor>()->AddActorLocation(100.f);
+	SpawnActor<TestActor>()->SetActorScale(0.1f,0.1f,0.1f);
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");
-	camera->AddActorLocation(100.f, 0.f, -50.f);
+	camera->AddActorLocation(0.f, 0.f, -50.f);
 
 	CreateLight(LightType::Directional);
 
