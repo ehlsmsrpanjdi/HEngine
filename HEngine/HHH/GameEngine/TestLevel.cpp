@@ -15,7 +15,7 @@ TestLevel::~TestLevel()
 void TestLevel::BeginPlay()
 {
 	Level::BeginPlay();
-	SpawnActor<TestActor>();
+	SpawnActor<MainPlayer>();
 	Actor* act = CreateBackGround<TestActor>("Sky").get();
 	act->SetActorScale(0.1f, 0.1f, 0.1f);
 
