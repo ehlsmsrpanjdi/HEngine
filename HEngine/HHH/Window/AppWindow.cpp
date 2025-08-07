@@ -1,4 +1,4 @@
-#include "Window/AppWindow.h"
+ï»¿#include "Window/AppWindow.h"
 #include "EngineHelper/EngineFile.h"
 #include "EngineHelper/EngineTime.h"
 #include "EngineHelper/EngineKey.h"
@@ -33,7 +33,7 @@ void AppWindow::onCreate()
 
 	FileManager->Move_parent();
 	if (false == FileManager->MovetoFile("Resource")) {
-		EngineDebug::Error("¾ø´Â°æ·Î·Î ÀÌµ¿ÇÔ");
+		EngineDebug::Error("ì—†ëŠ”ê²½ë¡œë¡œ ì´ë™í•¨");
 	}
 	FileManager->AllExtendFileRecursive();
 
@@ -53,7 +53,6 @@ void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 	KeyManager->Update();
-	
 	EngineKey::MouseX = -MouseForceX;
 	EngineKey::MouseY = -MouseForceY;
 	

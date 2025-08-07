@@ -1,4 +1,4 @@
-#include "MainPlayer.h"
+﻿#include "MainPlayer.h"
 #include "HDirect/GraphicsEngine.h"
 #include "HDirect/EngineScene.h"
 #include "HDirect/EngineAnimatinSkeleton.h"
@@ -6,6 +6,7 @@
 #include "memory"
 #include "EngineHelper/EngineTransform.h"
 #include <HDirect/EngineHlslResource.h>
+#include "EngineHelper/EngineKey.h"
 
 MainPlayer::MainPlayer()
 {
@@ -49,9 +50,19 @@ void MainPlayer::BeginPlay()
 	//	});
 }
 
-void MainPlayer::Tick(float _deltatime)
+void MainPlayer::Tick(float _Deltatime)
 {
-	Actor::Tick(_deltatime);
-	//AddActorLocation(10.f * _deltatime);
+	Actor::Tick(_Deltatime);
+	if (EngineKey::IsPressed('W')) {
+		Move(0.0f, 0.0f, 10.f * _Deltatime);
+	}
+	if (EngineKey::IsPressed('S')) {
+		Move(0.0f, 0.0f, -10.f * _Deltatime);
+	}
+	if (EngineKey::IsPressed('A')) {
+		Move(-10.f * _Deltatime, 0.0f, 0.0f);
+	}
+	if (EngineKey::IsPressed('D')) {
+		Move(10.f * _Deltatime, 0.0f, 0.0f);
+	}
 }
-

@@ -1,4 +1,4 @@
-#include "EngineFMesh.h"
+ï»¿#include "EngineFMesh.h"
 #include "AllStruct.h"
 #include "EngineAnimation.h"
 
@@ -56,32 +56,32 @@ void EngineFMesh::init(FbxNode* pNode)
 	if (uvs->GetMappingMode() == FbxLayerElement::eByPolygonVertex) {
 
 		for (int i = 0; i < PolygonCount; ++i) {
-			int polygonSize = pMesh->GetPolygonSize(i); // ÀÌ Æú¸®°ïÀÌ ¸î °³ÀÇ Á¤Á¡À» °¡Áö´ÂÁö
+			int polygonSize = pMesh->GetPolygonSize(i); // ì´ í´ë¦¬ê³¤ì´ ëª‡ ê°œì˜ ì •ì ì„ ê°€ì§€ëŠ”ì§€
 
-			for (int j = 0; j < polygonSize - 2; ++j) {		//index ÃßÃâ
+			for (int j = 0; j < polygonSize - 2; ++j) {		//index ì¶”ì¶œ
 				indices.push_back(totalVertexCount + 0);
 				indices.push_back(totalVertexCount + j + 1);
 				indices.push_back(totalVertexCount + j + 2);
 			}
 
 			for (int j = 0; j < polygonSize; ++j) {
-				int index = pMesh->GetPolygonVertex(i, j); //ÀÌ°Ç 
+				int index = pMesh->GetPolygonVertex(i, j); //ì´ê±´ 
 				/*
-				* n¹øÂ° Æú¸®°ïÀÇ m¹øÂ° Á¤Á¡À» °¡¸®Å°´Â ÄÁÆ®·Ñ Æ÷ÀÎÆ® ÀÎµ¦½º¸¦ ¹İÈ¯ÇÏ´Âµ¥
-				* control points´Â ¸ğµ¨ÀÇ ¸ğµç °íÀ¯ÇÑ À§Ä¡ ÁÂÇ¥µé (Áßº¹Á¦°Å)
-				*  polygon vertex ¾î¶² ÄÁÆ®·Ñ Æ÷ÀÎÆ®¸¦ »ç¿ëÇØ¼­ Æú¸®°ïÀÇ ²ÀÁşÁ¡À» ±¸¼ºÇÒÁö¸¦ ÁöÁ¤ ÇÑ´Ù°íÇÏ´Âµ¥
-				*  getpolygonvertex(n,m)Àº ÀÌ Æú¸®°ïÀÇ m¹øÀç ²ÀÁöÁ¡Àº control pointÀÇ ¸î ¹øÀ» »ç¿ëÇÏ´Â°¡? ¿¡ ´ëÇÑ ¶æÀÓ
+				* në²ˆì§¸ í´ë¦¬ê³¤ì˜ më²ˆì§¸ ì •ì ì„ ê°€ë¦¬í‚¤ëŠ” ì»¨íŠ¸ë¡¤ í¬ì¸íŠ¸ ì¸ë±ìŠ¤ë¥¼ ë°˜í™˜í•˜ëŠ”ë°
+				* control pointsëŠ” ëª¨ë¸ì˜ ëª¨ë“  ê³ ìœ í•œ ìœ„ì¹˜ ì¢Œí‘œë“¤ (ì¤‘ë³µì œê±°)
+				*  polygon vertex ì–´ë–¤ ì»¨íŠ¸ë¡¤ í¬ì¸íŠ¸ë¥¼ ì‚¬ìš©í•´ì„œ í´ë¦¬ê³¤ì˜ ê¼­ì§“ì ì„ êµ¬ì„±í• ì§€ë¥¼ ì§€ì • í•œë‹¤ê³ í•˜ëŠ”ë°
+				*  getpolygonvertex(n,m)ì€ ì´ í´ë¦¬ê³¤ì˜ më²ˆì¬ ê¼­ì§€ì ì€ control pointì˜ ëª‡ ë²ˆì„ ì‚¬ìš©í•˜ëŠ”ê°€? ì— ëŒ€í•œ ëœ»ì„
 				*/
 
 
 				FbxVector4 pos = pMesh->GetControlPointAt(index);
-				//pos = tempmatrix.MultT(pos);			//¿©·¯°³ÀÇ ¸Ş½¬°¡ ÀÖÀ» ¶§ À§Ä¡ ÀÌµ¿
+				//pos = tempmatrix.MultT(pos);			//ì—¬ëŸ¬ê°œì˜ ë©”ì‰¬ê°€ ìˆì„ ë•Œ ìœ„ì¹˜ ì´ë™
 				buffer.position = DirectX::XMFLOAT4(static_cast<float>(pos[0]), static_cast<float>(pos[1]), static_cast<float>(pos[2]), 1.0f);
-				buffer.controlpointindex = index;		//¹öÅØ½º°¡ ¿©·¯°³Áö¸¸, ÀÎµ¦½º»ó °°Àº À§Ä¡¿¡ ÀÖÀ» ¼ö ÀÖÀ½ ÄÁÆ®·Ñ Æ÷ÀÎÆ® »ó À§Ä¡
-				// ÄÁÆ®·Ñ Æ÷ÀÎÆ®´Â ¹öÅØ½º ¹öÆÛ°¡ ¾Æ´Ï¶ó ½ÇÁ¦ °ãÄ¡´Â Á¡À» Á¦¿ÜÇÑ ¸ğµç Á¡ÀÇ °³¼ö
-				// ÀÌ°Å index¸¦ ÀúÀåÇÏ´Â ÀÌÀ¯´Â ÇØ´ç ¹öÆÛ°¡ ¸î ¹øÂ°ÀÇ »À¿Í ¿¬°áµÇ¾îÀÖ´ÂÁö ¾Ë±â À§ÇØ¼­
+				buffer.controlpointindex = index;		//ë²„í…ìŠ¤ê°€ ì—¬ëŸ¬ê°œì§€ë§Œ, ì¸ë±ìŠ¤ìƒ ê°™ì€ ìœ„ì¹˜ì— ìˆì„ ìˆ˜ ìˆìŒ ì»¨íŠ¸ë¡¤ í¬ì¸íŠ¸ ìƒ ìœ„ì¹˜
+				// ì»¨íŠ¸ë¡¤ í¬ì¸íŠ¸ëŠ” ë²„í…ìŠ¤ ë²„í¼ê°€ ì•„ë‹ˆë¼ ì‹¤ì œ ê²¹ì¹˜ëŠ” ì ì„ ì œì™¸í•œ ëª¨ë“  ì ì˜ ê°œìˆ˜
+				// ì´ê±° indexë¥¼ ì €ì¥í•˜ëŠ” ì´ìœ ëŠ” í•´ë‹¹ ë²„í¼ê°€ ëª‡ ë²ˆì§¸ì˜ ë¼ˆì™€ ì—°ê²°ë˜ì–´ìˆëŠ”ì§€ ì•Œê¸° ìœ„í•´ì„œ
 				// 
-				//uvIndex´Â PolygonVertex ±âÁØÀ¸·Î °è»ê
+				//uvIndexëŠ” PolygonVertex ê¸°ì¤€ìœ¼ë¡œ ê³„ì‚°
 				int polygonVertexIndex = totalVertexCount + j;
 
 				int uvIndex = uvs->GetIndexArray().GetAt(polygonVertexIndex);
@@ -102,19 +102,20 @@ void EngineFMesh::init(FbxNode* pNode)
 
 				FbxVector4 normal;
 
-				if (normals->GetMappingMode() == FbxLayerElement::eByControlPoint) {
-					normal = normals->GetDirectArray().GetAt(index); // control point index
-				}
-				else if (normals->GetMappingMode() == FbxLayerElement::eByPolygonVertex) {
-					normal = normals->GetDirectArray().GetAt(polygonVertexIndex); // polygon vertex index
-				}
-				else {
-					assert(false && "Unsupported normal mapping mode");
+				if (normals != nullptr) {
+					if (normals->GetMappingMode() == FbxLayerElement::eByControlPoint) {
+						normal = normals->GetDirectArray().GetAt(index); // control point index
+					}
+					else if (normals->GetMappingMode() == FbxLayerElement::eByPolygonVertex) {
+						normal = normals->GetDirectArray().GetAt(polygonVertexIndex); // polygon vertex index
+					}
+					else {
+						assert(false && "Unsupported normal mapping mode");
+					}
+					buffer.Normal = DirectX::XMFLOAT3(static_cast<float>(normal[0]), static_cast<float>(normal[1]), static_cast<float>(normal[2]));
+					vertices.push_back(buffer);
 				}
 
-				buffer.Normal = DirectX::XMFLOAT3(static_cast<float>(normal[0]), static_cast<float>(normal[1]), static_cast<float>(normal[2]));
-
-				vertices.push_back(buffer);
 			}
 			totalVertexCount += polygonSize;
 		}

@@ -173,6 +173,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BoxActor.h" />
     <ClInclude Include="Collision.h">
       <SubType>
       </SubType>
@@ -193,7 +194,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="TestActor.h">
+    <ClInclude Include="SkyActor.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -207,6 +208,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BoxActor.cpp" />
     <ClCompile Include="Collision.cpp">
       <SubType>
       </SubType>
@@ -227,7 +229,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="TestActor.cpp">
+    <ClCompile Include="SkyActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
