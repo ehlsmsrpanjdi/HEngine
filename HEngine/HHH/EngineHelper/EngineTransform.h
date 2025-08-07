@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include "DirectXMath.h"
 //#include "fbxsdk.h"
@@ -14,11 +14,11 @@ public:
 	}
 	~EngineTransform();
 
-	// À§Ä¡ (Translation)
+	// ìœ„ì¹˜ (Translation)
 	XMFLOAT3 position;
-	// È¸Àü (Rotation)
+	// íšŒì „ (Rotation)
 	XMFLOAT4 rotation;
-	// Å©±â (Scale)
+	// í¬ê¸° (Scale)
 	XMFLOAT3 scale;
 
 	XMMATRIX Identity() {
@@ -33,15 +33,15 @@ public:
 		float projA = 0.0f;
 		float projB = 0.0f;
 
-		// A¹Ú½ºÀÇ ¹İ»çÀÌÁî Åõ¿µ ÇÕ
+		// Aë°•ìŠ¤ì˜ ë°˜ì‚¬ì´ì¦ˆ íˆ¬ì˜ í•©
 		for (int i = 0; i < 3; ++i)
 			projA += fabs(XMVectorGetX(XMVector3Dot(axis, axisA[i]))) * halfA[i];
 
-		// B¹Ú½ºÀÇ ¹İ»çÀÌÁî Åõ¿µ ÇÕ
+		// Bë°•ìŠ¤ì˜ ë°˜ì‚¬ì´ì¦ˆ íˆ¬ì˜ í•©
 		for (int i = 0; i < 3; ++i)
 			projB += fabs(XMVectorGetX(XMVector3Dot(axis, axisB[i]))) * halfB[i];
 
-		// Áß½É º¤ÅÍ DÀÇ Åõ¿µ
+		// ì¤‘ì‹¬ ë²¡í„° Dì˜ íˆ¬ì˜
 		float centerDist = fabs(XMVectorGetX(XMVector3Dot(axis, D)));
 
 		return centerDist <= (projA + projB);
@@ -53,14 +53,14 @@ public:
 
 	EngineTransform CombineWithParent(const EngineTransform& parent) const
 	{
-		// 1. µÎ TransformÀ» °¢°¢ Çà·Ä·Î º¯È¯
-		XMMATRIX parentMat = parent.GetWorldMatrix(); // ºÎ¸ğ ¿ùµå Çà·Ä
-		XMMATRIX localMat = this->GetWorldMatrix();   // ÀÚ±â ÀÚ½ÅÀÇ ·ÎÄÃ Çà·Ä
+		// 1. ë‘ Transformì„ ê°ê° í–‰ë ¬ë¡œ ë³€í™˜
+		XMMATRIX parentMat = parent.GetWorldMatrix(); // ë¶€ëª¨ ì›”ë“œ í–‰ë ¬
+		XMMATRIX localMat = this->GetWorldMatrix();   // ìê¸° ìì‹ ì˜ ë¡œì»¬ í–‰ë ¬
 
-		// 2. Çà·Ä °ö: Local * Parent
+		// 2. í–‰ë ¬ ê³±: Local * Parent
 		XMMATRIX combinedMat = localMat * parentMat;
 
-		// 3. °á°ú Çà·Ä¿¡¼­ ´Ù½Ã position, rotation, scaleÀ» ÃßÃâ
+		// 3. ê²°ê³¼ í–‰ë ¬ì—ì„œ ë‹¤ì‹œ position, rotation, scaleì„ ì¶”ì¶œ
 		EngineTransform result;
 		XMVECTOR scale, rotationQuat, translation;
 		XMMatrixDecompose(&scale, &rotationQuat, &translation, combinedMat);
@@ -97,20 +97,20 @@ public:
 	}
 
 	void AddRotation(float _x, float _y = 0, float _z = 0) {
-		// È¸Àü °¢µµ¸¦ ÄõÅÍ´Ï¾ğÀ¸·Î º¯È¯
+		// íšŒì „ ê°ë„ë¥¼ ì¿¼í„°ë‹ˆì–¸ìœ¼ë¡œ ë³€í™˜
 		XMVECTOR additionalRotationX = XMQuaternionRotationRollPitchYaw(_x, 0.0f, 0.0f);
 		XMVECTOR additionalRotationY = XMQuaternionRotationRollPitchYaw(0.0f, _y, 0.0f);
 		XMVECTOR additionalRotationZ = XMQuaternionRotationRollPitchYaw(0.0f, 0.0f, _z);
 
-		// ÇöÀç È¸ÀüÀ» ·Îµå
+		// í˜„ì¬ íšŒì „ì„ ë¡œë“œ
 		XMVECTOR currentRotation = XMLoadFloat4(&rotation);
 
-		// ÄõÅÍ´Ï¾ğ °ö¼ÀÀ» »ç¿ëÇÏ¿© È¸ÀüÀ» ´©Àû
+		// ì¿¼í„°ë‹ˆì–¸ ê³±ì…ˆì„ ì‚¬ìš©í•˜ì—¬ íšŒì „ì„ ëˆ„ì 
 		XMVECTOR newRotation = XMQuaternionMultiply(currentRotation, additionalRotationX);
 		newRotation = XMQuaternionMultiply(newRotation, additionalRotationY);
 		newRotation = XMQuaternionMultiply(newRotation, additionalRotationZ);
 
-		// °á°ú¸¦ ÀúÀå
+		// ê²°ê³¼ë¥¼ ì €ì¥
 		XMStoreFloat4(&rotation, newRotation);
 	}
 
@@ -143,20 +143,32 @@ public:
 		scale = XMFLOAT3(_x, _y, _z);
 	}
 
-	// °¢ º¯È¯ Çà·ÄÀ» °³º°ÀûÀ¸·Î °è»êÇÏ°í, ÃÖÁ¾ ¿ùµå Çà·ÄÀ» ¹İÈ¯
+	XMFLOAT3 GetLocation() {
+		return position;
+	}
+
+	XMFLOAT4 GetRotation() {
+		return rotation;
+	}
+
+	XMFLOAT3 GetScale() {
+		return scale;
+	}
+
+	// ê° ë³€í™˜ í–‰ë ¬ì„ ê°œë³„ì ìœ¼ë¡œ ê³„ì‚°í•˜ê³ , ìµœì¢… ì›”ë“œ í–‰ë ¬ì„ ë°˜í™˜
 	XMMATRIX GetWorldMatrix() const
 	{
-		// 1. Translation Çà·Ä °è»ê
+		// 1. Translation í–‰ë ¬ ê³„ì‚°
 		XMMATRIX translationMat = XMMatrixTranslation(position.x, position.y, position.z);
 
-		// 2. Rotation Çà·Ä °è»ê (QuaternionÀ» »ç¿ë)
+		// 2. Rotation í–‰ë ¬ ê³„ì‚° (Quaternionì„ ì‚¬ìš©)
 		XMVECTOR quaternion = XMLoadFloat4(&rotation);
 		XMMATRIX rotationMat = XMMatrixRotationQuaternion(quaternion);
 
-		// 3. Scale Çà·Ä °è»ê
+		// 3. Scale í–‰ë ¬ ê³„ì‚°
 		XMMATRIX scaleMat = XMMatrixScaling(scale.x, scale.y, scale.z);
 
-		// Scale * Rotation * Translation ¼ø¼­·Î °öÇÏ±â
+		// Scale * Rotation * Translation ìˆœì„œë¡œ ê³±í•˜ê¸°
 		return scaleMat * rotationMat * translationMat; // S * R * T
 	}
 
@@ -164,7 +176,7 @@ public:
 		XMVECTOR determinant;
 		XMMATRIX inverseMatrix = DirectX::XMMatrixInverse(&determinant, GetWorldMatrix());
 
-		// Çà·Ä½ÄÀÌ 0ÀÎ °æ¿ì
+		// í–‰ë ¬ì‹ì´ 0ì¸ ê²½ìš°
 		if (XMVectorGetX(determinant) == 0.0f) {
 			return XMMATRIX();
 		}
@@ -174,22 +186,22 @@ public:
 	}
 
 	XMMATRIX GetViewMatrix() const {
-		// Ä«¸Ş¶óÀÇ À§Ä¡
+		// ì¹´ë©”ë¼ì˜ ìœ„ì¹˜
 		XMVECTOR eyePosition = XMLoadFloat3(&position);
 
-		// Ä«¸Ş¶óÀÇ È¸Àü (ÄõÅÍ´Ï¾ğ)
+		// ì¹´ë©”ë¼ì˜ íšŒì „ (ì¿¼í„°ë‹ˆì–¸)
 		XMVECTOR quaternion = XMLoadFloat4(&rotation);
         XMMATRIX rotationMatrix = DirectX::XMMatrixRotationQuaternion(quaternion);
 
-		// Ä«¸Ş¶óÀÇ ¹æÇâ º¤ÅÍ (±âº»ÀûÀ¸·Î -Z ¹æÇâ)
+		// ì¹´ë©”ë¼ì˜ ë°©í–¥ ë²¡í„° (ê¸°ë³¸ì ìœ¼ë¡œ -Z ë°©í–¥)
 		XMVECTOR forward = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
 		forward = XMVector3Transform(forward, rotationMatrix);
 
-		// Ä«¸Ş¶óÀÇ ¾÷ º¤ÅÍ (±âº»ÀûÀ¸·Î Y ¹æÇâ)
+		// ì¹´ë©”ë¼ì˜ ì—… ë²¡í„° (ê¸°ë³¸ì ìœ¼ë¡œ Y ë°©í–¥)
 		XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 		up = XMVector3Transform(up, rotationMatrix);
 
-		// ºä Çà·Ä °è»ê
+		// ë·° í–‰ë ¬ ê³„ì‚°
 		return DirectX::XMMatrixLookToLH(eyePosition, forward, up);
 	}
 
@@ -198,16 +210,16 @@ public:
 	}
 
 	void Move(float x, float y, float z) {
-		// 1. È¸Àü Çà·Ä °¡Á®¿À±â
+		// 1. íšŒì „ í–‰ë ¬ ê°€ì ¸ì˜¤ê¸°
 		XMMATRIX rotationMatrix = GetRotationMatrix(rotation);
 
-		// 2. ÀÔ·Â ÀÌµ¿ º¤ÅÍ »ı¼º (·ÎÄÃ ±âÁØ)
+		// 2. ì…ë ¥ ì´ë™ ë²¡í„° ìƒì„± (ë¡œì»¬ ê¸°ì¤€)
 		XMVECTOR localMovement = XMVectorSet(x, y, z, 0);
 
-		// 3. È¸Àü Àû¿ë (·ÎÄÃ ¡æ ¿ùµå º¯È¯)
+		// 3. íšŒì „ ì ìš© (ë¡œì»¬ â†’ ì›”ë“œ ë³€í™˜)
 		XMVECTOR worldMovement = XMVector3TransformNormal(localMovement, rotationMatrix);
 
-		// 4. º¯È¯µÈ ÀÌµ¿ º¤ÅÍ¸¦ À§Ä¡¿¡ Àû¿ë
+		// 4. ë³€í™˜ëœ ì´ë™ ë²¡í„°ë¥¼ ìœ„ì¹˜ì— ì ìš©
 		XMFLOAT3 movement;
 		XMStoreFloat3(&movement, worldMovement);
 		position.x += movement.x;
@@ -216,20 +228,20 @@ public:
 	}
 
 	void Rotate(float _x, float _y = 0, float _z = 0) {
-		// X, Y, Z °¢°¢ÀÇ ÃàÀ» ±âÁØÀ¸·Î È¸Àü ÄõÅÍ´Ï¾ğ »ı¼º
-		XMVECTOR additionalRotationX = XMQuaternionRotationAxis(XMVectorSet(1, 0, 0, 0), _y); // XÃà (Pitch)
-		XMVECTOR additionalRotationY = XMQuaternionRotationAxis(XMVectorSet(0, 1, 0, 0), _x); // YÃà (Yaw)
-		XMVECTOR additionalRotationZ = XMQuaternionRotationAxis(XMVectorSet(0, 0, 1, 0), _z); // ZÃà (Roll)
+		// X, Y, Z ê°ê°ì˜ ì¶•ì„ ê¸°ì¤€ìœ¼ë¡œ íšŒì „ ì¿¼í„°ë‹ˆì–¸ ìƒì„±
+		XMVECTOR additionalRotationX = XMQuaternionRotationAxis(XMVectorSet(1, 0, 0, 0), _x); // Xì¶• (Pitch)
+		XMVECTOR additionalRotationY = XMQuaternionRotationAxis(XMVectorSet(0, 1, 0, 0), _y); // Yì¶• (Yaw)
+		XMVECTOR additionalRotationZ = XMQuaternionRotationAxis(XMVectorSet(0, 0, 1, 0), _z); // Zì¶• (Roll)
 
-		// ÇöÀç È¸ÀüÀ» ·Îµå
+		// í˜„ì¬ íšŒì „ì„ ë¡œë“œ
 		XMVECTOR currentRotation = XMLoadFloat4(&rotation);
 
-		// ·ÎÄÃ È¸Àü Àû¿ë (Ãß°¡ È¸Àü * ±âÁ¸ È¸Àü ¼ø¼­)
+		// ë¡œì»¬ íšŒì „ ì ìš© (ì¶”ê°€ íšŒì „ * ê¸°ì¡´ íšŒì „ ìˆœì„œ)
 		XMVECTOR newRotation = XMQuaternionMultiply(additionalRotationZ, currentRotation); // Roll
 		newRotation = XMQuaternionMultiply(additionalRotationX, newRotation); // Pitch
 		newRotation = XMQuaternionMultiply(additionalRotationY, newRotation); // Yaw
 
-		// °á°ú ÀúÀå
+		// ê²°ê³¼ ì €ì¥
 		XMStoreFloat4(&rotation, newRotation);
 	}
 };

@@ -1,4 +1,4 @@
-#include "Actor.h"
+﻿#include "Actor.h"
 #include "HDirect/EngineHlsl.h"
 #include "HDirect/EngineScene.h"
 #include "HDirect/GraphicsEngine.h"
@@ -98,6 +98,21 @@ void Actor::SetActorScale(float _x, float _y, float _z)
 void Actor::SetActorRotation(float _x, float _y, float _z)
 {
 	ActorTransform.SetRotation(XMFLOAT4(_x, _y, _z, 1.f));
+}
+
+XMFLOAT3 Actor::GetActorLocation()
+{
+	return ActorTransform.GetLocation();
+}
+
+XMFLOAT4 Actor::GetActorRotation()
+{
+	return ActorTransform.GetRotation();
+}
+
+XMFLOAT3 Actor::GetActorScale()
+{
+	return ActorTransform.GetScale();
 }
 
 void Actor::Move(float _x, float _y, float _z)

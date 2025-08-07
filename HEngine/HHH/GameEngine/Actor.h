@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include "EngineHelper/EngineTransform.h"
 #include "unordered_map"
 #include "iostream"
 
-// ¼³¸í :
+// ì„¤ëª… :
 class Actor
 {
 public:
@@ -29,6 +29,10 @@ public:
 	void SetActorLocation(float _x, float _y, float _z);
 	void SetActorScale(float _x, float _y, float _z);
 	void SetActorRotation(float _x, float _y, float _z);
+
+	XMFLOAT3 GetActorLocation();
+	XMFLOAT4 GetActorRotation();
+	XMFLOAT3 GetActorScale();
 
 	void Move(float _x, float _y, float _z);
 	void Rotate(float _x, float _y, float _z);
@@ -70,12 +74,12 @@ protected:
 	EngineTransform ActorTransform = EngineTransform();
 	struct HS* Hlsl = nullptr;
 	std::vector<DirectX::XMMATRIX> outBoneMatrices;
-	//ºô¸°°Í
+	//ë¹Œë¦°ê²ƒ
 	std::shared_ptr<class FScene> ActorScene;
 
 	class Level* World = nullptr;
 
-	//ºô¸°°Å
+	//ë¹Œë¦°ê±°
 	class ID3D11SamplerState* Sampler = nullptr;
 
 	std::vector<std::vector<struct KeyFrame>>* SeletedFrame = nullptr;

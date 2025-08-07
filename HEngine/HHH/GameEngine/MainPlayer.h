@@ -1,6 +1,6 @@
-#pragma once
+ο»Ώ#pragma once
 #include "Actor.h"
-// Ό³Έν :
+// μ„¤λª… :
 class MainPlayer : public Actor
 {
 public:
@@ -18,7 +18,18 @@ public:
 	void Tick(float _deltatime) override;
 protected:
 
+	void SetPlayerAnimation(const std::string& _string);
+	void CalculateFirction();
+
+	float ForwardSpeed = 0.f;
+	float LeftSpeed = 0.f;
 private:
 	Collision* boxcollision = nullptr;
+
+	std::string CurrentAnimationName;
+
+	const std::string IdleAnimationName = "Idle";
+	const std::string RunAnimationName = "Run";
+	const std::string JumpAnimationName = "Jump";
 };
 

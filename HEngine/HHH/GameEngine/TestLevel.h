@@ -1,6 +1,6 @@
-#pragma once
+ο»Ώ#pragma once
 #include "Level.h"
-// Ό³Έν :
+// μ„¤λª… :
 class TestLevel : public Level
 {
 public:
@@ -21,6 +21,6 @@ public:
 protected:
 
 private:
-
+	std::shared_ptr<class MainPlayer> mainPlayer = nullptr;
 };
 

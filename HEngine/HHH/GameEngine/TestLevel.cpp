@@ -16,18 +16,22 @@ TestLevel::~TestLevel()
 void TestLevel::BeginPlay()
 {
 	Level::BeginPlay();
-	std::shared_ptr<MainPlayer> player = SpawnActor<MainPlayer>();
+	mainPlayer = SpawnActor<MainPlayer>();
 	Actor* act = CreateBackGround<SkyActor>("Sky").get();
 	act->SetActorScale(0.0001f, 0.0001f, 0.0001f);
 
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");
-	camera->SetRoot(player.get());
+	camera->SetRoot(mainPlayer.get());
 	camera->SetActorScale(10.f, 10.f, 10.f);
 	camera->AddActorLocation(0.f, 200.f, -200.f);
 
-	std::shared_ptr<BoxActor> box = SpawnActor<BoxActor>();
-	box->SetActorScale(0.1f, 0.1f, 0.1f);
+	std::shared_ptr<BoxActor> box_1 = SpawnActor<BoxActor>();
+	box_1->SetActorScale(0.1f, 0.1f, 0.1f);
+
+	std::shared_ptr<BoxActor> box_2 = SpawnActor<BoxActor>();
+	box_2->SetActorScale(0.1f, 0.1f, 0.1f);
+	box_2->AddActorLocation(0, 0, 100);
 
 	CreateLight(LightType::Directional);
 
@@ -50,9 +54,8 @@ void TestLevel::Tick(float _DeltaTime)
 	//	MainCamera->Move(10.f * _DeltaTime, 0.0f, 0.0f);
 	//}
 
-	//if (EngineKey::IsPressed(VK_RBUTTON)) {
-	//	MainCamera->Rotate(EngineKey::MouseX * _DeltaTime, EngineKey::MouseY * _DeltaTime, 0.f);
-	//}
+	//x축 마우스가 움직여야 y축으로 움직여야하니까 x축으로 넣어야함 ㅋㅋㅋ;; 
+	mainPlayer->Rotate(0.f, EngineKey::MouseX * _DeltaTime, 0.f);
 
 }
 

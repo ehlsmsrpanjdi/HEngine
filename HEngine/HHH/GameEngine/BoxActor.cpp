@@ -14,8 +14,8 @@ void BoxActor::BeginPlay()
 	Actor::BeginPlay();
 
 	SetHlsl(HlslNamespace::NoneAnimation);
-	SetScene("WoodBox");
-	SetTexture("Wood");
+	SetScene("box");
+	//SetTexture("GlassCube");
 	Name = "Box";
 }
 
