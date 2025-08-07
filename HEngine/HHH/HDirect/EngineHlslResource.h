@@ -8,9 +8,10 @@
 #include "memory"
 
 namespace HlslNamespace {
-	extern std::string Default;
-	extern std::string Animation;
-	extern std::string NoneAnimation;
+	extern const std::string Default;
+	extern const std::string Animation;
+	extern const std::string NoneAnimation;
+	extern const std::string Background;
 }
 
 // Ό³Έν :

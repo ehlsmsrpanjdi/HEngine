@@ -19,9 +19,12 @@ void MainPlayer::BeginPlay()
 {
 	Actor::BeginPlay();
 
-	SetHlsl(HlslNamespace::NoneAnimation);
+	SetHlsl(HlslNamespace::Default);
 	SetScene("character");
+	SetAnimation("dance");
 	Name = "Test";
+
+	SetActorScale(0.1f, 0.1f, 0.1f);
 
 	//Collision* col = CreateCollision(CollisionType::Player);
 	//col->AddFunction([col]() {

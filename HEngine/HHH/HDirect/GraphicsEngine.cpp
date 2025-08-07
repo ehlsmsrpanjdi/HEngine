@@ -309,5 +309,14 @@ std::shared_ptr<FScene> GraphicsEngine::GetScene(std::string_view _str)
 	return EngineScene::Get().GetScene(_str);
 }
 
+std::shared_ptr<struct Tex> GraphicsEngine::GetTexture(std::string_view _str)
+{
+	std::string str = HString::Upper(_str.data());
+	if (TextureMap->contains(str) == true) {
+		return (*TextureMap)[str];
+	}
+	return nullptr;
+}
+
 #pragma endregion
 

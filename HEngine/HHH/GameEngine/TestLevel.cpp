@@ -17,7 +17,7 @@ void TestLevel::BeginPlay()
 	Level::BeginPlay();
 	SpawnActor<MainPlayer>();
 	Actor* act = CreateBackGround<TestActor>("Sky").get();
-	act->SetActorScale(0.1f, 0.1f, 0.1f);
+	act->SetActorScale(0.0001f, 0.0001f, 0.0001f);
 
 	std::shared_ptr<Actor> camera = CreateCamera<Actor>("Main");
 	SetMainCamera("main");

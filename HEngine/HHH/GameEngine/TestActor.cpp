@@ -20,8 +20,9 @@ void TestActor::BeginPlay()
 	Actor::BeginPlay();
 
 
-	SetHlsl(HlslNamespace::NoneAnimation);
-	SetScene("character");
+	SetHlsl(HlslNamespace::Background);
+	SetScene("skybox");
+	SetTexture("sky");
 	//SetAnimation("dance");
 	Name = "Test";
 

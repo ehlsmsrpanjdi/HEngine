@@ -161,6 +161,12 @@ void Actor::RunAnim()
 	AnimStop = false;
 }
 
+void Actor::SetTexture(std::string_view _str)
+{
+	std::string str = HString::Upper(_str.data());
+	ActorScene->SetTexture(str);
+}
+
 Level* Actor::GetWorld()
 {
 	if (World != nullptr) {

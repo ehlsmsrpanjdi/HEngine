@@ -41,6 +41,8 @@ public:
 	void StopAnim();
 	void RunAnim();
 
+	void SetTexture(std::string_view _str);
+
 
 	class Level* GetWorld();
 	class Collision* CreateCollision(enum class CollisionType _Type);

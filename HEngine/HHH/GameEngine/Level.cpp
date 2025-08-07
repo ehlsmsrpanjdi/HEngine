@@ -41,7 +41,7 @@ void Level::Tick(float _DeltaTime)
 void Level::Render(float _DeltaTime)
 {
 
-
+	CameraMatrixUpdate(_DeltaTime);
 
 	for (std::shared_ptr<Actor> Act : AllActor) {
 		if (Act->GetScene() == nullptr) {
@@ -96,6 +96,7 @@ void Level::BackGroundRender(float _DeltaTime)
 	if (MainBackGround != nullptr) {
 		WorldMatrix = MainBackGround->GetTransform().GetWorldMatrix();
 		WVPBuffer.WorldMatrix = WorldMatrix;
+		ViewMatrix.r[3] = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
 		WVPBuffer.ViewMatrix = ViewMatrix;
 		WVPBuffer.ProjectionMatrix = PerseMatrix;
 		WVPBuffer.WVPMatrix = WorldMatrix * ViewMatrix * PerseMatrix;
