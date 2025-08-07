@@ -20,12 +20,12 @@ void TestActor::BeginPlay()
 	Actor::BeginPlay();
 
 
-	SetHlsl(HlslNamespace::Default);
-	SetScene("character");
-	SetAnimation("dance");
+	SetHlsl(HlslNamespace::Background);
+	SetScene("skybox");
+	SetTexture("sky");
+	//SetAnimation("dance");
 	Name = "Test";
 
-	OffAnimation();
 	//SetActorScale(0.1f, 0.1f, 0.1f);
 
 

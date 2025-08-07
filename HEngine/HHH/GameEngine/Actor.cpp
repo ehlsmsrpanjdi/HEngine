@@ -135,6 +135,9 @@ void Actor::SetAnimation(std::string_view _str)
 
 void Actor::OffAnimation()
 {
+	if (SeletedFrame == nullptr) {
+		std::cout << "Animation Is Not Set" << __LINE__ << "\n" << __FUNCTION__ << "\n";
+	}
 	IsAnimation = false;
 	SetHlsl(HlslNamespace::NoneAnimation);
 }
@@ -156,6 +159,12 @@ void Actor::StopAnim()
 void Actor::RunAnim()
 {
 	AnimStop = false;
+}
+
+void Actor::SetTexture(std::string_view _str)
+{
+	std::string str = HString::Upper(_str.data());
+	ActorScene->SetTexture(str);
 }
 
 Level* Actor::GetWorld()

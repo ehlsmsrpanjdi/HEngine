@@ -74,6 +74,9 @@ public:
 #pragma endregion
 
 #pragma region " ºô¸°°Å "
+public:
+	std::shared_ptr<struct Tex> GetTexture(std::string_view _str);
+
 private:
 	std::unordered_map<std::string, std::shared_ptr<struct Tex>>* TextureMap = nullptr;
 #pragma endregion

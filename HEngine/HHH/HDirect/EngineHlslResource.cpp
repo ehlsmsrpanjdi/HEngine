@@ -1,9 +1,10 @@
 #include "EngineHlslResource.h"
 
 namespace HlslNamespace {
-	std::string Default = "DEFAULT";
-	std::string Animation = "ANIMATION";
-	std::string NoneAnimation = "NONEANIMATION";
+	const std::string Default = "DEFAULT";
+	const std::string Animation = "ANIMATION";
+	const std::string NoneAnimation = "NONEANIMATION";
+	const std::string Background = "BACKGROUND";
 }
 
 EngineHlslResource::EngineHlslResource() 

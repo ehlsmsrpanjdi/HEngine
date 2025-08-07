@@ -21,6 +21,7 @@ EngineHlsl::EngineHlsl()
 {
 	HlslResourceMap.insert(std::make_pair(HlslNamespace::Default, std::make_shared<DefaultResource>()));
 	HlslResourceMap.insert(std::make_pair(HlslNamespace::NoneAnimation, std::make_shared<NoneAnimationResource>()));
+	HlslResourceMap.insert(std::make_pair(HlslNamespace::Background, std::make_shared<SkyResource>()));
 
 	for (auto& [key, value] : HlslResourceMap) {
 		value->Init();

@@ -6,11 +6,21 @@
 #include "iostream"
 #include <memory>
 #include <unordered_map>
+#include "GraphicsEngine.h"
+#include "EngineHelper/AllStruct.h"
 
 
 class FScene {
 public:
 	std::unordered_map<std::string, std::shared_ptr<struct MH>> Meshs;
+
+	void SetTexture(std::string_view _str) {
+		for (auto& [name, element] : Meshs) {
+			element->TextureName = _str;
+		}
+		 //GraphicsEngine::get()->GetTexture(_str);
+	}
+
 	std::shared_ptr<class EngineAnimatinSkeleton> AnimSkeleton = nullptr;
 	~FScene() {
 		Meshs.clear();
